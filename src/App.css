@@ -1,0 +1,194 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter, Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:#eef3f8;
+}
+
+.app{
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  background:white;
+}
+
+.header{
+  background:#2563eb;
+  color:white;
+  padding:32px 22px;
+}
+
+.header h1{
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.header p{
+  opacity:.9;
+  font-size:15px;
+}
+
+.searchSection{
+  padding:20px;
+}
+
+.searchBox{
+  width:100%;
+  padding:16px 18px;
+  border:none;
+  border-radius:14px;
+  background:#f3f5f7;
+  font-size:16px;
+}
+
+.searchBox:focus{
+  outline:none;
+}
+
+.sectionTitle{
+  font-size:22px;
+  font-weight:700;
+  margin:4px 20px 18px;
+}
+
+.productRow{
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  padding:0 20px 30px;
+}
+
+.productRow::-webkit-scrollbar{
+  display:none;
+}
+
+.productCard{
+
+  min-width:200px;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  background:white;
+
+  border:1px solid #e8e8e8;
+
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+
+}
+
+.imagePlaceholder{
+
+  height:190px;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  background:#edf1f5;
+
+  color:#7b8794;
+
+  font-size:15px;
+
+}
+
+.productName{
+
+  font-size:18px;
+
+  font-weight:700;
+
+  padding:16px 16px 4px;
+
+}
+
+.productCategory{
+
+  color:#777;
+
+  padding:0 16px 18px;
+
+}
+
+.addButton{
+
+  margin:0 16px 18px;
+
+  width:calc(100% - 32px);
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:13px;
+
+  background:#2563eb;
+
+  color:white;
+
+  font-size:16px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+}
+
+.addButton:hover{
+
+  background:#1d4ed8;
+
+}
+
+.categoryGrid{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:14px;
+
+  padding:0 20px 40px;
+
+}
+
+.categoryButton{
+
+  border:none;
+
+  border-radius:14px;
+
+  background:white;
+
+  border:2px solid #2563eb;
+
+  color:#2563eb;
+
+  font-size:16px;
+
+  font-weight:600;
+
+  padding:18px;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+.categoryButton:hover{
+
+  background:#2563eb;
+
+  color:white;
+
+}
