@@ -55,6 +55,46 @@ export function updateLineQuantity(cart, productId, unit, quantity) {
 }
 
 /**
+ * Changes the unit on an existing cart line in place.
+ * If the target unit already exists for the same product, quantities merge
+ * and the old line is removed.
+ */
+export function changeLineUnit(cart, productId, oldUnit, newUnit) {
+  if (oldUnit === newUnit) {
+    return cart;
+  }
+
+  const oldLine = findCartLine(cart, productId, oldUnit);
+
+  if (!oldLine) {
+    return cart;
+  }
+
+  const existingWithNewUnit = findCartLine(cart, productId, newUnit);
+
+  if (existingWithNewUnit) {
+    const oldKey = getCartLineKey(productId, oldUnit);
+    const newKey = getCartLineKey(productId, newUnit);
+
+    return cart
+      .filter((line) => getCartLineKey(line.productId, line.unit) !== oldKey)
+      .map((line) =>
+        getCartLineKey(line.productId, line.unit) === newKey
+          ? { ...line, quantity: line.quantity + oldLine.quantity }
+          : line
+      );
+  }
+
+  const oldKey = getCartLineKey(productId, oldUnit);
+
+  return cart.map((line) =>
+    getCartLineKey(line.productId, line.unit) === oldKey
+      ? { ...line, unit: newUnit }
+      : line
+  );
+}
+
+/**
  * Formats cart lines for WhatsApp export (Release 0.5).
  * Example output:
  *   2 Dus Glory

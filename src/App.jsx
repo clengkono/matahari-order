@@ -1,9 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import "./App.css";
 import products from "./data/products";
+import OrderReviewBar from "./components/OrderReviewBar";
+import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
 import ProductBottomSheet from "./components/ProductBottomSheet";
 import { useCart } from "./context/CartContext";
+import { findCartLine } from "./utils/cartHelpers";
 
 const categories = [
   "🚬 Rokok",
@@ -25,7 +28,26 @@ function addProductDefaults(addToCart, product) {
 export default function App() {
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const { cartCount, addToCart } = useCart();
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const {
+    cart,
+    cartCount,
+    lineCount,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    changeUnit,
+  } = useCart();
+
+  const productUnitsById = useMemo(
+    () =>
+      Object.fromEntries(
+        products.map((product) => [product.id, product.availableUnits])
+      ),
+    []
+  );
+
+  const hasOrder = lineCount > 0;
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.toLowerCase())
@@ -56,19 +78,39 @@ export default function App() {
     setSelectedProduct(null);
   }, []);
 
+  const handleOpenReview = useCallback(() => {
+    setIsReviewOpen(true);
+  }, []);
+
+  const handleCloseReview = useCallback(() => {
+    setIsReviewOpen(false);
+  }, []);
+
+  const handleIncreaseQuantity = useCallback(
+    (productId, unit) => {
+      const line = findCartLine(cart, productId, unit);
+      if (line) {
+        updateQuantity(productId, unit, line.quantity + 1);
+      }
+    },
+    [cart, updateQuantity]
+  );
+
+  const handleDecreaseQuantity = useCallback(
+    (productId, unit) => {
+      const line = findCartLine(cart, productId, unit);
+      if (line) {
+        updateQuantity(productId, unit, line.quantity - 1);
+      }
+    },
+    [cart, updateQuantity]
+  );
+
   return (
-    <div className="app">
+    <div className={`app${hasOrder ? " app--hasReviewBar" : ""}`}>
       <header className="header">
         <div className="headerTop">
           <h1>Matahari Order</h1>
-          {cartCount > 0 && (
-            <span
-              className="cartBadge"
-              aria-label={`${cartCount} item di keranjang`}
-            >
-              {cartCount}
-            </span>
-          )}
         </div>
         <p>Pesan kebutuhan toko dengan cepat.</p>
       </header>
@@ -144,6 +186,27 @@ export default function App() {
           onAddToCart={addToCart}
         />
       )}
+
+      {hasOrder && (
+        <OrderReviewBar
+          cartCount={cartCount}
+          lineCount={lineCount}
+          onOpenReview={handleOpenReview}
+        />
+      )}
+
+      <OrderReviewSheet
+        isOpen={isReviewOpen}
+        onClose={handleCloseReview}
+        cart={cart}
+        cartCount={cartCount}
+        lineCount={lineCount}
+        productUnitsById={productUnitsById}
+        onIncrease={handleIncreaseQuantity}
+        onDecrease={handleDecreaseQuantity}
+        onRemove={removeFromCart}
+        onChangeUnit={changeUnit}
+      />
     </div>
   );
 }

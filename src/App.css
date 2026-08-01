@@ -86,6 +86,10 @@ body {
   box-shadow: var(--shadow-layered-sm);
 }
 
+.app--hasReviewBar {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
 
 /* --------------------------------------------------------------------------
    4. Header
@@ -112,21 +116,6 @@ body {
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: var(--color-white);
-}
-
-.cartBadge {
-  flex-shrink: 0;
-  min-width: 32px;
-  min-height: 32px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--color-white);
-  color: var(--color-primary);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.4;
-  text-align: center;
-  box-shadow: var(--shadow-layered-sm);
 }
 
 .header p {
@@ -629,4 +618,273 @@ body {
   .bottomSheet {
     animation: none;
   }
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Order Review Bar
+   -------------------------------------------------------------------------- */
+
+.orderReviewBar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: 430px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-layered-md);
+  transform: translateX(-50%);
+}
+
+.orderReviewBarSummary {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.orderReviewBarButton {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.orderReviewBarButton:hover {
+  background: var(--color-primary-hover);
+}
+
+.orderReviewBarButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Order Review Sheet
+   -------------------------------------------------------------------------- */
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.orderReviewSheetTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.orderReviewSheetSummary {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.orderReviewSheetEmpty {
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.orderReviewList {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.orderReviewRow {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.orderReviewRow:last-child {
+  border-bottom: none;
+}
+
+.orderReviewRowHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.orderReviewRowName {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.orderReviewRowRemove {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.orderReviewRowRemove:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #FFF8F0;
+}
+
+.orderReviewRowRemove:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.orderReviewRowUnits {
+  margin: 0 0 10px;
+  padding: 0;
+  border: none;
+}
+
+.orderReviewRowUnitOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.orderReviewRowUnit {
+  min-height: 34px;
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.orderReviewRowUnit:hover {
+  border-color: var(--color-primary);
+}
+
+.orderReviewRowUnit--selected {
+  border-color: var(--color-primary);
+  background: rgba(230, 126, 34, 0.1);
+  color: var(--color-primary);
+}
+
+.orderReviewRowUnit:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.orderReviewRowQuantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderReviewRowQuantityLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.orderReviewSheetActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.orderReviewContinueButton {
+  width: 100%;
+  min-height: 48px;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.orderReviewContinueButton:hover {
+  background: #FFF8F0;
+}
+
+.orderReviewContinueButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.orderReviewWhatsAppButton {
+  width: 100%;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.orderReviewWhatsAppButton:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.orderReviewWhatsAppButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.orderReviewWhatsAppButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

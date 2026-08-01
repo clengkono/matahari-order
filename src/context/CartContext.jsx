@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from "react
 import {
   addOrMergeLine,
   calculateCartCount,
+  changeLineUnit,
   removeLine,
   updateLineQuantity,
 } from "../utils/cartHelpers";
@@ -33,20 +34,37 @@ export function CartProvider({ children }) {
     );
   }, []);
 
+  const changeUnit = useCallback((productId, oldUnit, newUnit) => {
+    setCart((current) => changeLineUnit(current, productId, oldUnit, newUnit));
+  }, []);
+
   const clearCart = useCallback(() => {
     setCart([]);
   }, []);
+
+  const lineCount = cart.length;
 
   const value = useMemo(
     () => ({
       cart,
       cartCount,
+      lineCount,
       addToCart,
       removeFromCart,
       updateQuantity,
+      changeUnit,
       clearCart,
     }),
-    [cart, cartCount, addToCart, removeFromCart, updateQuantity, clearCart]
+    [
+      cart,
+      cartCount,
+      lineCount,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      changeUnit,
+      clearCart,
+    ]
   );
 
   return (
