@@ -1,27 +1,43 @@
-function ProductCard({ product, onOpen }) {
-    const handleButtonClick = (e) => {
-      e.stopPropagation();
-      onOpen(product);
-    };
-  
-    return (
-      <div className="productCard" onClick={() => onOpen(product)}>
-        <div className="imagePlaceholder">
-          PRODUCT PHOTO
-        </div>
-  
-        <div className="productName">
-          {product.name}
-        </div>
-  
-        <button
-          className="addButton"
-          onClick={handleButtonClick}
-        >
-          Tambah
-        </button>
+function ProductCard({ product, onOpen, onQuickAdd }) {
+  const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+
+  const handleCardClick = () => {
+    onOpen(product);
+  };
+
+  const handleQuickAdd = (e) => {
+    e.stopPropagation();
+    onQuickAdd(product);
+  };
+
+  return (
+    <article
+      className="productCard"
+      onClick={handleCardClick}
+      aria-label={`${product.name}, pesanan default ${defaultOrder}`}
+    >
+      <div className="imagePlaceholder">
+        PRODUCT PHOTO
       </div>
-    );
-  }
-  
-  export default ProductCard;
+
+      <div className="productName">
+        {product.name}
+      </div>
+
+      <div className="productDefaultOrder">
+        {defaultOrder}
+      </div>
+
+      <button
+        type="button"
+        className="addButton"
+        aria-label={`Tambah ${defaultOrder} ${product.name}`}
+        onClick={handleQuickAdd}
+      >
+        Tambah
+      </button>
+    </article>
+  );
+}
+
+export default ProductCard;

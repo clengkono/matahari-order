@@ -54,6 +54,8 @@ export function CartProvider({ children }) {
   );
 }
 
+// Hook export alongside provider — standard context pattern
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
   const context = useContext(CartContext);
 
