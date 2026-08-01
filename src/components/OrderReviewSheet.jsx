@@ -8,6 +8,9 @@ function OrderReviewSheet({
   cartCount,
   lineCount,
   productUnitsById,
+  orderNote,
+  onOrderNoteChange,
+  onSendWhatsApp,
   onIncrease,
   onDecrease,
   onRemove,
@@ -41,6 +44,22 @@ function OrderReviewSheet({
         </ul>
       )}
 
+      {cart.length > 0 && (
+        <div className="orderReviewNoteField">
+          <label className="orderReviewNoteLabel" htmlFor="orderReviewNote">
+            Catatan
+          </label>
+          <textarea
+            id="orderReviewNote"
+            className="orderReviewNoteInput"
+            value={orderNote}
+            onChange={(event) => onOrderNoteChange(event.target.value)}
+            placeholder="Tambahkan catatan untuk toko..."
+            rows={3}
+          />
+        </div>
+      )}
+
       <div className="orderReviewSheetActions">
         <button
           type="button"
@@ -52,8 +71,9 @@ function OrderReviewSheet({
         <button
           type="button"
           className="orderReviewWhatsAppButton"
-          disabled
-          aria-disabled="true"
+          disabled={cart.length === 0}
+          aria-disabled={cart.length === 0}
+          onClick={onSendWhatsApp}
         >
           Kirim via WhatsApp
         </button>

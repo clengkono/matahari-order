@@ -7,6 +7,7 @@ import ProductCard from "./components/ProductCard";
 import ProductBottomSheet from "./components/ProductBottomSheet";
 import { useCart } from "./context/CartContext";
 import { findCartLine } from "./utils/cartHelpers";
+import { openWhatsAppWithOrder } from "./utils/whatsapp";
 
 const categories = [
   "🚬 Rokok",
@@ -29,6 +30,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [orderNote, setOrderNote] = useState("");
   const {
     cart,
     cartCount,
@@ -86,6 +88,14 @@ export default function App() {
     setIsReviewOpen(false);
   }, []);
 
+  const handleOrderNoteChange = useCallback((value) => {
+    setOrderNote(value);
+  }, []);
+
+  const handleSendWhatsApp = useCallback(() => {
+    openWhatsAppWithOrder(cart, orderNote);
+  }, [cart, orderNote]);
+
   const handleIncreaseQuantity = useCallback(
     (productId, unit) => {
       const line = findCartLine(cart, productId, unit);
@@ -100,10 +110,24 @@ export default function App() {
     (productId, unit) => {
       const line = findCartLine(cart, productId, unit);
       if (line) {
+        const willEmptyCart = lineCount === 1 && line.quantity === 1;
         updateQuantity(productId, unit, line.quantity - 1);
+        if (willEmptyCart) {
+          setOrderNote("");
+        }
       }
     },
-    [cart, updateQuantity]
+    [cart, lineCount, updateQuantity]
+  );
+
+  const handleRemoveFromCart = useCallback(
+    (productId, unit) => {
+      removeFromCart(productId, unit);
+      if (lineCount === 1) {
+        setOrderNote("");
+      }
+    },
+    [lineCount, removeFromCart]
   );
 
   return (
@@ -202,9 +226,12 @@ export default function App() {
         cartCount={cartCount}
         lineCount={lineCount}
         productUnitsById={productUnitsById}
+        orderNote={orderNote}
+        onOrderNoteChange={handleOrderNoteChange}
+        onSendWhatsApp={handleSendWhatsApp}
         onIncrease={handleIncreaseQuantity}
         onDecrease={handleDecreaseQuantity}
-        onRemove={removeFromCart}
+        onRemove={handleRemoveFromCart}
         onChangeUnit={changeUnit}
       />
     </div>

@@ -93,15 +93,3 @@ export function changeLineUnit(cart, productId, oldUnit, newUnit) {
       : line
   );
 }
-
-/**
- * Formats cart lines for WhatsApp export (Release 0.5).
- * Example output:
- *   2 Dus Glory
- *   3 Bungkus Masako
- */
-export function formatCartForWhatsApp(cart) {
-  return cart
-    .map((line) => `${line.quantity} ${line.unit} ${line.name}`)
-    .join("\n");
-}
