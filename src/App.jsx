@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import products from "./data/products";
+import ProductCard from "./components/ProductCard";
 
 const categories = [
   "🚬 Rokok",
@@ -51,25 +52,12 @@ export default function App() {
 
         <div className="productRow">
 
-          {favoriteProducts.map(product => (
-
-            <div className="productCard" key={product.id}>
-
-              <div className="imagePlaceholder">
-                Product Photo
-              </div>
-
-              <div className="productName">
-                {product.name}
-              </div>
-
-              <button className="addButton">
-                Tambah
-              </button>
-
-            </div>
-
-          ))}
+        {favoriteProducts.map(product => (
+  <ProductCard
+    key={product.id}
+    product={product}
+  />
+))}
 
         </div>
 

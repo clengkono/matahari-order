@@ -1,10 +1,10 @@
 const products = [
-
   {
     id: 1,
     name: "Glory",
     category: "Rokok",
     favorite: true,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -12,6 +12,7 @@ const products = [
     name: "Troy",
     category: "Rokok",
     favorite: true,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -19,6 +20,7 @@ const products = [
     name: "Apache",
     category: "Rokok",
     favorite: true,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -26,6 +28,7 @@ const products = [
     name: "Chief",
     category: "Rokok",
     favorite: true,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -33,6 +36,7 @@ const products = [
     name: "Aqua 1.5 L",
     category: "Minuman",
     favorite: true,
+    units: ["Pcs", "Dus"],
   },
 
   {
@@ -40,6 +44,7 @@ const products = [
     name: "Masako Ayam",
     category: "Bahan & Bumbu Masak",
     favorite: false,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -47,6 +52,7 @@ const products = [
     name: "Masako Sapi",
     category: "Bahan & Bumbu Masak",
     favorite: false,
+    units: ["Bungkus", "Dus"],
   },
 
   {
@@ -54,8 +60,8 @@ const products = [
     name: "Energen Vanilla",
     category: "Minuman",
     favorite: false,
+    units: ["Pcs", "Pack"],
   },
-
 ];
 
 export default products;
