@@ -20,12 +20,14 @@ function ProductCard({ product, onOpen, onQuickAdd }) {
         PRODUCT PHOTO
       </div>
 
-      <div className="productName">
-        {product.name}
-      </div>
+      <div className="productCardBody">
+        <div className="productName">
+          {product.name}
+        </div>
 
-      <div className="productDefaultOrder">
-        {defaultOrder}
+        <span className="productDefaultOrder">
+          {defaultOrder}
+        </span>
       </div>
 
       <button
