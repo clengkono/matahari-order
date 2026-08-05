@@ -36,7 +36,7 @@ function findDuplicateIds(items, label) {
   return duplicates;
 }
 
-function validateCatalog({ products, variants, units, aliases }) {
+function validateCatalog({ products, variants, units, aliases, mappings }) {
   const errors = [];
 
   errors.push(...findDuplicateIds(products, "product"));
@@ -47,13 +47,23 @@ function validateCatalog({ products, variants, units, aliases }) {
   const productIds = new Set(products.map((product) => product.id));
   const unitIds = new Set(units.map((unit) => unit.id));
   const variantIds = new Set(variants.map((variant) => variant.id));
+  const unitById = new Map(units.map((unit) => [unit.id, unit]));
 
   for (const unit of units) {
+    const unitLabel = unit.id ?? "(unknown)";
+
     if (unit.id === undefined || unit.id === null || unit.id === "") {
       errors.push("unit missing id");
     }
     if (isBlank(unit.name)) {
-      errors.push(`unit "${unit.id ?? "(unknown)"}" missing name`);
+      errors.push(`unit "${unitLabel}" missing name`);
+    }
+    if (unit.productId) {
+      if (!productIds.has(unit.productId)) {
+        errors.push(
+          `unit "${unitLabel}" has invalid productId "${unit.productId}"`
+        );
+      }
     }
   }
 
@@ -108,6 +118,13 @@ function validateCatalog({ products, variants, units, aliases }) {
         errors.push(
           `variant "${variantLabel}" defaultUnitId "${variant.defaultUnitId}" is not in availableUnitIds`
         );
+      } else {
+        const defaultUnit = unitById.get(variant.defaultUnitId);
+        if (defaultUnit && defaultUnit.active === false) {
+          errors.push(
+            `variant "${variantLabel}" defaultUnitId "${variant.defaultUnitId}" is inactive`
+          );
+        }
       }
     }
 
@@ -117,6 +134,42 @@ function validateCatalog({ products, variants, units, aliases }) {
       Number(variant.defaultQuantity) < 1
     ) {
       errors.push(`variant "${variantLabel}" has invalid defaultQuantity`);
+    }
+  }
+
+  const defaultsByProduct = new Map();
+  for (const unit of units) {
+    if (!unit.productId || !unit.isDefault) {
+      continue;
+    }
+    const list = defaultsByProduct.get(unit.productId) ?? [];
+    list.push(unit);
+    defaultsByProduct.set(unit.productId, list);
+  }
+
+  for (const [productId, defaultUnits] of defaultsByProduct) {
+    if (defaultUnits.length === 0) {
+      errors.push(`product "${productId}" has no default unit`);
+    } else if (defaultUnits.length > 1) {
+      errors.push(`product "${productId}" has more than one default unit`);
+    } else if (defaultUnits[0].active === false) {
+      errors.push(
+        `product "${productId}" default unit "${defaultUnits[0].id}" is inactive`
+      );
+    }
+  }
+
+  for (const product of products) {
+    if (product.pattern !== "fixed-product") {
+      continue;
+    }
+    const productUnits = units.filter((unit) => unit.productId === product.id);
+    if (productUnits.length === 0) {
+      continue;
+    }
+    const defaultUnits = productUnits.filter((unit) => unit.isDefault);
+    if (defaultUnits.length === 0) {
+      errors.push(`product "${product.id}" has no default unit`);
     }
   }
 
@@ -159,16 +212,39 @@ function validateCatalog({ products, variants, units, aliases }) {
     }
   }
 
+  for (const mapping of mappings) {
+    const mappingLabel =
+      mapping.sourceRowIndex !== undefined
+        ? `row ${mapping.sourceRowIndex}`
+        : "(unknown)";
+
+    if (!mapping.productId || !productIds.has(mapping.productId)) {
+      errors.push(
+        `mapping ${mappingLabel} has invalid productId "${mapping.productId}"`
+      );
+    }
+
+    if (!mapping.unitId || !unitIds.has(mapping.unitId)) {
+      errors.push(
+        `mapping ${mappingLabel} has invalid unitId "${mapping.unitId}"`
+      );
+    }
+  }
+
   return errors;
 }
 
-function printSummary({ products, variants, units, aliases }, errors) {
+function printSummary(
+  { products, variants, units, aliases, mappings },
+  errors
+) {
   console.log("Matahari Order — Catalogue Build");
   console.log("--------------------------------");
   console.log(`Products : ${products.length}`);
   console.log(`Variants : ${variants.length}`);
   console.log(`Units    : ${units.length}`);
   console.log(`Aliases  : ${aliases.length}`);
+  console.log(`Mappings : ${mappings.length}`);
   console.log("");
 
   if (errors.length === 0) {
@@ -191,19 +267,27 @@ function main() {
   const variants = loadJson("variants.json");
   const units = loadJson("units.json");
   const aliases = loadJson("aliases.json");
+  const mappings = loadJson("mappings.json");
 
   if (
     !Array.isArray(products) ||
     !Array.isArray(variants) ||
     !Array.isArray(units) ||
-    !Array.isArray(aliases)
+    !Array.isArray(aliases) ||
+    !Array.isArray(mappings)
   ) {
     console.error("Catalogue JSON files must each contain an array.");
     process.exit(1);
   }
 
-  const errors = validateCatalog({ products, variants, units, aliases });
-  printSummary({ products, variants, units, aliases }, errors);
+  const errors = validateCatalog({
+    products,
+    variants,
+    units,
+    aliases,
+    mappings,
+  });
+  printSummary({ products, variants, units, aliases, mappings }, errors);
 
   if (errors.length > 0) {
     process.exit(1);

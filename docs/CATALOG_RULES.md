@@ -105,13 +105,17 @@ Source rows are never deleted by the builder.
 | POS unit | Catalogue unit |
 | --- | --- |
 | BKS | Bungkus |
+| 5BKS | 5 Bungkus |
 | 1/2 SLOF or ½ SLOF | ½ Slof |
 | SLOF | Slof |
 | BAL | Bal |
+| BLK | Balok |
 | DOS or DUS | Dus |
 | PCS | Pcs |
 | PAK | Pak |
+| 1/2PAK or ½ PAK | ½ Pak |
 | KTN or KARTON | Karton |
+| 1/2KTN or ½ KTN | ½ Karton |
 
 Catalogue unit labels use title case.
 

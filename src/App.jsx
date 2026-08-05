@@ -51,13 +51,20 @@ export default function App() {
 
   const hasOrder = lineCount > 0;
 
+  const normalizedSearch = search.trim().toLowerCase();
+  const isSearching = normalizedSearch !== "";
+
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
+    product.name.toLowerCase().includes(normalizedSearch)
   );
 
   const favoriteProducts = filteredProducts.filter(
     (product) => product.favorite
   );
+
+  const searchResultProducts = isSearching
+    ? filteredProducts.filter((product) => !product.favorite)
+    : [];
 
   const handleQuickAdd = useCallback(
     (product) => {
@@ -66,11 +73,11 @@ export default function App() {
     [addToCart]
   );
 
-  const handleAddAll = useCallback(() => {
+  function handleAddAll() {
     favoriteProducts.forEach((product) => {
       addProductDefaults(addToCart, product);
     });
-  }, [favoriteProducts, addToCart]);
+  }
 
   const handleOpenSheet = useCallback((product) => {
     setSelectedProduct(product);
@@ -177,12 +184,28 @@ export default function App() {
               </button>
             </div>
           </>
-        ) : (
-          search.trim() !== "" && (
-            <p className="emptyState">Produk tidak ditemukan.</p>
-          )
-        )}
+        ) : null}
       </section>
+
+      {isSearching && searchResultProducts.length > 0 && (
+        <section>
+          <div className="sectionTitle">Hasil Pencarian</div>
+          <div className="productGrid">
+            {searchResultProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onOpen={handleOpenSheet}
+                onQuickAdd={handleQuickAdd}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {isSearching && filteredProducts.length === 0 && (
+        <p className="emptyState">Produk tidak ditemukan.</p>
+      )}
 
       <section>
         <div className="sectionTitle">

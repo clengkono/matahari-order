@@ -1,6 +1,7 @@
 export {
   aliases,
   assembleProducts,
+  catalogMappings,
   catalogProducts,
   catalogUnits,
   catalogVariants,

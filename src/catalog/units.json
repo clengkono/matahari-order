@@ -1,26 +1,2072 @@
 [
   {
     "id": "bungkus",
-    "name": "Bungkus"
+    "name": "Bungkus",
+    "active": true
   },
   {
     "id": "slof",
-    "name": "Slof"
+    "name": "Slof",
+    "active": true
   },
   {
     "id": "dus",
-    "name": "Dus"
+    "name": "Dus",
+    "active": true
   },
   {
     "id": "pcs",
-    "name": "Pcs"
+    "name": "Pcs",
+    "active": true
   },
   {
     "id": "karton",
-    "name": "Karton"
+    "name": "Karton",
+    "active": true
   },
   {
     "id": "pack",
-    "name": "Pack"
+    "name": "Pack",
+    "active": true
+  },
+  {
+    "id": "prod-52-kretek-20__bungkus",
+    "productId": "prod-52-kretek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-52-kretek-20__1-2-slof",
+    "productId": "prod-52-kretek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-52-kretek-20__slof",
+    "productId": "prod-52-kretek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-apache-16__bungkus",
+    "productId": "prod-apache-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-apache-16__1-2-slof",
+    "productId": "prod-apache-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-apache-16__slof",
+    "productId": "prod-apache-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-ave-20__bungkus",
+    "productId": "prod-ave-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-ave-20__1-2-slof",
+    "productId": "prod-ave-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-ave-20__slof",
+    "productId": "prod-ave-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-avolution-merah-20__bungkus",
+    "productId": "prod-avolution-merah-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-avolution-merah-20__1-2-slof",
+    "productId": "prod-avolution-merah-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-avolution-merah-20__slof",
+    "productId": "prod-avolution-merah-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-bintang-mas-16__bungkus",
+    "productId": "prod-bintang-mas-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-bintang-mas-16__1-2-slof",
+    "productId": "prod-bintang-mas-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-bintang-mas-16__slof",
+    "productId": "prod-bintang-mas-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-bintang-mas-kuning-12__bungkus",
+    "productId": "prod-bintang-mas-kuning-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-bintang-mas-kuning-12__1-2-slof",
+    "productId": "prod-bintang-mas-kuning-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-bintang-mas-kuning-12__slof",
+    "productId": "prod-bintang-mas-kuning-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-blue16__bungkus",
+    "productId": "prod-camel-blue16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-blue16__1-2-slof",
+    "productId": "prod-camel-blue16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-blue16__slof",
+    "productId": "prod-camel-blue16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-purple-12__bungkus",
+    "productId": "prod-camel-purple-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-purple-12__1-2-slof",
+    "productId": "prod-camel-purple-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-purple-12__slof",
+    "productId": "prod-camel-purple-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-purple-16__bungkus",
+    "productId": "prod-camel-purple-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-purple-16__1-2-slof",
+    "productId": "prod-camel-purple-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-purple-16__slof",
+    "productId": "prod-camel-purple-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-white-panjang-20__bungkus",
+    "productId": "prod-camel-white-panjang-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-white-panjang-20__1-2-slof",
+    "productId": "prod-camel-white-panjang-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-white-panjang-20__slof",
+    "productId": "prod-camel-white-panjang-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-white-pendek-20__bungkus",
+    "productId": "prod-camel-white-pendek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-white-pendek-20__1-2-slof",
+    "productId": "prod-camel-white-pendek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-white-pendek-20__slof",
+    "productId": "prod-camel-white-pendek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-yellow-12__bungkus",
+    "productId": "prod-camel-yellow-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-yellow-12__1-2-slof",
+    "productId": "prod-camel-yellow-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-yellow-12__slof",
+    "productId": "prod-camel-yellow-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-yellow-panjang-20__bungkus",
+    "productId": "prod-camel-yellow-panjang-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-yellow-panjang-20__1-2-slof",
+    "productId": "prod-camel-yellow-panjang-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-yellow-panjang-20__slof",
+    "productId": "prod-camel-yellow-panjang-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-camel-yellow-pendek-20__bungkus",
+    "productId": "prod-camel-yellow-pendek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-camel-yellow-pendek-20__1-2-slof",
+    "productId": "prod-camel-yellow-pendek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-camel-yellow-pendek-20__slof",
+    "productId": "prod-camel-yellow-pendek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-chief-12__bungkus",
+    "productId": "prod-chief-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-chief-12__1-2-slof",
+    "productId": "prod-chief-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-chief-12__slof",
+    "productId": "prod-chief-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-crystal-16__bungkus",
+    "productId": "prod-crystal-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-crystal-16__1-2-slof",
+    "productId": "prod-crystal-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-crystal-16__slof",
+    "productId": "prod-crystal-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-crystal-caffe-latte-12__bungkus",
+    "productId": "prod-crystal-caffe-latte-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-crystal-caffe-latte-12__1-2-slof",
+    "productId": "prod-crystal-caffe-latte-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-crystal-caffe-latte-12__slof",
+    "productId": "prod-crystal-caffe-latte-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-d76-apel__bungkus",
+    "productId": "prod-d76-apel",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-d76-apel__1-2-slof",
+    "productId": "prod-d76-apel",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-d76-apel__slof",
+    "productId": "prod-d76-apel",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-d76-mangga-12__bungkus",
+    "productId": "prod-d76-mangga-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-d76-mangga-12__1-2-slof",
+    "productId": "prod-d76-mangga-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-d76-mangga-12__slof",
+    "productId": "prod-d76-mangga-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dio-kretek-12__bungkus",
+    "productId": "prod-dio-kretek-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dio-kretek-12__1-2-slof",
+    "productId": "prod-dio-kretek-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dio-kretek-12__slof",
+    "productId": "prod-dio-kretek-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dio-teh-manis-12__bungkus",
+    "productId": "prod-dio-teh-manis-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dio-teh-manis-12__1-2-slof",
+    "productId": "prod-dio-teh-manis-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dio-teh-manis-12__slof",
+    "productId": "prod-dio-teh-manis-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-djarum-black-cappuccino-16__bungkus",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-djarum-black-cappuccino-16__1-2-slof",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-djarum-black-cappuccino-16__slof",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-12__bungkus",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-12__1-2-slof",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-12__slof",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-16__bungkus",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-16__1-2-slof",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-16__slof",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-12__bungkus",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-12__1-2-slof",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-12__slof",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-16btg-8__bungkus",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-16btg-8__1-2-slof",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-16btg-8__slof",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dss-magnum-filter-12__bungkus",
+    "productId": "prod-dss-magnum-filter-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dss-magnum-filter-12__1-2-slof",
+    "productId": "prod-dss-magnum-filter-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dss-magnum-filter-12__slof",
+    "productId": "prod-dss-magnum-filter-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dss-magnum-mild-16__bungkus",
+    "productId": "prod-dss-magnum-mild-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dss-magnum-mild-16__1-2-slof",
+    "productId": "prod-dss-magnum-mild-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dss-magnum-mild-16__slof",
+    "productId": "prod-dss-magnum-mild-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dss-magnum-mild-20__bungkus",
+    "productId": "prod-dss-magnum-mild-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dss-magnum-mild-20__1-2-slof",
+    "productId": "prod-dss-magnum-mild-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dss-magnum-mild-20__slof",
+    "productId": "prod-dss-magnum-mild-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-12__bungkus",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-12__1-2-slof",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-12__slof",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-16__bungkus",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-16__1-2-slof",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-16__slof",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dunhill-putih-mild-16__bungkus",
+    "productId": "prod-dunhill-putih-mild-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dunhill-putih-mild-16__1-2-slof",
+    "productId": "prod-dunhill-putih-mild-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dunhill-putih-mild-16__slof",
+    "productId": "prod-dunhill-putih-mild-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-dunhill-putih-mild-20__bungkus",
+    "productId": "prod-dunhill-putih-mild-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-dunhill-putih-mild-20__1-2-slof",
+    "productId": "prod-dunhill-putih-mild-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-dunhill-putih-mild-20__slof",
+    "productId": "prod-dunhill-putih-mild-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-esse-change-double-20__bungkus",
+    "productId": "prod-esse-change-double-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-esse-change-double-20__1-2-slof",
+    "productId": "prod-esse-change-double-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-esse-change-double-20__slof",
+    "productId": "prod-esse-change-double-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-filasta-16__bungkus",
+    "productId": "prod-filasta-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-filasta-16__1-2-slof",
+    "productId": "prod-filasta-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-filasta-16__slof",
+    "productId": "prod-filasta-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gandum-mas-12__bungkus",
+    "productId": "prod-gandum-mas-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gandum-mas-12__slof",
+    "productId": "prod-gandum-mas-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-glory-16__bungkus",
+    "productId": "prod-glory-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-glory-16__1-2-slof",
+    "productId": "prod-glory-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-glory-16__slof",
+    "productId": "prod-glory-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gopas-20__bungkus",
+    "productId": "prod-gopas-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gopas-20__1-2-slof",
+    "productId": "prod-gopas-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-gopas-20__slof",
+    "productId": "prod-gopas-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gp1-filter-16__bungkus",
+    "productId": "prod-gp1-filter-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gp1-filter-16__1-2-slof",
+    "productId": "prod-gp1-filter-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-gp1-filter-16__slof",
+    "productId": "prod-gp1-filter-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gp2-hijau__bungkus",
+    "productId": "prod-gp2-hijau",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gp2-hijau__slof",
+    "productId": "prod-gp2-hijau",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gudang-garam-filter-12__bungkus",
+    "productId": "prod-gudang-garam-filter-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gudang-garam-filter-12__5-bungkus",
+    "productId": "prod-gudang-garam-filter-12",
+    "name": "5 Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 2
+  },
+  {
+    "id": "prod-gudang-garam-filter-12__1-2-slof",
+    "productId": "prod-gudang-garam-filter-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-gudang-garam-filter-12__slof",
+    "productId": "prod-gudang-garam-filter-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gudang-garam-merah-12__bungkus",
+    "productId": "prod-gudang-garam-merah-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gudang-garam-merah-12__1-2-slof",
+    "productId": "prod-gudang-garam-merah-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-gudang-garam-merah-12__slof",
+    "productId": "prod-gudang-garam-merah-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-gudang-garam-merah-16__bungkus",
+    "productId": "prod-gudang-garam-merah-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-gudang-garam-merah-16__1-2-slof",
+    "productId": "prod-gudang-garam-merah-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-gudang-garam-merah-16__slof",
+    "productId": "prod-gudang-garam-merah-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-harum-manis-20__bungkus",
+    "productId": "prod-harum-manis-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-harum-manis-20__1-2-slof",
+    "productId": "prod-harum-manis-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-harum-manis-20__slof",
+    "productId": "prod-harum-manis-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-hk-kretek-12__bungkus",
+    "productId": "prod-hk-kretek-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-hk-kretek-12__1-2-slof",
+    "productId": "prod-hk-kretek-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-hk-kretek-12__slof",
+    "productId": "prod-hk-kretek-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-ina-bold-20__bungkus",
+    "productId": "prod-ina-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-ina-bold-20__1-2-slof",
+    "productId": "prod-ina-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-ina-bold-20__slof",
+    "productId": "prod-ina-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-kabel-16__bungkus",
+    "productId": "prod-kabel-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-kabel-16__1-2-slof",
+    "productId": "prod-kabel-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-kabel-16__slof",
+    "productId": "prod-kabel-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-l-a-bold-20__bungkus",
+    "productId": "prod-l-a-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-l-a-bold-20__1-2-slof",
+    "productId": "prod-l-a-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-l-a-bold-20__slof",
+    "productId": "prod-l-a-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-l-a-lights-16__bungkus",
+    "productId": "prod-l-a-lights-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-l-a-lights-16__1-2-slof",
+    "productId": "prod-l-a-lights-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-l-a-lights-16__slof",
+    "productId": "prod-l-a-lights-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-lucky-strike-filter-20-merah__bungkus",
+    "productId": "prod-lucky-strike-filter-20-merah",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-lucky-strike-filter-20-merah__1-2-slof",
+    "productId": "prod-lucky-strike-filter-20-merah",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-lucky-strike-filter-20-merah__slof",
+    "productId": "prod-lucky-strike-filter-20-merah",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-magnum-kretek-12__bungkus",
+    "productId": "prod-magnum-kretek-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-magnum-kretek-12__1-2-slof",
+    "productId": "prod-magnum-kretek-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-magnum-kretek-12__slof",
+    "productId": "prod-magnum-kretek-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-marlboro-filter-black-12__bungkus",
+    "productId": "prod-marlboro-filter-black-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-12__1-2-slof",
+    "productId": "prod-marlboro-filter-black-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-marlboro-filter-black-12__slof",
+    "productId": "prod-marlboro-filter-black-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-marlboro-filter-black-16__bungkus",
+    "productId": "prod-marlboro-filter-black-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-16__1-2-slof",
+    "productId": "prod-marlboro-filter-black-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-marlboro-filter-black-16__slof",
+    "productId": "prod-marlboro-filter-black-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-marlboro-filter-black-20__bungkus",
+    "productId": "prod-marlboro-filter-black-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-20__1-2-slof",
+    "productId": "prod-marlboro-filter-black-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-marlboro-filter-black-20__slof",
+    "productId": "prod-marlboro-filter-black-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-milta-16__bungkus",
+    "productId": "prod-milta-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-milta-16__1-2-slof",
+    "productId": "prod-milta-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-milta-16__slof",
+    "productId": "prod-milta-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-nation-black-20__bungkus",
+    "productId": "prod-nation-black-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-nation-black-20__1-2-slof",
+    "productId": "prod-nation-black-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-nation-black-20__slof",
+    "productId": "prod-nation-black-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-nation-bold-16__bungkus",
+    "productId": "prod-nation-bold-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-nation-bold-16__1-2-slof",
+    "productId": "prod-nation-bold-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-nation-bold-16__slof",
+    "productId": "prod-nation-bold-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-nation-bold-20__bungkus",
+    "productId": "prod-nation-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-nation-bold-20__1-2-slof",
+    "productId": "prod-nation-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-nation-bold-20__slof",
+    "productId": "prod-nation-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-nation-gold-20__bungkus",
+    "productId": "prod-nation-gold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-nation-gold-20__1-2-slof",
+    "productId": "prod-nation-gold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-nation-gold-20__slof",
+    "productId": "prod-nation-gold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-nation-white-20__bungkus",
+    "productId": "prod-nation-white-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-nation-white-20__1-2-slof",
+    "productId": "prod-nation-white-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-nation-white-20__slof",
+    "productId": "prod-nation-white-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-pitoe-kretek-12__bungkus",
+    "productId": "prod-pitoe-kretek-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-pitoe-kretek-12__1-2-slof",
+    "productId": "prod-pitoe-kretek-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-pitoe-kretek-12__slof",
+    "productId": "prod-pitoe-kretek-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-pitoe-kretek-20__bungkus",
+    "productId": "prod-pitoe-kretek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-pitoe-kretek-20__1-2-slof",
+    "productId": "prod-pitoe-kretek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-pitoe-kretek-20__slof",
+    "productId": "prod-pitoe-kretek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-redjati__bungkus",
+    "productId": "prod-redjati",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-redjati__slof",
+    "productId": "prod-redjati",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-region-kretek-sari-poci-16__bungkus",
+    "productId": "prod-region-kretek-sari-poci-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-region-kretek-sari-poci-16__slof",
+    "productId": "prod-region-kretek-sari-poci-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-rexo-bold-20__bungkus",
+    "productId": "prod-rexo-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-rexo-bold-20__1-2-slof",
+    "productId": "prod-rexo-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-rexo-bold-20__slof",
+    "productId": "prod-rexo-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-rexo-kretek-16__bungkus",
+    "productId": "prod-rexo-kretek-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-rexo-kretek-16__1-2-slof",
+    "productId": "prod-rexo-kretek-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-rexo-kretek-16__slof",
+    "productId": "prod-rexo-kretek-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-rexo-kretek-20__bungkus",
+    "productId": "prod-rexo-kretek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-rexo-kretek-20__1-2-slof",
+    "productId": "prod-rexo-kretek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-rexo-kretek-20__slof",
+    "productId": "prod-rexo-kretek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-rexo-merah-20__bungkus",
+    "productId": "prod-rexo-merah-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-rexo-merah-20__1-2-slof",
+    "productId": "prod-rexo-merah-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-rexo-merah-20__slof",
+    "productId": "prod-rexo-merah-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-sahara-filter-20__bungkus",
+    "productId": "prod-sahara-filter-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sahara-filter-20__1-2-slof",
+    "productId": "prod-sahara-filter-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-sahara-filter-20__slof",
+    "productId": "prod-sahara-filter-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-sahara-kretek-20__bungkus",
+    "productId": "prod-sahara-kretek-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sahara-kretek-20__1-2-slof",
+    "productId": "prod-sahara-kretek-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-sahara-kretek-20__slof",
+    "productId": "prod-sahara-kretek-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-sampoerna-mild-16__bungkus",
+    "productId": "prod-sampoerna-mild-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sampoerna-mild-16__1-2-slof",
+    "productId": "prod-sampoerna-mild-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-sampoerna-mild-16__slof",
+    "productId": "prod-sampoerna-mild-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87__bungkus",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87__1-2-pak",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "name": "½ Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 5
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87__pak",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "name": "Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 6
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87__karton",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "name": "Karton",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 10
+  },
+  {
+    "id": "prod-sek-kunci__bungkus",
+    "productId": "prod-sek-kunci",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sek-kunci__1-2-pak",
+    "productId": "prod-sek-kunci",
+    "name": "½ Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 5
+  },
+  {
+    "id": "prod-sek-kunci__pak",
+    "productId": "prod-sek-kunci",
+    "name": "Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 6
+  },
+  {
+    "id": "prod-sek-kunci__1-2-karton",
+    "productId": "prod-sek-kunci",
+    "name": "½ Karton",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 9
+  },
+  {
+    "id": "prod-sek-kunci__karton",
+    "productId": "prod-sek-kunci",
+    "name": "Karton",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 10
+  },
+  {
+    "id": "prod-sek-roll-now__bungkus",
+    "productId": "prod-sek-roll-now",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sek-roll-now__1-2-pak",
+    "productId": "prod-sek-roll-now",
+    "name": "½ Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 5
+  },
+  {
+    "id": "prod-sek-roll-now__pak",
+    "productId": "prod-sek-roll-now",
+    "name": "Pak",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 6
+  },
+  {
+    "id": "prod-sek-roll-now__karton",
+    "productId": "prod-sek-roll-now",
+    "name": "Karton",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 10
+  },
+  {
+    "id": "prod-sergio-filter__bungkus",
+    "productId": "prod-sergio-filter",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-sergio-filter__1-2-slof",
+    "productId": "prod-sergio-filter",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-sergio-filter__slof",
+    "productId": "prod-sergio-filter",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-surya-12__bungkus",
+    "productId": "prod-surya-12",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-surya-12__1-2-slof",
+    "productId": "prod-surya-12",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-surya-12__slof",
+    "productId": "prod-surya-12",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-surya-16__bungkus",
+    "productId": "prod-surya-16",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-surya-16__1-2-slof",
+    "productId": "prod-surya-16",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-surya-16__slof",
+    "productId": "prod-surya-16",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-surya-kaleng-50__slof",
+    "productId": "prod-surya-kaleng-50",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-surya-kaleng-50__balok",
+    "productId": "prod-surya-kaleng-50",
+    "name": "Balok",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 12
+  },
+  {
+    "id": "prod-tik-tok-bold-20__bungkus",
+    "productId": "prod-tik-tok-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-tik-tok-bold-20__1-2-slof",
+    "productId": "prod-tik-tok-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-tik-tok-bold-20__slof",
+    "productId": "prod-tik-tok-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-troy-20__bungkus",
+    "productId": "prod-troy-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-troy-20__1-2-slof",
+    "productId": "prod-troy-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-troy-20__slof",
+    "productId": "prod-troy-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-urban-mild__bungkus",
+    "productId": "prod-urban-mild",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-urban-mild__1-2-slof",
+    "productId": "prod-urban-mild",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-urban-mild__slof",
+    "productId": "prod-urban-mild",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-zenix-bold-20__bungkus",
+    "productId": "prod-zenix-bold-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-zenix-bold-20__1-2-slof",
+    "productId": "prod-zenix-bold-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-zenix-bold-20__slof",
+    "productId": "prod-zenix-bold-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-zenix-coffee__bungkus",
+    "productId": "prod-zenix-coffee",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-zenix-coffee__1-2-slof",
+    "productId": "prod-zenix-coffee",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-zenix-coffee__slof",
+    "productId": "prod-zenix-coffee",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-zenix-putih-20__bungkus",
+    "productId": "prod-zenix-putih-20",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-zenix-putih-20__1-2-slof",
+    "productId": "prod-zenix-putih-20",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-zenix-putih-20__slof",
+    "productId": "prod-zenix-putih-20",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "prod-zenix-sultan__bungkus",
+    "productId": "prod-zenix-sultan",
+    "name": "Bungkus",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 1
+  },
+  {
+    "id": "prod-zenix-sultan__1-2-slof",
+    "productId": "prod-zenix-sultan",
+    "name": "½ Slof",
+    "active": true,
+    "isDefault": false,
+    "sortOrder": 3
+  },
+  {
+    "id": "prod-zenix-sultan__slof",
+    "productId": "prod-zenix-sultan",
+    "name": "Slof",
+    "active": true,
+    "isDefault": true,
+    "sortOrder": 4
   }
 ]

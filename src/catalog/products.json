@@ -1,62 +1,639 @@
 [
   {
-    "id": "prod-glory",
-    "name": "Glory",
+    "id": "prod-52-kretek-20",
+    "name": "52 Kretek 20",
     "category": "Rokok",
-    "favorite": true
+    "favorite": false,
+    "pattern": "fixed-product"
   },
   {
-    "id": "prod-troy",
-    "name": "Troy",
+    "id": "prod-apache-16",
+    "name": "Apache 16",
     "category": "Rokok",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
-    "id": "prod-apache",
-    "name": "Apache",
+    "id": "prod-ave-20",
+    "name": "Ave 20",
     "category": "Rokok",
-    "favorite": true
+    "favorite": false,
+    "pattern": "fixed-product"
   },
   {
-    "id": "prod-chief",
-    "name": "Chief",
+    "id": "prod-avolution-merah-20",
+    "name": "Avolution Merah 20",
     "category": "Rokok",
-    "favorite": true
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-bintang-mas-16",
+    "name": "Bintang Mas 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-bintang-mas-kuning-12",
+    "name": "Bintang Mas Kuning 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-blue16",
+    "name": "Camel Blue16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-purple-12",
+    "name": "Camel Purple 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-purple-16",
+    "name": "Camel Purple 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-white-panjang-20",
+    "name": "Camel White Panjang 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-white-pendek-20",
+    "name": "Camel White Pendek 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-yellow-12",
+    "name": "Camel Yellow 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-yellow-panjang-20",
+    "name": "Camel Yellow Panjang 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-camel-yellow-pendek-20",
+    "name": "Camel Yellow Pendek 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-chief-12",
+    "name": "Chief 12",
+    "category": "Rokok",
+    "favorite": true,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-crystal-16",
+    "name": "Crystal 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-crystal-caffe-latte-12",
+    "name": "Crystal Caffe Latte 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-d76-apel",
+    "name": "D76 Apel",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-d76-mangga-12",
+    "name": "D76 Mangga 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dio-kretek-12",
+    "name": "Dio Kretek 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dio-teh-manis-12",
+    "name": "Dio Teh Manis 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-djarum-black-cappuccino-16",
+    "name": "Djarum Black Cappuccino 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-12",
+    "name": "Dji Sam Soe Kretek 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-16",
+    "name": "Dji Sam Soe Kretek 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-12",
+    "name": "Dji Sam Soe Premium Snap Box 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "name": "Dji Sam Soe Premium Snap Box 16btg (8)",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dss-magnum-filter-12",
+    "name": "Dss Magnum Filter 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dss-magnum-mild-16",
+    "name": "Dss Magnum Mild 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dss-magnum-mild-20",
+    "name": "Dss Magnum Mild 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-12",
+    "name": "Dunhill Hitam Filter 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-16",
+    "name": "Dunhill Hitam Filter 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dunhill-putih-mild-16",
+    "name": "Dunhill Putih Mild 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-dunhill-putih-mild-20",
+    "name": "Dunhill Putih Mild 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-esse-change-double-20",
+    "name": "Esse Change Double 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-filasta-16",
+    "name": "Filasta 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gandum-mas-12",
+    "name": "Gandum Mas 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-glory-16",
+    "name": "Glory 16",
+    "category": "Rokok",
+    "favorite": true,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gopas-20",
+    "name": "Gopas 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gp1-filter-16",
+    "name": "Gp1 Filter 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gp2-hijau",
+    "name": "Gp2 Hijau",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gudang-garam-filter-12",
+    "name": "Gudang Garam Filter 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gudang-garam-merah-12",
+    "name": "Gudang Garam Merah 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-gudang-garam-merah-16",
+    "name": "Gudang Garam Merah 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-harum-manis-20",
+    "name": "Harum Manis 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-hk-kretek-12",
+    "name": "Hk Kretek 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-ina-bold-20",
+    "name": "Ina Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-kabel-16",
+    "name": "Kabel 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-l-a-bold-20",
+    "name": "L.a. Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-l-a-lights-16",
+    "name": "L.a. Lights 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-lucky-strike-filter-20-merah",
+    "name": "Lucky Strike Filter 20 (merah)",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-magnum-kretek-12",
+    "name": "Magnum Kretek 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-marlboro-filter-black-12",
+    "name": "Marlboro Filter Black 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-marlboro-filter-black-16",
+    "name": "Marlboro Filter Black 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-marlboro-filter-black-20",
+    "name": "Marlboro Filter Black 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-milta-16",
+    "name": "Milta 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-nation-black-20",
+    "name": "Nation Black 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-nation-bold-16",
+    "name": "Nation Bold 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-nation-bold-20",
+    "name": "Nation Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-nation-gold-20",
+    "name": "Nation Gold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-nation-white-20",
+    "name": "Nation White 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-pitoe-kretek-12",
+    "name": "Pitoe Kretek 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-pitoe-kretek-20",
+    "name": "Pitoe Kretek 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-redjati",
+    "name": "Redjati",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-region-kretek-sari-poci-16",
+    "name": "Region Kretek Sari Poci 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-rexo-bold-20",
+    "name": "Rexo Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-rexo-kretek-16",
+    "name": "Rexo Kretek 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-rexo-kretek-20",
+    "name": "Rexo Kretek 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-rexo-merah-20",
+    "name": "Rexo Merah 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sahara-filter-20",
+    "name": "Sahara Filter 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sahara-kretek-20",
+    "name": "Sahara Kretek 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sampoerna-mild-16",
+    "name": "Sampoerna Mild 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87",
+    "name": "Sek Delapan Tujuh 87",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sek-kunci",
+    "name": "Sek Kunci",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sek-roll-now",
+    "name": "Sek Roll Now",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-sergio-filter",
+    "name": "Sergio Filter",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-surya-12",
+    "name": "Surya 12",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-surya-16",
+    "name": "Surya 16",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-surya-kaleng-50",
+    "name": "Surya Kaleng (50)",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-tik-tok-bold-20",
+    "name": "Tik Tok Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-troy-20",
+    "name": "Troy 20",
+    "category": "Rokok",
+    "favorite": true,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-urban-mild",
+    "name": "Urban Mild",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-zenix-bold-20",
+    "name": "Zenix Bold 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-zenix-coffee",
+    "name": "Zenix Coffee",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-zenix-putih-20",
+    "name": "Zenix Putih 20",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
+  },
+  {
+    "id": "prod-zenix-sultan",
+    "name": "Zenix Sultan",
+    "category": "Rokok",
+    "favorite": false,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-aqua-15l",
     "name": "Aqua 1.5 L",
     "category": "Minuman",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-masako-ayam",
     "name": "Masako Ayam",
     "category": "Bahan & Bumbu Masak",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-masako-sapi",
     "name": "Masako Sapi",
     "category": "Bahan & Bumbu Masak",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-energen-vanilla",
     "name": "Energen Vanilla",
     "category": "Minuman",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-teh-botol-sosro",
     "name": "Teh Botol Sosro",
     "category": "Minuman",
-    "favorite": true
+    "favorite": true,
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-indomie-goreng",
     "name": "Indomie Goreng",
     "category": "Bahan & Bumbu Masak",
-    "favorite": false
+    "favorite": false,
+    "pattern": "fixed-product"
   }
 ]

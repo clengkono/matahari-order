@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -13,13 +13,17 @@ const previewDir = join(rootDir, "tmp", "catalog-preview");
 
 const UNIT_SORT_ORDER = [
   "Bungkus",
+  "5 Bungkus",
   "½ Slof",
   "Slof",
+  "½ Pak",
   "Pak",
   "Pcs",
   "Dus",
+  "½ Karton",
   "Karton",
   "Bal",
+  "Balok",
 ];
 
 const DEFAULT_UNIT_PREFERENCE = ["Slof", "Karton", "Dus", "Bungkus"];
@@ -69,6 +73,9 @@ function normalizeUnitLabel(rawUnit) {
   if (compact === "BKS") {
     return "Bungkus";
   }
+  if (compact === "5BKS" || compact === "5 BKS") {
+    return "5 Bungkus";
+  }
   if (compact === "1/2 SLOF" || compact === "½ SLOF") {
     return "½ Slof";
   }
@@ -77,6 +84,9 @@ function normalizeUnitLabel(rawUnit) {
   }
   if (compact === "BAL") {
     return "Bal";
+  }
+  if (compact === "BLK") {
+    return "Balok";
   }
   if (compact === "DOS" || compact === "DUS") {
     return "Dus";
@@ -87,8 +97,14 @@ function normalizeUnitLabel(rawUnit) {
   if (compact === "PAK") {
     return "Pak";
   }
+  if (compact === "1/2PAK" || compact === "1/2 PAK" || compact === "½ PAK") {
+    return "½ Pak";
+  }
   if (compact === "KTN" || compact === "KARTON") {
     return "Karton";
+  }
+  if (compact === "1/2KTN" || compact === "1/2 KTN" || compact === "½ KTN") {
+    return "½ Karton";
   }
 
   return titleCaseWords(rawUnit.trim());
@@ -529,4 +545,17 @@ function main() {
   generatePreview();
 }
 
-main();
+const isDirectRun =
+  Boolean(process.argv[1]) &&
+  import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+
+if (isDirectRun) {
+  main();
+}
+
+export {
+  buildPreview,
+  normalizeProductName,
+  normalizeUnitLabel,
+  validatePreview,
+};

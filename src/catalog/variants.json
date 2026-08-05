@@ -1,81 +1,1087 @@
 [
   {
-    "id": 1,
-    "productId": "prod-glory",
-    "name": "Glory",
-    "availableUnitIds": ["bungkus", "slof", "dus"],
-    "defaultUnitId": "slof",
+    "id": "prod-52-kretek-20",
+    "productId": "prod-52-kretek-20",
+    "name": "52 Kretek 20",
+    "availableUnitIds": [
+      "prod-52-kretek-20__bungkus",
+      "prod-52-kretek-20__1-2-slof",
+      "prod-52-kretek-20__slof"
+    ],
+    "defaultUnitId": "prod-52-kretek-20__slof",
     "defaultQuantity": 1
   },
   {
-    "id": 2,
-    "productId": "prod-troy",
-    "name": "Troy",
-    "availableUnitIds": ["bungkus", "slof", "dus"],
-    "defaultUnitId": "slof",
+    "id": "prod-apache-16",
+    "productId": "prod-apache-16",
+    "name": "Apache 16",
+    "availableUnitIds": [
+      "prod-apache-16__bungkus",
+      "prod-apache-16__1-2-slof",
+      "prod-apache-16__slof"
+    ],
+    "defaultUnitId": "prod-apache-16__slof",
     "defaultQuantity": 1
   },
   {
-    "id": 3,
-    "productId": "prod-apache",
-    "name": "Apache",
-    "availableUnitIds": ["bungkus", "slof", "dus"],
-    "defaultUnitId": "slof",
+    "id": "prod-ave-20",
+    "productId": "prod-ave-20",
+    "name": "Ave 20",
+    "availableUnitIds": [
+      "prod-ave-20__bungkus",
+      "prod-ave-20__1-2-slof",
+      "prod-ave-20__slof"
+    ],
+    "defaultUnitId": "prod-ave-20__slof",
     "defaultQuantity": 1
   },
   {
-    "id": 4,
-    "productId": "prod-chief",
-    "name": "Chief",
-    "availableUnitIds": ["bungkus", "slof", "dus"],
-    "defaultUnitId": "slof",
+    "id": "prod-avolution-merah-20",
+    "productId": "prod-avolution-merah-20",
+    "name": "Avolution Merah 20",
+    "availableUnitIds": [
+      "prod-avolution-merah-20__bungkus",
+      "prod-avolution-merah-20__1-2-slof",
+      "prod-avolution-merah-20__slof"
+    ],
+    "defaultUnitId": "prod-avolution-merah-20__slof",
     "defaultQuantity": 1
   },
   {
-    "id": 5,
+    "id": "prod-bintang-mas-16",
+    "productId": "prod-bintang-mas-16",
+    "name": "Bintang Mas 16",
+    "availableUnitIds": [
+      "prod-bintang-mas-16__bungkus",
+      "prod-bintang-mas-16__1-2-slof",
+      "prod-bintang-mas-16__slof"
+    ],
+    "defaultUnitId": "prod-bintang-mas-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-bintang-mas-kuning-12",
+    "productId": "prod-bintang-mas-kuning-12",
+    "name": "Bintang Mas Kuning 12",
+    "availableUnitIds": [
+      "prod-bintang-mas-kuning-12__bungkus",
+      "prod-bintang-mas-kuning-12__1-2-slof",
+      "prod-bintang-mas-kuning-12__slof"
+    ],
+    "defaultUnitId": "prod-bintang-mas-kuning-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-blue16",
+    "productId": "prod-camel-blue16",
+    "name": "Camel Blue16",
+    "availableUnitIds": [
+      "prod-camel-blue16__bungkus",
+      "prod-camel-blue16__1-2-slof",
+      "prod-camel-blue16__slof"
+    ],
+    "defaultUnitId": "prod-camel-blue16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-purple-12",
+    "productId": "prod-camel-purple-12",
+    "name": "Camel Purple 12",
+    "availableUnitIds": [
+      "prod-camel-purple-12__bungkus",
+      "prod-camel-purple-12__1-2-slof",
+      "prod-camel-purple-12__slof"
+    ],
+    "defaultUnitId": "prod-camel-purple-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-purple-16",
+    "productId": "prod-camel-purple-16",
+    "name": "Camel Purple 16",
+    "availableUnitIds": [
+      "prod-camel-purple-16__bungkus",
+      "prod-camel-purple-16__1-2-slof",
+      "prod-camel-purple-16__slof"
+    ],
+    "defaultUnitId": "prod-camel-purple-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-white-panjang-20",
+    "productId": "prod-camel-white-panjang-20",
+    "name": "Camel White Panjang 20",
+    "availableUnitIds": [
+      "prod-camel-white-panjang-20__bungkus",
+      "prod-camel-white-panjang-20__1-2-slof",
+      "prod-camel-white-panjang-20__slof"
+    ],
+    "defaultUnitId": "prod-camel-white-panjang-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-white-pendek-20",
+    "productId": "prod-camel-white-pendek-20",
+    "name": "Camel White Pendek 20",
+    "availableUnitIds": [
+      "prod-camel-white-pendek-20__bungkus",
+      "prod-camel-white-pendek-20__1-2-slof",
+      "prod-camel-white-pendek-20__slof"
+    ],
+    "defaultUnitId": "prod-camel-white-pendek-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-yellow-12",
+    "productId": "prod-camel-yellow-12",
+    "name": "Camel Yellow 12",
+    "availableUnitIds": [
+      "prod-camel-yellow-12__bungkus",
+      "prod-camel-yellow-12__1-2-slof",
+      "prod-camel-yellow-12__slof"
+    ],
+    "defaultUnitId": "prod-camel-yellow-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-yellow-panjang-20",
+    "productId": "prod-camel-yellow-panjang-20",
+    "name": "Camel Yellow Panjang 20",
+    "availableUnitIds": [
+      "prod-camel-yellow-panjang-20__bungkus",
+      "prod-camel-yellow-panjang-20__1-2-slof",
+      "prod-camel-yellow-panjang-20__slof"
+    ],
+    "defaultUnitId": "prod-camel-yellow-panjang-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-camel-yellow-pendek-20",
+    "productId": "prod-camel-yellow-pendek-20",
+    "name": "Camel Yellow Pendek 20",
+    "availableUnitIds": [
+      "prod-camel-yellow-pendek-20__bungkus",
+      "prod-camel-yellow-pendek-20__1-2-slof",
+      "prod-camel-yellow-pendek-20__slof"
+    ],
+    "defaultUnitId": "prod-camel-yellow-pendek-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-chief-12",
+    "productId": "prod-chief-12",
+    "name": "Chief 12",
+    "availableUnitIds": [
+      "prod-chief-12__bungkus",
+      "prod-chief-12__1-2-slof",
+      "prod-chief-12__slof"
+    ],
+    "defaultUnitId": "prod-chief-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-crystal-16",
+    "productId": "prod-crystal-16",
+    "name": "Crystal 16",
+    "availableUnitIds": [
+      "prod-crystal-16__bungkus",
+      "prod-crystal-16__1-2-slof",
+      "prod-crystal-16__slof"
+    ],
+    "defaultUnitId": "prod-crystal-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-crystal-caffe-latte-12",
+    "productId": "prod-crystal-caffe-latte-12",
+    "name": "Crystal Caffe Latte 12",
+    "availableUnitIds": [
+      "prod-crystal-caffe-latte-12__bungkus",
+      "prod-crystal-caffe-latte-12__1-2-slof",
+      "prod-crystal-caffe-latte-12__slof"
+    ],
+    "defaultUnitId": "prod-crystal-caffe-latte-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-d76-apel",
+    "productId": "prod-d76-apel",
+    "name": "D76 Apel",
+    "availableUnitIds": [
+      "prod-d76-apel__bungkus",
+      "prod-d76-apel__1-2-slof",
+      "prod-d76-apel__slof"
+    ],
+    "defaultUnitId": "prod-d76-apel__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-d76-mangga-12",
+    "productId": "prod-d76-mangga-12",
+    "name": "D76 Mangga 12",
+    "availableUnitIds": [
+      "prod-d76-mangga-12__bungkus",
+      "prod-d76-mangga-12__1-2-slof",
+      "prod-d76-mangga-12__slof"
+    ],
+    "defaultUnitId": "prod-d76-mangga-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dio-kretek-12",
+    "productId": "prod-dio-kretek-12",
+    "name": "Dio Kretek 12",
+    "availableUnitIds": [
+      "prod-dio-kretek-12__bungkus",
+      "prod-dio-kretek-12__1-2-slof",
+      "prod-dio-kretek-12__slof"
+    ],
+    "defaultUnitId": "prod-dio-kretek-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dio-teh-manis-12",
+    "productId": "prod-dio-teh-manis-12",
+    "name": "Dio Teh Manis 12",
+    "availableUnitIds": [
+      "prod-dio-teh-manis-12__bungkus",
+      "prod-dio-teh-manis-12__1-2-slof",
+      "prod-dio-teh-manis-12__slof"
+    ],
+    "defaultUnitId": "prod-dio-teh-manis-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-djarum-black-cappuccino-16",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "name": "Djarum Black Cappuccino 16",
+    "availableUnitIds": [
+      "prod-djarum-black-cappuccino-16__bungkus",
+      "prod-djarum-black-cappuccino-16__1-2-slof",
+      "prod-djarum-black-cappuccino-16__slof"
+    ],
+    "defaultUnitId": "prod-djarum-black-cappuccino-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-12",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "name": "Dji Sam Soe Kretek 12",
+    "availableUnitIds": [
+      "prod-dji-sam-soe-kretek-12__bungkus",
+      "prod-dji-sam-soe-kretek-12__1-2-slof",
+      "prod-dji-sam-soe-kretek-12__slof"
+    ],
+    "defaultUnitId": "prod-dji-sam-soe-kretek-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-kretek-16",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "name": "Dji Sam Soe Kretek 16",
+    "availableUnitIds": [
+      "prod-dji-sam-soe-kretek-16__bungkus",
+      "prod-dji-sam-soe-kretek-16__1-2-slof",
+      "prod-dji-sam-soe-kretek-16__slof"
+    ],
+    "defaultUnitId": "prod-dji-sam-soe-kretek-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-12",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "name": "Dji Sam Soe Premium Snap Box 12",
+    "availableUnitIds": [
+      "prod-dji-sam-soe-premium-snap-box-12__bungkus",
+      "prod-dji-sam-soe-premium-snap-box-12__1-2-slof",
+      "prod-dji-sam-soe-premium-snap-box-12__slof"
+    ],
+    "defaultUnitId": "prod-dji-sam-soe-premium-snap-box-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "name": "Dji Sam Soe Premium Snap Box 16btg (8)",
+    "availableUnitIds": [
+      "prod-dji-sam-soe-premium-snap-box-16btg-8__bungkus",
+      "prod-dji-sam-soe-premium-snap-box-16btg-8__1-2-slof",
+      "prod-dji-sam-soe-premium-snap-box-16btg-8__slof"
+    ],
+    "defaultUnitId": "prod-dji-sam-soe-premium-snap-box-16btg-8__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dss-magnum-filter-12",
+    "productId": "prod-dss-magnum-filter-12",
+    "name": "Dss Magnum Filter 12",
+    "availableUnitIds": [
+      "prod-dss-magnum-filter-12__bungkus",
+      "prod-dss-magnum-filter-12__1-2-slof",
+      "prod-dss-magnum-filter-12__slof"
+    ],
+    "defaultUnitId": "prod-dss-magnum-filter-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dss-magnum-mild-16",
+    "productId": "prod-dss-magnum-mild-16",
+    "name": "Dss Magnum Mild 16",
+    "availableUnitIds": [
+      "prod-dss-magnum-mild-16__bungkus",
+      "prod-dss-magnum-mild-16__1-2-slof",
+      "prod-dss-magnum-mild-16__slof"
+    ],
+    "defaultUnitId": "prod-dss-magnum-mild-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dss-magnum-mild-20",
+    "productId": "prod-dss-magnum-mild-20",
+    "name": "Dss Magnum Mild 20",
+    "availableUnitIds": [
+      "prod-dss-magnum-mild-20__bungkus",
+      "prod-dss-magnum-mild-20__1-2-slof",
+      "prod-dss-magnum-mild-20__slof"
+    ],
+    "defaultUnitId": "prod-dss-magnum-mild-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-12",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "name": "Dunhill Hitam Filter 12",
+    "availableUnitIds": [
+      "prod-dunhill-hitam-filter-12__bungkus",
+      "prod-dunhill-hitam-filter-12__1-2-slof",
+      "prod-dunhill-hitam-filter-12__slof"
+    ],
+    "defaultUnitId": "prod-dunhill-hitam-filter-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dunhill-hitam-filter-16",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "name": "Dunhill Hitam Filter 16",
+    "availableUnitIds": [
+      "prod-dunhill-hitam-filter-16__bungkus",
+      "prod-dunhill-hitam-filter-16__1-2-slof",
+      "prod-dunhill-hitam-filter-16__slof"
+    ],
+    "defaultUnitId": "prod-dunhill-hitam-filter-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dunhill-putih-mild-16",
+    "productId": "prod-dunhill-putih-mild-16",
+    "name": "Dunhill Putih Mild 16",
+    "availableUnitIds": [
+      "prod-dunhill-putih-mild-16__bungkus",
+      "prod-dunhill-putih-mild-16__1-2-slof",
+      "prod-dunhill-putih-mild-16__slof"
+    ],
+    "defaultUnitId": "prod-dunhill-putih-mild-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-dunhill-putih-mild-20",
+    "productId": "prod-dunhill-putih-mild-20",
+    "name": "Dunhill Putih Mild 20",
+    "availableUnitIds": [
+      "prod-dunhill-putih-mild-20__bungkus",
+      "prod-dunhill-putih-mild-20__1-2-slof",
+      "prod-dunhill-putih-mild-20__slof"
+    ],
+    "defaultUnitId": "prod-dunhill-putih-mild-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-esse-change-double-20",
+    "productId": "prod-esse-change-double-20",
+    "name": "Esse Change Double 20",
+    "availableUnitIds": [
+      "prod-esse-change-double-20__bungkus",
+      "prod-esse-change-double-20__1-2-slof",
+      "prod-esse-change-double-20__slof"
+    ],
+    "defaultUnitId": "prod-esse-change-double-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-filasta-16",
+    "productId": "prod-filasta-16",
+    "name": "Filasta 16",
+    "availableUnitIds": [
+      "prod-filasta-16__bungkus",
+      "prod-filasta-16__1-2-slof",
+      "prod-filasta-16__slof"
+    ],
+    "defaultUnitId": "prod-filasta-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gandum-mas-12",
+    "productId": "prod-gandum-mas-12",
+    "name": "Gandum Mas 12",
+    "availableUnitIds": [
+      "prod-gandum-mas-12__bungkus",
+      "prod-gandum-mas-12__slof"
+    ],
+    "defaultUnitId": "prod-gandum-mas-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-glory-16",
+    "productId": "prod-glory-16",
+    "name": "Glory 16",
+    "availableUnitIds": [
+      "prod-glory-16__bungkus",
+      "prod-glory-16__1-2-slof",
+      "prod-glory-16__slof"
+    ],
+    "defaultUnitId": "prod-glory-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gopas-20",
+    "productId": "prod-gopas-20",
+    "name": "Gopas 20",
+    "availableUnitIds": [
+      "prod-gopas-20__bungkus",
+      "prod-gopas-20__1-2-slof",
+      "prod-gopas-20__slof"
+    ],
+    "defaultUnitId": "prod-gopas-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gp1-filter-16",
+    "productId": "prod-gp1-filter-16",
+    "name": "Gp1 Filter 16",
+    "availableUnitIds": [
+      "prod-gp1-filter-16__bungkus",
+      "prod-gp1-filter-16__1-2-slof",
+      "prod-gp1-filter-16__slof"
+    ],
+    "defaultUnitId": "prod-gp1-filter-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gp2-hijau",
+    "productId": "prod-gp2-hijau",
+    "name": "Gp2 Hijau",
+    "availableUnitIds": [
+      "prod-gp2-hijau__bungkus",
+      "prod-gp2-hijau__slof"
+    ],
+    "defaultUnitId": "prod-gp2-hijau__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gudang-garam-filter-12",
+    "productId": "prod-gudang-garam-filter-12",
+    "name": "Gudang Garam Filter 12",
+    "availableUnitIds": [
+      "prod-gudang-garam-filter-12__bungkus",
+      "prod-gudang-garam-filter-12__5-bungkus",
+      "prod-gudang-garam-filter-12__1-2-slof",
+      "prod-gudang-garam-filter-12__slof"
+    ],
+    "defaultUnitId": "prod-gudang-garam-filter-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gudang-garam-merah-12",
+    "productId": "prod-gudang-garam-merah-12",
+    "name": "Gudang Garam Merah 12",
+    "availableUnitIds": [
+      "prod-gudang-garam-merah-12__bungkus",
+      "prod-gudang-garam-merah-12__1-2-slof",
+      "prod-gudang-garam-merah-12__slof"
+    ],
+    "defaultUnitId": "prod-gudang-garam-merah-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-gudang-garam-merah-16",
+    "productId": "prod-gudang-garam-merah-16",
+    "name": "Gudang Garam Merah 16",
+    "availableUnitIds": [
+      "prod-gudang-garam-merah-16__bungkus",
+      "prod-gudang-garam-merah-16__1-2-slof",
+      "prod-gudang-garam-merah-16__slof"
+    ],
+    "defaultUnitId": "prod-gudang-garam-merah-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-harum-manis-20",
+    "productId": "prod-harum-manis-20",
+    "name": "Harum Manis 20",
+    "availableUnitIds": [
+      "prod-harum-manis-20__bungkus",
+      "prod-harum-manis-20__1-2-slof",
+      "prod-harum-manis-20__slof"
+    ],
+    "defaultUnitId": "prod-harum-manis-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-hk-kretek-12",
+    "productId": "prod-hk-kretek-12",
+    "name": "Hk Kretek 12",
+    "availableUnitIds": [
+      "prod-hk-kretek-12__bungkus",
+      "prod-hk-kretek-12__1-2-slof",
+      "prod-hk-kretek-12__slof"
+    ],
+    "defaultUnitId": "prod-hk-kretek-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-ina-bold-20",
+    "productId": "prod-ina-bold-20",
+    "name": "Ina Bold 20",
+    "availableUnitIds": [
+      "prod-ina-bold-20__bungkus",
+      "prod-ina-bold-20__1-2-slof",
+      "prod-ina-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-ina-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-kabel-16",
+    "productId": "prod-kabel-16",
+    "name": "Kabel 16",
+    "availableUnitIds": [
+      "prod-kabel-16__bungkus",
+      "prod-kabel-16__1-2-slof",
+      "prod-kabel-16__slof"
+    ],
+    "defaultUnitId": "prod-kabel-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-l-a-bold-20",
+    "productId": "prod-l-a-bold-20",
+    "name": "L.a. Bold 20",
+    "availableUnitIds": [
+      "prod-l-a-bold-20__bungkus",
+      "prod-l-a-bold-20__1-2-slof",
+      "prod-l-a-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-l-a-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-l-a-lights-16",
+    "productId": "prod-l-a-lights-16",
+    "name": "L.a. Lights 16",
+    "availableUnitIds": [
+      "prod-l-a-lights-16__bungkus",
+      "prod-l-a-lights-16__1-2-slof",
+      "prod-l-a-lights-16__slof"
+    ],
+    "defaultUnitId": "prod-l-a-lights-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-lucky-strike-filter-20-merah",
+    "productId": "prod-lucky-strike-filter-20-merah",
+    "name": "Lucky Strike Filter 20 (merah)",
+    "availableUnitIds": [
+      "prod-lucky-strike-filter-20-merah__bungkus",
+      "prod-lucky-strike-filter-20-merah__1-2-slof",
+      "prod-lucky-strike-filter-20-merah__slof"
+    ],
+    "defaultUnitId": "prod-lucky-strike-filter-20-merah__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-magnum-kretek-12",
+    "productId": "prod-magnum-kretek-12",
+    "name": "Magnum Kretek 12",
+    "availableUnitIds": [
+      "prod-magnum-kretek-12__bungkus",
+      "prod-magnum-kretek-12__1-2-slof",
+      "prod-magnum-kretek-12__slof"
+    ],
+    "defaultUnitId": "prod-magnum-kretek-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-12",
+    "productId": "prod-marlboro-filter-black-12",
+    "name": "Marlboro Filter Black 12",
+    "availableUnitIds": [
+      "prod-marlboro-filter-black-12__bungkus",
+      "prod-marlboro-filter-black-12__1-2-slof",
+      "prod-marlboro-filter-black-12__slof"
+    ],
+    "defaultUnitId": "prod-marlboro-filter-black-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-16",
+    "productId": "prod-marlboro-filter-black-16",
+    "name": "Marlboro Filter Black 16",
+    "availableUnitIds": [
+      "prod-marlboro-filter-black-16__bungkus",
+      "prod-marlboro-filter-black-16__1-2-slof",
+      "prod-marlboro-filter-black-16__slof"
+    ],
+    "defaultUnitId": "prod-marlboro-filter-black-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-marlboro-filter-black-20",
+    "productId": "prod-marlboro-filter-black-20",
+    "name": "Marlboro Filter Black 20",
+    "availableUnitIds": [
+      "prod-marlboro-filter-black-20__bungkus",
+      "prod-marlboro-filter-black-20__1-2-slof",
+      "prod-marlboro-filter-black-20__slof"
+    ],
+    "defaultUnitId": "prod-marlboro-filter-black-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-milta-16",
+    "productId": "prod-milta-16",
+    "name": "Milta 16",
+    "availableUnitIds": [
+      "prod-milta-16__bungkus",
+      "prod-milta-16__1-2-slof",
+      "prod-milta-16__slof"
+    ],
+    "defaultUnitId": "prod-milta-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-nation-black-20",
+    "productId": "prod-nation-black-20",
+    "name": "Nation Black 20",
+    "availableUnitIds": [
+      "prod-nation-black-20__bungkus",
+      "prod-nation-black-20__1-2-slof",
+      "prod-nation-black-20__slof"
+    ],
+    "defaultUnitId": "prod-nation-black-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-nation-bold-16",
+    "productId": "prod-nation-bold-16",
+    "name": "Nation Bold 16",
+    "availableUnitIds": [
+      "prod-nation-bold-16__bungkus",
+      "prod-nation-bold-16__1-2-slof",
+      "prod-nation-bold-16__slof"
+    ],
+    "defaultUnitId": "prod-nation-bold-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-nation-bold-20",
+    "productId": "prod-nation-bold-20",
+    "name": "Nation Bold 20",
+    "availableUnitIds": [
+      "prod-nation-bold-20__bungkus",
+      "prod-nation-bold-20__1-2-slof",
+      "prod-nation-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-nation-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-nation-gold-20",
+    "productId": "prod-nation-gold-20",
+    "name": "Nation Gold 20",
+    "availableUnitIds": [
+      "prod-nation-gold-20__bungkus",
+      "prod-nation-gold-20__1-2-slof",
+      "prod-nation-gold-20__slof"
+    ],
+    "defaultUnitId": "prod-nation-gold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-nation-white-20",
+    "productId": "prod-nation-white-20",
+    "name": "Nation White 20",
+    "availableUnitIds": [
+      "prod-nation-white-20__bungkus",
+      "prod-nation-white-20__1-2-slof",
+      "prod-nation-white-20__slof"
+    ],
+    "defaultUnitId": "prod-nation-white-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-pitoe-kretek-12",
+    "productId": "prod-pitoe-kretek-12",
+    "name": "Pitoe Kretek 12",
+    "availableUnitIds": [
+      "prod-pitoe-kretek-12__bungkus",
+      "prod-pitoe-kretek-12__1-2-slof",
+      "prod-pitoe-kretek-12__slof"
+    ],
+    "defaultUnitId": "prod-pitoe-kretek-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-pitoe-kretek-20",
+    "productId": "prod-pitoe-kretek-20",
+    "name": "Pitoe Kretek 20",
+    "availableUnitIds": [
+      "prod-pitoe-kretek-20__bungkus",
+      "prod-pitoe-kretek-20__1-2-slof",
+      "prod-pitoe-kretek-20__slof"
+    ],
+    "defaultUnitId": "prod-pitoe-kretek-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-redjati",
+    "productId": "prod-redjati",
+    "name": "Redjati",
+    "availableUnitIds": [
+      "prod-redjati__bungkus",
+      "prod-redjati__slof"
+    ],
+    "defaultUnitId": "prod-redjati__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-region-kretek-sari-poci-16",
+    "productId": "prod-region-kretek-sari-poci-16",
+    "name": "Region Kretek Sari Poci 16",
+    "availableUnitIds": [
+      "prod-region-kretek-sari-poci-16__bungkus",
+      "prod-region-kretek-sari-poci-16__slof"
+    ],
+    "defaultUnitId": "prod-region-kretek-sari-poci-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-rexo-bold-20",
+    "productId": "prod-rexo-bold-20",
+    "name": "Rexo Bold 20",
+    "availableUnitIds": [
+      "prod-rexo-bold-20__bungkus",
+      "prod-rexo-bold-20__1-2-slof",
+      "prod-rexo-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-rexo-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-rexo-kretek-16",
+    "productId": "prod-rexo-kretek-16",
+    "name": "Rexo Kretek 16",
+    "availableUnitIds": [
+      "prod-rexo-kretek-16__bungkus",
+      "prod-rexo-kretek-16__1-2-slof",
+      "prod-rexo-kretek-16__slof"
+    ],
+    "defaultUnitId": "prod-rexo-kretek-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-rexo-kretek-20",
+    "productId": "prod-rexo-kretek-20",
+    "name": "Rexo Kretek 20",
+    "availableUnitIds": [
+      "prod-rexo-kretek-20__bungkus",
+      "prod-rexo-kretek-20__1-2-slof",
+      "prod-rexo-kretek-20__slof"
+    ],
+    "defaultUnitId": "prod-rexo-kretek-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-rexo-merah-20",
+    "productId": "prod-rexo-merah-20",
+    "name": "Rexo Merah 20",
+    "availableUnitIds": [
+      "prod-rexo-merah-20__bungkus",
+      "prod-rexo-merah-20__1-2-slof",
+      "prod-rexo-merah-20__slof"
+    ],
+    "defaultUnitId": "prod-rexo-merah-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sahara-filter-20",
+    "productId": "prod-sahara-filter-20",
+    "name": "Sahara Filter 20",
+    "availableUnitIds": [
+      "prod-sahara-filter-20__bungkus",
+      "prod-sahara-filter-20__1-2-slof",
+      "prod-sahara-filter-20__slof"
+    ],
+    "defaultUnitId": "prod-sahara-filter-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sahara-kretek-20",
+    "productId": "prod-sahara-kretek-20",
+    "name": "Sahara Kretek 20",
+    "availableUnitIds": [
+      "prod-sahara-kretek-20__bungkus",
+      "prod-sahara-kretek-20__1-2-slof",
+      "prod-sahara-kretek-20__slof"
+    ],
+    "defaultUnitId": "prod-sahara-kretek-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sampoerna-mild-16",
+    "productId": "prod-sampoerna-mild-16",
+    "name": "Sampoerna Mild 16",
+    "availableUnitIds": [
+      "prod-sampoerna-mild-16__bungkus",
+      "prod-sampoerna-mild-16__1-2-slof",
+      "prod-sampoerna-mild-16__slof"
+    ],
+    "defaultUnitId": "prod-sampoerna-mild-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sek-delapan-tujuh-87",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "name": "Sek Delapan Tujuh 87",
+    "availableUnitIds": [
+      "prod-sek-delapan-tujuh-87__bungkus",
+      "prod-sek-delapan-tujuh-87__1-2-pak",
+      "prod-sek-delapan-tujuh-87__pak",
+      "prod-sek-delapan-tujuh-87__karton"
+    ],
+    "defaultUnitId": "prod-sek-delapan-tujuh-87__karton",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sek-kunci",
+    "productId": "prod-sek-kunci",
+    "name": "Sek Kunci",
+    "availableUnitIds": [
+      "prod-sek-kunci__bungkus",
+      "prod-sek-kunci__1-2-pak",
+      "prod-sek-kunci__pak",
+      "prod-sek-kunci__1-2-karton",
+      "prod-sek-kunci__karton"
+    ],
+    "defaultUnitId": "prod-sek-kunci__karton",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sek-roll-now",
+    "productId": "prod-sek-roll-now",
+    "name": "Sek Roll Now",
+    "availableUnitIds": [
+      "prod-sek-roll-now__bungkus",
+      "prod-sek-roll-now__1-2-pak",
+      "prod-sek-roll-now__pak",
+      "prod-sek-roll-now__karton"
+    ],
+    "defaultUnitId": "prod-sek-roll-now__karton",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-sergio-filter",
+    "productId": "prod-sergio-filter",
+    "name": "Sergio Filter",
+    "availableUnitIds": [
+      "prod-sergio-filter__bungkus",
+      "prod-sergio-filter__1-2-slof",
+      "prod-sergio-filter__slof"
+    ],
+    "defaultUnitId": "prod-sergio-filter__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-surya-12",
+    "productId": "prod-surya-12",
+    "name": "Surya 12",
+    "availableUnitIds": [
+      "prod-surya-12__bungkus",
+      "prod-surya-12__1-2-slof",
+      "prod-surya-12__slof"
+    ],
+    "defaultUnitId": "prod-surya-12__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-surya-16",
+    "productId": "prod-surya-16",
+    "name": "Surya 16",
+    "availableUnitIds": [
+      "prod-surya-16__bungkus",
+      "prod-surya-16__1-2-slof",
+      "prod-surya-16__slof"
+    ],
+    "defaultUnitId": "prod-surya-16__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-surya-kaleng-50",
+    "productId": "prod-surya-kaleng-50",
+    "name": "Surya Kaleng (50)",
+    "availableUnitIds": [
+      "prod-surya-kaleng-50__slof",
+      "prod-surya-kaleng-50__balok"
+    ],
+    "defaultUnitId": "prod-surya-kaleng-50__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-tik-tok-bold-20",
+    "productId": "prod-tik-tok-bold-20",
+    "name": "Tik Tok Bold 20",
+    "availableUnitIds": [
+      "prod-tik-tok-bold-20__bungkus",
+      "prod-tik-tok-bold-20__1-2-slof",
+      "prod-tik-tok-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-tik-tok-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-troy-20",
+    "productId": "prod-troy-20",
+    "name": "Troy 20",
+    "availableUnitIds": [
+      "prod-troy-20__bungkus",
+      "prod-troy-20__1-2-slof",
+      "prod-troy-20__slof"
+    ],
+    "defaultUnitId": "prod-troy-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-urban-mild",
+    "productId": "prod-urban-mild",
+    "name": "Urban Mild",
+    "availableUnitIds": [
+      "prod-urban-mild__bungkus",
+      "prod-urban-mild__1-2-slof",
+      "prod-urban-mild__slof"
+    ],
+    "defaultUnitId": "prod-urban-mild__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-zenix-bold-20",
+    "productId": "prod-zenix-bold-20",
+    "name": "Zenix Bold 20",
+    "availableUnitIds": [
+      "prod-zenix-bold-20__bungkus",
+      "prod-zenix-bold-20__1-2-slof",
+      "prod-zenix-bold-20__slof"
+    ],
+    "defaultUnitId": "prod-zenix-bold-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-zenix-coffee",
+    "productId": "prod-zenix-coffee",
+    "name": "Zenix Coffee",
+    "availableUnitIds": [
+      "prod-zenix-coffee__bungkus",
+      "prod-zenix-coffee__1-2-slof",
+      "prod-zenix-coffee__slof"
+    ],
+    "defaultUnitId": "prod-zenix-coffee__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-zenix-putih-20",
+    "productId": "prod-zenix-putih-20",
+    "name": "Zenix Putih 20",
+    "availableUnitIds": [
+      "prod-zenix-putih-20__bungkus",
+      "prod-zenix-putih-20__1-2-slof",
+      "prod-zenix-putih-20__slof"
+    ],
+    "defaultUnitId": "prod-zenix-putih-20__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-zenix-sultan",
+    "productId": "prod-zenix-sultan",
+    "name": "Zenix Sultan",
+    "availableUnitIds": [
+      "prod-zenix-sultan__bungkus",
+      "prod-zenix-sultan__1-2-slof",
+      "prod-zenix-sultan__slof"
+    ],
+    "defaultUnitId": "prod-zenix-sultan__slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": "prod-aqua-15l",
     "productId": "prod-aqua-15l",
     "name": "Aqua 1.5 L",
-    "availableUnitIds": ["pcs", "karton"],
+    "availableUnitIds": [
+      "pcs",
+      "karton"
+    ],
     "defaultUnitId": "karton",
     "defaultQuantity": 1
   },
   {
-    "id": 6,
+    "id": "prod-masako-ayam",
     "productId": "prod-masako-ayam",
     "name": "Masako Ayam",
-    "availableUnitIds": ["bungkus", "dus"],
+    "availableUnitIds": [
+      "bungkus",
+      "dus"
+    ],
     "defaultUnitId": "dus",
     "defaultQuantity": 1
   },
   {
-    "id": 7,
+    "id": "prod-masako-sapi",
     "productId": "prod-masako-sapi",
     "name": "Masako Sapi",
-    "availableUnitIds": ["bungkus", "dus"],
+    "availableUnitIds": [
+      "bungkus",
+      "dus"
+    ],
     "defaultUnitId": "dus",
     "defaultQuantity": 1
   },
   {
-    "id": 8,
+    "id": "prod-energen-vanilla",
     "productId": "prod-energen-vanilla",
     "name": "Energen Vanilla",
-    "availableUnitIds": ["pcs", "pack"],
+    "availableUnitIds": [
+      "pcs",
+      "pack"
+    ],
     "defaultUnitId": "pack",
     "defaultQuantity": 1
   },
   {
-    "id": 9,
+    "id": "prod-teh-botol-sosro",
     "productId": "prod-teh-botol-sosro",
     "name": "Teh Botol Sosro",
-    "availableUnitIds": ["pcs", "karton"],
+    "availableUnitIds": [
+      "pcs",
+      "karton"
+    ],
     "defaultUnitId": "karton",
     "defaultQuantity": 1
   },
   {
-    "id": 10,
+    "id": "prod-indomie-goreng",
     "productId": "prod-indomie-goreng",
     "name": "Indomie Goreng",
-    "availableUnitIds": ["bungkus", "dus"],
+    "availableUnitIds": [
+      "bungkus",
+      "dus"
+    ],
     "defaultUnitId": "dus",
     "defaultQuantity": 1
   }
