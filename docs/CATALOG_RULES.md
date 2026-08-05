@@ -1,0 +1,129 @@
+# Matahari Order — Catalogue Rules
+
+## Purpose
+
+Catalogue rules define how raw POS-like rows become customer-facing products.
+
+The POS remains the source system. Matahari Order only needs a clean ordering catalogue:
+
+- one product customers recognise
+- clear unit choices
+- sensible defaults
+- preserved links back to POS codes
+
+These rules guide the catalogue builder preview and future import tools.
+
+---
+
+## Pattern A — Fixed Product
+
+Pattern A is used when each POS item name already maps to one customer-facing product.
+
+Examples:
+
+- `GLORY 16` + `BKS` / `SLOF` / `BAL` → product **Glory 16**
+- `APACHE 12` + `BKS` / `SLOF` → product **Apache 12**
+- `APACHE 16` + `BKS` / `SLOF` → product **Apache 16**
+
+Different cigarette sizes or types stay separate products.
+
+Do not merge:
+
+- Glory 16 with Glory 12
+- Apache 12 with Apache 16
+- Magnum Filter with Magnum Mild
+
+---
+
+## Ordering flow
+
+Customer ordering follows:
+
+**Product → Unit → Quantity**
+
+1. Choose the product
+2. Choose the unit
+3. Choose the quantity
+
+The catalogue stores customer-facing units only. It does not store POS conversion factors or prices.
+
+---
+
+## Cigarette examples
+
+| POS name | POS unit | Customer product | Customer unit |
+| --- | --- | --- | --- |
+| GLORY 16 | BKS | Glory 16 | Bungkus |
+| GLORY 16 | 1/2 SLOF | Glory 16 | ½ Slof |
+| GLORY 16 | SLOF | Glory 16 | Slof |
+| GLORY 16 | BAL | Glory 16 | Bal |
+| TROY | BKS | Troy | Bungkus |
+| TROY | SLOF | Troy | Slof |
+| APACHE 12 | BKS | Apache 12 | Bungkus |
+| APACHE 12 | SLOF | Apache 12 | Slof |
+| APACHE 16 | BKS | Apache 16 | Bungkus |
+| APACHE 16 | SLOF | Apache 16 | Slof |
+
+Default unit preference for the cigarette preview:
+
+1. Slof
+2. Karton
+3. Dus
+4. Bungkus
+5. first active unit
+
+---
+
+## Core rules
+
+### Specific sizes and types remain separate products
+
+Cigarette size and type are part of the product identity.
+
+`Apache 12` and `Apache 16` are different catalogue products.
+
+### Obsolete units are deactivated, not deleted
+
+If a unit should not appear for customers, mark it inactive.
+
+Example: `Bal` may remain in the catalogue mapping as inactive.
+
+Do not delete the unit option or its POS mappings.
+
+### POS mappings remain preserved
+
+Every source POS row keeps its mapping:
+
+- POS code
+- POS name
+- POS unit
+
+Source rows are never deleted by the builder.
+
+### Customer-facing unit names are normalized
+
+| POS unit | Catalogue unit |
+| --- | --- |
+| BKS | Bungkus |
+| 1/2 SLOF or ½ SLOF | ½ Slof |
+| SLOF | Slof |
+| BAL | Bal |
+| DOS or DUS | Dus |
+| PCS | Pcs |
+| PAK | Pak |
+| KTN or KARTON | Karton |
+
+Catalogue unit labels use title case.
+
+---
+
+## Future patterns
+
+Later releases may add other grouping patterns, for example:
+
+- **Pattern B** — shared brand with customer-selected variant
+- **Pattern C** — beverage pack sizes with Karton defaults
+- Excel import into the builder
+- Reviewed promotion from preview output into `src/catalog`
+
+Those patterns must still preserve POS mappings, avoid prices, and keep conversion factors out of the customer catalogue.

@@ -1,0 +1,82 @@
+[
+  {
+    "posCode": "RK-GL16-BKS",
+    "posName": "GLORY 16",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-GL16-HSF",
+    "posName": "GLORY 16",
+    "posUnit": "1/2 SLOF"
+  },
+  {
+    "posCode": "RK-GL16-SLF",
+    "posName": "GLORY 16",
+    "posUnit": "SLOF"
+  },
+  {
+    "posCode": "RK-GL16-BAL",
+    "posName": "GLORY 16",
+    "posUnit": "BAL"
+  },
+  {
+    "posCode": "RK-TROY-BKS",
+    "posName": "TROY",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-TROY-SLF",
+    "posName": "TROY",
+    "posUnit": "SLOF"
+  },
+  {
+    "posCode": "RK-TROY-BAL",
+    "posName": "TROY",
+    "posUnit": "BAL"
+  },
+  {
+    "posCode": "RK-AP12-BKS",
+    "posName": "APACHE 12",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-AP12-SLF",
+    "posName": "APACHE 12",
+    "posUnit": "SLOF"
+  },
+  {
+    "posCode": "RK-AP16-BKS",
+    "posName": "APACHE 16",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-AP16-HSF",
+    "posName": "APACHE 16",
+    "posUnit": "½ SLOF"
+  },
+  {
+    "posCode": "RK-AP16-SLF",
+    "posName": "APACHE 16",
+    "posUnit": "SLOF"
+  },
+  {
+    "posCode": "RK-CHIEF-BKS",
+    "posName": "CHIEF",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-CHIEF-SLF",
+    "posName": "CHIEF",
+    "posUnit": "SLOF"
+  },
+  {
+    "posCode": "RK-MAG-BKS",
+    "posName": "MAGNUM FILTER",
+    "posUnit": "BKS"
+  },
+  {
+    "posCode": "RK-MAG-SLF",
+    "posName": "MAGNUM FILTER",
+    "posUnit": "SLOF"
+  }
+]
