@@ -1,0 +1,27 @@
+[
+  {
+    "id": "alias-glory-1",
+    "productId": "prod-glory",
+    "alias": "glori"
+  },
+  {
+    "id": "alias-aqua-1",
+    "productId": "prod-aqua-15l",
+    "alias": "aqua"
+  },
+  {
+    "id": "alias-teh-botol-1",
+    "productId": "prod-teh-botol-sosro",
+    "alias": "teh botol"
+  },
+  {
+    "id": "alias-indomie-1",
+    "productId": "prod-indomie-goreng",
+    "alias": "mie goreng"
+  },
+  {
+    "id": "alias-masako-ayam-1",
+    "productId": "prod-masako-ayam",
+    "alias": "masako"
+  }
+]

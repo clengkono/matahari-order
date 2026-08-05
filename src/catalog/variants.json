@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "productId": "prod-glory",
+    "name": "Glory",
+    "availableUnitIds": ["bungkus", "slof", "dus"],
+    "defaultUnitId": "slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 2,
+    "productId": "prod-troy",
+    "name": "Troy",
+    "availableUnitIds": ["bungkus", "slof", "dus"],
+    "defaultUnitId": "slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 3,
+    "productId": "prod-apache",
+    "name": "Apache",
+    "availableUnitIds": ["bungkus", "slof", "dus"],
+    "defaultUnitId": "slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 4,
+    "productId": "prod-chief",
+    "name": "Chief",
+    "availableUnitIds": ["bungkus", "slof", "dus"],
+    "defaultUnitId": "slof",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 5,
+    "productId": "prod-aqua-15l",
+    "name": "Aqua 1.5 L",
+    "availableUnitIds": ["pcs", "karton"],
+    "defaultUnitId": "karton",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 6,
+    "productId": "prod-masako-ayam",
+    "name": "Masako Ayam",
+    "availableUnitIds": ["bungkus", "dus"],
+    "defaultUnitId": "dus",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 7,
+    "productId": "prod-masako-sapi",
+    "name": "Masako Sapi",
+    "availableUnitIds": ["bungkus", "dus"],
+    "defaultUnitId": "dus",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 8,
+    "productId": "prod-energen-vanilla",
+    "name": "Energen Vanilla",
+    "availableUnitIds": ["pcs", "pack"],
+    "defaultUnitId": "pack",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 9,
+    "productId": "prod-teh-botol-sosro",
+    "name": "Teh Botol Sosro",
+    "availableUnitIds": ["pcs", "karton"],
+    "defaultUnitId": "karton",
+    "defaultQuantity": 1
+  },
+  {
+    "id": 10,
+    "productId": "prod-indomie-goreng",
+    "name": "Indomie Goreng",
+    "availableUnitIds": ["bungkus", "dus"],
+    "defaultUnitId": "dus",
+    "defaultQuantity": 1
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "bungkus",
+    "name": "Bungkus"
+  },
+  {
+    "id": "slof",
+    "name": "Slof"
+  },
+  {
+    "id": "dus",
+    "name": "Dus"
+  },
+  {
+    "id": "pcs",
+    "name": "Pcs"
+  },
+  {
+    "id": "karton",
+    "name": "Karton"
+  },
+  {
+    "id": "pack",
+    "name": "Pack"
+  }
+]

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import "./App.css";
-import products from "./data/products";
+import products from "./catalog";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "prod-glory",
+    "name": "Glory",
+    "category": "Rokok",
+    "favorite": true
+  },
+  {
+    "id": "prod-troy",
+    "name": "Troy",
+    "category": "Rokok",
+    "favorite": true
+  },
+  {
+    "id": "prod-apache",
+    "name": "Apache",
+    "category": "Rokok",
+    "favorite": true
+  },
+  {
+    "id": "prod-chief",
+    "name": "Chief",
+    "category": "Rokok",
+    "favorite": true
+  },
+  {
+    "id": "prod-aqua-15l",
+    "name": "Aqua 1.5 L",
+    "category": "Minuman",
+    "favorite": true
+  },
+  {
+    "id": "prod-masako-ayam",
+    "name": "Masako Ayam",
+    "category": "Bahan & Bumbu Masak",
+    "favorite": true
+  },
+  {
+    "id": "prod-masako-sapi",
+    "name": "Masako Sapi",
+    "category": "Bahan & Bumbu Masak",
+    "favorite": true
+  },
+  {
+    "id": "prod-energen-vanilla",
+    "name": "Energen Vanilla",
+    "category": "Minuman",
+    "favorite": true
+  },
+  {
+    "id": "prod-teh-botol-sosro",
+    "name": "Teh Botol Sosro",
+    "category": "Minuman",
+    "favorite": true
+  },
+  {
+    "id": "prod-indomie-goreng",
+    "name": "Indomie Goreng",
+    "category": "Bahan & Bumbu Masak",
+    "favorite": false
+  }
+]
