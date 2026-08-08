@@ -1,0 +1,233 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import StudioImagesTab from "./StudioImagesTab";
+import StudioQueueTab from "./StudioQueueTab";
+import { fetchCigaretteCatalogue } from "../utils/studioApi";
+import "../CatalogueStudio.css";
+
+const TABS = [
+  { id: "images", label: "Images" },
+  { id: "queue", label: "Queue" },
+  { id: "products", label: "Products" },
+];
+
+function CatalogueStudio() {
+  const [tab, setTab] = useState("images");
+  const [products, setProducts] = useState([]);
+  const [stats, setStats] = useState({ total: 0, completed: 0, missing: 0 });
+  const [selectedId, setSelectedId] = useState(null);
+  const [loadError, setLoadError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [loadNonce, setLoadNonce] = useState(0);
+  const searchRef = useRef(null);
+  const queueApiRef = useRef(null);
+
+  const applyCatalogue = useCallback((data) => {
+    setProducts(data.products || []);
+    setStats(data.stats || { total: 0, completed: 0, missing: 0 });
+    setSelectedId((current) => {
+      if (current && data.products?.some((product) => product.id === current)) {
+        return current;
+      }
+      return data.products?.[0]?.id ?? null;
+    });
+  }, []);
+
+  const refresh = useCallback(async () => {
+    try {
+      const data = await fetchCigaretteCatalogue();
+      applyCatalogue(data);
+      setLoadError("");
+      return data;
+    } catch (error) {
+      setLoadError(
+        error.message ||
+          "Could not reach the local image service. Run npm run studio."
+      );
+      throw error;
+    }
+  }, [applyCatalogue]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchCigaretteCatalogue()
+      .then((data) => {
+        if (cancelled) {
+          return;
+        }
+        applyCatalogue(data);
+        setLoadError("");
+      })
+      .catch((error) => {
+        if (cancelled) {
+          return;
+        }
+        setLoadError(
+          error.message ||
+            "Could not reach the local image service. Run npm run studio."
+        );
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [applyCatalogue, loadNonce]);
+
+  useEffect(() => {
+    document.title = "Matahari Catalogue Studio";
+  }, []);
+
+  const handleRetry = useCallback(() => {
+    setLoading(true);
+    setLoadError("");
+    setLoadNonce((value) => value + 1);
+  }, []);
+
+  const handleSaved = useCallback(
+    async (result) => {
+      await refresh();
+      if (result?.productId) {
+        setSelectedId(result.productId);
+      }
+    },
+    [refresh]
+  );
+
+  useEffect(() => {
+    function isTypingTarget(target) {
+      if (!(target instanceof HTMLElement)) {
+        return false;
+      }
+      const tag = target.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target.isContentEditable
+      );
+    }
+
+    function onKeyDown(event) {
+      const key = event.key.toLowerCase();
+      const hasCtrl = event.ctrlKey || event.metaKey;
+
+      if (hasCtrl && key === "f") {
+        event.preventDefault();
+        setTab("images");
+        requestAnimationFrame(() => {
+          searchRef.current?.focus();
+          searchRef.current?.select?.();
+        });
+        return;
+      }
+
+      if (tab === "queue" && !isTypingTarget(event.target)) {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          queueApiRef.current?.goPrevious();
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          queueApiRef.current?.goNext();
+        }
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [tab]);
+
+  return (
+    <div className="studioApp">
+      <header className="studioHeader">
+        <div className="studioHeaderText">
+          <h1>Matahari Catalogue Studio</h1>
+          <p className="studioSubtitle">Local development tool</p>
+        </div>
+
+        <div className="studioStats" aria-live="polite">
+          <div className="studioStat">
+            <span className="studioStatValue">{stats.total}</span>
+            <span className="studioStatLabel">Cigarette products</span>
+          </div>
+          <div className="studioStat">
+            <span className="studioStatValue">{stats.completed}</span>
+            <span className="studioStatLabel">Completed images</span>
+          </div>
+          <div className="studioStat">
+            <span className="studioStatValue">{stats.missing}</span>
+            <span className="studioStatLabel">Missing images</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="studioWarning" role="status">
+        LOCAL ONLY — This Studio and its image service bind to 127.0.0.1 and must
+        not be publicly deployed as-is. There is no authentication in Version 1.
+      </div>
+
+      <nav className="studioTabs" aria-label="Studio sections">
+        {TABS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`studioTab${tab === item.id ? " is-active" : ""}`}
+            onClick={() => setTab(item.id)}
+            aria-current={tab === item.id ? "page" : undefined}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="studioMain">
+        {loading ? <p className="studioStatus">Loading catalogue…</p> : null}
+        {!loading && loadError ? (
+          <div className="studioError" role="alert">
+            <p>{loadError}</p>
+            <button
+              type="button"
+              className="studioButton studioButton--secondary"
+              onClick={handleRetry}
+            >
+              Retry
+            </button>
+          </div>
+        ) : null}
+
+        {!loading && !loadError && tab === "images" ? (
+          <StudioImagesTab
+            products={products}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onSaved={handleSaved}
+            searchRef={searchRef}
+          />
+        ) : null}
+
+        {!loading && !loadError && tab === "queue" ? (
+          <StudioQueueTab
+            products={products}
+            stats={stats}
+            onSaved={handleSaved}
+            apiRef={queueApiRef}
+          />
+        ) : null}
+
+        {!loading && !loadError && tab === "products" ? (
+          <div className="studioPanel studioPanel--empty">
+            <p>Product management will be added later.</p>
+          </div>
+        ) : null}
+      </main>
+    </div>
+  );
+}
+
+export default CatalogueStudio;

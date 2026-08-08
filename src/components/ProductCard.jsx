@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 function ProductCard({ product, onOpen, onQuickAdd }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+  const cardImage = product.image?.card;
+  const showImage = Boolean(cardImage) && !imageFailed;
 
   const handleCardClick = () => {
     onOpen(product);
@@ -16,9 +21,19 @@ function ProductCard({ product, onOpen, onQuickAdd }) {
       onClick={handleCardClick}
       aria-label={`${product.name}, pesanan default ${defaultOrder}`}
     >
-      <div className="imagePlaceholder">
-        PRODUCT PHOTO
-      </div>
+      {showImage ? (
+        <img
+          className="productCardImage"
+          src={cardImage}
+          alt={product.name}
+          loading="lazy"
+          onError={() => setImageFailed(true)}
+        />
+      ) : (
+        <div className="imagePlaceholder">
+          PRODUCT PHOTO
+        </div>
+      )}
 
       <div className="productCardBody">
         <div className="productName">

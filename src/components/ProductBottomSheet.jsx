@@ -4,6 +4,9 @@ import BottomSheet from "./BottomSheet";
 function ProductBottomSheet({ product, onClose, onAddToCart }) {
   const [selectedUnit, setSelectedUnit] = useState(product.defaultUnit);
   const [quantity, setQuantity] = useState(product.defaultQuantity);
+  const [imageFailed, setImageFailed] = useState(false);
+  const detailImage = product.image?.detail;
+  const showImage = Boolean(detailImage) && !imageFailed;
 
   const handleDecrease = () => {
     setQuantity((current) => Math.max(1, current - 1));
@@ -29,9 +32,18 @@ function ProductBottomSheet({ product, onClose, onAddToCart }) {
       onClose={onClose}
       title={product.name}
     >
-      <div className="bottomSheetImage">
-        PRODUCT PHOTO
-      </div>
+      {showImage ? (
+        <img
+          className="bottomSheetPhoto"
+          src={detailImage}
+          alt={product.name}
+          onError={() => setImageFailed(true)}
+        />
+      ) : (
+        <div className="bottomSheetImage">
+          PRODUCT PHOTO
+        </div>
+      )}
 
       <h2 className="bottomSheetTitle">{product.name}</h2>
 

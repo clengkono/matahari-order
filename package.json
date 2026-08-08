@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "studio": "node scripts/studio.js",
+    "studio:api": "node scripts/imageService.js",
     "catalog:build": "node scripts/buildCatalog.js",
     "catalog:check": "node scripts/buildCatalog.js",
     "catalog:preview": "node scripts/catalogBuilder.js",
@@ -27,6 +29,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
+    "sharp": "^0.35.3",
     "vite": "^8.1.1"
   }
 }

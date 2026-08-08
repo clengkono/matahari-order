@@ -43,6 +43,7 @@ export function assembleProducts({
       availableUnits,
       defaultUnit,
       defaultQuantity: variant.defaultQuantity ?? 1,
+      image: product?.image ?? null,
     };
   });
 }

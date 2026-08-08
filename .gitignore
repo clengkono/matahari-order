@@ -11,7 +11,11 @@ node_modules
 dist
 dist-ssr
 tmp
+tmp/
 *.local
+
+# Catalogue Studio local backups (keep folder via .gitkeep)
+src/catalog/backups/*.json
 
 # Editor directories and files
 .vscode/*
