@@ -1,0 +1,77 @@
+[
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-apache-16",
+    "weight": 10
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-chief-12",
+    "weight": 8
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 6
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-camel-blue16",
+    "weight": 4
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 9
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-apache-16",
+    "weight": 7
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-chief-12",
+    "weight": 5
+  },
+  {
+    "sourceProductId": "prod-apache-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 10
+  },
+  {
+    "sourceProductId": "prod-apache-16",
+    "targetProductId": "prod-chief-12",
+    "weight": 7
+  },
+  {
+    "sourceProductId": "prod-apache-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 6
+  },
+  {
+    "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-glory-16",
+    "weight": 9
+  },
+  {
+    "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-apache-16",
+    "weight": 8
+  },
+  {
+    "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-troy-20",
+    "weight": 5
+  },
+  {
+    "sourceProductId": "prod-camel-blue16",
+    "targetProductId": "prod-apache-16",
+    "weight": 7
+  },
+  {
+    "sourceProductId": "prod-camel-blue16",
+    "targetProductId": "prod-chief-12",
+    "weight": 5
+  }
+]

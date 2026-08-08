@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useState } from "react";
 import "./App.css";
-import products from "./catalog";
+import products, { catalogRecommendations } from "./catalog";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
 import ProductBottomSheet from "./components/ProductBottomSheet";
 import { useCart } from "./context/CartContext";
 import { findCartLine } from "./utils/cartHelpers";
+import { getRecommendedProducts } from "./utils/recommendations";
 import { openWhatsAppWithOrder } from "./utils/whatsapp";
 
 const categories = [
@@ -47,6 +48,17 @@ export default function App() {
         products.map((product) => [product.id, product.availableUnits])
       ),
     []
+  );
+
+  const frequentlyOrderedTogether = useMemo(
+    () =>
+      getRecommendedProducts({
+        cart,
+        relationships: catalogRecommendations,
+        products,
+        limit: 3,
+      }),
+    [cart]
   );
 
   const hasOrder = lineCount > 0;
@@ -135,6 +147,13 @@ export default function App() {
       }
     },
     [lineCount, removeFromCart]
+  );
+
+  const handleAddRecommendation = useCallback(
+    (product) => {
+      addProductDefaults(addToCart, product);
+    },
+    [addToCart]
   );
 
   return (
@@ -249,6 +268,7 @@ export default function App() {
         cartCount={cartCount}
         lineCount={lineCount}
         productUnitsById={productUnitsById}
+        recommendations={frequentlyOrderedTogether}
         orderNote={orderNote}
         onOrderNoteChange={handleOrderNoteChange}
         onSendWhatsApp={handleSendWhatsApp}
@@ -256,6 +276,7 @@ export default function App() {
         onDecrease={handleDecreaseQuantity}
         onRemove={handleRemoveFromCart}
         onChangeUnit={changeUnit}
+        onAddRecommendation={handleAddRecommendation}
       />
     </div>
   );

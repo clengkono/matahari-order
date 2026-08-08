@@ -8,6 +8,7 @@ function OrderReviewSheet({
   cartCount,
   lineCount,
   productUnitsById,
+  recommendations = [],
   orderNote,
   onOrderNoteChange,
   onSendWhatsApp,
@@ -15,7 +16,11 @@ function OrderReviewSheet({
   onDecrease,
   onRemove,
   onChangeUnit,
+  onAddRecommendation,
 }) {
+  const showRecommendations =
+    cart.length > 0 && recommendations.length > 0;
+
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} title="Pesanan Saya">
       <h2 className="orderReviewSheetTitle">Pesanan Saya</h2>
@@ -42,6 +47,54 @@ function OrderReviewSheet({
             />
           ))}
         </ul>
+      )}
+
+      {showRecommendations && (
+        <section
+          className="orderReviewRecommendations"
+          aria-label="Sering Dipesan Bersama"
+        >
+          <div className="orderReviewRecommendationsHeader">
+            <h3 className="orderReviewRecommendationsTitle">
+              <span
+                className="orderReviewRecommendationsAccent"
+                aria-hidden="true"
+              >
+                ✦
+              </span>
+              Sering Dipesan Bersama
+            </h3>
+            <p className="orderReviewRecommendationsHint">
+              Mungkin Anda juga perlu
+            </p>
+          </div>
+          <ul className="orderReviewRecommendationsList">
+            {recommendations.map((product) => {
+              const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+
+              return (
+                <li key={product.id} className="orderReviewRecommendationRow">
+                  <div className="orderReviewRecommendationInfo">
+                    <span className="orderReviewRecommendationName">
+                      {product.name}
+                    </span>
+                    <span className="orderReviewRecommendationDefault">
+                      {defaultOrder}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="orderReviewRecommendationAdd"
+                    aria-label={`Tambah ${defaultOrder} ${product.name}`}
+                    onClick={() => onAddRecommendation(product)}
+                  >
+                    Tambah
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
 
       {cart.length > 0 && (

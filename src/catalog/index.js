@@ -3,6 +3,7 @@ export {
   assembleProducts,
   catalogMappings,
   catalogProducts,
+  catalogRecommendations,
   catalogUnits,
   catalogVariants,
   products,

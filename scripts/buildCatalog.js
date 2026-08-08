@@ -36,7 +36,83 @@ function findDuplicateIds(items, label) {
   return duplicates;
 }
 
-function validateCatalog({ products, variants, units, aliases, mappings }) {
+function validateRecommendations(recommendations, productIds) {
+  const errors = [];
+
+  if (!Array.isArray(recommendations)) {
+    errors.push("recommendations must be an array");
+    return errors;
+  }
+
+  const seenPairs = new Map();
+
+  recommendations.forEach((relationship, index) => {
+    const label = `recommendation[${index}]`;
+    const sourceProductId = relationship?.sourceProductId;
+    const targetProductId = relationship?.targetProductId;
+    const weight = relationship?.weight;
+
+    if (
+      sourceProductId === undefined ||
+      sourceProductId === null ||
+      sourceProductId === ""
+    ) {
+      errors.push(`${label} missing sourceProductId`);
+    } else if (!productIds.has(sourceProductId)) {
+      errors.push(
+        `${label} has missing source product "${sourceProductId}"`
+      );
+    }
+
+    if (
+      targetProductId === undefined ||
+      targetProductId === null ||
+      targetProductId === ""
+    ) {
+      errors.push(`${label} missing targetProductId`);
+    } else if (!productIds.has(targetProductId)) {
+      errors.push(
+        `${label} has missing target product "${targetProductId}"`
+      );
+    }
+
+    if (
+      sourceProductId &&
+      targetProductId &&
+      sourceProductId === targetProductId
+    ) {
+      errors.push(`${label} source recommends itself ("${sourceProductId}")`);
+    }
+
+    if (typeof weight !== "number" || !Number.isFinite(weight)) {
+      errors.push(`${label} has invalid/non-numeric weight`);
+    } else if (weight <= 0) {
+      errors.push(`${label} has zero or negative weight (${weight})`);
+    }
+
+    if (sourceProductId && targetProductId) {
+      const pairKey = `${sourceProductId}→${targetProductId}`;
+      if (seenPairs.has(pairKey)) {
+        errors.push(
+          `duplicate source → target relationship "${pairKey}"`
+        );
+      } else {
+        seenPairs.set(pairKey, true);
+      }
+    }
+  });
+
+  return errors;
+}
+
+function validateCatalog({
+  products,
+  variants,
+  units,
+  aliases,
+  mappings,
+  recommendations,
+}) {
   const errors = [];
 
   errors.push(...findDuplicateIds(products, "product"));
@@ -231,11 +307,13 @@ function validateCatalog({ products, variants, units, aliases, mappings }) {
     }
   }
 
+  errors.push(...validateRecommendations(recommendations, productIds));
+
   return errors;
 }
 
 function printSummary(
-  { products, variants, units, aliases, mappings },
+  { products, variants, units, aliases, mappings, recommendations },
   errors
 ) {
   console.log("Matahari Order — Catalogue Build");
@@ -245,6 +323,9 @@ function printSummary(
   console.log(`Units    : ${units.length}`);
   console.log(`Aliases  : ${aliases.length}`);
   console.log(`Mappings : ${mappings.length}`);
+  console.log(
+    `Reco     : ${Array.isArray(recommendations) ? recommendations.length : 0}`
+  );
   console.log("");
 
   if (errors.length === 0) {
@@ -268,13 +349,15 @@ function main() {
   const units = loadJson("units.json");
   const aliases = loadJson("aliases.json");
   const mappings = loadJson("mappings.json");
+  const recommendations = loadJson("recommendations.json");
 
   if (
     !Array.isArray(products) ||
     !Array.isArray(variants) ||
     !Array.isArray(units) ||
     !Array.isArray(aliases) ||
-    !Array.isArray(mappings)
+    !Array.isArray(mappings) ||
+    !Array.isArray(recommendations)
   ) {
     console.error("Catalogue JSON files must each contain an array.");
     process.exit(1);
@@ -286,8 +369,12 @@ function main() {
     units,
     aliases,
     mappings,
+    recommendations,
   });
-  printSummary({ products, variants, units, aliases, mappings }, errors);
+  printSummary(
+    { products, variants, units, aliases, mappings, recommendations },
+    errors
+  );
 
   if (errors.length > 0) {
     process.exit(1);

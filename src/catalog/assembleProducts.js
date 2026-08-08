@@ -1,6 +1,7 @@
 import aliasesData from "./aliases.json";
 import mappingsData from "./mappings.json";
 import productsData from "./products.json";
+import recommendationsData from "./recommendations.json";
 import unitsData from "./units.json";
 import variantsData from "./variants.json";
 
@@ -54,5 +55,6 @@ export const catalogProducts = productsData;
 export const catalogVariants = variantsData;
 export const catalogUnits = unitsData;
 export const catalogMappings = mappingsData;
+export const catalogRecommendations = recommendationsData;
 
 export default products;
