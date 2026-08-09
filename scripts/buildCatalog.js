@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { normalizeSearchText } from "../src/utils/productSearch.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalogDir = join(__dirname, "..", "src", "catalog");
@@ -249,7 +250,9 @@ function validateCatalog({
     }
   }
 
-  const seenAliases = new Map();
+  // Exact duplicate aliases for the same target product are errors.
+  // The same alias text on different products is allowed (legitimate ambiguity).
+  const seenAliasPerTarget = new Map();
 
   for (const record of aliases) {
     const aliasLabel = record.id ?? "(unknown)";
@@ -258,24 +261,26 @@ function validateCatalog({
       errors.push("alias-record missing id");
     }
 
-    if (isBlank(record.alias)) {
-      errors.push(`alias-record "${aliasLabel}" missing alias`);
-    } else {
-      const normalized = record.alias.trim().toLowerCase();
-      if (seenAliases.has(normalized)) {
-        errors.push(`duplicate alias "${record.alias.trim()}"`);
-      } else {
-        seenAliases.set(normalized, true);
-      }
+    const normalizedAlias = normalizeSearchText(record.alias);
+    const hasProductId = !isBlank(record.productId);
+    const hasVariantId =
+      record.variantId !== undefined &&
+      record.variantId !== null &&
+      record.variantId !== "";
+
+    if (!normalizedAlias) {
+      errors.push(
+        `alias-record "${aliasLabel}" missing alias or empty after normalization`
+      );
     }
 
-    if (record.productId) {
+    if (hasProductId) {
       if (!productIds.has(record.productId)) {
         errors.push(
           `alias-record "${aliasLabel}" has invalid productId "${record.productId}"`
         );
       }
-    } else if (record.variantId !== undefined) {
+    } else if (hasVariantId) {
       if (!variantIds.has(record.variantId)) {
         errors.push(
           `alias-record "${aliasLabel}" has invalid variantId "${record.variantId}"`
@@ -285,6 +290,19 @@ function validateCatalog({
       errors.push(
         `alias-record "${aliasLabel}" missing productId or variantId`
       );
+    }
+
+    if (normalizedAlias && (hasProductId || hasVariantId)) {
+      const targetId = hasProductId ? record.productId : record.variantId;
+      const duplicateKey = `${targetId}::${normalizedAlias}`;
+
+      if (seenAliasPerTarget.has(duplicateKey)) {
+        errors.push(
+          `duplicate alias "${normalizedAlias}" for the same product "${targetId}"`
+        );
+      } else {
+        seenAliasPerTarget.set(duplicateKey, true);
+      }
     }
   }
 

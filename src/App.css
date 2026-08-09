@@ -351,6 +351,199 @@ body {
 
 
 /* --------------------------------------------------------------------------
+   8b. Search Result Rows — compact actionable ordering
+   -------------------------------------------------------------------------- */
+
+.searchResultsSection {
+  padding-bottom: 8px;
+}
+
+.searchResultList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 12px 8px;
+}
+
+.searchResultRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 8px 8px 8px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  box-sizing: border-box;
+}
+
+.searchResultRow + .searchResultRow {
+  margin-top: 8px;
+}
+
+.searchResultRow--subordinate {
+  background: var(--color-surface-raised);
+  border-color: rgba(230, 126, 34, 0.12);
+  min-height: 60px;
+}
+
+.searchResultRowMain {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.searchResultRowMain:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.searchResultThumb {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--color-image-bg);
+  border: 1px solid var(--color-border-light);
+  display: block;
+}
+
+.searchResultThumb--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-image-text);
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.searchResultRow--subordinate .searchResultThumb {
+  width: 48px;
+  height: 48px;
+}
+
+.searchResultText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.searchResultName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.searchResultRow--subordinate .searchResultName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.searchResultDefault {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchResultAdd {
+  flex-shrink: 0;
+  min-width: 76px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.searchResultAdd:hover {
+  background: var(--color-primary-hover);
+}
+
+.searchResultAdd:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.searchResultStepper {
+  flex-shrink: 0;
+}
+
+.searchResultStepper .quantityButton {
+  min-width: 36px;
+  min-height: 36px;
+  font-size: 16px;
+}
+
+.searchResultStepper .quantityValue {
+  min-width: 28px;
+  font-size: 14px;
+}
+
+.searchRecommendations {
+  margin: 12px 12px 8px;
+  padding: 12px 10px 10px;
+  border: 1px solid rgba(230, 126, 34, 0.14);
+  border-radius: var(--radius-md);
+  background: #FFF8F0;
+  box-sizing: border-box;
+}
+
+.searchRecommendationsTitle {
+  margin: 0 0 10px;
+  padding: 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.searchResultList--recommendations {
+  padding: 0;
+}
+
+.searchResultList--recommendations .searchResultRow + .searchResultRow {
+  margin-top: 6px;
+}
+
+
+/* --------------------------------------------------------------------------
    9. Category Grid
    -------------------------------------------------------------------------- */
 
