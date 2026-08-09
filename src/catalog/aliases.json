@@ -23,5 +23,475 @@
     "id": "alias-masako-ayam-1",
     "productId": "prod-masako-ayam",
     "alias": "masako"
+  },
+  {
+    "id": "alias-apache-16-1",
+    "productId": "prod-apache-16",
+    "alias": "apace"
+  },
+  {
+    "id": "alias-apache-16-2",
+    "productId": "prod-apache-16",
+    "alias": "apc16"
+  },
+  {
+    "id": "alias-apache-16-3",
+    "productId": "prod-apache-16",
+    "alias": "apch"
+  },
+  {
+    "id": "alias-camel-blue-16-1",
+    "productId": "prod-camel-blue16",
+    "alias": "camel biru"
+  },
+  {
+    "id": "alias-camel-blue-16-2",
+    "productId": "prod-camel-blue16",
+    "alias": "kamel biru"
+  },
+  {
+    "id": "alias-camel-purple-12-1",
+    "productId": "prod-camel-purple-12",
+    "alias": "camel ungu"
+  },
+  {
+    "id": "alias-camel-purple-12-2",
+    "productId": "prod-camel-purple-12",
+    "alias": "kamel ungu"
+  },
+  {
+    "id": "alias-camel-purple-16-1",
+    "productId": "prod-camel-purple-16",
+    "alias": "camel ungu"
+  },
+  {
+    "id": "alias-camel-purple-16-2",
+    "productId": "prod-camel-purple-16",
+    "alias": "kamel ungu"
+  },
+  {
+    "id": "alias-camel-purple-16-3",
+    "productId": "prod-camel-purple-16",
+    "alias": "camel ungu 16"
+  },
+  {
+    "id": "alias-camel-purple-16-4",
+    "productId": "prod-camel-purple-16",
+    "alias": "kamel ungu 16"
+  },
+  {
+    "id": "alias-chief-12-1",
+    "productId": "prod-chief-12",
+    "alias": "cief"
+  },
+  {
+    "id": "alias-chief-12-2",
+    "productId": "prod-chief-12",
+    "alias": "chif"
+  },
+  {
+    "id": "alias-chief-12-3",
+    "productId": "prod-chief-12",
+    "alias": "sif"
+  },
+  {
+    "id": "alias-chief-12-4",
+    "productId": "prod-chief-12",
+    "alias": "cif"
+  },
+  {
+    "id": "alias-chief-12-5",
+    "productId": "prod-chief-12",
+    "alias": "chf"
+  },
+  {
+    "id": "alias-crystal-16-1",
+    "productId": "prod-crystal-16",
+    "alias": "kristal"
+  },
+  {
+    "id": "alias-crystal-16-2",
+    "productId": "prod-crystal-16",
+    "alias": "kristal biru"
+  },
+  {
+    "id": "alias-crystal-caffe-latte-12-1",
+    "productId": "prod-crystal-caffe-latte-12",
+    "alias": "kristal"
+  },
+  {
+    "id": "alias-crystal-caffe-latte-12-2",
+    "productId": "prod-crystal-caffe-latte-12",
+    "alias": "kristal kopi"
+  },
+  {
+    "id": "alias-crystal-caffe-latte-12-3",
+    "productId": "prod-crystal-caffe-latte-12",
+    "alias": "kristal kafe"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-12-1",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "alias": "djisamsoe"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-12-2",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "alias": "djisamsoe kuning"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-16-1",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "alias": "djisamsoe"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-16-2",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "alias": "djisamsoe kuning"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-12-1",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "alias": "dunhil"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-12-2",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "alias": "dunhil itam"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-16-1",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "alias": "dunhil"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-16-2",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "alias": "dunhil itam"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-16-1",
+    "productId": "prod-dunhill-putih-mild-16",
+    "alias": "dunhil"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-16-2",
+    "productId": "prod-dunhill-putih-mild-16",
+    "alias": "dunhil putih"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-20-1",
+    "productId": "prod-dunhill-putih-mild-20",
+    "alias": "dunhil"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-20-2",
+    "productId": "prod-dunhill-putih-mild-20",
+    "alias": "dunhil putih"
+  },
+  {
+    "id": "alias-esse-change-double-20-1",
+    "productId": "prod-esse-change-double-20",
+    "alias": "esse dobel"
+  },
+  {
+    "id": "alias-esse-change-double-20-2",
+    "productId": "prod-esse-change-double-20",
+    "alias": "esse dbl"
+  },
+  {
+    "id": "alias-gudang-garam-merah-12-1",
+    "productId": "prod-gudang-garam-merah-12",
+    "alias": "gg merah"
+  },
+  {
+    "id": "alias-gudang-garam-merah-12-2",
+    "productId": "prod-gudang-garam-merah-12",
+    "alias": "gg merah 12"
+  },
+  {
+    "id": "alias-gudang-garam-merah-16-1",
+    "productId": "prod-gudang-garam-merah-16",
+    "alias": "gg merah"
+  },
+  {
+    "id": "alias-gudang-garam-merah-16-2",
+    "productId": "prod-gudang-garam-merah-16",
+    "alias": "gg merah 16"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-1",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "mfb12"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-2",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "marlboro black"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-3",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "malboro"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-4",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "malboro itam"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-5",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "malboro blek"
+  },
+  {
+    "id": "alias-marlboro-filter-black-12-6",
+    "productId": "prod-marlboro-filter-black-12",
+    "alias": "malboro blac"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-1",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "mfb16"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-2",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "marlboro black"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-3",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "malboro"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-4",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "malboro itam"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-5",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "malboro blek"
+  },
+  {
+    "id": "alias-marlboro-filter-black-16-6",
+    "productId": "prod-marlboro-filter-black-16",
+    "alias": "malboro blac"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-1",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "mfb20"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-2",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "marlboro black"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-3",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "malboro"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-4",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "malboro itam"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-5",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "malboro blek"
+  },
+  {
+    "id": "alias-marlboro-filter-black-20-6",
+    "productId": "prod-marlboro-filter-black-20",
+    "alias": "malboro blac"
+  },
+  {
+    "id": "alias-nation-black-20-1",
+    "productId": "prod-nation-black-20",
+    "alias": "nesien"
+  },
+  {
+    "id": "alias-nation-black-20-2",
+    "productId": "prod-nation-black-20",
+    "alias": "nesen"
+  },
+  {
+    "id": "alias-nation-black-20-3",
+    "productId": "prod-nation-black-20",
+    "alias": "nesion"
+  },
+  {
+    "id": "alias-nation-black-20-4",
+    "productId": "prod-nation-black-20",
+    "alias": "netion"
+  },
+  {
+    "id": "alias-nation-black-20-5",
+    "productId": "prod-nation-black-20",
+    "alias": "nesien blek"
+  },
+  {
+    "id": "alias-nation-black-20-6",
+    "productId": "prod-nation-black-20",
+    "alias": "nesen blek"
+  },
+  {
+    "id": "alias-nation-black-20-7",
+    "productId": "prod-nation-black-20",
+    "alias": "nesion blek"
+  },
+  {
+    "id": "alias-nation-black-20-8",
+    "productId": "prod-nation-black-20",
+    "alias": "netion blek"
+  },
+  {
+    "id": "alias-nation-bold-16-1",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesien"
+  },
+  {
+    "id": "alias-nation-bold-16-2",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesen"
+  },
+  {
+    "id": "alias-nation-bold-16-3",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesion"
+  },
+  {
+    "id": "alias-nation-bold-16-4",
+    "productId": "prod-nation-bold-16",
+    "alias": "netion"
+  },
+  {
+    "id": "alias-nation-bold-16-5",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesien bold"
+  },
+  {
+    "id": "alias-nation-bold-16-6",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesen bold"
+  },
+  {
+    "id": "alias-nation-bold-16-7",
+    "productId": "prod-nation-bold-16",
+    "alias": "nesion bold"
+  },
+  {
+    "id": "alias-nation-bold-16-8",
+    "productId": "prod-nation-bold-16",
+    "alias": "netion bold"
+  },
+  {
+    "id": "alias-nation-bold-20-1",
+    "productId": "prod-nation-bold-20",
+    "alias": "nesien"
+  },
+  {
+    "id": "alias-nation-bold-20-2",
+    "productId": "prod-nation-bold-20",
+    "alias": "nesen"
+  },
+  {
+    "id": "alias-nation-bold-20-3",
+    "productId": "prod-nation-bold-20",
+    "alias": "nesion"
+  },
+  {
+    "id": "alias-nation-bold-20-4",
+    "productId": "prod-nation-bold-20",
+    "alias": "netion"
+  },
+  {
+    "id": "alias-nation-gold-20-1",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesien"
+  },
+  {
+    "id": "alias-nation-gold-20-2",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesen"
+  },
+  {
+    "id": "alias-nation-gold-20-3",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesion"
+  },
+  {
+    "id": "alias-nation-gold-20-4",
+    "productId": "prod-nation-gold-20",
+    "alias": "netion"
+  },
+  {
+    "id": "alias-nation-gold-20-5",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesien gol"
+  },
+  {
+    "id": "alias-nation-gold-20-6",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesen gol"
+  },
+  {
+    "id": "alias-nation-gold-20-7",
+    "productId": "prod-nation-gold-20",
+    "alias": "nesion gol"
+  },
+  {
+    "id": "alias-nation-gold-20-8",
+    "productId": "prod-nation-gold-20",
+    "alias": "netion gol"
+  },
+  {
+    "id": "alias-nation-white-20-1",
+    "productId": "prod-nation-white-20",
+    "alias": "nesien"
+  },
+  {
+    "id": "alias-nation-white-20-2",
+    "productId": "prod-nation-white-20",
+    "alias": "nesen"
+  },
+  {
+    "id": "alias-nation-white-20-3",
+    "productId": "prod-nation-white-20",
+    "alias": "nesion"
+  },
+  {
+    "id": "alias-nation-white-20-4",
+    "productId": "prod-nation-white-20",
+    "alias": "netion"
+  },
+  {
+    "id": "alias-pitoe-kretek-20-1",
+    "productId": "prod-pitoe-kretek-20",
+    "alias": "pitu"
+  },
+  {
+    "id": "alias-pitoe-kretek-20-2",
+    "productId": "prod-pitoe-kretek-20",
+    "alias": "pitu merah"
+  },
+  {
+    "id": "alias-rexo-kretek-20-1",
+    "productId": "prod-rexo-kretek-20",
+    "alias": "rexo merah"
+  },
+  {
+    "id": "alias-surya-16-1",
+    "productId": "prod-surya-16",
+    "alias": "suria"
+  },
+  {
+    "id": "alias-surya-16-2",
+    "productId": "prod-surya-16",
+    "alias": "gg surya"
   }
 ]
