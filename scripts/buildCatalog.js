@@ -37,6 +37,8 @@ function findDuplicateIds(items, label) {
   return duplicates;
 }
 
+const RECOMMENDATION_SOURCES = new Set(["sales", "manual"]);
+
 function validateRecommendations(recommendations, productIds) {
   const errors = [];
 
@@ -45,13 +47,15 @@ function validateRecommendations(recommendations, productIds) {
     return errors;
   }
 
-  const seenPairs = new Map();
+  // Identity: sourceProductId + targetProductId + provenance source
+  const seenEdges = new Map();
 
   recommendations.forEach((relationship, index) => {
     const label = `recommendation[${index}]`;
     const sourceProductId = relationship?.sourceProductId;
     const targetProductId = relationship?.targetProductId;
     const weight = relationship?.weight;
+    const source = relationship?.source;
 
     if (
       sourceProductId === undefined ||
@@ -91,14 +95,22 @@ function validateRecommendations(recommendations, productIds) {
       errors.push(`${label} has zero or negative weight (${weight})`);
     }
 
-    if (sourceProductId && targetProductId) {
-      const pairKey = `${sourceProductId}→${targetProductId}`;
-      if (seenPairs.has(pairKey)) {
+    if (source === undefined || source === null || source === "") {
+      errors.push(`${label} missing provenance source`);
+    } else if (!RECOMMENDATION_SOURCES.has(source)) {
+      errors.push(
+        `${label} has invalid provenance source "${source}" (expected sales|manual)`
+      );
+    }
+
+    if (sourceProductId && targetProductId && source) {
+      const edgeKey = `${sourceProductId}→${targetProductId}|${source}`;
+      if (seenEdges.has(edgeKey)) {
         errors.push(
-          `duplicate source → target relationship "${pairKey}"`
+          `duplicate recommendation edge "${edgeKey}"`
         );
       } else {
-        seenPairs.set(pairKey, true);
+        seenEdges.set(edgeKey, true);
       }
     }
   });

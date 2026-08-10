@@ -1,77 +1,884 @@
 [
   {
-    "sourceProductId": "prod-glory-16",
+    "sourceProductId": "prod-52-kretek-20",
     "targetProductId": "prod-apache-16",
-    "weight": 10
+    "weight": 8,
+    "source": "sales"
   },
   {
-    "sourceProductId": "prod-glory-16",
-    "targetProductId": "prod-chief-12",
-    "weight": 8
-  },
-  {
-    "sourceProductId": "prod-glory-16",
-    "targetProductId": "prod-troy-20",
-    "weight": 6
-  },
-  {
-    "sourceProductId": "prod-glory-16",
-    "targetProductId": "prod-camel-blue16",
-    "weight": 4
-  },
-  {
-    "sourceProductId": "prod-troy-20",
+    "sourceProductId": "prod-52-kretek-20",
     "targetProductId": "prod-glory-16",
-    "weight": 9
+    "weight": 10,
+    "source": "sales"
   },
   {
-    "sourceProductId": "prod-troy-20",
-    "targetProductId": "prod-apache-16",
-    "weight": 7
+    "sourceProductId": "prod-52-kretek-20",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 7,
+    "source": "sales"
   },
   {
-    "sourceProductId": "prod-troy-20",
-    "targetProductId": "prod-chief-12",
-    "weight": 5
+    "sourceProductId": "prod-52-kretek-20",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-52-kretek-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-apache-16",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-apache-16",
     "targetProductId": "prod-glory-16",
-    "weight": 10
+    "weight": 10,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-apache-16",
-    "targetProductId": "prod-chief-12",
-    "weight": 7
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-apache-16",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 6,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-apache-16",
     "targetProductId": "prod-troy-20",
-    "weight": 6
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-camel-purple-16",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-camel-purple-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-camel-purple-16",
+    "targetProductId": "prod-surya-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-camel-purple-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-apache-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 9,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-chief-12",
     "targetProductId": "prod-glory-16",
-    "weight": 9
+    "weight": 10,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-chief-12",
-    "targetProductId": "prod-apache-16",
-    "weight": 8
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 10,
+    "source": "sales"
   },
   {
     "sourceProductId": "prod-chief-12",
+    "targetProductId": "prod-rexo-kretek-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-crystal-16",
+    "targetProductId": "prod-djarum-black-cappuccino-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-crystal-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-crystal-16",
+    "targetProductId": "prod-sergio-filter",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-crystal-16",
     "targetProductId": "prod-troy-20",
-    "weight": 5
+    "weight": 9,
+    "source": "sales"
   },
   {
-    "sourceProductId": "prod-camel-blue16",
+    "sourceProductId": "prod-crystal-16",
+    "targetProductId": "prod-zenix-sultan",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-crystal-caffe-latte-12",
+    "targetProductId": "prod-troy-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dio-kretek-12",
+    "targetProductId": "prod-52-kretek-20",
+    "weight": 4,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dio-kretek-12",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 4,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dio-kretek-12",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dio-kretek-12",
+    "targetProductId": "prod-gudang-garam-merah-12",
+    "weight": 5,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dio-kretek-12",
+    "targetProductId": "prod-rexo-kretek-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-djarum-black-cappuccino-16",
+    "targetProductId": "prod-crystal-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-djarum-black-cappuccino-16",
+    "targetProductId": "prod-dunhill-putih-mild-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-djarum-black-cappuccino-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 5,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-djarum-black-cappuccino-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-hitam-filter-16",
     "targetProductId": "prod-apache-16",
-    "weight": 7
+    "weight": 6,
+    "source": "sales"
   },
   {
-    "sourceProductId": "prod-camel-blue16",
-    "targetProductId": "prod-chief-12",
-    "weight": 5
+    "sourceProductId": "prod-dunhill-hitam-filter-16",
+    "targetProductId": "prod-dunhill-putih-mild-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-hitam-filter-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-hitam-filter-16",
+    "targetProductId": "prod-sampoerna-mild-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-hitam-filter-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-16",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-16",
+    "targetProductId": "prod-surya-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-16",
+    "targetProductId": "prod-urban-mild",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-20",
+    "targetProductId": "prod-crystal-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-20",
+    "targetProductId": "prod-djarum-black-cappuccino-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-dunhill-putih-mild-20",
+    "targetProductId": "prod-rexo-kretek-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-apache-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-glory-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-12",
+    "targetProductId": "prod-apache-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-12",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-12",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-12",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-12",
+    "targetProductId": "prod-troy-20",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-16",
+    "targetProductId": "prod-apache-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-16",
+    "targetProductId": "prod-gudang-garam-merah-12",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-16",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-gudang-garam-merah-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-harum-manis-20",
+    "targetProductId": "prod-52-kretek-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-harum-manis-20",
+    "targetProductId": "prod-crystal-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-harum-manis-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-harum-manis-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 3,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-harum-manis-20",
+    "targetProductId": "prod-zenix-sultan",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-l-a-bold-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-l-a-bold-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-marlboro-filter-black-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-marlboro-filter-black-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-marlboro-filter-black-20",
+    "targetProductId": "prod-nation-bold-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-marlboro-filter-black-20",
+    "targetProductId": "prod-sampoerna-mild-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-marlboro-filter-black-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-black-20",
+    "targetProductId": "prod-apache-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-black-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-black-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-black-20",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-black-20",
+    "targetProductId": "prod-surya-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-20",
+    "targetProductId": "prod-marlboro-filter-black-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-20",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-20",
+    "targetProductId": "prod-surya-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-bold-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-gold-20",
+    "targetProductId": "prod-52-kretek-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-gold-20",
+    "targetProductId": "prod-apache-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-gold-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-gold-20",
+    "targetProductId": "prod-nation-bold-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-nation-gold-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-pitoe-kretek-20",
+    "targetProductId": "prod-crystal-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-pitoe-kretek-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-pitoe-kretek-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-pitoe-kretek-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-rexo-kretek-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-rexo-kretek-20",
+    "targetProductId": "prod-gudang-garam-merah-12",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-rexo-kretek-20",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-rexo-kretek-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-rexo-kretek-20",
+    "targetProductId": "prod-zenix-sultan",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sahara-kretek-20",
+    "targetProductId": "prod-apache-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sahara-kretek-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sahara-kretek-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sahara-kretek-20",
+    "targetProductId": "prod-gudang-garam-merah-12",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sahara-kretek-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sampoerna-mild-16",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sampoerna-mild-16",
+    "targetProductId": "prod-dunhill-putih-mild-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sampoerna-mild-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sampoerna-mild-16",
+    "targetProductId": "prod-surya-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sampoerna-mild-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sek-delapan-tujuh-87",
+    "targetProductId": "prod-apache-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sek-delapan-tujuh-87",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sek-delapan-tujuh-87",
+    "targetProductId": "prod-glory-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sek-delapan-tujuh-87",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sergio-filter",
+    "targetProductId": "prod-crystal-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sergio-filter",
+    "targetProductId": "prod-glory-16",
+    "weight": 5,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-sergio-filter",
+    "targetProductId": "prod-troy-20",
+    "weight": 5,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-12",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-12",
+    "targetProductId": "prod-glory-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-12",
+    "targetProductId": "prod-troy-20",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-16",
+    "targetProductId": "prod-dunhill-putih-mild-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-16",
+    "targetProductId": "prod-glory-16",
+    "weight": 9,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-16",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-16",
+    "targetProductId": "prod-sampoerna-mild-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-surya-16",
+    "targetProductId": "prod-troy-20",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-apache-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-nation-gold-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-troy-20",
+    "targetProductId": "prod-surya-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-urban-mild",
+    "targetProductId": "prod-dunhill-hitam-filter-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-urban-mild",
+    "targetProductId": "prod-dunhill-putih-mild-16",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-urban-mild",
+    "targetProductId": "prod-glory-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-urban-mild",
+    "targetProductId": "prod-surya-16",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-urban-mild",
+    "targetProductId": "prod-troy-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-bold-20",
+    "targetProductId": "prod-glory-16",
+    "weight": 4,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-bold-20",
+    "targetProductId": "prod-gudang-garam-merah-16",
+    "weight": 3,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-bold-20",
+    "targetProductId": "prod-surya-16",
+    "weight": 3,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-bold-20",
+    "targetProductId": "prod-troy-20",
+    "weight": 4,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-bold-20",
+    "targetProductId": "prod-zenix-sultan",
+    "weight": 10,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-sultan",
+    "targetProductId": "prod-crystal-16",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-sultan",
+    "targetProductId": "prod-glory-16",
+    "weight": 8,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-sultan",
+    "targetProductId": "prod-harum-manis-20",
+    "weight": 7,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-sultan",
+    "targetProductId": "prod-troy-20",
+    "weight": 6,
+    "source": "sales"
+  },
+  {
+    "sourceProductId": "prod-zenix-sultan",
+    "targetProductId": "prod-zenix-bold-20",
+    "weight": 10,
+    "source": "sales"
   }
 ]

@@ -102,8 +102,9 @@ export default function App() {
     const searchIds = new Set(searchResultProducts.map((product) => product.id));
     const cartProductIds = new Set(cart.map((line) => line.productId));
 
-    // Reuse Release 0.7 ranking: treat all genuine search hits (name + alias)
-    // as recommendation sources; include cart IDs so in-cart items are excluded.
+    // Whole-cart ranking (Release 0.7/0.9): treat all genuine search hits
+    // (name + alias) as recommendation sources; include cart IDs so in-cart
+    // items are excluded. Edges come from sales/manual provenance data.
     const recommendationSources = [
       ...searchResultProducts.map((product) => ({ productId: product.id })),
       ...cart.map((line) => ({ productId: line.productId })),
