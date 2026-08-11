@@ -6,6 +6,8 @@ import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
 import ProductBottomSheet from "./components/ProductBottomSheet";
 import SearchResultRow from "./components/SearchResultRow";
+import SearchShortcuts from "./components/SearchShortcuts";
+import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
 import { findCartLine } from "./utils/cartHelpers";
 import {
@@ -13,6 +15,11 @@ import {
   searchProducts,
 } from "./utils/productSearch";
 import { getRecommendedProducts } from "./utils/recommendations";
+import {
+  clearRecentSearches,
+  loadRecentSearches,
+  rememberRecentSearch,
+} from "./utils/recentSearches";
 import { openWhatsAppWithOrder } from "./utils/whatsapp";
 
 const categories = [
@@ -34,6 +41,8 @@ function addProductDefaults(addToCart, product) {
 
 export default function App() {
   const [search, setSearch] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [recentSearches, setRecentSearches] = useState(loadRecentSearches);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
@@ -70,11 +79,16 @@ export default function App() {
 
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
+  const showSearchShortcuts = isSearchFocused && !isSearching;
 
   const favoriteProducts = useMemo(
     () => products.filter((product) => product.favorite),
     []
   );
+
+  const recordRecentSearch = useCallback((query) => {
+    setRecentSearches((current) => rememberRecentSearch(query, current));
+  }, []);
 
   // Tier 1 name matches, then Tier 2 alias-only matches (no duplicates).
   const { searchResultProducts, hasSearchHits } = useMemo(() => {
@@ -131,9 +145,12 @@ export default function App() {
 
   const handleQuickAdd = useCallback(
     (product) => {
+      if (normalizeSearchText(search)) {
+        recordRecentSearch(search);
+      }
       addProductDefaults(addToCart, product);
     },
-    [addToCart]
+    [addToCart, recordRecentSearch, search]
   );
 
   function handleAddAll() {
@@ -142,8 +159,34 @@ export default function App() {
     });
   }
 
-  const handleOpenSheet = useCallback((product) => {
-    setSelectedProduct(product);
+  const handleOpenSheet = useCallback(
+    (product) => {
+      if (normalizeSearchText(search)) {
+        recordRecentSearch(search);
+      }
+      setSelectedProduct(product);
+    },
+    [recordRecentSearch, search]
+  );
+
+  const handleSelectSearchShortcut = useCallback(
+    (term) => {
+      setSearch(term);
+      recordRecentSearch(term);
+    },
+    [recordRecentSearch]
+  );
+
+  const handleClearRecentSearches = useCallback(() => {
+    setRecentSearches(clearRecentSearches());
+  }, []);
+
+  const handleSearchFocus = useCallback(() => {
+    setIsSearchFocused(true);
+  }, []);
+
+  const handleSearchBlur = useCallback(() => {
+    setIsSearchFocused(false);
   }, []);
 
   const handleCloseSheet = useCallback(() => {
@@ -222,9 +265,20 @@ export default function App() {
           placeholder="Cari nama produk..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onFocus={handleSearchFocus}
+          onBlur={handleSearchBlur}
           aria-label="Cari nama produk"
         />
       </div>
+
+      {showSearchShortcuts && (
+        <SearchShortcuts
+          recentSearches={recentSearches}
+          popularSearches={POPULAR_SEARCHES}
+          onSelect={handleSelectSearchShortcut}
+          onClearRecent={handleClearRecentSearches}
+        />
+      )}
 
       {!isSearching && (
         <section>
