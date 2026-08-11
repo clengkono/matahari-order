@@ -7,6 +7,7 @@ import ProductCard from "./components/ProductCard";
 import ProductBottomSheet from "./components/ProductBottomSheet";
 import SearchResultRow from "./components/SearchResultRow";
 import SearchShortcuts from "./components/SearchShortcuts";
+import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
 import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
 import { findCartLine } from "./utils/cartHelpers";
@@ -29,6 +30,14 @@ const categories = [
   "🧼 Perawatan",
   "🧹 Kebersihan",
 ];
+
+const productsById = Object.fromEntries(
+  products.map((product) => [product.id, product])
+);
+
+const homepageFeaturedProducts = HOMEPAGE_FEATURED_PRODUCT_IDS.map(
+  (productId) => productsById[productId]
+).filter(Boolean);
 
 function addProductDefaults(addToCart, product) {
   addToCart({
@@ -80,11 +89,6 @@ export default function App() {
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
   const showSearchShortcuts = isSearchFocused && !isSearching;
-
-  const favoriteProducts = useMemo(
-    () => products.filter((product) => product.favorite),
-    []
-  );
 
   const recordRecentSearch = useCallback((query) => {
     setRecentSearches((current) => rememberRecentSearch(query, current));
@@ -152,12 +156,6 @@ export default function App() {
     },
     [addToCart, recordRecentSearch, search]
   );
-
-  function handleAddAll() {
-    favoriteProducts.forEach((product) => {
-      addProductDefaults(addToCart, product);
-    });
-  }
 
   const handleOpenSheet = useCallback(
     (product) => {
@@ -262,12 +260,12 @@ export default function App() {
       <div className="searchSection">
         <input
           className="searchBox"
-          placeholder="Cari nama produk..."
+          placeholder="Cari produk..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={handleSearchFocus}
           onBlur={handleSearchBlur}
-          aria-label="Cari nama produk"
+          aria-label="Cari produk"
         />
       </div>
 
@@ -286,29 +284,17 @@ export default function App() {
             ⭐ Sering Dipesan
           </div>
 
-          {favoriteProducts.length > 0 ? (
-            <>
-              <div className="productGrid">
-                {favoriteProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onOpen={handleOpenSheet}
-                    onQuickAdd={handleQuickAdd}
-                  />
-                ))}
-              </div>
-
-              <div className="addAllSection">
-                <button
-                  type="button"
-                  className="addAllButton"
-                  onClick={handleAddAll}
-                >
-                  Tambahkan Semua
-                </button>
-              </div>
-            </>
+          {homepageFeaturedProducts.length > 0 ? (
+            <div className="productGrid">
+              {homepageFeaturedProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onOpen={handleOpenSheet}
+                  onQuickAdd={handleQuickAdd}
+                />
+              ))}
+            </div>
           ) : null}
         </section>
       )}
