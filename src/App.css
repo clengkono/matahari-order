@@ -707,6 +707,79 @@ body {
   outline-offset: 2px;
 }
 
+/* --------------------------------------------------------------------------
+   9b. Category Results — browse mode (Stage 2A)
+   -------------------------------------------------------------------------- */
+
+.categoryResultsSection {
+  padding-bottom: 24px;
+}
+
+.categoryResultsHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 20px 14px;
+}
+
+.categoryResultsBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  margin: 0;
+  padding: 6px 10px 6px 4px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.categoryResultsBack:hover {
+  color: var(--color-text);
+  background: rgba(45, 45, 45, 0.04);
+}
+
+.categoryResultsBack:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.categoryResultsIdentity {
+  min-width: 0;
+  width: 100%;
+}
+
+.categoryResultsTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.categoryResultsIcon {
+  font-weight: 400;
+}
+
+.categoryResultsCount {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-text-muted);
+}
+
 
 /* --------------------------------------------------------------------------
    10. Bottom Sheet

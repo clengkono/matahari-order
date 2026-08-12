@@ -7,6 +7,10 @@ import ProductCard from "./components/ProductCard";
 import ProductInfoView from "./components/ProductInfoView";
 import SearchResultRow from "./components/SearchResultRow";
 import SearchShortcuts from "./components/SearchShortcuts";
+import {
+  getCategoryPresentation,
+  getVisibleCategories,
+} from "./config/categories";
 import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
 import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
@@ -22,14 +26,6 @@ import {
   rememberRecentSearch,
 } from "./utils/recentSearches";
 import { openWhatsAppWithOrder } from "./utils/whatsapp";
-
-const categories = [
-  "🚬 Rokok",
-  "🥤 Minuman",
-  "🍳 Bahan & Bumbu Masak",
-  "🧼 Perawatan",
-  "🧹 Kebersihan",
-];
 
 const productsById = Object.fromEntries(
   products.map((product) => [product.id, product])
@@ -52,6 +48,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [recentSearches, setRecentSearches] = useState(loadRecentSearches);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [productStack, setProductStack] = useState([]);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
@@ -70,6 +67,27 @@ export default function App() {
   const selectedProduct =
     productStack.length > 0 ? productStack[productStack.length - 1] : null;
   const isProductInfoOpen = selectedProduct != null;
+  const isCategoryMode = selectedCategory != null;
+
+  const visibleCategories = useMemo(
+    () => getVisibleCategories(products),
+    []
+  );
+
+  const categoryPresentation = useMemo(
+    () => getCategoryPresentation(selectedCategory),
+    [selectedCategory]
+  );
+
+  const categoryProducts = useMemo(() => {
+    if (!selectedCategory) {
+      return [];
+    }
+
+    return products.filter(
+      (product) => product.category === selectedCategory
+    );
+  }, [selectedCategory]);
 
   const productUnitsById = useMemo(
     () =>
@@ -126,21 +144,25 @@ export default function App() {
 
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
-  const showSearchShortcuts = isSearchFocused && !isSearching;
+  const showHomepage = !isCategoryMode && !isSearching;
+  // Shortcuts stay homepage/global only — never in category mode (Stage 2A).
+  const showSearchShortcuts =
+    !isCategoryMode && isSearchFocused && !isSearching;
 
   const recordRecentSearch = useCallback((query) => {
     setRecentSearches((current) => rememberRecentSearch(query, current));
   }, []);
 
-  // Tier 1 name matches, then Tier 2 alias-only matches (no duplicates).
+  // Global search: full catalogue. Category search: categoryProducts only.
   const { searchResultProducts, hasSearchHits } = useMemo(() => {
     if (!isSearching) {
       return { searchResultProducts: [], hasSearchHits: false };
     }
 
+    const searchPool = isCategoryMode ? categoryProducts : products;
     const { results } = searchProducts({
       query: normalizedSearch,
-      products,
+      products: searchPool,
       aliases,
     });
 
@@ -148,10 +170,16 @@ export default function App() {
       searchResultProducts: results,
       hasSearchHits: results.length > 0,
     };
-  }, [isSearching, normalizedSearch]);
+  }, [isSearching, normalizedSearch, isCategoryMode, categoryProducts]);
 
+  const categoryResultProducts = isSearching
+    ? searchResultProducts
+    : categoryProducts;
+  const hasCategoryHits = categoryResultProducts.length > 0;
+
+  // Search recommendations: global search only (not category mode).
   const searchRecommendations = useMemo(() => {
-    if (!hasSearchHits) {
+    if (isCategoryMode || !hasSearchHits) {
       return [];
     }
 
@@ -175,7 +203,7 @@ export default function App() {
       (product) =>
         !searchIds.has(product.id) && !cartProductIds.has(product.id)
     );
-  }, [hasSearchHits, searchResultProducts, cart]);
+  }, [isCategoryMode, hasSearchHits, searchResultProducts, cart]);
 
   const getDefaultUnitQuantity = useCallback(
     (product) => {
@@ -232,6 +260,18 @@ export default function App() {
   const handleClearSearch = useCallback(() => {
     setSearch("");
     searchInputRef.current?.focus();
+  }, []);
+
+  const handleSelectCategory = useCallback((categoryId) => {
+    setSelectedCategory(categoryId);
+    setSearch("");
+    setIsSearchFocused(false);
+  }, []);
+
+  const handleExitCategory = useCallback(() => {
+    setSelectedCategory(null);
+    setSearch("");
+    setIsSearchFocused(false);
   }, []);
 
   const handleProductBack = useCallback(() => {
@@ -345,7 +385,56 @@ export default function App() {
         />
       )}
 
-      {!isSearching && (
+      {isCategoryMode && (
+        <section
+          className="categoryResultsSection"
+          aria-label={`Kategori ${categoryPresentation.label}`}
+        >
+          <div className="categoryResultsHeader">
+            <button
+              type="button"
+              className="categoryResultsBack"
+              aria-label="Kembali ke beranda"
+              onClick={handleExitCategory}
+            >
+              <span aria-hidden="true">←</span> Kembali
+            </button>
+            <div className="categoryResultsIdentity">
+              <h2 className="categoryResultsTitle">
+                {categoryPresentation.icon ? (
+                  <span className="categoryResultsIcon" aria-hidden="true">
+                    {categoryPresentation.icon}{" "}
+                  </span>
+                ) : null}
+                {categoryPresentation.label}
+              </h2>
+              <p className="categoryResultsCount">
+                {categoryProducts.length} Produk
+              </p>
+            </div>
+          </div>
+
+          {hasCategoryHits ? (
+            <div className="searchResultList">
+              {categoryResultProducts.map((product) => (
+                <SearchResultRow
+                  key={product.id}
+                  product={product}
+                  cartQuantity={getDefaultUnitQuantity(product)}
+                  onOpen={handleOpenProduct}
+                  onQuickAdd={handleQuickAdd}
+                  onIncrease={handleIncreaseQuantity}
+                  onDecrease={handleDecreaseQuantity}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="emptyState">Produk tidak ditemukan.</p>
+          )}
+        </section>
+      )}
+
+      {showHomepage && (
         <section>
           <div className="sectionTitle">
             ⭐ Sering Dipesan
@@ -366,7 +455,7 @@ export default function App() {
         </section>
       )}
 
-      {isSearching && hasSearchHits && (
+      {!isCategoryMode && isSearching && hasSearchHits && (
         <section className="searchResultsSection" aria-label="Hasil pencarian">
           <div className="sectionTitle">Hasil Pencarian</div>
           <div className="searchResultList">
@@ -407,24 +496,26 @@ export default function App() {
         </section>
       )}
 
-      {isSearching && !hasSearchHits && (
+      {!isCategoryMode && isSearching && !hasSearchHits && (
         <p className="emptyState">Produk tidak ditemukan.</p>
       )}
 
-      {!isSearching && (
+      {showHomepage && (
         <section>
           <div className="sectionTitle">
             Kategori
           </div>
 
           <div className="categoryGrid">
-            {categories.map((category) => (
+            {visibleCategories.map((category) => (
               <button
-                key={category}
+                key={category.id}
                 type="button"
                 className="categoryButton"
+                onClick={() => handleSelectCategory(category.id)}
               >
-                {category}
+                {category.icon ? `${category.icon} ` : ""}
+                {category.label}
               </button>
             ))}
           </div>
