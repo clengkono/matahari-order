@@ -39,6 +39,85 @@ function findDuplicateIds(items, label) {
 
 const RECOMMENDATION_SOURCES = new Set(["sales", "manual"]);
 
+/**
+ * Optional customer-facing unit conversion hints on variants.
+ * Shape: { fromUnitId, toUnitId, quantity }
+ * Not POS conversion — display-only wholesale packing hints.
+ */
+function validateCustomerUnitHints(variant, unitIds) {
+  const errors = [];
+  const variantLabel = variant.id ?? "(unknown)";
+  const hints = variant.customerUnitHints;
+
+  if (hints === undefined || hints === null) {
+    return errors;
+  }
+
+  if (!Array.isArray(hints)) {
+    errors.push(
+      `variant "${variantLabel}" customerUnitHints must be an array`
+    );
+    return errors;
+  }
+
+  const availableUnitIds = Array.isArray(variant.availableUnitIds)
+    ? new Set(variant.availableUnitIds)
+    : new Set();
+  const seenPairs = new Map();
+
+  hints.forEach((hint, index) => {
+    const label = `variant "${variantLabel}" customerUnitHints[${index}]`;
+    const fromUnitId = hint?.fromUnitId;
+    const toUnitId = hint?.toUnitId;
+    const quantity = hint?.quantity;
+
+    if (
+      fromUnitId === undefined ||
+      fromUnitId === null ||
+      fromUnitId === ""
+    ) {
+      errors.push(`${label} missing fromUnitId`);
+    } else if (!unitIds.has(fromUnitId)) {
+      errors.push(`${label} references unknown fromUnitId "${fromUnitId}"`);
+    } else if (!availableUnitIds.has(fromUnitId)) {
+      errors.push(
+        `${label} fromUnitId "${fromUnitId}" is not in availableUnitIds`
+      );
+    }
+
+    if (toUnitId === undefined || toUnitId === null || toUnitId === "") {
+      errors.push(`${label} missing toUnitId`);
+    } else if (!unitIds.has(toUnitId)) {
+      errors.push(`${label} references unknown toUnitId "${toUnitId}"`);
+    } else if (!availableUnitIds.has(toUnitId)) {
+      errors.push(
+        `${label} toUnitId "${toUnitId}" is not in availableUnitIds`
+      );
+    }
+
+    if (fromUnitId && toUnitId && fromUnitId === toUnitId) {
+      errors.push(`${label} cannot convert a unit to itself`);
+    }
+
+    if (typeof quantity !== "number" || !Number.isFinite(quantity)) {
+      errors.push(`${label} has invalid/non-numeric quantity`);
+    } else if (quantity <= 0) {
+      errors.push(`${label} has zero or negative quantity (${quantity})`);
+    }
+
+    if (fromUnitId && toUnitId && fromUnitId !== toUnitId) {
+      const pairKey = `${fromUnitId}→${toUnitId}`;
+      if (seenPairs.has(pairKey)) {
+        errors.push(`${label} duplicate conversion pair "${pairKey}"`);
+      } else {
+        seenPairs.set(pairKey, true);
+      }
+    }
+  });
+
+  return errors;
+}
+
 function validateRecommendations(recommendations, productIds) {
   const errors = [];
 
@@ -224,6 +303,8 @@ function validateCatalog({
     ) {
       errors.push(`variant "${variantLabel}" has invalid defaultQuantity`);
     }
+
+    errors.push(...validateCustomerUnitHints(variant, unitIds));
   }
 
   const defaultsByProduct = new Map();

@@ -1,0 +1,226 @@
+import { useEffect, useMemo, useState } from "react";
+import RecommendationCard from "./RecommendationCard";
+import { getCartUnitDisplayLabel } from "../utils/cartHelpers";
+
+function ProductInfoView({
+  product,
+  initialUnit,
+  cartCount,
+  productCount,
+  recommendations = [],
+  suppressEscape = false,
+  onBack,
+  onAddToCart,
+  onOpenCart,
+  onOpenRecommendation,
+  onQuickAddRecommendation,
+}) {
+  const startingUnit =
+    initialUnit && product.availableUnits.includes(initialUnit)
+      ? initialUnit
+      : product.defaultUnit;
+  const [selectedUnit, setSelectedUnit] = useState(startingUnit);
+  const [quantity, setQuantity] = useState(product.defaultQuantity);
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && !suppressEscape) {
+        onBack();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onBack, suppressEscape]);
+
+  const detailImage = product.image?.detail;
+  const showImage = Boolean(detailImage) && !imageFailed;
+  const hints = product.customerUnitHints ?? [];
+  const hasRecommendations = recommendations.length > 0;
+
+  const cartSummary = useMemo(() => {
+    if (cartCount < 1) {
+      return "Pesanan kosong";
+    }
+    return `${cartCount} Barang • ${productCount} Produk`;
+  }, [cartCount, productCount]);
+
+  const handleDecrease = () => {
+    setQuantity((current) => Math.max(1, current - 1));
+  };
+
+  const handleIncrease = () => {
+    setQuantity((current) => current + 1);
+  };
+
+  const handleAdd = () => {
+    onAddToCart({
+      productId: product.id,
+      name: product.name,
+      unit: selectedUnit,
+      quantity,
+      replaceUnit: true,
+    });
+  };
+
+  return (
+    <div
+      className="productInfoOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={product.name}
+    >
+      <div className="productInfoPage">
+        <header className="productInfoHeader">
+          <button
+            type="button"
+            className="productInfoBackButton"
+            aria-label="Kembali"
+            onClick={onBack}
+          >
+            ←
+          </button>
+          <span className="productInfoHeaderTitle">Detail Produk</span>
+        </header>
+
+        <div className="productInfoScroll">
+          {showImage ? (
+            <img
+              className="productInfoPhoto"
+              src={detailImage}
+              alt={product.name}
+              onError={() => setImageFailed(true)}
+            />
+          ) : (
+            <div className="productInfoImagePlaceholder" aria-hidden="true">
+              PRODUCT PHOTO
+            </div>
+          )}
+
+          <div className="productInfoIdentity">
+            <h2 className="productInfoName">{product.name}</h2>
+            {product.category ? (
+              <p className="productInfoCategory">{product.category}</p>
+            ) : null}
+          </div>
+
+          <fieldset className="unitSelector productInfoUnitSelector">
+            <legend className="unitSelectorLabel">Satuan Tersedia</legend>
+            <div className="unitOptions">
+              {product.availableUnits.map((unit) => (
+                <button
+                  key={unit}
+                  type="button"
+                  className={`unitOption${selectedUnit === unit ? " unitOption--selected" : ""}`}
+                  aria-pressed={selectedUnit === unit}
+                  onClick={() => setSelectedUnit(unit)}
+                >
+                  {getCartUnitDisplayLabel(unit)}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="quantityControl productInfoQuantity">
+            <span className="quantityLabel">Jumlah</span>
+            <div className="quantityStepper">
+              <button
+                type="button"
+                className="quantityButton"
+                aria-label="Kurangi jumlah"
+                onClick={handleDecrease}
+                disabled={quantity <= 1}
+              >
+                −
+              </button>
+              <span className="quantityValue" aria-live="polite">
+                {quantity}
+              </span>
+              <button
+                type="button"
+                className="quantityButton"
+                aria-label="Tambah jumlah"
+                onClick={handleIncrease}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {hints.length > 0 ? (
+            <ul className="productInfoHints" aria-label="Petunjuk satuan">
+              {hints.map((hint) => (
+                <li
+                  key={`${hint.fromUnit}-${hint.toUnit}-${hint.quantity}`}
+                  className="productInfoHint"
+                >
+                  1 {hint.fromUnit} = {hint.quantity}{" "}
+                  {getCartUnitDisplayLabel(hint.toUnit)}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {hasRecommendations ? (
+            <section
+              className="orderReviewRecommendations productInfoRecommendations"
+              aria-label="Sering Dipesan Bersama"
+            >
+              <div className="orderReviewRecommendationsHeader">
+                <h3 className="orderReviewRecommendationsTitle">
+                  <span
+                    className="orderReviewRecommendationsAccent"
+                    aria-hidden="true"
+                  >
+                    ✦
+                  </span>
+                  Sering Dipesan Bersama
+                </h3>
+                <p className="orderReviewRecommendationsHint">
+                  Geser untuk melihat lebih banyak
+                </p>
+              </div>
+              <ul className="orderReviewRecoCarousel">
+                {recommendations.map((recommended) => (
+                  <RecommendationCard
+                    key={recommended.id}
+                    product={recommended}
+                    onAdd={onQuickAddRecommendation}
+                    onOpen={onOpenRecommendation}
+                  />
+                ))}
+              </ul>
+            </section>
+          ) : null}
+        </div>
+
+        <div className="productInfoActions">
+          <button
+            type="button"
+            className="productInfoCartButton"
+            onClick={onOpenCart}
+            aria-label={`Pesanan Saya, ${cartSummary}`}
+          >
+            <span className="productInfoCartIcon" aria-hidden="true">
+              🛒
+            </span>
+            <span className="productInfoCartCount">{cartCount}</span>
+          </button>
+          <button
+            type="button"
+            className="productInfoAddButton"
+            onClick={handleAdd}
+          >
+            + Tambah ke Pesanan
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ProductInfoView;

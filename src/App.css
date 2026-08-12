@@ -715,7 +715,7 @@ body {
 .bottomSheetOverlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 120;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1299,6 +1299,23 @@ body {
   gap: 4px;
 }
 
+.orderReviewRecoCardInner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.orderReviewRecoCardInner--openable {
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.orderReviewRecoCardInner--openable:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .orderReviewRecoCardMedia {
   position: relative;
   width: 100%;
@@ -1483,4 +1500,271 @@ body {
 .orderReviewWhatsAppButton:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   13. Product Info View
+   -------------------------------------------------------------------------- */
+
+.productInfoOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  justify-content: center;
+  background: rgba(45, 45, 45, 0.35);
+  animation: overlayFadeIn 0.2s ease;
+}
+
+.productInfoPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  max-height: 100dvh;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-layered-lg);
+  animation: productInfoSlideIn 0.22s ease;
+}
+
+.productInfoHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: max(10px, env(safe-area-inset-top, 10px)) 12px 10px;
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-surface);
+}
+
+.productInfoBackButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.productInfoBackButton:hover {
+  background: #FFF8F0;
+  color: var(--color-primary);
+}
+
+.productInfoBackButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.productInfoHeaderTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.productInfoScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 16px 20px;
+}
+
+.productInfoPhoto {
+  display: block;
+  width: 100%;
+  max-height: min(52vw, 280px);
+  margin: 0 auto 14px;
+  border-radius: var(--radius-md);
+  object-fit: contain;
+  background: var(--color-image-bg);
+}
+
+.productInfoImagePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: min(52vw, 240px);
+  margin: 0 auto 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-image-bg);
+  color: var(--color-image-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.productInfoIdentity {
+  margin-bottom: 16px;
+}
+
+.productInfoName {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.productInfoCategory {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+}
+
+.productInfoUnitSelector {
+  margin-bottom: 16px;
+}
+
+.productInfoQuantity {
+  margin-bottom: 12px;
+}
+
+.productInfoHints {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: #FFF8F0;
+  border: 1px solid rgba(230, 126, 34, 0.14);
+}
+
+.productInfoHint {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.productInfoHint + .productInfoHint {
+  margin-top: 4px;
+}
+
+.productInfoRecommendations {
+  margin: 4px 0 8px;
+}
+
+.productInfoActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 12px 16px max(12px, env(safe-area-inset-bottom, 12px));
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-surface);
+  box-shadow: 0 -4px 16px rgba(45, 45, 45, 0.04);
+}
+
+.productInfoCartButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 52px;
+  min-height: 52px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.productInfoCartButton:hover {
+  border-color: var(--color-primary);
+  background: #FFF8F0;
+}
+
+.productInfoCartButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.productInfoCartIcon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.productInfoCartCount {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+.productInfoAddButton {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.productInfoAddButton:hover {
+  background: var(--color-primary-hover);
+}
+
+.productInfoAddButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@keyframes productInfoSlideIn {
+  from {
+    transform: translateX(12px);
+    opacity: 0.72;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .productInfoOverlay {
+    animation: none;
+  }
+
+  .productInfoPage {
+    animation: none;
+  }
 }

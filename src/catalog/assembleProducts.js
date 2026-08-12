@@ -35,6 +35,43 @@ export function assembleProducts({
       ? defaultUnitRecord.name
       : variant.defaultUnitId;
 
+    const availableUnitIdSet = new Set(variant.availableUnitIds ?? []);
+    const customerUnitHints = (variant.customerUnitHints ?? [])
+      .map((hint) => {
+        if (!availableUnitIdSet.has(hint?.fromUnitId)) {
+          return null;
+        }
+        if (!availableUnitIdSet.has(hint?.toUnitId)) {
+          return null;
+        }
+
+        const fromUnit = unitById.get(hint.fromUnitId);
+        const toUnit = unitById.get(hint.toUnitId);
+
+        if (!fromUnit || !toUnit) {
+          return null;
+        }
+
+        if (!isUnitActive(fromUnit) || !isUnitActive(toUnit)) {
+          return null;
+        }
+
+        if (
+          typeof hint.quantity !== "number" ||
+          !Number.isFinite(hint.quantity) ||
+          hint.quantity <= 0
+        ) {
+          return null;
+        }
+
+        return {
+          fromUnit: fromUnit.name,
+          toUnit: toUnit.name,
+          quantity: hint.quantity,
+        };
+      })
+      .filter(Boolean);
+
     return {
       id: variant.id,
       name: variant.name || product?.name || "",
@@ -45,6 +82,7 @@ export function assembleProducts({
       defaultUnit,
       defaultQuantity: variant.defaultQuantity ?? 1,
       image: product?.image ?? null,
+      customerUnitHints,
     };
   });
 }

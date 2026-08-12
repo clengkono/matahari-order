@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import products, { aliases, catalogRecommendations } from "./catalog";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
-import ProductBottomSheet from "./components/ProductBottomSheet";
+import ProductInfoView from "./components/ProductInfoView";
 import SearchResultRow from "./components/SearchResultRow";
 import SearchShortcuts from "./components/SearchShortcuts";
 import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
@@ -52,7 +52,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [recentSearches, setRecentSearches] = useState(loadRecentSearches);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productStack, setProductStack] = useState([]);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
   const searchInputRef = useRef(null);
@@ -66,6 +66,10 @@ export default function App() {
     updateQuantity,
     changeUnit,
   } = useCart();
+
+  const selectedProduct =
+    productStack.length > 0 ? productStack[productStack.length - 1] : null;
+  const isProductInfoOpen = selectedProduct != null;
 
   const productUnitsById = useMemo(
     () =>
@@ -86,7 +90,39 @@ export default function App() {
     [cart]
   );
 
+  const productPageRecommendations = useMemo(() => {
+    if (!selectedProduct) {
+      return [];
+    }
+
+    const recommendationSources = [
+      { productId: selectedProduct.id },
+      ...cart.map((line) => ({ productId: line.productId })),
+    ];
+
+    return getRecommendedProducts({
+      cart: recommendationSources,
+      relationships: catalogRecommendations,
+      products,
+      limit: 8,
+    });
+  }, [selectedProduct, cart]);
+
   const hasOrder = lineCount > 0;
+  const showReviewBar = hasOrder && !isProductInfoOpen;
+
+  useEffect(() => {
+    if (!isProductInfoOpen && !isReviewOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isProductInfoOpen, isReviewOpen]);
 
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
@@ -159,15 +195,19 @@ export default function App() {
     [addToCart, recordRecentSearch, search]
   );
 
-  const handleOpenSheet = useCallback(
+  const handleOpenProduct = useCallback(
     (product) => {
       if (normalizeSearchText(search)) {
         recordRecentSearch(search);
       }
-      setSelectedProduct(product);
+      setProductStack([product]);
     },
     [recordRecentSearch, search]
   );
+
+  const handleOpenRecommendationProduct = useCallback((product) => {
+    setProductStack((current) => [...current, product]);
+  }, []);
 
   const handleSelectSearchShortcut = useCallback(
     (term) => {
@@ -194,8 +234,8 @@ export default function App() {
     searchInputRef.current?.focus();
   }, []);
 
-  const handleCloseSheet = useCallback(() => {
-    setSelectedProduct(null);
+  const handleProductBack = useCallback(() => {
+    setProductStack((current) => current.slice(0, -1));
   }, []);
 
   const handleOpenReview = useCallback(() => {
@@ -257,7 +297,7 @@ export default function App() {
   );
 
   return (
-    <div className={`app${hasOrder ? " app--hasReviewBar" : ""}`}>
+    <div className={`app${showReviewBar ? " app--hasReviewBar" : ""}`}>
       <header className="header">
         <div className="headerTop">
           <h1>Matahari Order</h1>
@@ -317,7 +357,7 @@ export default function App() {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onOpen={handleOpenSheet}
+                  onOpen={handleOpenProduct}
                   onQuickAdd={handleQuickAdd}
                 />
               ))}
@@ -335,7 +375,7 @@ export default function App() {
                 key={product.id}
                 product={product}
                 cartQuantity={getDefaultUnitQuantity(product)}
-                onOpen={handleOpenSheet}
+                onOpen={handleOpenProduct}
                 onQuickAdd={handleQuickAdd}
                 onIncrease={handleIncreaseQuantity}
                 onDecrease={handleDecreaseQuantity}
@@ -354,7 +394,7 @@ export default function App() {
                     key={product.id}
                     product={product}
                     cartQuantity={getDefaultUnitQuantity(product)}
-                    onOpen={handleOpenSheet}
+                    onOpen={handleOpenProduct}
                     onQuickAdd={handleQuickAdd}
                     onIncrease={handleIncreaseQuantity}
                     onDecrease={handleDecreaseQuantity}
@@ -392,16 +432,23 @@ export default function App() {
       )}
 
       {selectedProduct && (
-        <ProductBottomSheet
+        <ProductInfoView
           key={selectedProduct.id}
           product={selectedProduct}
           initialUnit={findProductLine(cart, selectedProduct.id)?.unit}
-          onClose={handleCloseSheet}
+          cartCount={cartCount}
+          productCount={productCount}
+          recommendations={productPageRecommendations}
+          suppressEscape={isReviewOpen}
+          onBack={handleProductBack}
           onAddToCart={addToCart}
+          onOpenCart={handleOpenReview}
+          onOpenRecommendation={handleOpenRecommendationProduct}
+          onQuickAddRecommendation={handleAddRecommendation}
         />
       )}
 
-      {hasOrder && (
+      {showReviewBar && (
         <OrderReviewBar
           cartCount={cartCount}
           productCount={productCount}

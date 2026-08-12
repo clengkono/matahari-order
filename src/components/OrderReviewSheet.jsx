@@ -1,46 +1,6 @@
-import { useState } from "react";
 import BottomSheet from "./BottomSheet";
 import OrderReviewRow from "./OrderReviewRow";
-
-function RecommendationCard({ product, onAdd }) {
-  const [imageFailed, setImageFailed] = useState(false);
-  const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
-  const cardImage = product.image?.card;
-  const showImage = Boolean(cardImage) && !imageFailed;
-
-  return (
-    <li className="orderReviewRecoCard">
-      <div className="orderReviewRecoCardMedia">
-        {showImage ? (
-          <img
-            className="orderReviewRecoCardImage"
-            src={cardImage}
-            alt=""
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <div
-            className="orderReviewRecoCardImage orderReviewRecoCardImage--placeholder"
-            aria-hidden="true"
-          >
-            PHOTO
-          </div>
-        )}
-        <button
-          type="button"
-          className="orderReviewRecoCardAdd"
-          aria-label={`Tambah ${defaultOrder} ${product.name}`}
-          onClick={() => onAdd(product)}
-        >
-          +
-        </button>
-      </div>
-      <span className="orderReviewRecoCardName">{product.name}</span>
-      <span className="orderReviewRecoCardDefault">{defaultOrder}</span>
-    </li>
-  );
-}
+import RecommendationCard from "./RecommendationCard";
 
 function OrderReviewSheet({
   isOpen,
