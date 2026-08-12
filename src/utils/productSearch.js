@@ -1,5 +1,5 @@
 /**
- * Customer product search helpers (Release 0.8.1).
+ * Customer product search helpers (Release 0.8.1 / Stage 2B).
  * Pure utilities — no React dependency.
  */
 
@@ -14,6 +14,45 @@ export function normalizeSearchText(value) {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, " ");
+}
+
+/**
+ * Split a normalized name into meaningful tokens for short-query matching.
+ * Splits on whitespace and common separators; keeps alphanumerics and dots
+ * (so "l.a." / "Blue16" stay useful tokens).
+ *
+ * @param {string} normalizedName
+ * @returns {string[]}
+ */
+function tokenizeProductName(normalizedName) {
+  return String(normalizedName ?? "")
+    .split(/[^a-z0-9.]+/)
+    .filter(Boolean);
+}
+
+/**
+ * Product-name match rule.
+ * - Query length 1–2: token-prefix only (no mid-word substring).
+ * - Query length >= 3: existing substring includes().
+ *
+ * @param {string} productName
+ * @param {string} normalizedQuery
+ * @returns {boolean}
+ */
+export function productNameMatchesQuery(productName, normalizedQuery) {
+  const normalizedName = normalizeSearchText(productName);
+
+  if (!normalizedQuery || !normalizedName) {
+    return false;
+  }
+
+  if (normalizedQuery.length <= 2) {
+    return tokenizeProductName(normalizedName).some((token) =>
+      token.startsWith(normalizedQuery)
+    );
+  }
+
+  return normalizedName.includes(normalizedQuery);
 }
 
 function compareByNameThenId(a, b) {
@@ -63,7 +102,7 @@ export function searchProducts({ query, products, aliases } = {}) {
   }
 
   const nameMatches = products.filter((product) =>
-    normalizeSearchText(product.name).includes(normalizedQuery)
+    productNameMatchesQuery(product.name, normalizedQuery)
   );
 
   const nameMatchIds = new Set(nameMatches.map((product) => product.id));
@@ -74,6 +113,8 @@ export function searchProducts({ query, products, aliases } = {}) {
     for (const record of aliases) {
       const normalizedAlias = normalizeSearchText(record?.alias);
 
+      // Alias matching keeps unrestricted substring for all query lengths
+      // so shorthand like "gg" still hits "gg merah" / "gg surya".
       if (!normalizedAlias || !normalizedAlias.includes(normalizedQuery)) {
         continue;
       }

@@ -5,11 +5,16 @@ import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
 import ProductInfoView from "./components/ProductInfoView";
+import SearchEmptyState, {
+  CategoryDiscoveryCard,
+  CategoryMatchState,
+} from "./components/SearchEmptyState";
 import SearchResultRow from "./components/SearchResultRow";
 import SearchShortcuts from "./components/SearchShortcuts";
 import {
   getCategoryPresentation,
   getVisibleCategories,
+  matchCategorySearchTerm,
 } from "./config/categories";
 import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
 import { POPULAR_SEARCHES } from "./config/popularSearches";
@@ -177,6 +182,30 @@ export default function App() {
     : categoryProducts;
   const hasCategoryHits = categoryResultProducts.length > 0;
 
+  // Cross-category recovery: same pipeline on full catalogue when category miss.
+  const hasGlobalHitsOutsideCategory = useMemo(() => {
+    if (!isCategoryMode || !isSearching || hasSearchHits) {
+      return false;
+    }
+
+    const { results } = searchProducts({
+      query: normalizedSearch,
+      products,
+      aliases,
+    });
+
+    return results.length > 0;
+  }, [isCategoryMode, isSearching, hasSearchHits, normalizedSearch]);
+
+  // Exact category-term discovery for global search (no auto-redirect).
+  const matchedCategoryTerm = useMemo(() => {
+    if (isCategoryMode || !isSearching) {
+      return null;
+    }
+
+    return matchCategorySearchTerm(normalizedSearch, visibleCategories);
+  }, [isCategoryMode, isSearching, normalizedSearch, visibleCategories]);
+
   // Search recommendations: global search only (not category mode).
   const searchRecommendations = useMemo(() => {
     if (isCategoryMode || !hasSearchHits) {
@@ -271,6 +300,11 @@ export default function App() {
   const handleExitCategory = useCallback(() => {
     setSelectedCategory(null);
     setSearch("");
+    setIsSearchFocused(false);
+  }, []);
+
+  const handleSearchAllProducts = useCallback(() => {
+    setSelectedCategory(null);
     setIsSearchFocused(false);
   }, []);
 
@@ -429,7 +463,13 @@ export default function App() {
               ))}
             </div>
           ) : (
-            <p className="emptyState">Produk tidak ditemukan.</p>
+            <SearchEmptyState
+              query={normalizedSearch}
+              categoryLabel={categoryPresentation.label}
+              showCrossCategory={hasGlobalHitsOutsideCategory}
+              onClearSearch={handleClearSearch}
+              onSearchAllProducts={handleSearchAllProducts}
+            />
           )}
         </section>
       )}
@@ -457,6 +497,12 @@ export default function App() {
 
       {!isCategoryMode && isSearching && hasSearchHits && (
         <section className="searchResultsSection" aria-label="Hasil pencarian">
+          {matchedCategoryTerm ? (
+            <CategoryDiscoveryCard
+              category={matchedCategoryTerm}
+              onSelectCategory={handleSelectCategory}
+            />
+          ) : null}
           <div className="sectionTitle">Hasil Pencarian</div>
           <div className="searchResultList">
             {searchResultProducts.map((product) => (
@@ -496,9 +542,25 @@ export default function App() {
         </section>
       )}
 
-      {!isCategoryMode && isSearching && !hasSearchHits && (
-        <p className="emptyState">Produk tidak ditemukan.</p>
+      {!isCategoryMode && isSearching && !hasSearchHits && matchedCategoryTerm && (
+        <CategoryMatchState
+          category={matchedCategoryTerm}
+          onSelectCategory={handleSelectCategory}
+          onClearSearch={handleClearSearch}
+        />
       )}
+
+      {!isCategoryMode &&
+        isSearching &&
+        !hasSearchHits &&
+        !matchedCategoryTerm && (
+          <SearchEmptyState
+            query={normalizedSearch}
+            categories={visibleCategories}
+            onClearSearch={handleClearSearch}
+            onSelectCategory={handleSelectCategory}
+          />
+        )}
 
       {showHomepage && (
         <section>

@@ -1,19 +1,49 @@
 /**
- * Curated homepage category order and presentation (Stage 2A).
+ * Curated homepage category order and presentation (Stage 2A / 2B).
  *
  * Canonical `id` values must match product.category on assembled products.
  * Icons/labels are presentation only — filtering always uses `id`.
+ *
+ * `searchTerms` are exact normalized query synonyms used for global
+ * category-discovery chips (Stage 2B). They are NOT product aliases.
  *
  * Categories with zero active products are hidden at render time.
  * Unknown future catalogue categories are appended after this list.
  */
 
+import { normalizeSearchText } from "../utils/productSearch";
+
 export const CATEGORY_CONFIG = [
-  { id: "Rokok", label: "Rokok", icon: "🚬" },
-  { id: "Minuman", label: "Minuman", icon: "🥤" },
-  { id: "Bahan & Bumbu Masak", label: "Bahan & Bumbu Masak", icon: "🍳" },
-  { id: "Perawatan", label: "Perawatan", icon: "🧼" },
-  { id: "Kebersihan", label: "Kebersihan", icon: "🧹" },
+  {
+    id: "Rokok",
+    label: "Rokok",
+    icon: "🚬",
+    searchTerms: ["rokok"],
+  },
+  {
+    id: "Minuman",
+    label: "Minuman",
+    icon: "🥤",
+    searchTerms: ["minuman"],
+  },
+  {
+    id: "Bahan & Bumbu Masak",
+    label: "Bahan & Bumbu Masak",
+    icon: "🍳",
+    searchTerms: ["bahan", "bumbu", "bumbu masak", "bahan & bumbu masak"],
+  },
+  {
+    id: "Perawatan",
+    label: "Perawatan",
+    icon: "🧼",
+    searchTerms: ["perawatan"],
+  },
+  {
+    id: "Kebersihan",
+    label: "Kebersihan",
+    icon: "🧹",
+    searchTerms: ["kebersihan"],
+  },
 ];
 
 const configById = new Map(
@@ -25,7 +55,7 @@ const configById = new Map(
  * Curated order first (only if present), then any unknown categories A–Z.
  *
  * @param {Array<{ category?: string }>} products
- * @returns {Array<{ id: string, label: string, icon: string, count: number }>}
+ * @returns {Array<{ id: string, label: string, icon: string, count: number, searchTerms?: string[] }>}
  */
 export function getVisibleCategories(products) {
   const counts = new Map();
@@ -60,6 +90,7 @@ export function getVisibleCategories(products) {
         id,
         label: known?.label ?? id,
         icon: known?.icon ?? "",
+        searchTerms: known?.searchTerms ?? [id],
         count,
       });
     }
@@ -71,7 +102,7 @@ export function getVisibleCategories(products) {
 /**
  * Presentation metadata for a canonical category id.
  * @param {string | null | undefined} categoryId
- * @returns {{ id: string, label: string, icon: string }}
+ * @returns {{ id: string, label: string, icon: string, searchTerms?: string[] }}
  */
 export function getCategoryPresentation(categoryId) {
   if (!categoryId) {
@@ -84,4 +115,48 @@ export function getCategoryPresentation(categoryId) {
   }
 
   return { id: categoryId, label: categoryId, icon: "" };
+}
+
+/**
+ * Exact category-term match for global search discovery (Stage 2B).
+ * Does not auto-navigate — caller shows a suggestion chip/card.
+ *
+ * Matches against:
+ * - configured searchTerms
+ * - canonical id / label
+ *
+ * Only considers categories currently visible (have products).
+ *
+ * @param {string} query
+ * @param {Array<{ id: string, label: string, icon?: string, count: number, searchTerms?: string[] }>} visibleCategories
+ * @returns {{ id: string, label: string, icon: string, count: number } | null}
+ */
+export function matchCategorySearchTerm(query, visibleCategories = []) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery || !Array.isArray(visibleCategories)) {
+    return null;
+  }
+
+  for (const category of visibleCategories) {
+    const candidates = [
+      category.id,
+      category.label,
+      ...(category.searchTerms ?? []),
+    ];
+
+    const matched = candidates.some(
+      (term) => normalizeSearchText(term) === normalizedQuery
+    );
+
+    if (matched) {
+      return {
+        id: category.id,
+        label: category.label,
+        icon: category.icon ?? "",
+        count: category.count,
+      };
+    }
+  }
+
+  return null;
 }
