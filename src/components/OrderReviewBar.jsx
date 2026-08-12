@@ -1,9 +1,9 @@
-function OrderReviewBar({ cartCount, lineCount, onOpenReview }) {
+function OrderReviewBar({ cartCount, productCount, onOpenReview }) {
   return (
     <div className="orderReviewBar" role="region" aria-label="Ringkasan pesanan">
       <p className="orderReviewBarSummary" aria-live="polite">
         <span aria-hidden="true">🛒 </span>
-        {cartCount} Barang • {lineCount} Produk
+        {cartCount} Barang • {productCount} Produk
       </p>
       <button
         type="button"

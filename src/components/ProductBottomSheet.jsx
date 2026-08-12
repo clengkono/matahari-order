@@ -1,8 +1,12 @@
 import { useState } from "react";
 import BottomSheet from "./BottomSheet";
 
-function ProductBottomSheet({ product, onClose, onAddToCart }) {
-  const [selectedUnit, setSelectedUnit] = useState(product.defaultUnit);
+function ProductBottomSheet({ product, onClose, onAddToCart, initialUnit }) {
+  const startingUnit =
+    initialUnit && product.availableUnits.includes(initialUnit)
+      ? initialUnit
+      : product.defaultUnit;
+  const [selectedUnit, setSelectedUnit] = useState(startingUnit);
   const [quantity, setQuantity] = useState(product.defaultQuantity);
   const [imageFailed, setImageFailed] = useState(false);
   const detailImage = product.image?.detail;
@@ -22,6 +26,7 @@ function ProductBottomSheet({ product, onClose, onAddToCart }) {
       name: product.name,
       unit: selectedUnit,
       quantity,
+      replaceUnit: true,
     });
     onClose();
   };

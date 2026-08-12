@@ -1,77 +1,105 @@
+import { useState } from "react";
+import { getCartUnitDisplayLabel } from "../utils/cartHelpers";
+
 function OrderReviewRow({
   line,
+  imageCard,
   availableUnits,
   onIncrease,
   onDecrease,
-  onRemove,
+  onRemoveProduct,
   onChangeUnit,
 }) {
-  const handleDecrease = () => {
-    onDecrease(line.productId, line.unit);
-  };
-
-  const handleIncrease = () => {
-    onIncrease(line.productId, line.unit);
-  };
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = Boolean(imageCard) && !imageFailed;
+  const units =
+    availableUnits.length > 0 ? availableUnits : [line.unit].filter(Boolean);
 
   const handleRemove = () => {
-    onRemove(line.productId, line.unit);
+    onRemoveProduct(line.productId);
+  };
+
+  const handleSelectUnit = (newUnit) => {
+    if (newUnit !== line.unit) {
+      onChangeUnit(line.productId, line.unit, newUnit);
+    }
   };
 
   return (
     <li className="orderReviewRow">
-      <div className="orderReviewRowHeader">
-        <span className="orderReviewRowName">{line.name}</span>
-        <button
-          type="button"
-          className="orderReviewRowRemove"
-          aria-label={`Hapus ${line.name} ${line.quantity} ${line.unit}`}
-          onClick={handleRemove}
-        >
-          Hapus
-        </button>
-      </div>
+      <div className="orderReviewRowMain">
+        {showImage ? (
+          <img
+            className="orderReviewRowThumb"
+            src={imageCard}
+            alt=""
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="orderReviewRowThumb orderReviewRowThumb--placeholder"
+            aria-hidden="true"
+          >
+            PRODUCT PHOTO
+          </div>
+        )}
 
-      <fieldset className="orderReviewRowUnits">
-        <legend className="visuallyHidden">Satuan untuk {line.name}</legend>
-        <div className="orderReviewRowUnitOptions">
-          {availableUnits.map((unit) => (
+        <div className="orderReviewRowBody">
+          <div className="orderReviewRowHeader">
+            <span className="orderReviewRowName">{line.name}</span>
             <button
-              key={unit}
               type="button"
-              className={`orderReviewRowUnit${line.unit === unit ? " orderReviewRowUnit--selected" : ""}`}
-              aria-pressed={line.unit === unit}
-              onClick={() => onChangeUnit(line.productId, line.unit, unit)}
+              className="orderReviewRowRemove"
+              aria-label={`Hapus ${line.name} dari pesanan`}
+              onClick={handleRemove}
             >
-              {unit}
+              Hapus
             </button>
-          ))}
-        </div>
-      </fieldset>
+          </div>
 
-      <div className="orderReviewRowQuantity">
-        <span className="orderReviewRowQuantityLabel">Jumlah</span>
-        <div className="quantityStepper">
-          <button
-            type="button"
-            className="quantityButton"
-            aria-label={`Kurangi jumlah ${line.name}`}
-            onClick={handleDecrease}
-            disabled={line.quantity <= 1}
-          >
-            −
-          </button>
-          <span className="quantityValue" aria-live="polite">
-            {line.quantity}
-          </span>
-          <button
-            type="button"
-            className="quantityButton"
-            aria-label={`Tambah jumlah ${line.name}`}
-            onClick={handleIncrease}
-          >
-            +
-          </button>
+          <div className="orderReviewUnitLine">
+            <fieldset className="orderReviewUnitOptions">
+              <legend className="visuallyHidden">
+                Satuan untuk {line.name}
+              </legend>
+              {units.map((unit) => (
+                <button
+                  key={unit}
+                  type="button"
+                  className={`orderReviewUnitPill${line.unit === unit ? " orderReviewUnitPill--selected" : ""}`}
+                  aria-pressed={line.unit === unit}
+                  aria-label={unit}
+                  onClick={() => handleSelectUnit(unit)}
+                >
+                  {getCartUnitDisplayLabel(unit)}
+                </button>
+              ))}
+            </fieldset>
+
+            <div className="quantityStepper quantityStepper--compact">
+              <button
+                type="button"
+                className="quantityButton"
+                aria-label={`Kurangi ${line.name} ${line.unit}`}
+                onClick={() => onDecrease(line.productId)}
+                disabled={line.quantity <= 1}
+              >
+                −
+              </button>
+              <span className="quantityValue" aria-live="polite">
+                {line.quantity}
+              </span>
+              <button
+                type="button"
+                className="quantityButton"
+                aria-label={`Tambah ${line.name} ${line.unit}`}
+                onClick={() => onIncrease(line.productId)}
+              >
+                +
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </li>

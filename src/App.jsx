@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import "./App.css";
 import products, { aliases, catalogRecommendations } from "./catalog";
 import OrderReviewBar from "./components/OrderReviewBar";
@@ -10,7 +10,7 @@ import SearchShortcuts from "./components/SearchShortcuts";
 import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
 import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
-import { findCartLine } from "./utils/cartHelpers";
+import { findProductLine } from "./utils/cartHelpers";
 import {
   normalizeSearchText,
   searchProducts,
@@ -55,12 +55,14 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
+  const searchInputRef = useRef(null);
   const {
     cart,
     cartCount,
     lineCount,
+    productCount,
     addToCart,
-    removeFromCart,
+    removeProduct,
     updateQuantity,
     changeUnit,
   } = useCart();
@@ -79,7 +81,7 @@ export default function App() {
         cart,
         relationships: catalogRecommendations,
         products,
-        limit: 3,
+        limit: 8,
       }),
     [cart]
   );
@@ -141,7 +143,7 @@ export default function App() {
 
   const getDefaultUnitQuantity = useCallback(
     (product) => {
-      const line = findCartLine(cart, product.id, product.defaultUnit);
+      const line = findProductLine(cart, product.id);
       return line?.quantity ?? 0;
     },
     [cart]
@@ -187,6 +189,11 @@ export default function App() {
     setIsSearchFocused(false);
   }, []);
 
+  const handleClearSearch = useCallback(() => {
+    setSearch("");
+    searchInputRef.current?.focus();
+  }, []);
+
   const handleCloseSheet = useCallback(() => {
     setSelectedProduct(null);
   }, []);
@@ -208,21 +215,21 @@ export default function App() {
   }, [cart, orderNote]);
 
   const handleIncreaseQuantity = useCallback(
-    (productId, unit) => {
-      const line = findCartLine(cart, productId, unit);
+    (productId) => {
+      const line = findProductLine(cart, productId);
       if (line) {
-        updateQuantity(productId, unit, line.quantity + 1);
+        updateQuantity(productId, line.quantity + 1);
       }
     },
     [cart, updateQuantity]
   );
 
   const handleDecreaseQuantity = useCallback(
-    (productId, unit) => {
-      const line = findCartLine(cart, productId, unit);
+    (productId) => {
+      const line = findProductLine(cart, productId);
       if (line) {
         const willEmptyCart = lineCount === 1 && line.quantity === 1;
-        updateQuantity(productId, unit, line.quantity - 1);
+        updateQuantity(productId, line.quantity - 1);
         if (willEmptyCart) {
           setOrderNote("");
         }
@@ -231,14 +238,15 @@ export default function App() {
     [cart, lineCount, updateQuantity]
   );
 
-  const handleRemoveFromCart = useCallback(
-    (productId, unit) => {
-      removeFromCart(productId, unit);
-      if (lineCount === 1) {
+  const handleRemoveProduct = useCallback(
+    (productId) => {
+      const remainingLines = cart.filter((line) => line.productId !== productId);
+      removeProduct(productId);
+      if (remainingLines.length === 0) {
         setOrderNote("");
       }
     },
-    [lineCount, removeFromCart]
+    [cart, removeProduct]
   );
 
   const handleAddRecommendation = useCallback(
@@ -258,15 +266,34 @@ export default function App() {
       </header>
 
       <div className="searchSection">
-        <input
-          className="searchBox"
-          placeholder="Cari produk..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onFocus={handleSearchFocus}
-          onBlur={handleSearchBlur}
-          aria-label="Cari produk"
-        />
+        <div
+          className={`searchField${search ? " searchField--hasValue" : ""}`}
+        >
+          <input
+            ref={searchInputRef}
+            className="searchBox"
+            placeholder="Cari produk..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
+            aria-label="Cari produk"
+          />
+          {search ? (
+            <button
+              type="button"
+              className="searchClearButton"
+              aria-label="Hapus pencarian"
+              onMouseDown={(event) => {
+                // Keep focus on the input; avoid blur flicker before clear.
+                event.preventDefault();
+              }}
+              onClick={handleClearSearch}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {showSearchShortcuts && (
@@ -368,6 +395,7 @@ export default function App() {
         <ProductBottomSheet
           key={selectedProduct.id}
           product={selectedProduct}
+          initialUnit={findProductLine(cart, selectedProduct.id)?.unit}
           onClose={handleCloseSheet}
           onAddToCart={addToCart}
         />
@@ -376,7 +404,7 @@ export default function App() {
       {hasOrder && (
         <OrderReviewBar
           cartCount={cartCount}
-          lineCount={lineCount}
+          productCount={productCount}
           onOpenReview={handleOpenReview}
         />
       )}
@@ -386,15 +414,16 @@ export default function App() {
         onClose={handleCloseReview}
         cart={cart}
         cartCount={cartCount}
-        lineCount={lineCount}
+        productCount={productCount}
         productUnitsById={productUnitsById}
+        productsById={productsById}
         recommendations={frequentlyOrderedTogether}
         orderNote={orderNote}
         onOrderNoteChange={handleOrderNoteChange}
         onSendWhatsApp={handleSendWhatsApp}
         onIncrease={handleIncreaseQuantity}
         onDecrease={handleDecreaseQuantity}
-        onRemove={handleRemoveFromCart}
+        onRemoveProduct={handleRemoveProduct}
         onChangeUnit={changeUnit}
         onAddRecommendation={handleAddRecommendation}
       />

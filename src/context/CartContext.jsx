@@ -3,7 +3,9 @@ import {
   addOrMergeLine,
   calculateCartCount,
   changeLineUnit,
+  normalizeOneUnitPerProduct,
   removeLine,
+  removeProductLines,
   updateLineQuantity,
 } from "../utils/cartHelpers";
 
@@ -12,26 +14,43 @@ const CartContext = createContext(null);
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const cartCount = useMemo(() => calculateCartCount(cart), [cart]);
+  const normalizedCart = useMemo(
+    () => normalizeOneUnitPerProduct(cart),
+    [cart]
+  );
 
-  const addToCart = useCallback(({ productId, name, unit, quantity }) => {
-    if (!productId || !name || !unit || quantity < 1) {
-      return;
-    }
+  const cartCount = useMemo(
+    () => calculateCartCount(normalizedCart),
+    [normalizedCart]
+  );
 
-    setCart((current) =>
-      addOrMergeLine(current, { productId, name, unit, quantity })
-    );
+  const addToCart = useCallback(
+    ({ productId, name, unit, quantity, replaceUnit = false }) => {
+      if (!productId || !name || !unit || quantity < 1) {
+        return;
+      }
+
+      setCart((current) =>
+        addOrMergeLine(
+          current,
+          { productId, name, unit, quantity },
+          { replaceUnit }
+        )
+      );
+    },
+    []
+  );
+
+  const removeFromCart = useCallback((productId) => {
+    setCart((current) => removeLine(current, productId));
   }, []);
 
-  const removeFromCart = useCallback((productId, unit) => {
-    setCart((current) => removeLine(current, productId, unit));
+  const removeProduct = useCallback((productId) => {
+    setCart((current) => removeProductLines(current, productId));
   }, []);
 
-  const updateQuantity = useCallback((productId, unit, quantity) => {
-    setCart((current) =>
-      updateLineQuantity(current, productId, unit, quantity)
-    );
+  const updateQuantity = useCallback((productId, quantity) => {
+    setCart((current) => updateLineQuantity(current, productId, quantity));
   }, []);
 
   const changeUnit = useCallback((productId, oldUnit, newUnit) => {
@@ -42,25 +61,30 @@ export function CartProvider({ children }) {
     setCart([]);
   }, []);
 
-  const lineCount = cart.length;
+  const lineCount = normalizedCart.length;
+  const productCount = lineCount;
 
   const value = useMemo(
     () => ({
-      cart,
+      cart: normalizedCart,
       cartCount,
       lineCount,
+      productCount,
       addToCart,
       removeFromCart,
+      removeProduct,
       updateQuantity,
       changeUnit,
       clearCart,
     }),
     [
-      cart,
+      normalizedCart,
       cartCount,
       lineCount,
+      productCount,
       addToCart,
       removeFromCart,
+      removeProduct,
       updateQuantity,
       changeUnit,
       clearCart,

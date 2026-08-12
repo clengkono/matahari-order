@@ -1,20 +1,62 @@
+import { useState } from "react";
 import BottomSheet from "./BottomSheet";
 import OrderReviewRow from "./OrderReviewRow";
+
+function RecommendationCard({ product, onAdd }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+  const cardImage = product.image?.card;
+  const showImage = Boolean(cardImage) && !imageFailed;
+
+  return (
+    <li className="orderReviewRecoCard">
+      <div className="orderReviewRecoCardMedia">
+        {showImage ? (
+          <img
+            className="orderReviewRecoCardImage"
+            src={cardImage}
+            alt=""
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="orderReviewRecoCardImage orderReviewRecoCardImage--placeholder"
+            aria-hidden="true"
+          >
+            PHOTO
+          </div>
+        )}
+        <button
+          type="button"
+          className="orderReviewRecoCardAdd"
+          aria-label={`Tambah ${defaultOrder} ${product.name}`}
+          onClick={() => onAdd(product)}
+        >
+          +
+        </button>
+      </div>
+      <span className="orderReviewRecoCardName">{product.name}</span>
+      <span className="orderReviewRecoCardDefault">{defaultOrder}</span>
+    </li>
+  );
+}
 
 function OrderReviewSheet({
   isOpen,
   onClose,
   cart,
   cartCount,
-  lineCount,
+  productCount,
   productUnitsById,
+  productsById = {},
   recommendations = [],
   orderNote,
   onOrderNoteChange,
   onSendWhatsApp,
   onIncrease,
   onDecrease,
-  onRemove,
+  onRemoveProduct,
   onChangeUnit,
   onAddRecommendation,
 }) {
@@ -26,7 +68,7 @@ function OrderReviewSheet({
       <h2 className="orderReviewSheetTitle">Pesanan Saya</h2>
 
       <p className="orderReviewSheetSummary" aria-live="polite">
-        {cartCount} Barang • {lineCount} Produk
+        {cartCount} Barang • {productCount} Produk
       </p>
 
       {cart.length === 0 ? (
@@ -35,14 +77,15 @@ function OrderReviewSheet({
         <ul className="orderReviewList">
           {cart.map((line) => (
             <OrderReviewRow
-              key={`${line.productId}::${line.unit}`}
+              key={line.productId}
               line={line}
+              imageCard={productsById[line.productId]?.image?.card}
               availableUnits={
                 productUnitsById[line.productId] ?? [line.unit]
               }
               onIncrease={onIncrease}
               onDecrease={onDecrease}
-              onRemove={onRemove}
+              onRemoveProduct={onRemoveProduct}
               onChangeUnit={onChangeUnit}
             />
           ))}
@@ -65,34 +108,17 @@ function OrderReviewSheet({
               Sering Dipesan Bersama
             </h3>
             <p className="orderReviewRecommendationsHint">
-              Mungkin Anda juga perlu
+              Geser untuk melihat lebih banyak
             </p>
           </div>
-          <ul className="orderReviewRecommendationsList">
-            {recommendations.map((product) => {
-              const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
-
-              return (
-                <li key={product.id} className="orderReviewRecommendationRow">
-                  <div className="orderReviewRecommendationInfo">
-                    <span className="orderReviewRecommendationName">
-                      {product.name}
-                    </span>
-                    <span className="orderReviewRecommendationDefault">
-                      {defaultOrder}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    className="orderReviewRecommendationAdd"
-                    aria-label={`Tambah ${defaultOrder} ${product.name}`}
-                    onClick={() => onAddRecommendation(product)}
-                  >
-                    Tambah
-                  </button>
-                </li>
-              );
-            })}
+          <ul className="orderReviewRecoCarousel">
+            {recommendations.map((product) => (
+              <RecommendationCard
+                key={product.id}
+                product={product}
+                onAdd={onAddRecommendation}
+              />
+            ))}
           </ul>
         </section>
       )}

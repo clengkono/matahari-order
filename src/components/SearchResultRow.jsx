@@ -26,12 +26,12 @@ function SearchResultRow({
 
   const handleIncrease = (e) => {
     e.stopPropagation();
-    onIncrease(product.id, product.defaultUnit);
+    onIncrease(product.id);
   };
 
   const handleDecrease = (e) => {
     e.stopPropagation();
-    onDecrease(product.id, product.defaultUnit);
+    onDecrease(product.id);
   };
 
   return (

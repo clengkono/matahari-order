@@ -138,6 +138,10 @@ body {
   background: transparent;
 }
 
+.searchField {
+  position: relative;
+}
+
 .searchBox {
   width: 100%;
   min-height: 52px;
@@ -153,6 +157,10 @@ body {
     box-shadow var(--transition);
 }
 
+.searchField--hasValue .searchBox {
+  padding-right: 52px;
+}
+
 .searchBox::placeholder {
   color: var(--color-text-muted);
 }
@@ -163,6 +171,40 @@ body {
   box-shadow:
     var(--shadow-search-float),
     0 0 0 3px rgba(212, 160, 23, 0.12);
+}
+
+.searchClearButton {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.searchClearButton:hover {
+  color: var(--color-text);
+  background: rgba(45, 45, 45, 0.06);
+}
+
+.searchClearButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 
@@ -811,6 +853,22 @@ body {
   background: var(--color-surface-raised);
 }
 
+.quantityStepper--compact {
+  flex-shrink: 0;
+}
+
+.quantityStepper--compact .quantityButton {
+  min-width: 36px;
+  min-height: 36px;
+  font-size: 17px;
+}
+
+.quantityStepper--compact .quantityValue {
+  min-width: 32px;
+  min-height: 36px;
+  font-size: 14px;
+}
+
 .quantityButton {
   min-width: 40px;
   min-height: 40px;
@@ -1014,12 +1072,12 @@ body {
 
 .orderReviewList {
   list-style: none;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   padding: 0;
 }
 
 .orderReviewRow {
-  padding: 14px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--color-border-light);
 }
 
@@ -1027,30 +1085,69 @@ body {
   border-bottom: none;
 }
 
+.orderReviewRowMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.orderReviewRowThumb {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--color-image-bg);
+  border: 1px solid var(--color-border-light);
+  display: block;
+}
+
+.orderReviewRowThumb--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-image-text);
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.orderReviewRowBody {
+  flex: 1;
+  min-width: 0;
+}
+
 .orderReviewRowHeader {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
 .orderReviewRowName {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .orderReviewRowRemove {
   flex-shrink: 0;
-  min-height: 36px;
-  padding: 6px 10px;
+  min-height: 32px;
+  padding: 4px 8px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-raised);
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -1070,26 +1167,35 @@ body {
   outline-offset: 2px;
 }
 
-.orderReviewRowUnits {
-  margin: 0 0 10px;
+.orderReviewUnitLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 8px;
+  min-width: 0;
+}
+
+.orderReviewUnitOptions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 140px;
+  min-width: 0;
+  margin: 0;
   padding: 0;
   border: none;
 }
 
-.orderReviewRowUnitOptions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.orderReviewRowUnit {
+.orderReviewUnitPill {
   min-height: 34px;
-  padding: 5px 12px;
+  padding: 5px 10px;
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: var(--color-surface-raised);
   color: var(--color-text);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -1099,36 +1205,28 @@ body {
     color var(--transition);
 }
 
-.orderReviewRowUnit:hover {
+.orderReviewUnitPill:hover {
   border-color: var(--color-primary);
 }
 
-.orderReviewRowUnit--selected {
+.orderReviewUnitPill--selected {
   border-color: var(--color-primary);
   background: rgba(230, 126, 34, 0.1);
   color: var(--color-primary);
 }
 
-.orderReviewRowUnit:focus-visible {
+.orderReviewUnitPill:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-.orderReviewRowQuantity {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.orderReviewRowQuantityLabel {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
+.orderReviewUnitLine .quantityStepper--compact {
+  margin-left: auto;
 }
 
 .orderReviewRecommendations {
-  margin: 18px 0 16px;
-  padding: 14px 12px;
+  margin: 14px 0 16px;
+  padding: 12px 0 12px 12px;
   border: 1px solid rgba(230, 126, 34, 0.16);
   border-radius: var(--radius-md);
   background: #FFF8F0;
@@ -1139,6 +1237,7 @@ body {
 
 .orderReviewRecommendationsHeader {
   margin-bottom: 10px;
+  padding-right: 12px;
   min-width: 0;
 }
 
@@ -1171,70 +1270,121 @@ body {
   line-height: 1.35;
 }
 
-.orderReviewRecommendationsList {
+.orderReviewRecoCarousel {
   list-style: none;
   margin: 0;
-  padding: 0;
-}
-
-.orderReviewRecommendationRow {
+  padding: 0 12px 2px 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  min-width: 0;
-  padding: 10px 0;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
 
-.orderReviewRecommendationRow + .orderReviewRecommendationRow {
-  border-top: 1px solid rgba(230, 126, 34, 0.12);
+.orderReviewRecoCarousel::-webkit-scrollbar {
+  display: none;
 }
 
-.orderReviewRecommendationInfo {
+.orderReviewRecoCard {
+  flex: 0 0 calc((100% - 24px) / 3.35);
+  width: calc((100% - 24px) / 3.35);
+  max-width: 120px;
+  min-width: 86px;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
+  gap: 4px;
 }
 
-.orderReviewRecommendationName {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.3;
-  overflow-wrap: anywhere;
+.orderReviewRecoCardMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: var(--color-image-bg);
+  border: 1px solid rgba(230, 126, 34, 0.12);
+  overflow: hidden;
 }
 
-.orderReviewRecommendationDefault {
-  font-size: 12px;
+.orderReviewRecoCardImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--color-image-bg);
+}
+
+.orderReviewRecoCardImage--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-image-text);
+  font-size: 8px;
   font-weight: 600;
-  color: var(--color-text-muted);
-  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.orderReviewRecommendationAdd {
-  flex-shrink: 0;
-  min-width: 72px;
-  min-height: 40px;
-  padding: 8px 12px;
+.orderReviewRecoCardAdd {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   background: var(--color-primary);
   color: var(--color-white);
-  font-size: 13px;
+  font-size: 22px;
   font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  transition: background-color var(--transition);
+  box-shadow: 0 1px 3px rgba(45, 45, 45, 0.16);
+  transition: background-color var(--transition), transform var(--transition);
 }
 
-.orderReviewRecommendationAdd:hover {
+.orderReviewRecoCardAdd:hover {
   background: var(--color-primary-hover);
 }
 
-.orderReviewRecommendationAdd:focus-visible {
+.orderReviewRecoCardAdd:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+.orderReviewRecoCardName {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.orderReviewRecoCardDefault {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.25;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orderReviewRecoCarousel {
+    scroll-behavior: auto;
+  }
+
+  .orderReviewRecoCardAdd {
+    transition: none;
+  }
 }
 
 .orderReviewNoteField {
