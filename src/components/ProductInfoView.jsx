@@ -4,7 +4,7 @@ import { getCartUnitDisplayLabel } from "../utils/cartHelpers";
 
 function ProductInfoView({
   product,
-  initialUnit,
+  cartLine,
   cartCount,
   productCount,
   recommendations = [],
@@ -16,8 +16,8 @@ function ProductInfoView({
   onQuickAddRecommendation,
 }) {
   const startingUnit =
-    initialUnit && product.availableUnits.includes(initialUnit)
-      ? initialUnit
+    cartLine?.unit && product.availableUnits.includes(cartLine.unit)
+      ? cartLine.unit
       : product.defaultUnit;
   const [selectedUnit, setSelectedUnit] = useState(startingUnit);
   const [quantity, setQuantity] = useState(product.defaultQuantity);
@@ -41,6 +41,12 @@ function ProductInfoView({
   const showImage = Boolean(detailImage) && !imageFailed;
   const hints = product.customerUnitHints ?? [];
   const hasRecommendations = recommendations.length > 0;
+  const isInCart = Boolean(cartLine && cartLine.quantity >= 1);
+  const selectedUnitLabel = getCartUnitDisplayLabel(selectedUnit);
+  const addButtonLabel = isInCart
+    ? `Tambah ${quantity} ${selectedUnitLabel}`
+    : "+ Tambah ke Pesanan";
+  const addAriaLabel = `Tambah ${quantity} ${selectedUnitLabel} ke pesanan`;
 
   const cartSummary = useMemo(() => {
     if (cartCount < 1) {
@@ -107,6 +113,26 @@ function ProductInfoView({
               <p className="productInfoCategory">{product.category}</p>
             ) : null}
           </div>
+
+          {isInCart ? (
+            <div className="productInfoCartStatus">
+              <p className="productInfoCartStatusCopy">
+                <span className="productInfoCartStatusLabel">
+                  Sudah di pesanan:
+                </span>
+                <span className="productInfoCartStatusValue" aria-live="polite">
+                  {cartLine.quantity} {getCartUnitDisplayLabel(cartLine.unit)}
+                </span>
+              </p>
+              <button
+                type="button"
+                className="productInfoEditInCart"
+                onClick={onOpenCart}
+              >
+                Ubah di Pesanan Saya
+              </button>
+            </div>
+          ) : null}
 
           <fieldset className="unitSelector productInfoUnitSelector">
             <legend className="unitSelectorLabel">Satuan Tersedia</legend>
@@ -214,8 +240,9 @@ function ProductInfoView({
             type="button"
             className="productInfoAddButton"
             onClick={handleAdd}
+            aria-label={addAriaLabel}
           >
-            + Tambah ke Pesanan
+            {addButtonLabel}
           </button>
         </div>
       </div>

@@ -1,6 +1,13 @@
 import { useEffect } from "react";
 
-function BottomSheet({ isOpen, onClose, title, children }) {
+function BottomSheet({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer = null,
+  scrollRef,
+}) {
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -23,17 +30,24 @@ function BottomSheet({ isOpen, onClose, title, children }) {
     return null;
   }
 
+  const hasFooter = Boolean(footer);
+
   return (
     <div className="bottomSheetOverlay" onClick={onClose}>
       <div
-        className="bottomSheet"
+        className={`bottomSheet${hasFooter ? " bottomSheet--hasFooter" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bottomSheetHandle" aria-hidden="true" />
-        {children}
+        <div className="bottomSheetScroll" ref={scrollRef}>
+          {children}
+        </div>
+        {hasFooter ? (
+          <div className="bottomSheetFooter">{footer}</div>
+        ) : null}
       </div>
     </div>
   );

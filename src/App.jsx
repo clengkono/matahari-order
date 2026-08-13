@@ -659,7 +659,7 @@ export default function App() {
         <ProductInfoView
           key={selectedProduct.id}
           product={selectedProduct}
-          initialUnit={findProductLine(cart, selectedProduct.id)?.unit}
+          cartLine={findProductLine(cart, selectedProduct.id)}
           cartCount={cartCount}
           productCount={productCount}
           recommendations={productPageRecommendations}

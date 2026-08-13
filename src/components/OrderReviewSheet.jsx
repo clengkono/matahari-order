@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from "react";
 import BottomSheet from "./BottomSheet";
 import OrderReviewRow from "./OrderReviewRow";
 import RecommendationCard from "./RecommendationCard";
@@ -23,6 +24,7 @@ function OrderReviewSheet({
   onChangeUnit,
   onAddRecommendation,
 }) {
+  const scrollRef = useRef(null);
   const showHandoff = whatsAppHandoffStatus === "opened";
   const showRecommendations =
     !showHandoff && cart.length > 0 && recommendations.length > 0;
@@ -31,8 +33,46 @@ function OrderReviewSheet({
     whatsAppHandoffStatus === "opening" ||
     whatsAppHandoffStatus === "opened";
 
+  useLayoutEffect(() => {
+    if (!isOpen || !showHandoff) {
+      return;
+    }
+
+    const scroller = scrollRef.current;
+    if (scroller) {
+      scroller.scrollTop = 0;
+    }
+  }, [isOpen, showHandoff]);
+
+  const sendFooter = showHandoff ? null : (
+    <div className="orderReviewSheetFooter">
+      {whatsAppHandoffStatus === "failed" ? (
+        <p className="orderReviewHandoffError" role="alert">
+          WhatsApp tidak dapat dibuka.
+          <br />
+          Coba lagi.
+        </p>
+      ) : null}
+      <button
+        type="button"
+        className="orderReviewWhatsAppButton"
+        disabled={isSendDisabled}
+        aria-disabled={isSendDisabled}
+        onClick={onSendWhatsApp}
+      >
+        Kirim via WhatsApp
+      </button>
+    </div>
+  );
+
   return (
-    <BottomSheet isOpen={isOpen} onClose={onClose} title="Pesanan Saya">
+    <BottomSheet
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Pesanan Saya"
+      scrollRef={scrollRef}
+      footer={sendFooter}
+    >
       <h2 className="orderReviewSheetTitle">Pesanan Saya</h2>
 
       {showHandoff ? (
@@ -137,28 +177,12 @@ function OrderReviewSheet({
           )}
 
           <div className="orderReviewSheetActions">
-            {whatsAppHandoffStatus === "failed" ? (
-              <p className="orderReviewHandoffError" role="alert">
-                WhatsApp tidak dapat dibuka.
-                <br />
-                Coba lagi.
-              </p>
-            ) : null}
             <button
               type="button"
               className="orderReviewContinueButton"
               onClick={onClose}
             >
               Tambah Produk
-            </button>
-            <button
-              type="button"
-              className="orderReviewWhatsAppButton"
-              disabled={isSendDisabled}
-              aria-disabled={isSendDisabled}
-              onClick={onSendWhatsApp}
-            >
-              Kirim via WhatsApp
             </button>
           </div>
         </>
