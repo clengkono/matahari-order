@@ -138,6 +138,16 @@ body {
   background: transparent;
 }
 
+/* Stage 2D: same search field stays reachable on long category lists.
+   Category-only so homepage keeps the floating overlap on the orange header.
+   Opaque fill prevents result rows from showing through while stuck. */
+.app--categoryMode .searchSection {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--color-surface);
+}
+
 .searchField {
   position: relative;
 }
@@ -152,6 +162,9 @@ body {
   font-size: 16px;
   color: var(--color-text);
   box-shadow: var(--shadow-search-float);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   transition:
     border-color var(--transition),
     box-shadow var(--transition);

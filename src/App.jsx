@@ -370,8 +370,17 @@ export default function App() {
     [addToCart]
   );
 
+  const searchPlaceholder = isCategoryMode
+    ? `Cari di ${categoryPresentation.label}...`
+    : "Cari produk...";
+  const searchAriaLabel = isCategoryMode
+    ? `Cari di ${categoryPresentation.label}`
+    : "Cari produk";
+
   return (
-    <div className={`app${showReviewBar ? " app--hasReviewBar" : ""}`}>
+    <div
+      className={`app${showReviewBar ? " app--hasReviewBar" : ""}${isCategoryMode ? " app--categoryMode" : ""}`}
+    >
       <header className="header">
         <div className="headerTop">
           <h1>Matahari Order</h1>
@@ -386,12 +395,12 @@ export default function App() {
           <input
             ref={searchInputRef}
             className="searchBox"
-            placeholder="Cari produk..."
+            placeholder={searchPlaceholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onFocus={handleSearchFocus}
             onBlur={handleSearchBlur}
-            aria-label="Cari produk"
+            aria-label={searchAriaLabel}
           />
           {search ? (
             <button
@@ -443,7 +452,7 @@ export default function App() {
                 {categoryPresentation.label}
               </h2>
               <p className="categoryResultsCount">
-                {categoryProducts.length} Produk
+                {categoryResultProducts.length} Produk
               </p>
             </div>
           </div>
