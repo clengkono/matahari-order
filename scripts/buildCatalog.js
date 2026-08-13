@@ -1,10 +1,16 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join, resolve, sep } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { normalizeSearchText } from "../src/utils/productSearch.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const catalogDir = join(__dirname, "..", "src", "catalog");
+const rootDir = join(__dirname, "..");
+const catalogDir = join(rootDir, "src", "catalog");
+const defaultPublicDir = join(rootDir, "public");
+
+const PRODUCT_IMAGE_PREFIX = "/product-images/";
+const SERVED_IMAGE_EXTENSION = ".webp";
+const ORIGINAL_IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 
 function loadJson(fileName) {
   const filePath = join(catalogDir, fileName);
@@ -35,6 +41,256 @@ function findDuplicateIds(items, label) {
   }
 
   return duplicates;
+}
+
+function isInsideDir(filePath, dirPath) {
+  const resolvedFile = resolve(filePath);
+  const resolvedDir = resolve(dirPath);
+  const prefix = resolvedDir.endsWith(sep) ? resolvedDir : resolvedDir + sep;
+  return resolvedFile === resolvedDir || resolvedFile.startsWith(prefix);
+}
+
+function pathExtension(pathname) {
+  const base = pathname.split("/").pop() || "";
+  const dot = base.lastIndexOf(".");
+  if (dot < 0) {
+    return "";
+  }
+  return base.slice(dot).toLowerCase();
+}
+
+function pathBasename(pathname) {
+  return pathname.split("/").pop() || "";
+}
+
+function hasImageField(image, field) {
+  return (
+    Object.prototype.hasOwnProperty.call(image, field) &&
+    image[field] !== undefined &&
+    image[field] !== null
+  );
+}
+
+/**
+ * Validate one image path. Missing image metadata is handled by the caller.
+ * Local /product-images/ files only — no remote URLs.
+ */
+function validateImagePath(value, productId, field, { publicDir, fileExists }) {
+  const errors = [];
+  const label = `product "${productId}" image.${field}`;
+
+  if (typeof value !== "string") {
+    errors.push(`${label} must be a string`);
+    return { errors, normalizedPath: null };
+  }
+
+  const trimmed = value.trim();
+  if (trimmed === "") {
+    errors.push(`${label} is empty`);
+    return { errors, normalizedPath: null };
+  }
+
+  const lower = trimmed.toLowerCase();
+  if (
+    lower.startsWith("http://") ||
+    lower.startsWith("https://") ||
+    lower.startsWith("//")
+  ) {
+    errors.push(
+      `${label} must be a local /product-images/ path, not an external URL`
+    );
+    return { errors, normalizedPath: null };
+  }
+
+  if (!trimmed.startsWith(PRODUCT_IMAGE_PREFIX)) {
+    errors.push(`${label} must begin with "/product-images/"`);
+    return { errors, normalizedPath: null };
+  }
+
+  if (
+    trimmed.includes("\\") ||
+    trimmed.includes("..") ||
+    trimmed.includes("//") ||
+    trimmed.includes("?") ||
+    trimmed.includes("#")
+  ) {
+    errors.push(`${label} contains an unsafe path`);
+    return { errors, normalizedPath: null };
+  }
+
+  const relativeFromPublic = trimmed.slice(1);
+  const segments = relativeFromPublic.split("/");
+  if (segments.some((segment) => segment === "" || segment === ".")) {
+    errors.push(`${label} contains an unsafe path`);
+    return { errors, normalizedPath: null };
+  }
+
+  const absolutePath = join(publicDir, ...segments);
+  if (!isInsideDir(absolutePath, join(publicDir, "product-images"))) {
+    errors.push(`${label} contains an unsafe path`);
+    return { errors, normalizedPath: null };
+  }
+
+  if (!fileExists(absolutePath)) {
+    errors.push(
+      `${label} references missing file "public/${relativeFromPublic}"`
+    );
+  }
+
+  return { errors, normalizedPath: trimmed };
+}
+
+function validateServedImageFilename(pathname, productId, field) {
+  const errors = [];
+  const label = `product "${productId}" image.${field}`;
+  const basename = pathBasename(pathname);
+  const extension = pathExtension(pathname);
+
+  if (extension !== SERVED_IMAGE_EXTENSION) {
+    errors.push(`${label} must use a .webp extension`);
+  }
+
+  const stem =
+    basename.lastIndexOf(".") >= 0
+      ? basename.slice(0, basename.lastIndexOf("."))
+      : basename;
+  if (productId && stem !== productId) {
+    errors.push(`${label} filename must be "${productId}.webp"`);
+  }
+
+  return errors;
+}
+
+function validateOriginalImageFilename(pathname, productId) {
+  const errors = [];
+  const label = `product "${productId}" image.original`;
+  const extension = pathExtension(pathname);
+
+  if (!ORIGINAL_IMAGE_EXTENSIONS.has(extension)) {
+    errors.push(
+      `${label} must use a .jpg, .jpeg, .png, or .webp extension`
+    );
+  }
+
+  return errors;
+}
+
+function validateProductImages(products, { publicDir, fileExists } = {}) {
+  const errors = [];
+  const resolvedPublicDir = publicDir ?? defaultPublicDir;
+  const exists = fileExists ?? existsSync;
+  const seenCard = new Map();
+  const seenDetail = new Map();
+  const seenOriginal = new Map();
+
+  for (const product of products) {
+    const productId = product.id ?? "(unknown)";
+    const image = product.image;
+
+    if (image === undefined || image === null) {
+      continue;
+    }
+
+    if (typeof image !== "object" || Array.isArray(image)) {
+      errors.push(`product "${productId}" image must be an object`);
+      continue;
+    }
+
+    const hasCard = hasImageField(image, "card");
+    const hasDetail = hasImageField(image, "detail");
+    const hasOriginal = hasImageField(image, "original");
+
+    if (hasCard && !hasDetail) {
+      errors.push(
+        `product "${productId}" image.card is set without image.detail`
+      );
+    } else if (hasDetail && !hasCard) {
+      errors.push(
+        `product "${productId}" image.detail is set without image.card`
+      );
+    } else if (!hasCard && !hasDetail) {
+      errors.push(
+        `product "${productId}" image must include both card and detail`
+      );
+    }
+
+    const pathOptions = {
+      publicDir: resolvedPublicDir,
+      fileExists: exists,
+    };
+
+    if (hasCard) {
+      const result = validateImagePath(
+        image.card,
+        productId,
+        "card",
+        pathOptions
+      );
+      errors.push(...result.errors);
+      if (result.normalizedPath) {
+        errors.push(
+          ...validateServedImageFilename(result.normalizedPath, productId, "card")
+        );
+        if (seenCard.has(result.normalizedPath)) {
+          errors.push(
+            `duplicate image.card path "${result.normalizedPath}" on products "${seenCard.get(result.normalizedPath)}" and "${productId}"`
+          );
+        } else {
+          seenCard.set(result.normalizedPath, productId);
+        }
+      }
+    }
+
+    if (hasDetail) {
+      const result = validateImagePath(
+        image.detail,
+        productId,
+        "detail",
+        pathOptions
+      );
+      errors.push(...result.errors);
+      if (result.normalizedPath) {
+        errors.push(
+          ...validateServedImageFilename(
+            result.normalizedPath,
+            productId,
+            "detail"
+          )
+        );
+        if (seenDetail.has(result.normalizedPath)) {
+          errors.push(
+            `duplicate image.detail path "${result.normalizedPath}" on products "${seenDetail.get(result.normalizedPath)}" and "${productId}"`
+          );
+        } else {
+          seenDetail.set(result.normalizedPath, productId);
+        }
+      }
+    }
+
+    if (hasOriginal) {
+      const result = validateImagePath(
+        image.original,
+        productId,
+        "original",
+        pathOptions
+      );
+      errors.push(...result.errors);
+      if (result.normalizedPath) {
+        errors.push(
+          ...validateOriginalImageFilename(result.normalizedPath, productId)
+        );
+        if (seenOriginal.has(result.normalizedPath)) {
+          errors.push(
+            `duplicate image.original path "${result.normalizedPath}" on products "${seenOriginal.get(result.normalizedPath)}" and "${productId}"`
+          );
+        } else {
+          seenOriginal.set(result.normalizedPath, productId);
+        }
+      }
+    }
+  }
+
+  return errors;
 }
 
 const RECOMMENDATION_SOURCES = new Set(["sales", "manual"]);
@@ -197,14 +453,10 @@ function validateRecommendations(recommendations, productIds) {
   return errors;
 }
 
-function validateCatalog({
-  products,
-  variants,
-  units,
-  aliases,
-  mappings,
-  recommendations,
-}) {
+function validateCatalog(
+  { products, variants, units, aliases, mappings, recommendations },
+  options = {}
+) {
   const errors = [];
 
   errors.push(...findDuplicateIds(products, "product"));
@@ -419,6 +671,7 @@ function validateCatalog({
   }
 
   errors.push(...validateRecommendations(recommendations, productIds));
+  errors.push(...validateProductImages(products, options));
 
   return errors;
 }
@@ -492,4 +745,12 @@ function main() {
   }
 }
 
-main();
+const isDirectRun =
+  Boolean(process.argv[1]) &&
+  import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+
+if (isDirectRun) {
+  main();
+}
+
+export { validateCatalog, validateProductImages };

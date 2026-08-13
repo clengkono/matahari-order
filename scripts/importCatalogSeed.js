@@ -1,3 +1,10 @@
+/**
+ * BOOTSTRAP / DESTRUCTIVE IMPORT — NOT FOR ROUTINE CATALOGUE UPDATES
+ *
+ * Rewrites products, variants, units, mappings, and aliases from
+ * rkk.catalog-seed.json. This wipes image metadata and expanded aliases.
+ * Use Catalogue Studio and the live JSON files for ongoing catalogue work.
+ */
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
