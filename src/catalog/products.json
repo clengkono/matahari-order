@@ -11,7 +11,12 @@
     "name": "Apache 16",
     "category": "Rokok",
     "favorite": true,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-apache-16.webp",
+      "detail": "/product-images/details/cigarettes/prod-apache-16.webp",
+      "original": "/product-images/originals/cigarettes/prod-apache-16-original.png"
+    }
   },
   {
     "id": "prod-ave-20",
@@ -214,7 +219,12 @@
     "name": "Dunhill Hitam Filter 16",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-dunhill-hitam-filter-16.webp",
+      "detail": "/product-images/details/cigarettes/prod-dunhill-hitam-filter-16.webp",
+      "original": "/product-images/originals/cigarettes/prod-dunhill-hitam-filter-16-original.png"
+    }
   },
   {
     "id": "prod-dunhill-putih-mild-16",
@@ -303,7 +313,12 @@
     "name": "Gudang Garam Merah 16",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-gudang-garam-merah-16.webp",
+      "detail": "/product-images/details/cigarettes/prod-gudang-garam-merah-16.webp",
+      "original": "/product-images/originals/cigarettes/prod-gudang-garam-merah-16-original.png"
+    }
   },
   {
     "id": "prod-harum-manis-20",
@@ -415,7 +430,12 @@
     "name": "Nation Gold 20",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-nation-gold-20.webp",
+      "detail": "/product-images/details/cigarettes/prod-nation-gold-20.webp",
+      "original": "/product-images/originals/cigarettes/prod-nation-gold-20-original.png"
+    }
   },
   {
     "id": "prod-nation-white-20",
