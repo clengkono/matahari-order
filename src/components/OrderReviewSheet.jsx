@@ -26,6 +26,9 @@ function OrderReviewSheet({
 }) {
   const scrollRef = useRef(null);
   const showHandoff = whatsAppHandoffStatus === "opened";
+  const lockSheetDismiss =
+    whatsAppHandoffStatus === "opening" ||
+    whatsAppHandoffStatus === "opened";
   const showRecommendations =
     !showHandoff && cart.length > 0 && recommendations.length > 0;
   const isSendDisabled =
@@ -72,6 +75,7 @@ function OrderReviewSheet({
       title="Pesanan Saya"
       scrollRef={scrollRef}
       footer={sendFooter}
+      dismissible={!lockSheetDismiss}
     >
       <h2 className="orderReviewSheetTitle">Pesanan Saya</h2>
 
@@ -81,12 +85,15 @@ function OrderReviewSheet({
           <p className="orderReviewHandoffBody">
             Periksa pesan di WhatsApp lalu tekan Kirim.
           </p>
+          <p className="orderReviewHandoffClearHint">
+            Pesanan di aplikasi akan dihapus setelah Anda memilih “Saya sudah kirim”.
+          </p>
           <div className="orderReviewSheetActions">
             <button
               type="button"
               className="orderReviewWhatsAppButton"
               onClick={onConfirmWhatsAppSent}
-              aria-label="Saya sudah kirim di WhatsApp. Hapus pesanan dari aplikasi."
+              aria-label="Saya sudah kirim di WhatsApp. Pesanan di aplikasi akan dihapus."
             >
               Saya sudah kirim
             </button>

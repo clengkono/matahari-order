@@ -7,9 +7,10 @@ function BottomSheet({
   children,
   footer = null,
   scrollRef,
+  dismissible = true,
 }) {
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || !dismissible) {
       return;
     }
 
@@ -24,7 +25,7 @@ function BottomSheet({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, dismissible, onClose]);
 
   if (!isOpen) {
     return null;
@@ -33,7 +34,10 @@ function BottomSheet({
   const hasFooter = Boolean(footer);
 
   return (
-    <div className="bottomSheetOverlay" onClick={onClose}>
+    <div
+      className="bottomSheetOverlay"
+      onClick={dismissible ? onClose : undefined}
+    >
       <div
         className={`bottomSheet${hasFooter ? " bottomSheet--hasFooter" : ""}`}
         role="dialog"

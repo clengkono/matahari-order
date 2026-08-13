@@ -334,8 +334,15 @@ export default function App() {
   }, []);
 
   const handleCloseReview = useCallback(() => {
+    if (
+      whatsAppHandoffStatus === "opening" ||
+      whatsAppHandoffStatus === "opened"
+    ) {
+      return;
+    }
+
     setIsReviewOpen(false);
-  }, []);
+  }, [whatsAppHandoffStatus]);
 
   const handleOrderNoteChange = useCallback((value) => {
     setOrderNote(value);

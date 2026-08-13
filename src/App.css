@@ -1857,11 +1857,20 @@ body {
 }
 
 .orderReviewHandoffBody {
-  margin: 0 0 20px;
+  margin: 0 0 10px;
   font-size: 15px;
   font-weight: 500;
   color: var(--color-text-muted);
   line-height: 1.45;
+}
+
+.orderReviewHandoffClearHint {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 .orderReviewHandoffError {
