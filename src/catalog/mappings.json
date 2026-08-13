@@ -185,7 +185,7 @@
     "posName": "Camel Blue16",
     "posUnit": "BKS",
     "productId": "prod-camel-blue16",
-    "productName": "Camel Blue16",
+    "productName": "Camel Blue 16",
     "unitId": "prod-camel-blue16__bungkus",
     "unitName": "Bungkus"
   },
@@ -195,7 +195,7 @@
     "posName": "Camel Blue16",
     "posUnit": "½ SLOF",
     "productId": "prod-camel-blue16",
-    "productName": "Camel Blue16",
+    "productName": "Camel Blue 16",
     "unitId": "prod-camel-blue16__1-2-slof",
     "unitName": "½ Slof"
   },
@@ -205,7 +205,7 @@
     "posName": "Camel Blue16",
     "posUnit": "SLOF",
     "productId": "prod-camel-blue16",
-    "productName": "Camel Blue16",
+    "productName": "Camel Blue 16",
     "unitId": "prod-camel-blue16__slof",
     "unitName": "Slof"
   },
@@ -1985,7 +1985,7 @@
     "posName": "Rexo Merah 20",
     "posUnit": "BKS",
     "productId": "prod-rexo-merah-20",
-    "productName": "Rexo Merah 20",
+    "productName": "Rexo Filter Merah 20",
     "unitId": "prod-rexo-merah-20__bungkus",
     "unitName": "Bungkus"
   },
@@ -1995,7 +1995,7 @@
     "posName": "Rexo Merah 20",
     "posUnit": "½ SLOF",
     "productId": "prod-rexo-merah-20",
-    "productName": "Rexo Merah 20",
+    "productName": "Rexo Filter Merah 20",
     "unitId": "prod-rexo-merah-20__1-2-slof",
     "unitName": "½ Slof"
   },
@@ -2005,7 +2005,7 @@
     "posName": "Rexo Merah 20",
     "posUnit": "SLOF",
     "productId": "prod-rexo-merah-20",
-    "productName": "Rexo Merah 20",
+    "productName": "Rexo Filter Merah 20",
     "unitId": "prod-rexo-merah-20__slof",
     "unitName": "Slof"
   },

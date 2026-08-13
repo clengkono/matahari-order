@@ -74,7 +74,7 @@
   {
     "id": "prod-camel-blue16",
     "productId": "prod-camel-blue16",
-    "name": "Camel Blue16",
+    "name": "Camel Blue 16",
     "availableUnitIds": [
       "prod-camel-blue16__bungkus",
       "prod-camel-blue16__1-2-slof",
@@ -803,7 +803,7 @@
   {
     "id": "prod-rexo-merah-20",
     "productId": "prod-rexo-merah-20",
-    "name": "Rexo Merah 20",
+    "name": "Rexo Filter Merah 20",
     "availableUnitIds": [
       "prod-rexo-merah-20__bungkus",
       "prod-rexo-merah-20__1-2-slof",

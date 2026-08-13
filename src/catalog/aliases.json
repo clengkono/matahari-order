@@ -493,5 +493,475 @@
     "id": "alias-surya-16-2",
     "productId": "prod-surya-16",
     "alias": "gg surya"
+  },
+  {
+    "id": "alias-aqua-2",
+    "productId": "prod-aqua-15l",
+    "alias": "agua"
+  },
+  {
+    "id": "alias-52-kretek-20-1",
+    "productId": "prod-52-kretek-20",
+    "alias": "lima dua"
+  },
+  {
+    "id": "alias-avolution-merah-20-1",
+    "productId": "prod-avolution-merah-20",
+    "alias": "evolusien"
+  },
+  {
+    "id": "alias-avolution-merah-20-2",
+    "productId": "prod-avolution-merah-20",
+    "alias": "evolusen"
+  },
+  {
+    "id": "alias-camel-white-panjang-20-1",
+    "productId": "prod-camel-white-panjang-20",
+    "alias": "kamel"
+  },
+  {
+    "id": "alias-camel-white-panjang-20-2",
+    "productId": "prod-camel-white-panjang-20",
+    "alias": "kamel putih"
+  },
+  {
+    "id": "alias-camel-white-pendek-20-1",
+    "productId": "prod-camel-white-pendek-20",
+    "alias": "kamel"
+  },
+  {
+    "id": "alias-camel-white-pendek-20-2",
+    "productId": "prod-camel-white-pendek-20",
+    "alias": "kamel putih"
+  },
+  {
+    "id": "alias-camel-yellow-12-1",
+    "productId": "prod-camel-yellow-12",
+    "alias": "kamel"
+  },
+  {
+    "id": "alias-camel-yellow-12-2",
+    "productId": "prod-camel-yellow-12",
+    "alias": "kamel kuning"
+  },
+  {
+    "id": "alias-camel-yellow-panjang-20-1",
+    "productId": "prod-camel-yellow-panjang-20",
+    "alias": "kamel"
+  },
+  {
+    "id": "alias-camel-yellow-panjang-20-2",
+    "productId": "prod-camel-yellow-panjang-20",
+    "alias": "kamel kuning"
+  },
+  {
+    "id": "alias-camel-yellow-pendek-20-1",
+    "productId": "prod-camel-yellow-pendek-20",
+    "alias": "kamel"
+  },
+  {
+    "id": "alias-camel-yellow-pendek-20-2",
+    "productId": "prod-camel-yellow-pendek-20",
+    "alias": "kamel kuning"
+  },
+  {
+    "id": "alias-djarum-black-cappuccino-16-1",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "alias": "jarum"
+  },
+  {
+    "id": "alias-djarum-black-cappuccino-16-2",
+    "productId": "prod-djarum-black-cappuccino-16",
+    "alias": "blek"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-12-3",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "alias": "samsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-12-4",
+    "productId": "prod-dji-sam-soe-kretek-12",
+    "alias": "jisamsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-16-3",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "alias": "samsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-kretek-16-4",
+    "productId": "prod-dji-sam-soe-kretek-16",
+    "alias": "jisamsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-12-1",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "alias": "jisamsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-12-2",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "alias": "jisamsu hitam"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-12-3",
+    "productId": "prod-dji-sam-soe-premium-snap-box-12",
+    "alias": "samsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-16btg-8-1",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "alias": "jisamsu"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-16btg-8-2",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "alias": "jisamsu hitam"
+  },
+  {
+    "id": "alias-dji-sam-soe-premium-snap-box-16btg-8-3",
+    "productId": "prod-dji-sam-soe-premium-snap-box-16btg-8",
+    "alias": "samsu"
+  },
+  {
+    "id": "alias-dss-magnum-filter-12-1",
+    "productId": "prod-dss-magnum-filter-12",
+    "alias": "maknum"
+  },
+  {
+    "id": "alias-dss-magnum-mild-16-1",
+    "productId": "prod-dss-magnum-mild-16",
+    "alias": "maknum"
+  },
+  {
+    "id": "alias-dss-magnum-mild-20-1",
+    "productId": "prod-dss-magnum-mild-20",
+    "alias": "maknum"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-12-3",
+    "productId": "prod-dunhill-hitam-filter-12",
+    "alias": "danhil"
+  },
+  {
+    "id": "alias-dunhill-hitam-filter-16-3",
+    "productId": "prod-dunhill-hitam-filter-16",
+    "alias": "danhil"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-16-3",
+    "productId": "prod-dunhill-putih-mild-16",
+    "alias": "danhil"
+  },
+  {
+    "id": "alias-dunhill-putih-mild-20-3",
+    "productId": "prod-dunhill-putih-mild-20",
+    "alias": "danhil"
+  },
+  {
+    "id": "alias-gopas-20-1",
+    "productId": "prod-gopas-20",
+    "alias": "gopas"
+  },
+  {
+    "id": "alias-gp1-filter-16-1",
+    "productId": "prod-gp1-filter-16",
+    "alias": "gp merah"
+  },
+  {
+    "id": "alias-gudang-garam-filter-12-1",
+    "productId": "prod-gudang-garam-filter-12",
+    "alias": "gg filter"
+  },
+  {
+    "id": "alias-gudang-garam-filter-12-2",
+    "productId": "prod-gudang-garam-filter-12",
+    "alias": "inter"
+  },
+  {
+    "id": "alias-hk-kretek-12-1",
+    "productId": "prod-hk-kretek-12",
+    "alias": "hk"
+  },
+  {
+    "id": "alias-ina-bold-20-1",
+    "productId": "prod-ina-bold-20",
+    "alias": "inabol"
+  },
+  {
+    "id": "alias-l-a-bold-20-1",
+    "productId": "prod-l-a-bold-20",
+    "alias": "la itam"
+  },
+  {
+    "id": "alias-pitoe-kretek-12-1",
+    "productId": "prod-pitoe-kretek-12",
+    "alias": "pitu"
+  },
+  {
+    "id": "alias-pitoe-kretek-12-2",
+    "productId": "prod-pitoe-kretek-12",
+    "alias": "pitu hijau"
+  },
+  {
+    "id": "alias-rexo-bold-20-1",
+    "productId": "prod-rexo-bold-20",
+    "alias": "rexo itam"
+  },
+  {
+    "id": "alias-rexo-bold-20-2",
+    "productId": "prod-rexo-bold-20",
+    "alias": "rexo hitam"
+  },
+  {
+    "id": "alias-rexo-bold-20-3",
+    "productId": "prod-rexo-bold-20",
+    "alias": "rekso itam"
+  },
+  {
+    "id": "alias-rexo-bold-20-4",
+    "productId": "prod-rexo-bold-20",
+    "alias": "reso itam"
+  },
+  {
+    "id": "alias-rexo-kretek-16-1",
+    "productId": "prod-rexo-kretek-16",
+    "alias": "rekso kretek"
+  },
+  {
+    "id": "alias-rexo-kretek-16-2",
+    "productId": "prod-rexo-kretek-16",
+    "alias": "reso kretek"
+  },
+  {
+    "id": "alias-rexo-kretek-20-2",
+    "productId": "prod-rexo-kretek-20",
+    "alias": "rekso merah"
+  },
+  {
+    "id": "alias-rexo-kretek-20-3",
+    "productId": "prod-rexo-kretek-20",
+    "alias": "rekso kretek"
+  },
+  {
+    "id": "alias-rexo-kretek-20-4",
+    "productId": "prod-rexo-kretek-20",
+    "alias": "reso kretek"
+  },
+  {
+    "id": "alias-rexo-merah-20-1",
+    "productId": "prod-rexo-merah-20",
+    "alias": "rexo filter"
+  },
+  {
+    "id": "alias-rexo-merah-20-2",
+    "productId": "prod-rexo-merah-20",
+    "alias": "rekso filter"
+  },
+  {
+    "id": "alias-rexo-merah-20-3",
+    "productId": "prod-rexo-merah-20",
+    "alias": "reso filter"
+  },
+  {
+    "id": "alias-rexo-merah-20-4",
+    "productId": "prod-rexo-merah-20",
+    "alias": "rexo merah"
+  },
+  {
+    "id": "alias-sahara-filter-20-1",
+    "productId": "prod-sahara-filter-20",
+    "alias": "sahara merah"
+  },
+  {
+    "id": "alias-sahara-kretek-20-1",
+    "productId": "prod-sahara-kretek-20",
+    "alias": "sahara itam"
+  },
+  {
+    "id": "alias-sampoerna-mild-16-1",
+    "productId": "prod-sampoerna-mild-16",
+    "alias": "sempurna"
+  },
+  {
+    "id": "alias-sampoerna-mild-16-2",
+    "productId": "prod-sampoerna-mild-16",
+    "alias": "sampurna"
+  },
+  {
+    "id": "alias-sampoerna-mild-16-3",
+    "productId": "prod-sampoerna-mild-16",
+    "alias": "sempurna merah"
+  },
+  {
+    "id": "alias-sampoerna-mild-16-4",
+    "productId": "prod-sampoerna-mild-16",
+    "alias": "sampurna merah"
+  },
+  {
+    "id": "alias-sek-delapan-tujuh-87-1",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "alias": "sek 87"
+  },
+  {
+    "id": "alias-sek-delapan-tujuh-87-2",
+    "productId": "prod-sek-delapan-tujuh-87",
+    "alias": "sek"
+  },
+  {
+    "id": "alias-sek-kunci-1",
+    "productId": "prod-sek-kunci",
+    "alias": "sek kuntji"
+  },
+  {
+    "id": "alias-sek-kunci-2",
+    "productId": "prod-sek-kunci",
+    "alias": "sek"
+  },
+  {
+    "id": "alias-sek-kunci-3",
+    "productId": "prod-sek-kunci",
+    "alias": "kuntji"
+  },
+  {
+    "id": "alias-sek-roll-now-1",
+    "productId": "prod-sek-roll-now",
+    "alias": "rol"
+  },
+  {
+    "id": "alias-sek-roll-now-2",
+    "productId": "prod-sek-roll-now",
+    "alias": "sek"
+  },
+  {
+    "id": "alias-surya-12-1",
+    "productId": "prod-surya-12",
+    "alias": "suria"
+  },
+  {
+    "id": "alias-surya-12-2",
+    "productId": "prod-surya-12",
+    "alias": "suria 12"
+  },
+  {
+    "id": "alias-surya-kaleng-50-1",
+    "productId": "prod-surya-kaleng-50",
+    "alias": "suria"
+  },
+  {
+    "id": "alias-surya-kaleng-50-2",
+    "productId": "prod-surya-kaleng-50",
+    "alias": "suria blek"
+  },
+  {
+    "id": "alias-tik-tok-bold-20-1",
+    "productId": "prod-tik-tok-bold-20",
+    "alias": "tiktok"
+  },
+  {
+    "id": "alias-troy-20-1",
+    "productId": "prod-troy-20",
+    "alias": "troi"
+  },
+  {
+    "id": "alias-zenix-bold-20-1",
+    "productId": "prod-zenix-bold-20",
+    "alias": "senix"
+  },
+  {
+    "id": "alias-zenix-bold-20-2",
+    "productId": "prod-zenix-bold-20",
+    "alias": "seynix"
+  },
+  {
+    "id": "alias-zenix-bold-20-3",
+    "productId": "prod-zenix-bold-20",
+    "alias": "zeniks"
+  },
+  {
+    "id": "alias-zenix-bold-20-4",
+    "productId": "prod-zenix-bold-20",
+    "alias": "senix itam"
+  },
+  {
+    "id": "alias-zenix-bold-20-5",
+    "productId": "prod-zenix-bold-20",
+    "alias": "seynix itam"
+  },
+  {
+    "id": "alias-zenix-coffee-1",
+    "productId": "prod-zenix-coffee",
+    "alias": "senix"
+  },
+  {
+    "id": "alias-zenix-coffee-2",
+    "productId": "prod-zenix-coffee",
+    "alias": "seynix"
+  },
+  {
+    "id": "alias-zenix-coffee-3",
+    "productId": "prod-zenix-coffee",
+    "alias": "zeniks"
+  },
+  {
+    "id": "alias-zenix-coffee-4",
+    "productId": "prod-zenix-coffee",
+    "alias": "senix kopi"
+  },
+  {
+    "id": "alias-zenix-coffee-5",
+    "productId": "prod-zenix-coffee",
+    "alias": "seynix kopi"
+  },
+  {
+    "id": "alias-zenix-putih-20-1",
+    "productId": "prod-zenix-putih-20",
+    "alias": "senix"
+  },
+  {
+    "id": "alias-zenix-putih-20-2",
+    "productId": "prod-zenix-putih-20",
+    "alias": "seynix"
+  },
+  {
+    "id": "alias-zenix-putih-20-3",
+    "productId": "prod-zenix-putih-20",
+    "alias": "zeniks"
+  },
+  {
+    "id": "alias-zenix-putih-20-4",
+    "productId": "prod-zenix-putih-20",
+    "alias": "senix putih"
+  },
+  {
+    "id": "alias-zenix-putih-20-5",
+    "productId": "prod-zenix-putih-20",
+    "alias": "seynix putih"
+  },
+  {
+    "id": "alias-zenix-sultan-1",
+    "productId": "prod-zenix-sultan",
+    "alias": "senix"
+  },
+  {
+    "id": "alias-zenix-sultan-2",
+    "productId": "prod-zenix-sultan",
+    "alias": "seynix"
+  },
+  {
+    "id": "alias-zenix-sultan-3",
+    "productId": "prod-zenix-sultan",
+    "alias": "zeniks"
+  },
+  {
+    "id": "alias-zenix-sultan-4",
+    "productId": "prod-zenix-sultan",
+    "alias": "senix kuning"
+  },
+  {
+    "id": "alias-zenix-sultan-5",
+    "productId": "prod-zenix-sultan",
+    "alias": "seynix kuning"
   }
 ]

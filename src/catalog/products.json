@@ -48,7 +48,7 @@
   },
   {
     "id": "prod-camel-blue16",
-    "name": "Camel Blue16",
+    "name": "Camel Blue 16",
     "category": "Rokok",
     "favorite": false,
     "pattern": "fixed-product"
@@ -480,7 +480,7 @@
   },
   {
     "id": "prod-rexo-merah-20",
-    "name": "Rexo Merah 20",
+    "name": "Rexo Filter Merah 20",
     "category": "Rokok",
     "favorite": false,
     "pattern": "fixed-product"
