@@ -21,6 +21,12 @@ import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
 import { findProductLine } from "./utils/cartHelpers";
 import {
+  clearStoredOrderNote,
+  loadStoredCart,
+  loadStoredOrderNote,
+  saveStoredOrderNote,
+} from "./utils/orderDraftStorage";
+import {
   normalizeSearchText,
   searchProducts,
 } from "./utils/productSearch";
@@ -56,8 +62,18 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [productStack, setProductStack] = useState([]);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [orderNote, setOrderNote] = useState("");
+  const [orderNote, setOrderNote] = useState(() => {
+    const storedCart = loadStoredCart(products);
+    if (storedCart.length === 0) {
+      clearStoredOrderNote();
+      return "";
+    }
+
+    return loadStoredOrderNote();
+  });
+  const [whatsAppHandoffStatus, setWhatsAppHandoffStatus] = useState("idle");
   const searchInputRef = useRef(null);
+  const whatsAppSendLockRef = useRef(false);
   const {
     cart,
     cartCount,
@@ -67,6 +83,7 @@ export default function App() {
     removeProduct,
     updateQuantity,
     changeUnit,
+    clearCart,
   } = useCart();
 
   const selectedProduct =
@@ -322,11 +339,60 @@ export default function App() {
 
   const handleOrderNoteChange = useCallback((value) => {
     setOrderNote(value);
+    saveStoredOrderNote(value);
   }, []);
 
   const handleSendWhatsApp = useCallback(() => {
-    openWhatsAppWithOrder(cart, orderNote);
-  }, [cart, orderNote]);
+    if (whatsAppSendLockRef.current) {
+      return;
+    }
+
+    if (whatsAppHandoffStatus !== "idle" && whatsAppHandoffStatus !== "failed") {
+      return;
+    }
+
+    if (!cart.length) {
+      return;
+    }
+
+    whatsAppSendLockRef.current = true;
+    setWhatsAppHandoffStatus("opening");
+
+    const result = openWhatsAppWithOrder(cart, orderNote);
+
+    if (result.ok) {
+      setWhatsAppHandoffStatus("opened");
+      return;
+    }
+
+    whatsAppSendLockRef.current = false;
+    setWhatsAppHandoffStatus("failed");
+  }, [cart, orderNote, whatsAppHandoffStatus]);
+
+  const handleReturnFromWhatsAppHandoff = useCallback(() => {
+    whatsAppSendLockRef.current = false;
+    setWhatsAppHandoffStatus("idle");
+  }, []);
+
+  const handleConfirmWhatsAppSent = useCallback(() => {
+    whatsAppSendLockRef.current = false;
+    setWhatsAppHandoffStatus("idle");
+    setOrderNote("");
+    clearStoredOrderNote();
+    clearCart();
+    setIsReviewOpen(false);
+  }, [clearCart]);
+
+  const clearDraftIfCartWillEmpty = useCallback((willEmpty) => {
+    if (!willEmpty) {
+      return;
+    }
+
+    setOrderNote("");
+    clearStoredOrderNote();
+    whatsAppSendLockRef.current = false;
+    setWhatsAppHandoffStatus("idle");
+  }, []);
 
   const handleIncreaseQuantity = useCallback(
     (productId) => {
@@ -344,23 +410,19 @@ export default function App() {
       if (line) {
         const willEmptyCart = lineCount === 1 && line.quantity === 1;
         updateQuantity(productId, line.quantity - 1);
-        if (willEmptyCart) {
-          setOrderNote("");
-        }
+        clearDraftIfCartWillEmpty(willEmptyCart);
       }
     },
-    [cart, lineCount, updateQuantity]
+    [cart, clearDraftIfCartWillEmpty, lineCount, updateQuantity]
   );
 
   const handleRemoveProduct = useCallback(
     (productId) => {
-      const remainingLines = cart.filter((line) => line.productId !== productId);
+      const willEmptyCart = lineCount === 1;
       removeProduct(productId);
-      if (remainingLines.length === 0) {
-        setOrderNote("");
-      }
+      clearDraftIfCartWillEmpty(willEmptyCart);
     },
-    [cart, removeProduct]
+    [clearDraftIfCartWillEmpty, lineCount, removeProduct]
   );
 
   const handleAddRecommendation = useCallback(
@@ -629,7 +691,10 @@ export default function App() {
         recommendations={frequentlyOrderedTogether}
         orderNote={orderNote}
         onOrderNoteChange={handleOrderNoteChange}
+        whatsAppHandoffStatus={whatsAppHandoffStatus}
         onSendWhatsApp={handleSendWhatsApp}
+        onConfirmWhatsAppSent={handleConfirmWhatsAppSent}
+        onReturnFromWhatsAppHandoff={handleReturnFromWhatsAppHandoff}
         onIncrease={handleIncreaseQuantity}
         onDecrease={handleDecreaseQuantity}
         onRemoveProduct={handleRemoveProduct}

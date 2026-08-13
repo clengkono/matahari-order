@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import products from "../catalog";
 import {
   addOrMergeLine,
   calculateCartCount,
@@ -8,16 +16,21 @@ import {
   removeProductLines,
   updateLineQuantity,
 } from "../utils/cartHelpers";
+import { loadStoredCart, saveStoredCart } from "../utils/orderDraftStorage";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => loadStoredCart(products));
 
   const normalizedCart = useMemo(
     () => normalizeOneUnitPerProduct(cart),
     [cart]
   );
+
+  useEffect(() => {
+    saveStoredCart(normalizedCart);
+  }, [normalizedCart]);
 
   const cartCount = useMemo(
     () => calculateCartCount(normalizedCart),

@@ -43,16 +43,40 @@ export function buildWhatsAppUrl(message) {
   return `https://wa.me/?text=${encodedMessage}`;
 }
 
+/**
+ * Open WhatsApp with the current order.
+ *
+ * Success: window.open returns a Window without throwing.
+ * Failure: empty cart, thrown error, or a null return (typically popup blocked).
+ *
+ * Limitation: some mobile browsers return null even when WhatsApp opens,
+ * or return a Window when the handoff later fails. The app cannot know
+ * whether the customer actually sent the message.
+ *
+ * @returns {{ ok: boolean, reason?: "empty" | "blocked" | "error" }}
+ */
 export function openWhatsAppWithOrder(cart, note = "") {
   if (!cart.length) {
-    return;
+    return { ok: false, reason: "empty" };
   }
 
   try {
     const message = buildWhatsAppMessage(cart, note);
     const url = buildWhatsAppUrl(message);
-    window.open(url, "_blank", "noopener,noreferrer");
+    const openedWindow = window.open(url, "_blank");
+
+    if (openedWindow == null) {
+      return { ok: false, reason: "blocked" };
+    }
+
+    try {
+      openedWindow.opener = null;
+    } catch {
+      // Cross-origin or browser restriction — ignore.
+    }
+
+    return { ok: true };
   } catch {
-    // Popup blocked or unavailable — cart and note stay unchanged.
+    return { ok: false, reason: "error" };
   }
 }
