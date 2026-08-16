@@ -15,7 +15,8 @@ tmp/
 *.local
 
 # Catalogue Studio local backups (keep folder via .gitkeep)
-src/catalog/backups/*.json
+src/catalog/backups/*
+!src/catalog/backups/.gitkeep
 
 # Editor directories and files
 .vscode/*

@@ -146,24 +146,35 @@ Replacing an image:
 
 ## Catalogue backups and updates
 
-Before each successful image assignment, Studio copies:
+Image assignment writes card/detail/original files first (existing binary
+temp/prior safety), then updates `products.json` through the catalogue
+transaction layer (`scripts/catalogTransaction.js`).
 
-`src/catalog/products.json`
+That layer:
 
-to a timestamped file in:
+1. mutates the catalogue in memory
+2. runs the same `validateCatalog()` rules as `npm run catalog:check`
+3. copies only changed JSON files into a timestamped backup set
+4. writes temps and replaces live files
+5. rolls all changed files back if any replace fails
+6. appends `src/catalog/backups/changelog.jsonl` on success
 
-`src/catalog/backups/`
+Example backup set:
 
-Example:
+`src/catalog/backups/2026-08-16T15-30-00-000Z/`
 
-`src/catalog/backups/products-2026-08-05T14-30-00-000Z.json`
+containing `products.json` and `metadata.json`.
 
-Catalogue writes:
+Catalogue JSON writes:
 
-- use a temporary file and rename strategy
+- never update an invalid catalogue
 - preserve stable product IDs
 - modify only the selected product’s `image` fields (`card`, `detail`, `original`)
 - leave units, aliases, mappings, variants, favorites, and POS links untouched
+
+Limitation: binary image files and `products.json` are not one atomic
+cross-resource transaction. If metadata validation/write fails after the
+binaries were saved, the image files may already be on disk.
 
 Image paths survive restarting Vite and the image service because files live under `public/` and metadata lives in `products.json`.
 
@@ -187,7 +198,7 @@ If a catalogue edit needs undoing and Git still has the previous `products.json`
 git checkout -- src/catalog/products.json
 ```
 
-Or restore a Studio backup file from `src/catalog/backups/` by copying it back to `src/catalog/products.json`.
+Or restore a Studio backup set from `src/catalog/backups/<timestamp>/` by copying the JSON files in that folder back over the live catalogue files.
 
 Generated image files under `public/product-images/` may also need manual cleanup or restore from Git if they were committed.
 

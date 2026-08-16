@@ -20,6 +20,7 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import sharp from "sharp";
+import { runCatalogTransaction } from "./catalogTransaction.js";
 import { createWatermarkOverlay } from "./imageWatermark.js";
 
 sharp.cache(false);
@@ -207,28 +208,35 @@ function cigaretteSummary(products) {
   };
 }
 
-function backupProductsFile() {
-  mkdirSync(BACKUPS_DIR, { recursive: true });
-  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const backupPath = join(BACKUPS_DIR, `products-${stamp}.json`);
-  copyFileSync(PRODUCTS_PATH, backupPath);
-  return backupPath;
-}
+/**
+ * Persist image metadata through the catalogue transaction layer.
+ * Binary card/detail/original files must already be on disk so catalog:check
+ * image-path validation can pass.
+ *
+ * Remaining limitation: if this JSON write fails after processAndSaveImage
+ * succeeded, derived/original files may already have been replaced. The
+ * binary pipeline keeps its own prior/restore; it is not one atomic
+ * binary+JSON transaction.
+ */
+export function saveAssignedImageMetadata(productId, image, options = {}) {
+  return runCatalogTransaction({
+    action: "assign-image",
+    productIds: [productId],
+    summary: `Assigned image metadata for ${productId}`,
+    mutate(catalog) {
+      const product = catalog.products.find((entry) => entry.id === productId);
+      if (!product) {
+        throw new Error("Product ID not found in catalogue.");
+      }
 
-function atomicWriteProducts(products) {
-  const tmpPath = join(
-    dirname(PRODUCTS_PATH),
-    `products.${process.pid}.${Date.now()}.tmp.json`
-  );
-  const content = `${JSON.stringify(products, null, 2)}\n`;
-  writeFileSync(tmpPath, content, "utf8");
-
-  try {
-    renameSync(tmpPath, PRODUCTS_PATH);
-  } catch {
-    copyFileSync(tmpPath, PRODUCTS_PATH);
-    unlinkSync(tmpPath);
-  }
+      product.image = {
+        card: image.card,
+        detail: image.detail,
+        original: image.original,
+      };
+    },
+    ...options,
+  });
 }
 
 let tempSeq = 0;
@@ -981,23 +989,19 @@ async function handleAssignImage(req, res, productId) {
       mimeType
     );
 
-    const backupPath = backupProductsFile();
+    const transaction = saveAssignedImageMetadata(productId, image);
+    if (!transaction.ok) {
+      sendJson(res, transaction.code === "VALIDATION_FAILED" ? 400 : 500, {
+        error:
+          transaction.error ||
+          "Image files were saved, but catalogue metadata could not be updated.",
+        validationErrors: transaction.validationErrors,
+        code: transaction.code || "CATALOG_WRITE_FAILED",
+      });
+      return;
+    }
 
-    const nextProducts = products.map((entry, i) => {
-      if (i !== index) {
-        return entry;
-      }
-      return {
-        ...entry,
-        image: {
-          card: image.card,
-          detail: image.detail,
-          original: image.original,
-        },
-      };
-    });
-
-    atomicWriteProducts(nextProducts);
+    const nextProducts = loadProducts();
 
     sendJson(res, 200, {
       ok: true,
@@ -1005,7 +1009,10 @@ async function handleAssignImage(req, res, productId) {
       name: product.name,
       image,
       replaced: replacing,
-      backupPath: backupPath.replace(ROOT, "").replace(/\\/g, "/"),
+      backupId: transaction.backupId,
+      backupPath: transaction.backupId
+        ? `/src/catalog/backups/${transaction.backupId}`
+        : "",
       dimensions: {
         card: cardInfo,
         detail: detailInfo,

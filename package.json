@@ -15,7 +15,8 @@
     "catalog:check": "node scripts/buildCatalog.js",
     "catalog:preview": "node scripts/catalogBuilder.js",
     "catalog:preview:check": "node scripts/catalogBuilder.js --check",
-    "catalog:import-seed": "node scripts/importCatalogSeed.js"
+    "catalog:import-seed": "node scripts/importCatalogSeed.js",
+    "catalog:transaction:smoke": "node scripts/catalogTransaction.smoke.js"
   },
   "dependencies": {
     "react": "^19.2.7",
