@@ -302,6 +302,21 @@
   text-transform: uppercase;
 }
 
+.studioWatermarkRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  max-width: 280px;
+  margin-top: 8px;
+}
+
+.studioWatermarkNote {
+  margin: 0;
+  color: var(--color-text-muted, #6b6560);
+  font-size: 0.8rem;
+}
+
 .studioDropzone {
   padding: 20px 16px;
   border: 2px dashed #d2c8ba;

@@ -19,6 +19,19 @@ export async function fetchCigaretteCatalogue() {
   return parseJson(response);
 }
 
+export async function regenerateProductImage(productId) {
+  const response = await fetch(
+    `${STUDIO_API}/cigarettes/${encodeURIComponent(productId)}/image/regenerate`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return parseJson(response);
+}
+
 export async function assignProductImage({
   productId,
   mimeType,

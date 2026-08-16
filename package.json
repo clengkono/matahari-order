@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "studio": "node scripts/studio.js",
     "studio:api": "node scripts/imageService.js",
+    "studio:regenerate": "node scripts/regenerateProductImages.js",
     "catalog:build": "node scripts/buildCatalog.js",
     "catalog:check": "node scripts/buildCatalog.js",
     "catalog:preview": "node scripts/catalogBuilder.js",

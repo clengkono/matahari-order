@@ -16,10 +16,11 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import sharp from "sharp";
+import { createWatermarkOverlay } from "./imageWatermark.js";
 
 sharp.cache(false);
 
@@ -138,6 +139,50 @@ function validateProductId(productId) {
 
 function publicPath(relativeFromPublic) {
   return `/${relativeFromPublic.replace(/\\/g, "/")}`;
+}
+
+function resolvePublicImagePath(publicUrl) {
+  if (typeof publicUrl !== "string" || !publicUrl.startsWith("/product-images/")) {
+    return null;
+  }
+
+  const segments = publicUrl.split("/").filter(Boolean);
+  if (segments.some((segment) => segment === ".." || segment === ".")) {
+    return null;
+  }
+
+  const absolute = resolve(join(ROOT, "public", ...segments));
+  const imagesRoot = resolve(PUBLIC_IMAGES);
+  const prefix = imagesRoot.endsWith(sep) ? imagesRoot : imagesRoot + sep;
+  if (absolute !== imagesRoot && !absolute.startsWith(prefix)) {
+    return null;
+  }
+  return absolute;
+}
+
+function findOriginalAbsolutePath(product) {
+  const fromMeta = resolvePublicImagePath(product?.image?.original);
+  if (fromMeta) {
+    return existsSync(fromMeta) ? fromMeta : null;
+  }
+
+  if (!product?.id) {
+    return null;
+  }
+
+  for (const ext of Object.keys(EXT_TO_MIME)) {
+    const candidate = join(
+      PUBLIC_IMAGES,
+      "originals",
+      "cigarettes",
+      `${product.id}-original.${ext}`
+    );
+    if (existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  return null;
 }
 
 function cigaretteSummary(products) {
@@ -395,6 +440,18 @@ async function generateSquareWebpBuffer(sourceBuffer, size) {
     })
     .toBuffer({ resolveWithObject: true });
 
+  const layers = [
+    {
+      input: resized.data,
+      gravity: "centre",
+    },
+  ];
+
+  const watermark = await createWatermarkOverlay(size);
+  if (watermark) {
+    layers.push(watermark);
+  }
+
   const output = await sharp({
     create: {
       width: size,
@@ -403,12 +460,7 @@ async function generateSquareWebpBuffer(sourceBuffer, size) {
       background: BACKGROUND,
     },
   })
-    .composite([
-      {
-        input: resized.data,
-        gravity: "centre",
-      },
-    ])
+    .composite(layers)
     .webp({ quality: WEBP_QUALITY })
     .toBuffer({ resolveWithObject: true });
 
@@ -637,6 +689,197 @@ async function processAndSaveImage(productId, buffer, mimeType) {
   }
 }
 
+async function regenerateDerivedImages(productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    const error = new Error(idError);
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  let products;
+  try {
+    products = loadProducts();
+  } catch (error) {
+    const wrapped = new Error(error.message || "Failed to read catalogue.");
+    wrapped.status = 500;
+    wrapped.userSafe = true;
+    throw wrapped;
+  }
+
+  const product = products.find((entry) => entry.id === productId);
+  if (!product) {
+    const error = new Error("Product ID not found in catalogue.");
+    error.status = 404;
+    error.userSafe = true;
+    throw error;
+  }
+
+  if (!isCigaretteProduct(product)) {
+    const error = new Error("Studio Version 1 only accepts cigarette products.");
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  if (!product.image?.original && !hasCardImage(product)) {
+    const error = new Error("This product has no image to regenerate.");
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  const originalAbs = findOriginalAbsolutePath(product);
+  if (!originalAbs) {
+    const error = new Error(
+      "Cannot regenerate: the original image file is missing. Card and detail were left unchanged."
+    );
+    error.status = 404;
+    error.userSafe = true;
+    throw error;
+  }
+
+  let buffer;
+  try {
+    buffer = readFileSync(originalAbs);
+  } catch {
+    const error = new Error(
+      "Cannot regenerate: the original image file is missing. Card and detail were left unchanged."
+    );
+    error.status = 404;
+    error.userSafe = true;
+    throw error;
+  }
+
+  if (!buffer.length) {
+    const error = new Error(
+      "Cannot regenerate: the original image file is empty. Card and detail were left unchanged."
+    );
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  ensureDirs();
+
+  const cardsDir = join(PUBLIC_IMAGES, "cards", "cigarettes");
+  const detailsDir = join(PUBLIC_IMAGES, "details", "cigarettes");
+  const cardName = `${productId}.webp`;
+  const detailName = `${productId}.webp`;
+  const cardAbs = join(cardsDir, cardName);
+  const detailAbs = join(detailsDir, detailName);
+
+  const temps = [];
+  const priors = [];
+  let cardTemp;
+  let detailTemp;
+  let cardReplaced = false;
+  let detailReplaced = false;
+  let priorCard = null;
+  let priorDetail = null;
+
+  try {
+    const cardProcessed = await generateSquareWebpBuffer(buffer, CARD_SIZE);
+    const detailProcessed = await generateSquareWebpBuffer(buffer, DETAIL_SIZE);
+
+    cardTemp = await writeProcessedTemp(
+      cardsDir,
+      cardName,
+      cardProcessed.data,
+      CARD_SIZE
+    );
+    temps.push(cardTemp.tempPath);
+
+    detailTemp = await writeProcessedTemp(
+      detailsDir,
+      detailName,
+      detailProcessed.data,
+      DETAIL_SIZE
+    );
+    temps.push(detailTemp.tempPath);
+
+    if (existsSync(cardAbs)) {
+      priorCard = uniqueTempPath(cardsDir, `${cardName}.prior`, "bak");
+      copyFileSync(cardAbs, priorCard);
+      priors.push(priorCard);
+    }
+    if (existsSync(detailAbs)) {
+      priorDetail = uniqueTempPath(detailsDir, `${detailName}.prior`, "bak");
+      copyFileSync(detailAbs, priorDetail);
+      priors.push(priorDetail);
+    }
+
+    await replaceDestination(cardTemp.tempPath, cardAbs);
+    cardReplaced = true;
+    dropTemp(temps, cardTemp.tempPath);
+
+    await replaceDestination(detailTemp.tempPath, detailAbs);
+    detailReplaced = true;
+    dropTemp(temps, detailTemp.tempPath);
+
+    for (const prior of priors) {
+      safeUnlink(prior);
+    }
+    priors.length = 0;
+
+    const image = {
+      card: product.image?.card ?? publicPath(`product-images/cards/cigarettes/${cardName}`),
+      detail:
+        product.image?.detail ??
+        publicPath(`product-images/details/cigarettes/${detailName}`),
+      original: product.image?.original ?? publicPath(
+        `product-images/originals/cigarettes/${basenameSafe(originalAbs)}`
+      ),
+    };
+
+    return {
+      productId,
+      name: product.name,
+      image,
+      originalUnchanged: true,
+      cardInfo: { width: cardTemp.width, height: cardTemp.height },
+      detailInfo: { width: detailTemp.width, height: detailTemp.height },
+    };
+  } catch (error) {
+    console.error("[studio] regenerate derived images failed:", error);
+
+    try {
+      if (cardReplaced) {
+        await restoreDestination(priorCard, cardAbs, "card");
+      }
+      if (detailReplaced) {
+        await restoreDestination(priorDetail, detailAbs, "detail");
+      }
+    } catch (restoreError) {
+      console.error("[studio] restore after regenerate failure also failed:", restoreError);
+      const wrapped = new Error(
+        "Image replacement failed. The previous image was kept."
+      );
+      wrapped.status = 500;
+      wrapped.userSafe = true;
+      throw wrapped;
+    }
+
+    if (error.status) {
+      error.userSafe = true;
+      throw error;
+    }
+
+    const wrapped = new Error(userFacingImageError(error));
+    wrapped.status = 500;
+    wrapped.userSafe = true;
+    throw wrapped;
+  } finally {
+    for (const tempPath of temps) {
+      safeUnlink(tempPath);
+    }
+    for (const prior of priors) {
+      safeUnlink(prior);
+    }
+  }
+}
+
 async function handleAssignImage(req, res, productId) {
   const idError = validateProductId(productId);
   if (idError) {
@@ -826,11 +1069,63 @@ const server = createServer(async (req, res) => {
     return;
   }
 
+  const regenerateMatch = pathname.match(
+    /^\/api\/studio\/cigarettes\/([^/]+)\/image\/regenerate$/
+  );
+  if (req.method === "POST" && regenerateMatch) {
+    const productId = decodeURIComponent(regenerateMatch[1]);
+    await handleRegenerateImage(res, productId);
+    return;
+  }
+
   notFound(res);
 });
 
-server.listen(PORT, HOST, () => {
-  console.log("Matahari Catalogue Studio — image service");
-  console.log(`Listening on http://${HOST}:${PORT}`);
-  console.log("LOCAL ONLY — do not deploy publicly.");
-});
+async function handleRegenerateImage(res, productId) {
+  try {
+    const result = await regenerateDerivedImages(productId);
+    let stats;
+    try {
+      stats = cigaretteSummary(loadProducts()).stats;
+    } catch {
+      stats = null;
+    }
+
+    sendJson(res, 200, {
+      ok: true,
+      productId: result.productId,
+      name: result.name,
+      image: result.image,
+      regenerated: true,
+      originalUnchanged: true,
+      dimensions: {
+        card: result.cardInfo,
+        detail: result.detailInfo,
+      },
+      stats,
+    });
+  } catch (error) {
+    console.error("[studio] regenerate image failed:", error);
+    sendJson(res, error.status || 500, {
+      error: userFacingImageError(error),
+    });
+  }
+}
+
+function isLaunchedDirectly() {
+  const entry = process.argv[1];
+  if (!entry) {
+    return false;
+  }
+  return resolve(fileURLToPath(import.meta.url)) === resolve(entry);
+}
+
+if (isLaunchedDirectly()) {
+  server.listen(PORT, HOST, () => {
+    console.log("Matahari Catalogue Studio — image service");
+    console.log(`Listening on http://${HOST}:${PORT}`);
+    console.log("LOCAL ONLY — do not deploy publicly.");
+  });
+}
+
+export { regenerateDerivedImages, processAndSaveImage };

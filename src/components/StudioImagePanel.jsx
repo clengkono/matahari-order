@@ -4,6 +4,7 @@ import {
   clipboardImageFile,
   fileToBase64,
   mimeFromFile,
+  regenerateProductImage,
   validateImageFile,
 } from "../utils/studioApi";
 
@@ -15,6 +16,7 @@ function StudioImagePanel({ product, onSaved }) {
   const [busy, setBusy] = useState(false);
   const [step, setStep] = useState("idle"); // idle | assign | replace
   const [dragOver, setDragOver] = useState(false);
+  const [previewVersion, setPreviewVersion] = useState(0);
 
   const draftRef = useRef(null);
   const stepRef = useRef("idle");
@@ -129,6 +131,7 @@ function StudioImagePanel({ product, onSaved }) {
         replaceConfirmed,
       });
       clearDraft();
+      setPreviewVersion(Date.now());
       onSavedRef.current?.(result);
     } catch (err) {
       setError(err.message || "Save failed.");
@@ -156,6 +159,26 @@ function StudioImagePanel({ product, onSaved }) {
 
   function handleConfirmReplace() {
     void saveImage(true);
+  }
+
+  async function handleRegenerate() {
+    const currentProduct = productRef.current;
+    if (!currentProduct?.hasImage || busyRef.current || stepRef.current !== "idle") {
+      return;
+    }
+
+    setBusy(true);
+    setError("");
+
+    try {
+      const result = await regenerateProductImage(currentProduct.id);
+      setPreviewVersion(Date.now());
+      onSavedRef.current?.(result);
+    } catch (err) {
+      setError(err.message || "Regenerate failed.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   useEffect(() => {
@@ -224,6 +247,9 @@ function StudioImagePanel({ product, onSaved }) {
   }
 
   const currentCard = product.image?.card;
+  const previewSrc = currentCard
+    ? `${currentCard}${currentCard.includes("?") ? "&" : "?"}v=${previewVersion}`
+    : null;
 
   return (
     <div className="studioPanel">
@@ -233,9 +259,9 @@ function StudioImagePanel({ product, onSaved }) {
       </div>
 
       <div className="studioCurrentImage">
-        {currentCard ? (
+        {previewSrc ? (
           <img
-            src={currentCard}
+            src={previewSrc}
             alt={`Current card image for ${product.name}`}
             className="studioCurrentImagePhoto"
           />
@@ -244,6 +270,23 @@ function StudioImagePanel({ product, onSaved }) {
             Missing Image
           </div>
         )}
+        {product.hasImage ? (
+          <div className="studioWatermarkRow">
+            <p className="studioWatermarkNote">Watermark: Matahari Langowan</p>
+            {step === "idle" ? (
+              <button
+                type="button"
+                className="studioButton studioButton--secondary"
+                onClick={() => {
+                  void handleRegenerate();
+                }}
+                disabled={busy}
+              >
+                {busy ? "Regenerating…" : "Regenerate"}
+              </button>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       <div
