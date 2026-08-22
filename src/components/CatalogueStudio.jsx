@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import StudioImagesTab from "./StudioImagesTab";
+import StudioProductsTab from "./StudioProductsTab";
 import StudioQueueTab from "./StudioQueueTab";
 import { fetchCigaretteCatalogue } from "../utils/studioApi";
 import "../CatalogueStudio.css";
@@ -19,6 +20,7 @@ function CatalogueStudio() {
   const [loading, setLoading] = useState(true);
   const [loadNonce, setLoadNonce] = useState(0);
   const searchRef = useRef(null);
+  const productsSearchRef = useRef(null);
   const queueApiRef = useRef(null);
 
   const applyCatalogue = useCallback((data) => {
@@ -118,6 +120,14 @@ function CatalogueStudio() {
 
       if (hasCtrl && key === "f") {
         event.preventDefault();
+        if (tab === "products") {
+          requestAnimationFrame(() => {
+            productsSearchRef.current?.focus();
+            productsSearchRef.current?.select?.();
+          });
+          return;
+        }
+
         setTab("images");
         requestAnimationFrame(() => {
           searchRef.current?.focus();
@@ -187,8 +197,17 @@ function CatalogueStudio() {
       </nav>
 
       <main className="studioMain">
-        {loading ? <p className="studioStatus">Loading catalogue…</p> : null}
-        {!loading && loadError ? (
+        {tab === "products" ? (
+          <StudioProductsTab
+            searchRef={productsSearchRef}
+            onCatalogueChanged={refresh}
+          />
+        ) : null}
+
+        {tab !== "products" && loading ? (
+          <p className="studioStatus">Loading catalogue…</p>
+        ) : null}
+        {tab !== "products" && !loading && loadError ? (
           <div className="studioError" role="alert">
             <p>{loadError}</p>
             <button
@@ -201,7 +220,7 @@ function CatalogueStudio() {
           </div>
         ) : null}
 
-        {!loading && !loadError && tab === "images" ? (
+        {tab !== "products" && !loading && !loadError && tab === "images" ? (
           <StudioImagesTab
             products={products}
             selectedId={selectedId}
@@ -211,19 +230,13 @@ function CatalogueStudio() {
           />
         ) : null}
 
-        {!loading && !loadError && tab === "queue" ? (
+        {tab !== "products" && !loading && !loadError && tab === "queue" ? (
           <StudioQueueTab
             products={products}
             stats={stats}
             onSaved={handleSaved}
             apiRef={queueApiRef}
           />
-        ) : null}
-
-        {!loading && !loadError && tab === "products" ? (
-          <div className="studioPanel studioPanel--empty">
-            <p>Product management will be added later.</p>
-          </div>
         ) : null}
       </main>
     </div>

@@ -54,7 +54,9 @@ Then open `/studio` in the Vite app.
 
 Keyboard:
 
-- `Ctrl+F` focuses Studio product search (does not open browser find)
+- `Ctrl+F` focuses the current tab’s product search (does not open browser find)
+- Images and Queue: `Ctrl+F` focuses the cigarette search on the Images tab
+- Products: `Ctrl+F` focuses the full-catalogue product search
 - `Ctrl+V` pastes an image when the clipboard contains image data
 - `Enter` confirms save when a confirmation dialog is open
 - `Escape` cancels preview or confirmation
@@ -217,8 +219,16 @@ Do not reverse-proxy it to the internet. Do not bind it to `0.0.0.0`. Do not dep
 
 ## Products tab
 
-Version 1 shows only:
+The Products tab edits **customer-facing** name and category for the full catalogue (all 91 products, not only Rokok).
 
-> Product management will be added later.
+- Editable: customer-facing name, category
+- Read-only: product ID, variant ID, aliases, photo, POS name, POS code
+- Alias chips are display-only in this stage (no add/remove)
+- Category is a dropdown of `CATEGORY_CONFIG` plus any extra values already present in `products.json`. There is no free-text category creation, and Studio does not edit `src/config/categories.js`
+- Saves go through the catalogue transaction layer (`update-product-metadata`)
+- A name change updates `products.json` name, matching `variants.json` names, and `mappings.productName` only
+- POS name, POS code, IDs, aliases, image paths, units, favorites, and recommendations are not written
+- Changing a Rokok product to another category shows a warning that it will leave the current Images/Queue cigarette list; image files are not moved or deleted
+- After a category save, reload the customer app if the homepage categories still look stale — Vite JSON imports may not hot-reload
 
-Naming, units, aliases, and variants remain out of scope for this release.
+Keyboard: `Ctrl+F` on the Products tab focuses the Products search, not the cigarette search.

@@ -19,6 +19,27 @@ export async function fetchCigaretteCatalogue() {
   return parseJson(response);
 }
 
+export async function fetchStudioProducts() {
+  const response = await fetch(`${STUDIO_API}/products`, {
+    cache: "no-store",
+  });
+  return parseJson(response);
+}
+
+export async function updateStudioProduct(productId, payload) {
+  const response = await fetch(
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+  return parseJson(response);
+}
+
 export async function regenerateProductImage(productId) {
   const response = await fetch(
     `${STUDIO_API}/cigarettes/${encodeURIComponent(productId)}/image/regenerate`,

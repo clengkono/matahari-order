@@ -20,8 +20,15 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import sharp from "sharp";
-import { runCatalogTransaction } from "./catalogTransaction.js";
+import { loadCatalog, runCatalogTransaction } from "./catalogTransaction.js";
 import { createWatermarkOverlay } from "./imageWatermark.js";
+import {
+  getAllowedCategories,
+  getStudioProduct,
+  listStudioProducts,
+  parseProductMetadataPatch,
+  updateProductMetadata,
+} from "./studioProductMetadata.js";
 
 sharp.cache(false);
 
@@ -30,6 +37,7 @@ const ROOT = join(__dirname, "..");
 const HOST = "127.0.0.1";
 const PORT = 8787;
 const MAX_BYTES = 15 * 1024 * 1024;
+const METADATA_MAX_BYTES = 64 * 1024;
 const CIGARETTE_CATEGORY = "Rokok";
 const BACKGROUND = { r: 237, g: 232, b: 225, alpha: 1 }; // #EDE8E1
 const WEBP_QUALITY = 82;
@@ -1041,6 +1049,137 @@ function handleList(res) {
   }
 }
 
+function studioWarning() {
+  return "LOCAL ONLY — This image service binds to 127.0.0.1 and must not be publicly deployed as-is.";
+}
+
+function handleListStudioProducts(res) {
+  try {
+    const catalog = loadCatalog();
+    sendJson(res, 200, {
+      products: listStudioProducts(catalog),
+      categories: getAllowedCategories(catalog.products),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+function handleStudioCategories(res) {
+  try {
+    const catalog = loadCatalog();
+    sendJson(res, 200, {
+      categories: getAllowedCategories(catalog.products),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+function handleGetStudioProduct(res, productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  try {
+    const catalog = loadCatalog();
+    const product = getStudioProduct(catalog, productId);
+    if (!product) {
+      sendJson(res, 404, { error: "Product not found.", code: "NOT_FOUND" });
+      return;
+    }
+
+    sendJson(res, 200, {
+      product,
+      categories: getAllowedCategories(catalog.products),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+function metadataStatus(result) {
+  if (result.code === "BUSY") {
+    return 409;
+  }
+  if (result.code === "NOT_FOUND") {
+    return 404;
+  }
+  if (result.code === "INVALID_INPUT" || result.code === "VALIDATION_FAILED") {
+    return 400;
+  }
+  return 500;
+}
+
+async function handleUpdateStudioProduct(req, res, productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  let raw;
+  try {
+    raw = await readBody(req, METADATA_MAX_BYTES);
+  } catch (error) {
+    sendJson(res, error.status || 400, {
+      error: error.message || "Could not read the save request.",
+    });
+    return;
+  }
+
+  let body;
+  try {
+    body = JSON.parse(raw.toString("utf8") || "{}");
+  } catch {
+    sendJson(res, 400, {
+      error: "Expected JSON with name and/or category.",
+      code: "INVALID_INPUT",
+    });
+    return;
+  }
+
+  const parsed = parseProductMetadataPatch(body);
+  if (!parsed.ok) {
+    sendJson(res, 400, { error: parsed.error, code: parsed.code });
+    return;
+  }
+
+  const result = updateProductMetadata({
+    productId,
+    ...parsed.patch,
+  });
+
+  if (!result.ok) {
+    sendJson(res, metadataStatus(result), {
+      error: result.error || "Could not save the product.",
+      code: result.code,
+      validationErrors: result.validationErrors,
+    });
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    product: result.product,
+    nameChanged: result.nameChanged,
+    categoryChanged: result.categoryChanged,
+    previousName: result.previousName,
+    previousCategory: result.previousCategory,
+    name: result.name,
+    category: result.category,
+    summary: result.summary,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+  });
+}
+
 function notFound(res) {
   sendJson(res, 404, { error: "Not found." });
 }
@@ -1064,6 +1203,32 @@ const server = createServer(async (req, res) => {
 
   if (req.method === "GET" && pathname === "/api/studio/cigarettes") {
     handleList(res);
+    return;
+  }
+
+  if (req.method === "GET" && pathname === "/api/studio/products") {
+    handleListStudioProducts(res);
+    return;
+  }
+
+  if (req.method === "GET" && pathname === "/api/studio/categories") {
+    handleStudioCategories(res);
+    return;
+  }
+
+  const studioProductMatch = pathname.match(
+    /^\/api\/studio\/products\/([^/]+)$/
+  );
+  if (req.method === "GET" && studioProductMatch) {
+    handleGetStudioProduct(res, decodeURIComponent(studioProductMatch[1]));
+    return;
+  }
+  if (req.method === "PATCH" && studioProductMatch) {
+    await handleUpdateStudioProduct(
+      req,
+      res,
+      decodeURIComponent(studioProductMatch[1])
+    );
     return;
   }
 

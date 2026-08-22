@@ -24,6 +24,12 @@ import {
   undoLastCatalogTransaction,
 } from "./catalogTransaction.js";
 import { saveAssignedImageMetadata } from "./imageService.js";
+import {
+  getAllowedCategories,
+  listStudioProducts,
+  parseProductMetadataPatch,
+  updateProductMetadata,
+} from "./studioProductMetadata.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -113,6 +119,19 @@ function txOptions(dirs, extra = {}) {
     validateOptions: { publicDir: LIVE_PUBLIC_DIR },
     ...extra,
   };
+}
+
+function metaTxOptions(dirs, extra = {}) {
+  return txOptions(dirs, {
+    validateOptions: {
+      publicDir: LIVE_PUBLIC_DIR,
+      fileExists: (filePath) =>
+        String(filePath).includes("prod-ave-20") ||
+        String(filePath).includes("prod-52-kretek-20") ||
+        existsSync(filePath),
+    },
+    ...extra,
+  });
 }
 
 function main() {
@@ -381,6 +400,248 @@ function main() {
     assert(
       "J. Stage 4A rejects remote image URLs",
       badImageErrors.some((message) => message.includes("not an external URL"))
+    );
+
+    const listed = listStudioProducts(loadCatalog(dirs));
+    assert(
+      "4D.3 list includes every catalogue product",
+      listed.length === liveCatalog.products.length && listed.length === 91,
+      `listed=${listed.length} live=${liveCatalog.products.length}`
+    );
+    const searchHits = (query) =>
+      listed.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
+    assert("4D.3 search Troy", searchHits("Troy").length >= 1);
+    assert("4D.3 search Aqua", searchHits("Aqua").some((product) => product.category !== "Rokok"));
+    assert("4D.3 search Indomie", searchHits("Indomie").length >= 1);
+    assert("4D.3 search Masako", searchHits("Masako").length >= 1);
+    assert("4D.3 search Camel", searchHits("Camel").length >= 1);
+
+    const allowed = getAllowedCategories(loadCatalog(dirs).products);
+    assert(
+      "4D.3 curated categories stay first",
+      allowed[0] === "Rokok" &&
+        allowed.includes("Minuman") &&
+        allowed.includes("Bahan & Bumbu Masak") &&
+        allowed.includes("Perawatan") &&
+        allowed.includes("Kebersihan")
+    );
+    assert(
+      "4D.3 extra patch keys rejected",
+      parseProductMetadataPatch({ name: "X", favorite: true }).ok === false
+    );
+    assert(
+      "4D.3 empty body patch is allowed",
+      parseProductMetadataPatch({}).ok === true
+    );
+
+    const camelBefore = loadCatalog(dirs);
+    const camelProductBefore = camelBefore.products.find(
+      (product) => product.id === "prod-camel-blue16"
+    );
+    const camelAliasBefore = camelBefore.aliases
+      .filter((entry) => entry.productId === "prod-camel-blue16")
+      .map((entry) => entry.alias);
+    const camelImageBefore = JSON.stringify(camelProductBefore?.image ?? null);
+    const camelPosBefore = camelBefore.mappings
+      .filter((mapping) => mapping.productId === "prod-camel-blue16")
+      .map((mapping) => ({
+        posName: mapping.posName,
+        posCode: mapping.posCode,
+        productId: mapping.productId,
+        unitId: mapping.unitId,
+      }));
+
+    const renamedCamel = updateProductMetadata(
+      { productId: "prod-camel-blue16", name: "Camel Blue 16 Studio" },
+      metaTxOptions(dirs)
+    );
+    assert("4D.3 rename succeeds", renamedCamel.ok && !renamedCamel.noop, renamedCamel.error);
+    assert(
+      "4D.3 rename is one transaction",
+      renamedCamel.action === "update-product-metadata" &&
+        renamedCamel.changedFiles.includes("products.json") &&
+        renamedCamel.changedFiles.includes("variants.json") &&
+        renamedCamel.changedFiles.includes("mappings.json")
+    );
+    const camelAfter = loadCatalog(dirs);
+    const camelProductAfter = camelAfter.products.find(
+      (product) => product.id === "prod-camel-blue16"
+    );
+    const camelVariants = camelAfter.variants.filter(
+      (variant) => variant.productId === "prod-camel-blue16"
+    );
+    const camelMappings = camelAfter.mappings.filter(
+      (mapping) => mapping.productId === "prod-camel-blue16"
+    );
+    assert(
+      "4D.3 rename updates customer-facing names",
+      camelProductAfter?.name === "Camel Blue 16 Studio" &&
+        camelVariants.every((variant) => variant.name === "Camel Blue 16 Studio") &&
+        camelMappings.every(
+          (mapping) => mapping.productName === "Camel Blue 16 Studio"
+        )
+    );
+    assert(
+      "4D.3 rename leaves POS, IDs, image, aliases untouched",
+      camelProductAfter?.id === "prod-camel-blue16" &&
+        camelVariants.every((variant) => variant.id === "prod-camel-blue16") &&
+        JSON.stringify(camelProductAfter?.image ?? null) === camelImageBefore &&
+        JSON.stringify(
+          camelAfter.aliases
+            .filter((entry) => entry.productId === "prod-camel-blue16")
+            .map((entry) => entry.alias)
+        ) === JSON.stringify(camelAliasBefore) &&
+        camelMappings.every((mapping, index) => {
+          const before = camelPosBefore[index];
+          return (
+            mapping.posName === before.posName &&
+            mapping.posCode === before.posCode &&
+            mapping.productId === before.productId &&
+            mapping.unitId === before.unitId
+          );
+        })
+    );
+
+    const snapshotBeforeCategory = snapshotFiles(dirs.catalogDir);
+    const apacheBefore = loadCatalog(dirs).products.find(
+      (product) => product.id === "prod-apache-16"
+    );
+    const categoryOnly = updateProductMetadata(
+      { productId: "prod-apache-16", category: "Perawatan" },
+      metaTxOptions(dirs)
+    );
+    assert(
+      "4D.3 category-only succeeds",
+      categoryOnly.ok && !categoryOnly.noop,
+      categoryOnly.error
+    );
+    assert(
+      "4D.3 category-only writes products.json only",
+      categoryOnly.changedFiles.length === 1 &&
+        categoryOnly.changedFiles[0] === "products.json"
+    );
+    const apacheAfter = loadCatalog(dirs).products.find(
+      (product) => product.id === "prod-apache-16"
+    );
+    assert(
+      "4D.3 category-only updates category and keeps image",
+      apacheAfter?.category === "Perawatan" &&
+        apacheAfter?.name === apacheBefore?.name &&
+        JSON.stringify(apacheAfter?.image ?? null) ===
+          JSON.stringify(apacheBefore?.image ?? null)
+    );
+    assert(
+      "4D.3 category-only leaves variants and mappings bytes unchanged",
+      readText(join(dirs.catalogDir, "variants.json")) ===
+        snapshotBeforeCategory["variants.json"] &&
+        readText(join(dirs.catalogDir, "mappings.json")) ===
+          snapshotBeforeCategory["mappings.json"]
+    );
+
+    const combined = updateProductMetadata(
+      {
+        productId: "prod-camel-purple-12",
+        name: "Camel Purple 12 Studio",
+        category: "Minuman",
+      },
+      metaTxOptions(dirs)
+    );
+    assert("4D.3 combined save succeeds", combined.ok && !combined.noop, combined.error);
+    assert(
+      "4D.3 combined save is one transaction",
+      combined.action === "update-product-metadata" &&
+        combined.nameChanged === true &&
+        combined.categoryChanged === true &&
+        combined.changedFiles.includes("products.json") &&
+        combined.changedFiles.includes("variants.json") &&
+        combined.changedFiles.includes("mappings.json")
+    );
+
+    const imageAfterMeta = saveAssignedImageMetadata(
+      "prod-52-kretek-20",
+      {
+        card: "/product-images/cards/cigarettes/prod-52-kretek-20.webp",
+        detail: "/product-images/details/cigarettes/prod-52-kretek-20.webp",
+        original:
+          "/product-images/originals/cigarettes/prod-52-kretek-20-original.png",
+      },
+      metaTxOptions(dirs)
+    );
+    assert(
+      "4D.3 image metadata still works after product edits",
+      imageAfterMeta.ok,
+      imageAfterMeta.error || imageAfterMeta.validationErrors?.[0]
+    );
+
+    const emptyName = updateProductMetadata(
+      { productId: "prod-aqua-15l", name: "   " },
+      metaTxOptions(dirs)
+    );
+    assert(
+      "4D.3 empty name rejected",
+      !emptyName.ok && emptyName.code === "INVALID_INPUT"
+    );
+
+    const snapshotBeforeInvalidCategory = snapshotFiles(dirs.catalogDir);
+    const invalidCategory = updateProductMetadata(
+      { productId: "prod-aqua-15l", category: "Snacks" },
+      metaTxOptions(dirs)
+    );
+    assert(
+      "4D.3 invalid category rejected",
+      !invalidCategory.ok && invalidCategory.code === "INVALID_INPUT"
+    );
+    assert(
+      "4D.3 invalid category writes nothing",
+      filesUnchanged(dirs.catalogDir, snapshotBeforeInvalidCategory)
+    );
+
+    const unknownProduct = updateProductMetadata(
+      { productId: "prod-does-not-exist", name: "Nope" },
+      metaTxOptions(dirs)
+    );
+    assert(
+      "4D.3 unknown product rejected",
+      !unknownProduct.ok && unknownProduct.code === "NOT_FOUND"
+    );
+
+    const noopMeta = updateProductMetadata(
+      {
+        productId: "prod-aqua-15l",
+        name: "Aqua 1.5 L",
+        category: "Minuman",
+      },
+      metaTxOptions(dirs)
+    );
+    assert("4D.3 no-change save is noop", noopMeta.ok && noopMeta.noop === true);
+
+    let busyResult;
+    const busyHolder = runCatalogTransaction(
+      metaTxOptions(dirs, {
+        action: "busy-holder",
+        mutate() {
+          busyResult = updateProductMetadata(
+            { productId: "prod-aqua-15l", name: "Aqua Held" },
+            metaTxOptions(dirs)
+          );
+        },
+      })
+    );
+    assert("4D.3 outer lock holder succeeds", busyHolder.ok, busyHolder.error);
+    assert(
+      "4D.3 nested metadata save is BUSY",
+      busyResult?.ok === false && busyResult?.code === "BUSY"
+    );
+
+    const aquaListed = listed.find((product) => product.id === "prod-aqua-15l");
+    assert(
+      "4D.3 non-rokok product has display fields",
+      aquaListed?.name === "Aqua 1.5 L" &&
+        aquaListed?.category === "Minuman" &&
+        Array.isArray(aquaListed.aliases) &&
+        aquaListed.aliases.includes("aqua")
     );
 
     assert(
