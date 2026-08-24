@@ -1,15 +1,8 @@
 import { WHATSAPP_DESTINATION_NUMBER } from "../config/whatsappDestination.js";
-
-function lowercaseFirstCharacter(value) {
-  if (!value) {
-    return value;
-  }
-
-  return value.charAt(0).toLowerCase() + value.slice(1);
-}
+import { lowercaseUnitLabel } from "./unitDisplay.js";
 
 export function formatOrderLine(item) {
-  const unit = lowercaseFirstCharacter(item.unit);
+  const unit = lowercaseUnitLabel(item.unit);
   return `☐ ${item.quantity} ${unit} ${item.name}`;
 }
 

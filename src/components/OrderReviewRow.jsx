@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getCartUnitDisplayLabel } from "../utils/cartHelpers";
+import { getCartUnitDisplayLabel } from "../utils/unitDisplay";
 
 function OrderReviewRow({
   line,
@@ -69,7 +69,7 @@ function OrderReviewRow({
                   type="button"
                   className={`orderReviewUnitPill${line.unit === unit ? " orderReviewUnitPill--selected" : ""}`}
                   aria-pressed={line.unit === unit}
-                  aria-label={unit}
+                  aria-label={getCartUnitDisplayLabel(unit)}
                   onClick={() => handleSelectUnit(unit)}
                 >
                   {getCartUnitDisplayLabel(unit)}
@@ -81,7 +81,7 @@ function OrderReviewRow({
               <button
                 type="button"
                 className="quantityButton"
-                aria-label={`Kurangi ${line.name} ${line.unit}`}
+                aria-label={`Kurangi ${line.name} ${getCartUnitDisplayLabel(line.unit)}`}
                 onClick={() => onDecrease(line.productId)}
                 disabled={line.quantity <= 1}
               >
@@ -93,7 +93,7 @@ function OrderReviewRow({
               <button
                 type="button"
                 className="quantityButton"
-                aria-label={`Tambah ${line.name} ${line.unit}`}
+                aria-label={`Tambah ${line.name} ${getCartUnitDisplayLabel(line.unit)}`}
                 onClick={() => onIncrease(line.productId)}
               >
                 +

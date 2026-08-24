@@ -145,10 +145,4 @@ export function changeLineUnit(cart, productId, oldUnit, newUnit) {
   );
 }
 
-/** Pesanan Saya display label only — catalogue/WhatsApp keep canonical names. */
-export function getCartUnitDisplayLabel(unit) {
-  if (unit === "Bungkus") {
-    return "Bks";
-  }
-  return unit;
-}
+export { getCartUnitDisplayLabel } from "./unitDisplay";

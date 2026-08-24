@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatUnitQuantity } from "../utils/unitDisplay";
 
 function SearchResultRow({
   product,
@@ -10,7 +11,10 @@ function SearchResultRow({
   subordinate = false,
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+  const defaultOrder = formatUnitQuantity(
+    product.defaultQuantity,
+    product.defaultUnit
+  );
   const cardImage = product.image?.card;
   const showImage = Boolean(cardImage) && !imageFailed;
   const inCart = cartQuantity > 0;

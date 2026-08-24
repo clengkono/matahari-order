@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { formatUnitQuantity } from "../utils/unitDisplay";
 
 function RecommendationCard({ product, onAdd, onOpen }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const defaultOrder = `${product.defaultQuantity} ${product.defaultUnit}`;
+  const defaultOrder = formatUnitQuantity(
+    product.defaultQuantity,
+    product.defaultUnit
+  );
   const cardImage = product.image?.card;
   const showImage = Boolean(cardImage) && !imageFailed;
   const isOpenable = typeof onOpen === "function";

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import RecommendationCard from "./RecommendationCard";
-import { getCartUnitDisplayLabel } from "../utils/cartHelpers";
+import { getCartUnitDisplayLabel } from "../utils/unitDisplay";
 
 function ProductInfoView({
   product,
@@ -184,7 +184,7 @@ function ProductInfoView({
                   key={`${hint.fromUnit}-${hint.toUnit}-${hint.quantity}`}
                   className="productInfoHint"
                 >
-                  1 {hint.fromUnit} = {hint.quantity}{" "}
+                  1 {getCartUnitDisplayLabel(hint.fromUnit)} = {hint.quantity}{" "}
                   {getCartUnitDisplayLabel(hint.toUnit)}
                 </li>
               ))}

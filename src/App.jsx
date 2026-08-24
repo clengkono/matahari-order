@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import products, { aliases, catalogRecommendations } from "./catalog";
+import AddFeedbackToast from "./components/AddFeedbackToast";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
 import ProductCard from "./components/ProductCard";
 import ProductInfoView from "./components/ProductInfoView";
+import RecommendationCard from "./components/RecommendationCard";
 import SearchEmptyState, {
   CategoryDiscoveryCard,
   CategoryMatchState,
@@ -72,6 +74,7 @@ export default function App() {
     return loadStoredOrderNote();
   });
   const [whatsAppHandoffStatus, setWhatsAppHandoffStatus] = useState("idle");
+  const [addFeedbackToken, setAddFeedbackToken] = useState(0);
   const searchInputRef = useRef(null);
   const whatsAppSendLockRef = useRef(false);
   const {
@@ -259,14 +262,26 @@ export default function App() {
     [cart]
   );
 
+  const showAddedFeedback = useCallback(() => {
+    setAddFeedbackToken((current) => current + 1);
+  }, []);
+
+  const addToCartWithFeedback = useCallback(
+    (line) => {
+      addToCart(line);
+      showAddedFeedback();
+    },
+    [addToCart, showAddedFeedback]
+  );
+
   const handleQuickAdd = useCallback(
     (product) => {
       if (normalizeSearchText(search)) {
         recordRecentSearch(search);
       }
-      addProductDefaults(addToCart, product);
+      addProductDefaults(addToCartWithFeedback, product);
     },
-    [addToCart, recordRecentSearch, search]
+    [addToCartWithFeedback, recordRecentSearch, search]
   );
 
   const handleOpenProduct = useCallback(
@@ -434,9 +449,9 @@ export default function App() {
 
   const handleAddRecommendation = useCallback(
     (product) => {
-      addProductDefaults(addToCart, product);
+      addProductDefaults(addToCartWithFeedback, product);
     },
-    [addToCart]
+    [addToCartWithFeedback]
   );
 
   const searchPlaceholder = isCategoryMode
@@ -597,25 +612,35 @@ export default function App() {
           </div>
 
           {searchRecommendations.length > 0 && (
-            <div className="searchRecommendations">
-              <h2 className="searchRecommendationsTitle">
-                Mungkin Anda juga perlu
-              </h2>
-              <div className="searchResultList searchResultList--recommendations">
+            <section
+              className="orderReviewRecommendations searchRecommendations"
+              aria-label="Mungkin Anda juga perlu"
+            >
+              <div className="orderReviewRecommendationsHeader">
+                <h2 className="orderReviewRecommendationsTitle">
+                  <span
+                    className="orderReviewRecommendationsAccent"
+                    aria-hidden="true"
+                  >
+                    ✦
+                  </span>
+                  Mungkin Anda juga perlu
+                </h2>
+                <p className="orderReviewRecommendationsHint">
+                  Geser untuk melihat lebih banyak
+                </p>
+              </div>
+              <ul className="orderReviewRecoCarousel">
                 {searchRecommendations.map((product) => (
-                  <SearchResultRow
+                  <RecommendationCard
                     key={product.id}
                     product={product}
-                    cartQuantity={getDefaultUnitQuantity(product)}
+                    onAdd={handleQuickAdd}
                     onOpen={handleOpenProduct}
-                    onQuickAdd={handleQuickAdd}
-                    onIncrease={handleIncreaseQuantity}
-                    onDecrease={handleDecreaseQuantity}
-                    subordinate
                   />
                 ))}
-              </div>
-            </div>
+              </ul>
+            </section>
           )}
         </section>
       )}
@@ -672,7 +697,7 @@ export default function App() {
           recommendations={productPageRecommendations}
           suppressEscape={isReviewOpen}
           onBack={handleProductBack}
-          onAddToCart={addToCart}
+          onAddToCart={addToCartWithFeedback}
           onOpenCart={handleOpenReview}
           onOpenRecommendation={handleOpenRecommendationProduct}
           onQuickAddRecommendation={handleAddRecommendation}
@@ -708,6 +733,8 @@ export default function App() {
         onChangeUnit={changeUnit}
         onAddRecommendation={handleAddRecommendation}
       />
+
+      <AddFeedbackToast token={addFeedbackToken} />
     </div>
   );
 }

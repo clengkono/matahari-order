@@ -7,7 +7,7 @@
 
 /* --------------------------------------------------------------------------
    1. Shared Design Tokens
-   (Mirrors App.css for document-level use)
+   Studio / document fallback. Customer Palette D lives in App.css.
    -------------------------------------------------------------------------- */
 
 :root {
