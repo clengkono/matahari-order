@@ -11,7 +11,47 @@ The POS remains the source system. Matahari Order only needs a clean ordering ca
 - sensible defaults
 - preserved links back to POS codes
 
-These rules guide the catalogue builder preview and future import tools.
+## Customer-facing categories
+
+Approved top-level taxonomy (Stage 5B.2A), in homepage order:
+
+1. Makanan Ringan
+2. Bahan Makanan
+3. Minuman
+4. Perawatan Diri
+5. Kebutuhan Rumah
+6. Alat & Perlengkapan
+7. Kesehatan
+8. Rokok
+9. Bayi & Anak
+
+`src/config/categories.js` is the authoritative list. Catalogue Studio reads the same IDs. Do not add Lainnya. Empty categories stay hidden until they have products.
+
+Search and category screens cap how many rows mount (`Tampilkan lainnya`) so a large catalogue does not render hundreds of rows at once. Matching and ranking still run over the full result set.
+
+---
+
+## Authoritative vs generated customer catalogue
+
+The six files in `src/catalog/` remain the source of truth:
+
+- `products.json`
+- `variants.json`
+- `units.json`
+- `aliases.json`
+- `mappings.json`
+- `recommendations.json`
+
+Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use those files.
+
+The customer app imports the generated artefact `src/catalog/generated/customerCatalog.json`.
+
+- Do not edit the generated file by hand.
+- Regenerate with `npm run catalog:customer-build`.
+- `npm run build` regenerates it before Vite.
+- Catalogue transactions do not rewrite it (avoids smoke tests mutating the live artefact). After Studio edits, regenerate before customer testing.
+
+A later Option B could fetch this JSON at runtime (or via a PWA cache). That is not implemented yet.
 
 ---
 

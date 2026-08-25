@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "notes": "Owner-approved POS recodes. An empty decisions array means no recodes are applied. Each decision maps an existing catalogue product from an old mappings.posCode to a new workbook Kode Item. Do not guess. Stage 5B.2 reports unmatched name-only cases as RECODE_REVIEW until a decision here is approved: true.",
+  "decisions": []
+}

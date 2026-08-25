@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/buildCustomerCatalog.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "studio": "node scripts/studio.js",
@@ -16,7 +16,13 @@
     "catalog:preview": "node scripts/catalogBuilder.js",
     "catalog:preview:check": "node scripts/catalogBuilder.js --check",
     "catalog:import-seed": "node scripts/importCatalogSeed.js",
-    "catalog:transaction:smoke": "node scripts/catalogTransaction.smoke.js"
+    "catalog:import-full:dry": "node scripts/importFullCatalog.js --dry",
+    "catalog:import-full:apply": "node scripts/importFullCatalog.js --apply",
+    "catalog:import-full:smoke": "node scripts/importFullCatalog.smoke.js",
+    "catalog:transaction:smoke": "node scripts/catalogTransaction.smoke.js",
+    "catalog:customer-build": "node scripts/buildCustomerCatalog.js",
+    "catalog:customer-build:smoke": "node scripts/buildCustomerCatalog.smoke.js",
+    "catalog:migrate-category-taxonomy": "node scripts/migrateCategoryTaxonomy.js"
   },
   "dependencies": {
     "react": "^19.2.7",

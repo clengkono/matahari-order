@@ -275,3 +275,39 @@ Never reintroduce:
 - ecommerce behaviour
 
 without explicit approval.
+
+---
+
+# Decision 13 — Nine customer categories
+
+Status: Permanent unless the owner changes the taxonomy
+
+The customer homepage uses nine top-level categories, defined once in `src/config/categories.js`:
+
+Makanan Ringan, Bahan Makanan, Minuman, Perawatan Diri, Kebutuhan Rumah, Alat & Perlengkapan, Kesehatan, Rokok, Bayi & Anak.
+
+There is no Lainnya catch-all and no subcategory UI. Unresolved import rows stay out of the live catalogue until they are classified.
+
+---
+
+# Decision 14 — Render caps instead of virtualization
+
+Status: Current
+
+Search shows 20 rows first, then +20 per `Tampilkan lainnya`. Category browse shows 24, then +24.
+
+Search matching, ranking, aliases, recommendations, and category membership still use the full list. Only DOM rendering is capped.
+
+Virtualization was not added: it would add a dependency, change scroll/focus behaviour on phones, and is unnecessary while a batch button keeps the first paint small.
+
+---
+
+# Decision 15 — Generated customer catalogue (Option D)
+
+Status: Current
+
+The customer production bundle consumes a compact generated catalogue, not the raw variants/units/mappings JSON.
+
+Authoritative source remains the six `src/catalog/*.json` files. `customerCatalog.json` is generated, must not be hand-edited, and is rebuilt by `npm run catalog:customer-build` and `npm run build`.
+
+A future Option B could serve or cache that JSON as a static fetch / PWA asset. Do not add a service worker in this stage.

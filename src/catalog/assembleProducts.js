@@ -1,9 +1,13 @@
-import aliasesData from "./aliases.json";
-import mappingsData from "./mappings.json";
-import productsData from "./products.json";
-import recommendationsData from "./recommendations.json";
-import unitsData from "./units.json";
-import variantsData from "./variants.json";
+/**
+ * Assemble customer-visible products from the authoritative six-file catalogue.
+ *
+ * Used by the customer-catalogue generator (scripts/buildCustomerCatalog.js).
+ * The customer app must not import this module — it would pull variants.json
+ * and units.json into the production bundle. Runtime reads
+ * src/catalog/generated/customerCatalog.json instead.
+ *
+ * Do not add static JSON imports here.
+ */
 
 function isUnitActive(unit) {
   return !unit || unit.active !== false;
@@ -15,9 +19,9 @@ function isUnitActive(unit) {
  * Only active units are exposed to the ordering UI.
  */
 export function assembleProducts({
-  products = productsData,
-  variants = variantsData,
-  units = unitsData,
+  products = [],
+  variants = [],
+  units = [],
 } = {}) {
   const productById = new Map(products.map((product) => [product.id, product]));
   const unitById = new Map(units.map((unit) => [unit.id, unit]));
@@ -86,13 +90,3 @@ export function assembleProducts({
     };
   });
 }
-
-export const products = assembleProducts();
-export const aliases = aliasesData;
-export const catalogProducts = productsData;
-export const catalogVariants = variantsData;
-export const catalogUnits = unitsData;
-export const catalogMappings = mappingsData;
-export const catalogRecommendations = recommendationsData;
-
-export default products;

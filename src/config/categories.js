@@ -1,5 +1,5 @@
 /**
- * Curated homepage category order and presentation (Stage 2A / 2B).
+ * Curated homepage category order and presentation (Stage 2A / 2B / 5B.2A).
  *
  * Canonical `id` values must match product.category on assembled products.
  * Icons/labels are presentation only — filtering always uses `id`.
@@ -7,18 +7,35 @@
  * `searchTerms` are exact normalized query synonyms used for global
  * category-discovery chips (Stage 2B). They are NOT product aliases.
  *
+ * This file is the authoritative customer-facing taxonomy. Studio reads
+ * CURATED_CATEGORY_IDS from here — do not duplicate the list elsewhere.
+ *
  * Categories with zero active products are hidden at render time.
  * Unknown future catalogue categories are appended after this list.
+ *
+ * There is no Lainnya catch-all.
  */
 
-import { normalizeSearchText } from "../utils/productSearch";
+import { normalizeSearchText } from "../utils/productSearch.js";
 
 export const CATEGORY_CONFIG = [
   {
-    id: "Rokok",
-    label: "Rokok",
-    icon: "🚬",
-    searchTerms: ["rokok"],
+    id: "Makanan Ringan",
+    label: "Makanan Ringan",
+    icon: "🍪",
+    searchTerms: ["makanan ringan", "cemilan", "snack"],
+  },
+  {
+    id: "Bahan Makanan",
+    label: "Bahan Makanan",
+    icon: "🍳",
+    searchTerms: [
+      "bahan makanan",
+      "bahan",
+      "bumbu",
+      "bumbu masak",
+      "bahan & bumbu masak",
+    ],
   },
   {
     id: "Minuman",
@@ -27,24 +44,44 @@ export const CATEGORY_CONFIG = [
     searchTerms: ["minuman"],
   },
   {
-    id: "Bahan & Bumbu Masak",
-    label: "Bahan & Bumbu Masak",
-    icon: "🍳",
-    searchTerms: ["bahan", "bumbu", "bumbu masak", "bahan & bumbu masak"],
-  },
-  {
-    id: "Perawatan",
-    label: "Perawatan",
+    id: "Perawatan Diri",
+    label: "Perawatan Diri",
     icon: "🧼",
-    searchTerms: ["perawatan"],
+    searchTerms: ["perawatan diri", "perawatan"],
   },
   {
-    id: "Kebersihan",
-    label: "Kebersihan",
+    id: "Kebutuhan Rumah",
+    label: "Kebutuhan Rumah",
     icon: "🧹",
-    searchTerms: ["kebersihan"],
+    searchTerms: ["kebutuhan rumah", "kebersihan"],
+  },
+  {
+    id: "Alat & Perlengkapan",
+    label: "Alat & Perlengkapan",
+    icon: "🔧",
+    searchTerms: ["alat & perlengkapan", "alat", "perlengkapan"],
+  },
+  {
+    id: "Kesehatan",
+    label: "Kesehatan",
+    icon: "💊",
+    searchTerms: ["kesehatan"],
+  },
+  {
+    id: "Rokok",
+    label: "Rokok",
+    icon: "🚬",
+    searchTerms: ["rokok"],
+  },
+  {
+    id: "Bayi & Anak",
+    label: "Bayi & Anak",
+    icon: "🍼",
+    searchTerms: ["bayi & anak", "bayi", "anak"],
   },
 ];
+
+export const CURATED_CATEGORY_IDS = CATEGORY_CONFIG.map((entry) => entry.id);
 
 const configById = new Map(
   CATEGORY_CONFIG.map((entry) => [entry.id, entry])

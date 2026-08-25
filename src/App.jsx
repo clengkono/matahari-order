@@ -13,6 +13,7 @@ import SearchEmptyState, {
 } from "./components/SearchEmptyState";
 import SearchResultRow from "./components/SearchResultRow";
 import SearchShortcuts from "./components/SearchShortcuts";
+import ShowMoreResults from "./components/ShowMoreResults";
 import {
   getCategoryPresentation,
   getVisibleCategories,
@@ -22,6 +23,13 @@ import { HOMEPAGE_FEATURED_PRODUCT_IDS } from "./config/homepageFeatured";
 import { POPULAR_SEARCHES } from "./config/popularSearches";
 import { useCart } from "./context/CartContext";
 import { findProductLine } from "./utils/cartHelpers";
+import {
+  SEARCH_RESULT_PAGE_SIZE,
+  initialVisibleLimit,
+  nextVisibleLimit,
+  remainingItemCount,
+  visibleItems,
+} from "./utils/resultCap";
 import {
   clearStoredOrderNote,
   loadStoredCart,
@@ -75,6 +83,10 @@ export default function App() {
   });
   const [whatsAppHandoffStatus, setWhatsAppHandoffStatus] = useState("idle");
   const [addFeedbackToken, setAddFeedbackToken] = useState(0);
+  const [visibleLimitState, setVisibleLimitState] = useState({
+    resetKey: "",
+    limit: SEARCH_RESULT_PAGE_SIZE,
+  });
   const searchInputRef = useRef(null);
   const whatsAppSendLockRef = useRef(false);
   const {
@@ -201,6 +213,43 @@ export default function App() {
     ? searchResultProducts
     : categoryProducts;
   const hasCategoryHits = categoryResultProducts.length > 0;
+  const resultPageSize = initialVisibleLimit({
+    isSearching,
+    isCategoryMode,
+  });
+  const resultResetKey = `${selectedCategory ?? ""}::${normalizedSearch}`;
+  const visibleLimit =
+    visibleLimitState.resetKey === resultResetKey
+      ? visibleLimitState.limit
+      : resultPageSize;
+
+  const visibleSearchResultProducts = visibleItems(
+    searchResultProducts,
+    visibleLimit
+  );
+  const visibleCategoryResultProducts = visibleItems(
+    categoryResultProducts,
+    visibleLimit
+  );
+  const hiddenSearchCount = remainingItemCount(
+    searchResultProducts.length,
+    visibleSearchResultProducts.length
+  );
+  const hiddenCategoryCount = remainingItemCount(
+    categoryResultProducts.length,
+    visibleCategoryResultProducts.length
+  );
+
+  const handleShowMoreResults = useCallback(() => {
+    setVisibleLimitState((current) => {
+      const currentLimit =
+        current.resetKey === resultResetKey ? current.limit : resultPageSize;
+      return {
+        resetKey: resultResetKey,
+        limit: nextVisibleLimit(currentLimit, resultPageSize),
+      };
+    });
+  }, [resultPageSize, resultResetKey]);
 
   // Cross-category recovery: same pipeline on full catalogue when category miss.
   const hasGlobalHitsOutsideCategory = useMemo(() => {
@@ -542,19 +591,29 @@ export default function App() {
           </div>
 
           {hasCategoryHits ? (
-            <div className="searchResultList">
-              {categoryResultProducts.map((product) => (
-                <SearchResultRow
-                  key={product.id}
-                  product={product}
-                  cartQuantity={getDefaultUnitQuantity(product)}
-                  onOpen={handleOpenProduct}
-                  onQuickAdd={handleQuickAdd}
-                  onIncrease={handleIncreaseQuantity}
-                  onDecrease={handleDecreaseQuantity}
+            <>
+              <div className="searchResultList">
+                {visibleCategoryResultProducts.map((product) => (
+                  <SearchResultRow
+                    key={product.id}
+                    product={product}
+                    cartQuantity={getDefaultUnitQuantity(product)}
+                    onOpen={handleOpenProduct}
+                    onQuickAdd={handleQuickAdd}
+                    onIncrease={handleIncreaseQuantity}
+                    onDecrease={handleDecreaseQuantity}
+                  />
+                ))}
+              </div>
+              {hiddenCategoryCount > 0 ? (
+                <ShowMoreResults
+                  visibleCount={visibleCategoryResultProducts.length}
+                  totalCount={categoryResultProducts.length}
+                  pageSize={resultPageSize}
+                  onShowMore={handleShowMoreResults}
                 />
-              ))}
-            </div>
+              ) : null}
+            </>
           ) : (
             <SearchEmptyState
               query={normalizedSearch}
@@ -598,7 +657,7 @@ export default function App() {
           ) : null}
           <div className="sectionTitle">Hasil Pencarian</div>
           <div className="searchResultList">
-            {searchResultProducts.map((product) => (
+            {visibleSearchResultProducts.map((product) => (
               <SearchResultRow
                 key={product.id}
                 product={product}
@@ -610,6 +669,14 @@ export default function App() {
               />
             ))}
           </div>
+          {hiddenSearchCount > 0 ? (
+            <ShowMoreResults
+              visibleCount={visibleSearchResultProducts.length}
+              totalCount={searchResultProducts.length}
+              pageSize={resultPageSize}
+              onShowMore={handleShowMoreResults}
+            />
+          ) : null}
 
           {searchRecommendations.length > 0 && (
             <section

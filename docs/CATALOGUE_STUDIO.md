@@ -224,11 +224,11 @@ The Products tab edits **customer-facing** name and category for the full catalo
 - Editable: customer-facing name, category
 - Read-only: product ID, variant ID, aliases, photo, POS name, POS code
 - Alias chips are display-only in this stage (no add/remove)
-- Category is a dropdown of `CATEGORY_CONFIG` plus any extra values already present in `products.json`. There is no free-text category creation, and Studio does not edit `src/config/categories.js`
+- Category is a dropdown of the nine IDs from `CATEGORY_CONFIG` in `src/config/categories.js`, plus any extra values already present in `products.json`. There is no free-text category creation, and Studio does not edit `src/config/categories.js`. Keep Studio’s list in sync by importing `CURATED_CATEGORY_IDS` from that file.
 - Saves go through the catalogue transaction layer (`update-product-metadata`)
 - A name change updates `products.json` name, matching `variants.json` names, and `mappings.productName` only
 - POS name, POS code, IDs, aliases, image paths, units, favorites, and recommendations are not written
 - Changing a Rokok product to another category shows a warning that it will leave the current Images/Queue cigarette list; image files are not moved or deleted
-- After a category save, reload the customer app if the homepage categories still look stale — Vite JSON imports may not hot-reload
+- After a catalogue save, run `npm run catalog:customer-build` (or `npm run build`) before testing the customer app. Studio writes the six source files only; the generated customer catalogue is not updated by transactions.
 
 Keyboard: `Ctrl+F` on the Products tab focuses the Products search, not the cigarette search.

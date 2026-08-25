@@ -5,20 +5,11 @@
  * LOCAL ONLY.
  */
 
+import { CURATED_CATEGORY_IDS } from "../src/config/categories.js";
 import { loadCatalog, runCatalogTransaction } from "./catalogTransaction.js";
 
 const CIGARETTE_CATEGORY = "Rokok";
 const PATCH_KEYS = new Set(["name", "category"]);
-
-// Curated order from src/config/categories.js CATEGORY_CONFIG.
-// Studio must not write that file; this list is read-only policy for the dropdown.
-const CURATED_CATEGORY_IDS = [
-  "Rokok",
-  "Minuman",
-  "Bahan & Bumbu Masak",
-  "Perawatan",
-  "Kebersihan",
-];
 
 function hasOwn(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key);

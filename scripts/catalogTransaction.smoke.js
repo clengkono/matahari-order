@@ -421,11 +421,15 @@ function main() {
     const allowed = getAllowedCategories(loadCatalog(dirs).products);
     assert(
       "4D.3 curated categories stay first",
-      allowed[0] === "Rokok" &&
+      allowed[0] === "Makanan Ringan" &&
+        allowed[1] === "Bahan Makanan" &&
         allowed.includes("Minuman") &&
-        allowed.includes("Bahan & Bumbu Masak") &&
-        allowed.includes("Perawatan") &&
-        allowed.includes("Kebersihan")
+        allowed.includes("Perawatan Diri") &&
+        allowed.includes("Kebutuhan Rumah") &&
+        allowed.includes("Alat & Perlengkapan") &&
+        allowed.includes("Kesehatan") &&
+        allowed.includes("Rokok") &&
+        allowed.includes("Bayi & Anak")
     );
     assert(
       "4D.3 extra patch keys rejected",
@@ -509,7 +513,7 @@ function main() {
       (product) => product.id === "prod-apache-16"
     );
     const categoryOnly = updateProductMetadata(
-      { productId: "prod-apache-16", category: "Perawatan" },
+      { productId: "prod-apache-16", category: "Perawatan Diri" },
       metaTxOptions(dirs)
     );
     assert(
@@ -527,7 +531,7 @@ function main() {
     );
     assert(
       "4D.3 category-only updates category and keeps image",
-      apacheAfter?.category === "Perawatan" &&
+      apacheAfter?.category === "Perawatan Diri" &&
         apacheAfter?.name === apacheBefore?.name &&
         JSON.stringify(apacheAfter?.image ?? null) ===
           JSON.stringify(apacheBefore?.image ?? null)

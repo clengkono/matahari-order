@@ -639,14 +639,14 @@
   {
     "id": "prod-masako-ayam",
     "name": "Masako Ayam",
-    "category": "Bahan & Bumbu Masak",
+    "category": "Bahan Makanan",
     "favorite": true,
     "pattern": "fixed-product"
   },
   {
     "id": "prod-masako-sapi",
     "name": "Masako Sapi",
-    "category": "Bahan & Bumbu Masak",
+    "category": "Bahan Makanan",
     "favorite": true,
     "pattern": "fixed-product"
   },
@@ -667,7 +667,7 @@
   {
     "id": "prod-indomie-goreng",
     "name": "Indomie Goreng",
-    "category": "Bahan & Bumbu Masak",
+    "category": "Bahan Makanan",
     "favorite": false,
     "pattern": "fixed-product"
   }

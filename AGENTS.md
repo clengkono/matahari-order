@@ -42,6 +42,12 @@ This is not a conventional ecommerce application.
   - Glory defaults to `1 Slof`
   - Aqua 1.5 L defaults to `1 Karton`
 
+## Catalogue files
+
+- Authoritative catalogue: `src/catalog/*.json` (six files, including POS mappings).
+- Customer runtime: generated `src/catalog/generated/customerCatalog.json`. Do not hand-edit it.
+- After catalogue edits, run `npm run catalog:customer-build`. `npm run build` regenerates it before Vite.
+
 ## Cart rules
 
 - Use the existing `CartContext`.

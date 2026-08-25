@@ -18,6 +18,8 @@ The app should help customers choose the correct product, quantity, and unit bef
 
 The application is a price-free ordering catalogue.
 
+Customer-facing categories are the nine IDs in `src/config/categories.js`. The customer app reads a generated compact catalogue; the six `src/catalog/*.json` files remain authoritative.
+
 It is not intended to replace the store's POS.
 
 The POS remains the internal source for:
