@@ -1,0 +1,6 @@
+priority,query,posCodes,posNames,why,status
+1,"Gomala Youvella wholesale Indonesia",GML5 | GML6 | GML7 | GML8 | GML9 | GML10,Gomala No.5 / 6 / 7 / 9; Gomala Youvella No.8 / 10,Numbered PCS SKUs with no safe category,queued
+2,"Rackus product Indonesia wholesale",CM063,Rackus,Name alone is not enough; units DOS/KTN/PAK,queued
+3,"Speed brand product POS Indonesia wholesale Matahari",1087,Speed,Name is too generic; units BAL/KTN/PAK,queued
+4,"Kucing Batang Merah 60 72",KB60 | KB,Kucing Batang Merah 60; Kucing Batang Merah 72,Batang/stick sizes 60 and 72; do not assume incense or crackers,queued
+5,"Kertas Kaf Indonesia",CM267,Kertas Kaf,Nearby workbook rows are paper (lembar/rim); identity of Kaf unknown,queued

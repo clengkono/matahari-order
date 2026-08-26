@@ -6,7 +6,12 @@
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+export const UNIT_DECISIONS_RELATIVE = "imports/catalog-unit-decisions.json";
+const UNIT_DECISIONS_PATH = join(ROOT, UNIT_DECISIONS_RELATIVE);
 
 const FORBIDDEN_COLUMNS = new Set(["Jenis", "Harga Pokok", "Harga Jual"]);
 const HEADER_LABELS = {
@@ -63,6 +68,40 @@ export const POS_UNIT_TO_CUSTOMER = Object.freeze({
   BAKI: "Baki",
 });
 
+export function loadApprovedUnitMaps(filePath = UNIT_DECISIONS_PATH) {
+  const extras = {};
+  if (!existsSync(filePath)) {
+    return extras;
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(readFileSync(filePath, "utf8"));
+  } catch {
+    return extras;
+  }
+
+  for (const decision of parsed?.decisions ?? []) {
+    if (!decision || decision.approved !== true) {
+      continue;
+    }
+    const token = String(decision.posToken ?? "").trim();
+    const label = String(decision.proposedCustomerUnit ?? "").trim();
+    if (!token || !label) {
+      continue;
+    }
+    extras[token] = label;
+    extras[token.toUpperCase()] = label;
+    extras[compactUnitKey(token)] = label;
+  }
+
+  return extras;
+}
+
+function resolvedUnitMap() {
+  return { ...POS_UNIT_TO_CUSTOMER, ...loadApprovedUnitMaps() };
+}
+
 /**
  * Customer-facing unit sort: smaller retail packs first, wholesale last.
  * Matches cigarette Pattern A ordering (Bungkus → ½ Slof → Slof).
@@ -75,7 +114,10 @@ export const UNIT_SORT_ORDER = Object.freeze([
   "½ Pak",
   "Pak",
   "Pack",
+  "Ikat",
   "Pcs",
+  "Pasang",
+  "Gantung",
   "Botol",
   "Kaleng",
   "Strip",
@@ -91,13 +133,18 @@ export const UNIT_SORT_ORDER = Object.freeze([
   "Bal",
   "Balok",
   "Box",
+  "Toples",
   "Kg",
   "½ Kg",
+  "5 Kg",
   "Sak",
+  "Karung",
+  "Galon",
   "½ Sak",
   "Gram",
   "Ons",
   "Rim",
+  "Lembar",
   "Gross",
   "Baki",
 ]);
@@ -117,12 +164,23 @@ export const DEFAULT_UNIT_PREFERENCE = Object.freeze([
   "Pack",
   "Pak",
   "Lusin",
+  "Pasang",
   "Bal",
   "Box",
   "Gross",
   "Sak",
+  "Karung",
+  "Galon",
   "Rim",
+  "Lembar",
   "Baki",
+  "Toples",
+  "Ikat",
+  "Gantung",
+  "5 Kg",
+  "Kg",
+  "Gram",
+  "Balok",
   "Bungkus",
   "Botol",
   "Pcs",
@@ -429,11 +487,12 @@ export function compactUnitKey(value) {
 export function proposedCustomerUnitName(posUnit) {
   const trimmed = cellText(posUnit);
   const compact = compactUnitKey(trimmed);
-  if (POS_UNIT_TO_CUSTOMER[trimmed]) {
-    return POS_UNIT_TO_CUSTOMER[trimmed];
+  const unitMap = resolvedUnitMap();
+  if (unitMap[trimmed]) {
+    return unitMap[trimmed];
   }
-  if (POS_UNIT_TO_CUSTOMER[compact]) {
-    return POS_UNIT_TO_CUSTOMER[compact];
+  if (unitMap[compact]) {
+    return unitMap[compact];
   }
   if (!trimmed) {
     return "";

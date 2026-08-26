@@ -405,7 +405,7 @@ function main() {
     const listed = listStudioProducts(loadCatalog(dirs));
     assert(
       "4D.3 list includes every catalogue product",
-      listed.length === liveCatalog.products.length && listed.length === 91,
+      listed.length === liveCatalog.products.length && listed.length === 2259,
       `listed=${listed.length} live=${liveCatalog.products.length}`
     );
     const searchHits = (query) =>

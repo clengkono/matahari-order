@@ -598,6 +598,7 @@ function main() {
       "Q. recode cases not silently merged",
       recodePlan.recodeReview.length === 1 &&
         recodePlan.recodeReview[0].status === "RECODE_REVIEW" &&
+        recodePlan.recodeReview[0].applied === false &&
         recodePlan.recodeReview[0].toPosCode === "AV20" &&
         recodePlan.proposed.mappings.some(
           (mapping) => mapping.posCode === "AVE20"
@@ -606,6 +607,97 @@ function main() {
           (mapping) => mapping.posCode === "AV20"
         ) &&
         !recodePlan.newVisibleProducts.some((row) => row.posCode === "AV20")
+    );
+
+    const recodeCatalog = structuredClone(baseCatalog());
+    recodeCatalog.products.find((product) => product.id === "prod-ave-20").image = {
+      card: "/product-images/cards/cigarettes/prod-ave-20.webp",
+    };
+    recodeCatalog.aliases.push({
+      id: "alias-ave-1",
+      productId: "prod-ave-20",
+      alias: "ave",
+    });
+    recodeCatalog.recommendations.push({
+      sourceProductId: "prod-glory-16",
+      targetProductId: "prod-ave-20",
+      weight: 4,
+      source: "sales",
+    });
+    const approvedRecodePlan = runPlan({
+      catalog: recodeCatalog,
+      workbookProducts: [
+        workbookProduct("AV20", "Ave 20", [
+          { posUnit: "SLOF" },
+          { posUnit: "BKS" },
+        ]),
+      ],
+      classifications: [
+        classification("AV20", "Ave 20", { proposedCategory: "Rokok" }),
+      ],
+      recodeDecisions: {
+        decisions: [
+          {
+            productId: "prod-ave-20",
+            fromPosCode: "AVE20",
+            toPosCode: "AV20",
+            toPosName: "Ave 20",
+            approved: true,
+          },
+        ],
+      },
+    });
+    const recodedAve = approvedRecodePlan.proposed.products.find(
+      (product) => product.id === "prod-ave-20"
+    );
+    const recodedVariant = approvedRecodePlan.proposed.variants.find(
+      (variant) => variant.productId === "prod-ave-20"
+    );
+    const recodedUnits = approvedRecodePlan.proposed.units.filter(
+      (unit) => unit.productId === "prod-ave-20"
+    );
+    const recodedMappings = approvedRecodePlan.proposed.mappings.filter(
+      (mapping) => mapping.productId === "prod-ave-20"
+    );
+    assert(
+      "R. approved recode updates POS mapping identity in proposed catalogue",
+      approvedRecodePlan.recodeReview.length === 1 &&
+        approvedRecodePlan.recodeReview[0].status === "RECODE_APPROVED" &&
+        approvedRecodePlan.recodeReview[0].applied === true &&
+        recodedAve?.id === "prod-ave-20" &&
+        recodedAve.name === "Ave 20" &&
+        recodedAve.category === "Rokok" &&
+        recodedAve.image?.card ===
+          "/product-images/cards/cigarettes/prod-ave-20.webp" &&
+        recodedVariant?.id === "prod-ave-20" &&
+        recodedUnits.length === 1 &&
+        recodedUnits[0].id === "prod-ave-20__slof" &&
+        recodedMappings.length === 1 &&
+        recodedMappings[0].posCode === "AV20" &&
+        recodedMappings[0].posName === "Ave 20" &&
+        recodedMappings[0].posUnit === "SLOF" &&
+        recodedMappings[0].productName === "Ave 20" &&
+        recodedMappings[0].unitId === "prod-ave-20__slof" &&
+        !approvedRecodePlan.proposed.mappings.some(
+          (mapping) => mapping.posCode === "AVE20"
+        ) &&
+        !approvedRecodePlan.newVisibleProducts.some(
+          (row) => row.posCode === "AV20"
+        ) &&
+        approvedRecodePlan.proposed.aliases.some(
+          (alias) => alias.id === "alias-ave-1" && alias.productId === "prod-ave-20"
+        ) &&
+        approvedRecodePlan.proposed.recommendations.some(
+          (edge) =>
+            edge.sourceProductId === "prod-glory-16" &&
+            edge.targetProductId === "prod-ave-20"
+        ) &&
+        approvedRecodePlan.skippedExistingUnits.some(
+          (row) =>
+            row.productId === "prod-ave-20" &&
+            row.posUnit === "BKS" &&
+            row.reason === "workbook-unit-not-added-in-5B.2"
+        )
     );
 
     const noMode = parseCliArgs([]);

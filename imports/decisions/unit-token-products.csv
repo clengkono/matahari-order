@@ -1,0 +1,81 @@
+posUnitToken,posCode,posName,chosenDefault,customerUnitNames,workbookPosUnits,flags
+GLN,0001,Minyak AMR,Gln,Kg | ½ Kg | Gln,1/2KG | GLN | KG,fallback-first-active | unrecognized-unit-name
+GTG,02523xxx,Rejoice Shampoo Hijab 10ML,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GLN,1034,Mentega Butter,Gln,Kg | ½ Kg | Ons | Gln,1/2KG | GLN | KG | ONS,fallback-first-active | unrecognized-unit-name
+KG,107014,Simas,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+GLN,1517,Mentega Vitas Bos 18KG,Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+KG,1690,Kacang Tanah Besar,Kg,Kg | ½ Kg | Krg,1/2KG | KG | KRG,fallback-first-active
+GLN,17003744,Minyak Goreng Sedap Jerigen 20L,Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+GLN,17015,Butter Gold Bullion BOS 18Kg EMBER,Gln,Ons | Gln,GLN | ONS,fallback-first-active | unrecognized-unit-name
+GTG,245124609H,Pantene Shampoo Anti Lepek 9ML,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GLN,31014,Sambal Nasional Jerigen 5.7KG (PIRING),Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+GLN,31015,Saos Tomat Nasional Jerigen 5.7KG,Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+GLN,60805,Kecap Sedap Jerigen 6KG,Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+GTG,6719xxxx,Sunsilk BIRU,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,68651949,Lifebuoy Shampoo MERAH 9ML,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,68661377,Dove Super Shampoo 9ML,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+KRG,8201,Tepung Roti Mix 10kg,Krg,Krg,KRG,fallback-first-active | unrecognized-unit-name
+GTG,840009,Anlene Gold Vanilla 20G,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,ANBBBQ,Antaka Barbekiu 100G (10),Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,ANBSB,Antaka Sambal Balado 100G (10),Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+BLK,ANCH1KG,Mentega Anchor Kaleng 1Kg,Balok,Balok,BLK,fallback-first-active
+TPL,ATM145,Serutan Mini Toples,Tpl,Tpl,TPL,fallback-first-active | unrecognized-unit-name
+KG,BLBNDCRH,Blue Band Curah,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+LYR,BLNMTLK,Balon Metalik,Lyr,Lyr,LYR,fallback-first-active | unrecognized-unit-name
+KRG,BM,Tepung Roti Maissy MIX 10Kg,Krg,Krg,KRG,fallback-first-active | unrecognized-unit-name
+KG,CACTKG,Tepung Tapioka Arerut Rose Brand,Kg,Kg,KG,fallback-first-active
+LYR,CM174,"Balon HB 2 Sisi Elastik 12""",Lyr,Lyr,LYR,fallback-first-active | unrecognized-unit-name
+LYR,CM486,"Balon Metalik Polos NCL 12""",Lyr,Lyr,LYR,fallback-first-active | unrecognized-unit-name
+LYR,CM828,Balon Metalik Merah Putih,Lyr,Lyr,LYR,fallback-first-active | unrecognized-unit-name
+GTG,ESA02,Entrasol Vanilla Sachet 20G,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,ESA06,Entrasol Coklat Sachet 20G,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+TPL,FRROLLGUM,Fruit Roll Gummy Rasa Jeruk (50),Tpl,Tpl,TPL,fallback-first-active | unrecognized-unit-name
+GLN,GLNMYKAMR,Gelon Minyak AMR,Gln,Gln,GLN,fallback-first-active | unrecognized-unit-name
+LBR,GRDAMPLPCKT,Garda Amplop Coklat 240 x 350MM,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+IKT,HD1501PW,Tas Warna Petromax,Ikt,Ikt | Krg,IKT | KRG,fallback-first-active | unrecognized-unit-name
+GTG,KOPISS,Susu Zee Coklat 38g,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+IKT,LKSHKONC,Laksa Hong Kong 1 Ons,Ikt,Ikt,IKT,fallback-first-active | unrecognized-unit-name
+GTG,MAC40F,Masako Ayam 40G (2000),Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+KG,MSSCKT,Meses Coklat,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+KG,PB1735R,Polybag 17.5x35,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+KG,PLBG1530,Polybag 15x30,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+KG,PLBG1830,Polybag 18x30,Kg,Kg | ½ Kg,1/2KG | KG,fallback-first-active
+KG,PLBG2525,Polybag 25x25,Kg,Kg,KG,fallback-first-active
+KG,PLBG3030,Polybag 30x30,Kg,Kg | Krg,KG | KRG,fallback-first-active
+KG,PLBG3535,Polybag 35x35,Kg,Kg,KG,fallback-first-active
+KG,PLBG4040,Polybag 40x40,Kg,Kg,KG,fallback-first-active
+TPL,RTNPNSLCMB,Rautan Pensil Combo (24pcs),Tpl,Tpl,TPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR100,Senar No.100,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR150,Senar No.150,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR200,Senar No.200,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR25,Senar No.25,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR250,Senar No.250,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR30,Senar No.30,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR300,Senar No.300,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR40,Senar No.40,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR400,Senar No.400,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR50,Senar No.50,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR500,Senar No.500,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR60,Senar No.60,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR70,Senar No.70,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+KPL,SNR80,Senar No.80,Kpl,Kpl,KPL,fallback-first-active | unrecognized-unit-name
+GTG,SSAYAM,Sajiku Soto Ayam 24G,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,SSCAP,Sajiku Capcay 20G,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+GTG,STM80,Sajiku Tepung Manis 75G (10),Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name
+IKT,TASPLNGI,Tas Jumbo Pelangi KHARISMA (20) 40x65x0.25,Ikt,Ikt,IKT,fallback-first-active | unrecognized-unit-name
+5KG,TPGTRG,Tepung Terigu,5KG,Kg | 5KG,5KG | KG,fallback-first-active | unrecognized-unit-name
+KG,TPPRMR10,Tepung Roti Primera Oranye 10kg,Kg,Kg | ½ Kg | Krg,1/2KG | KG | KRG,fallback-first-active
+KRG,TPPRMRMX10,Tepung Roti Primera Mix 10kg,Krg,Krg,KRG,fallback-first-active | unrecognized-unit-name
+GRAM,TPRTCRH,Tepung Roti Curah,Gram,Kg | ½ Kg | Gram,1/2KG | GRAM | KG,fallback-first-active
+LBR,TRPL23,Terpal A3 2 x 3,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+KRG,TRPL23A,Terpal Gajah Truk A2 2 x 3,Krg,Krg | Lbr,KRG | LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL34,Terpal A3 3 x 4,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL34S,Terpal Sakura 3 x 4,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL46,Terpal A3 4 x 6,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL46S,Terpal Sakura 4 x 6,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL57,Terpal A3 5 x 7,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+LBR,TRPL68,Terpal A3 6 x 8,Lbr,Lbr,LBR,fallback-first-active | unrecognized-unit-name
+BLK,WJSMN1KG,Wijsman Butter 1Kg,Balok,Balok,BLK,fallback-first-active
+BLK,WJSMN2270,Wijsman Butter 2270G,Balok,Balok,BLK,fallback-first-active
+BLK,WJSMN454,Wijsman 454G,Balok,Balok,BLK,fallback-first-active
+GTG,YM015A-05,Gosok Panci Yong Ma,Gtg,Gtg,GTG,fallback-first-active | unrecognized-unit-name

@@ -1,0 +1,6 @@
+currentProductId,currentCustomerName,category,oldPosCode,oldPosName,newPosCode,newPosName,unitsOldCurrent,unitsWorkbook,oldCodeStillInWorkbook,normalizedNamesMatch,conflictingProductUsingNewPosCode,currentCustomerFacingUnits,status,applied,ownerDecision
+prod-ave-20,Ave 20,Rokok,AVE20,AVE 20,AV20,Ave 20,½ SLOF | BKS | SLOF,½ SLOF | BKS | SLOF,no,yes,none,½ Slof | Bungkus | Slof,RECODE_REVIEW,no,
+prod-kabel-16,Kabel 16,Rokok,KABEL,Kabel 16,KBL16,Kabel 16,½ SLOF | BKS | SLOF,½ SLOF | BKS | SLOF,no,yes,none,½ Slof | Bungkus | Slof,RECODE_REVIEW,no,
+prod-region-kretek-sari-poci-16,Region Kretek Sari Poci 16,Rokok,REGION,Region Kretek Sari Poci 16,RKSP16,Region Kretek Sari Poci 16,BKS | SLOF,BKS | SLOF,no,yes,none,Bungkus | Slof,RECODE_REVIEW,no,
+prod-zenix-bold-20,Zenix Bold 20,Rokok,ZENIXB20,Zenix Bold 20,ZB20,Zenix Bold 20,½ SLOF | BKS | SLOF,½ SLOF | BKS | SLOF,no,yes,none,½ Slof | Bungkus | Slof,RECODE_REVIEW,no,
+prod-zenix-putih-20,Zenix Putih 20,Rokok,ZenPTH,Zenix Putih 20,ZP20,Zenix Putih 20,½ SLOF | BKS | SLOF,½ SLOF | BKS | SLOF,no,yes,none,½ Slof | Bungkus | Slof,RECODE_REVIEW,no,

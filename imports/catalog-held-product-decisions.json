@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "notes": "Owner category decisions for held MEDIUM / LOW products and classifier corrections. approved must be true and category must be one of the nine customer categories to release a family. Speed stays unapproved / UNKNOWN. The importer applies approved rows before visibility checks.",
+  "categoryCorrections": [
+    {
+      "posCode": "KGBK",
+      "posName": "Kucing Angora Gelas",
+      "fromCategory": "Minuman",
+      "fromSubcategory": "Air Mineral",
+      "category": "Kebutuhan Rumah",
+      "subcategory": "Sabun Rumah",
+      "approved": true,
+      "ownerDecision": "APPROVE correction",
+      "notes": "Classifier/category correction caused by the word Gelas. This is Cap Kucing cream soap in a glass, not mineral water. Preserve product identity and all unrelated data."
+    }
+  ],
+  "decisions": [
+    {
+      "familyId": "scissors",
+      "productCount": 14,
+      "posCodes": ["ATM030", "ATM031x", "ATM033", "ATM051", "ATM056", "ATM077", "ATM117", "ATM134", "ATM144", "ATM152", "ATM164", "ATM190", "CM698", "SMD680-05"],
+      "proposedCategory": "Alat & Perlengkapan",
+      "category": "Alat & Perlengkapan",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "nail-clippers",
+      "productCount": 5,
+      "posCodes": ["CM090", "CM222", "CM275", "CM736", "CM785"],
+      "proposedCategory": "Perawatan Diri",
+      "category": "Perawatan Diri",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "cotton",
+      "productCount": 5,
+      "posCodes": ["CM166", "CN01", "CN02", "CN03", "CN28"],
+      "proposedCategory": "Perawatan Diri",
+      "category": "Perawatan Diri",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "candles",
+      "productCount": 5,
+      "posCodes": ["1033", "1107", "EB05", "LLNBIO", "LLNUK24"],
+      "proposedCategory": "Alat & Perlengkapan",
+      "category": "Alat & Perlengkapan",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "herbal-drinks",
+      "productCount": 4,
+      "posCodes": ["50061", "CKTBTL", "LCKB5", "LCKT2"],
+      "proposedCategory": "Minuman",
+      "category": "Minuman",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "top-lady",
+      "productCount": 2,
+      "posCodes": ["COS065", "COS221"],
+      "proposedCategory": "Perawatan Diri",
+      "category": "Perawatan Diri",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "wings-gelas",
+      "productCount": 2,
+      "posCodes": ["18000465", "18000466"],
+      "proposedCategory": "Bahan Makanan",
+      "category": "Bahan Makanan",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "menara-mld-16",
+      "productCount": 1,
+      "posCodes": ["MLDM16"],
+      "proposedCategory": "Rokok",
+      "category": "Rokok",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "nestle-cap-nona",
+      "productCount": 1,
+      "posCodes": ["12309579"],
+      "proposedCategory": "Minuman",
+      "category": "Minuman",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "toothpicks",
+      "productCount": 1,
+      "posCodes": ["CM108"],
+      "proposedCategory": "Alat & Perlengkapan",
+      "category": "Alat & Perlengkapan",
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "familyId": "gomala",
+      "productCount": 6,
+      "posCodes": ["GML5", "GML6", "GML7", "GML8", "GML9", "GML10"],
+      "proposedCategory": "Alat & Perlengkapan",
+      "category": "Alat & Perlengkapan",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Fishing-hook sizes (gumala / Youvella Nos. 5–10)."
+    },
+    {
+      "familyId": "rackus",
+      "productCount": 1,
+      "posCodes": ["CM063"],
+      "proposedCategory": "Kebutuhan Rumah",
+      "category": "Kebutuhan Rumah",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Rat poison."
+    },
+    {
+      "familyId": "speed",
+      "productCount": 1,
+      "posCodes": ["1087"],
+      "proposedCategory": "UNKNOWN",
+      "category": null,
+      "approved": false,
+      "ownerDecision": "KEEP UNKNOWN",
+      "notes": "Keep held / non-visible. Do not guess its category."
+    },
+    {
+      "familyId": "kucing-batang-merah",
+      "productCount": 2,
+      "posCodes": ["KB", "KB60"],
+      "proposedCategory": "Kebutuhan Rumah",
+      "category": "Kebutuhan Rumah",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Cap Kucing bar soap, not mosquito incense."
+    },
+    {
+      "familyId": "kertas-kaf",
+      "productCount": 1,
+      "posCodes": ["CM267"],
+      "proposedCategory": "Alat & Perlengkapan",
+      "category": "Alat & Perlengkapan",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Paper sold by lembar / ikat / rim."
+    }
+  ]
+}

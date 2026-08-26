@@ -149,8 +149,8 @@ function main() {
     const liveSerialized = serializeCustomerCatalog(liveCustomer);
 
     assert(
-      "live customer catalogue has 91 products",
-      liveCustomer.products.length === 91,
+      "live customer catalogue has 2,259 products",
+      liveCustomer.products.length === 2259,
       `count=${liveCustomer.products.length}`
     );
     assert(
@@ -314,13 +314,13 @@ function main() {
 
     const proposed = loadProposedCatalog();
     assert(
-      "proposed 2,209-product fixture exists under tmp/",
+      "proposed 2,259-product fixture exists under tmp/",
       Boolean(proposed),
       `missing ${FIXTURE_DIR}`
     );
     assert(
-      "proposed fixture has 2,209 products",
-      proposed.products.length === 2209,
+      "proposed fixture has 2,259 products",
+      proposed.products.length === 2259,
       `count=${proposed.products.length}`
     );
 
@@ -331,7 +331,7 @@ function main() {
     });
     assert(
       "generator produces compact fixture artefact",
-      fixtureBuild.ok && fixtureBuild.productCount === 2209,
+      fixtureBuild.ok && fixtureBuild.productCount === 2259,
       fixtureBuild.error ||
         (fixtureBuild.validationErrors || []).slice(0, 3).join("; ")
     );
@@ -372,7 +372,7 @@ function main() {
       elapsedMs < 50 ? "" : "slower than 50ms budget"
     );
     assert(
-      "search calculation stays responsive on the 2,209 fixture",
+      "search calculation stays responsive on the 2,259 fixture",
       elapsedMs < 50,
       `${elapsedMs.toFixed(1)}ms`
     );

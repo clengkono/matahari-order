@@ -1,5 +1,56 @@
 {
   "version": 1,
-  "notes": "Owner-approved POS recodes. An empty decisions array means no recodes are applied. Each decision maps an existing catalogue product from an old mappings.posCode to a new workbook Kode Item. Do not guess. Stage 5B.2 reports unmatched name-only cases as RECODE_REVIEW until a decision here is approved: true.",
-  "decisions": []
+  "notes": "Owner-approved POS recodes. approved must be true to apply. Stage 5B.2C: the five cigarette recodes are owner-approved and are applied in the proposed catalogue (mapping posCode/posName only). Live src/catalog is unchanged until Stage 5B.3 apply.",
+  "decisions": [
+    {
+      "productId": "prod-ave-20",
+      "fromPosCode": "AVE20",
+      "toPosCode": "AV20",
+      "fromPosName": "AVE 20",
+      "toPosName": "Ave 20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Normalized names match. Units match. Old code not in workbook. No conflicting product uses AV20."
+    },
+    {
+      "productId": "prod-kabel-16",
+      "fromPosCode": "KABEL",
+      "toPosCode": "KBL16",
+      "fromPosName": "Kabel 16",
+      "toPosName": "Kabel 16",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Normalized names match. Units match. Old code not in workbook. No conflicting product uses KBL16."
+    },
+    {
+      "productId": "prod-region-kretek-sari-poci-16",
+      "fromPosCode": "REGION",
+      "toPosCode": "RKSP16",
+      "fromPosName": "Region Kretek Sari Poci 16",
+      "toPosName": "Region Kretek Sari Poci 16",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Normalized names match. Units match (BKS / SLOF). Old code not in workbook. No conflicting product uses RKSP16."
+    },
+    {
+      "productId": "prod-zenix-bold-20",
+      "fromPosCode": "ZENIXB20",
+      "toPosCode": "ZB20",
+      "fromPosName": "Zenix Bold 20",
+      "toPosName": "Zenix Bold 20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Normalized names match. Units match. Old code not in workbook. No conflicting product uses ZB20. Do not confuse with Zenix Coffee / Sultan preservation rows."
+    },
+    {
+      "productId": "prod-zenix-putih-20",
+      "fromPosCode": "ZenPTH",
+      "toPosCode": "ZP20",
+      "fromPosName": "Zenix Putih 20",
+      "toPosName": "Zenix Putih 20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Normalized names match. Units match. Old code not in workbook. No conflicting product uses ZP20."
+    }
+  ]
 }

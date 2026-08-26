@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "notes": "Owner-approved POS unit token maps. approved must be true to apply. The importer merges approved rows into proposedCustomerUnitName. Unapproved tokens stay as the raw displayed unit and do not hold the product. Stage 5B.3: PSG → Pasang is owner-approved. Kpl and Lyr stay raw.",
+  "laterUnitReview": [],
+  "decisions": [
+    {
+      "posToken": "GTG",
+      "proposedCustomerUnit": "Gantung",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 16,
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "posToken": "GLN",
+      "proposedCustomerUnit": "Galon",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 9,
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "posToken": "LBR",
+      "proposedCustomerUnit": "Lembar",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 8,
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "posToken": "5KG",
+      "proposedCustomerUnit": "5 Kg",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 1,
+      "approved": true,
+      "ownerDecision": "APPROVE"
+    },
+    {
+      "posToken": "KRG",
+      "proposedCustomerUnit": "Karung",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 36,
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Owner approved Krg → Karung. Outer wholesale sack across flour, sugar, and similar bulk rows."
+    },
+    {
+      "posToken": "IKT",
+      "proposedCustomerUnit": "Ikat",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 51,
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Owner approved Ikt → Ikat. Bundle between small and outer pack."
+    },
+    {
+      "posToken": "TPL",
+      "proposedCustomerUnit": "Toples",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 34,
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Owner approved Tpl → Toples. Almost all named Toples / Jar / Tupperware."
+    },
+    {
+      "posToken": "PSG",
+      "proposedCustomerUnit": "Pasang",
+      "mappingSafety": "owner-approved",
+      "confidence": "HIGH",
+      "affectedProductCount": 28,
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "notes": "Owner approved PSG → Pasang. 21 sandals use PSG=1, ½ lusin=6, lusin=12. Batteries with PCS use PSG=2 pieces (one pair); Panasonic /2B packs use PSG=1 as the pair blister. Yeye 318B/318L share the same 1/6/12 hierarchy."
+    },
+    {
+      "posToken": "KPL",
+      "proposedCustomerUnit": null,
+      "mappingSafety": "leave-unresolved",
+      "confidence": "LOW",
+      "affectedProductCount": 14,
+      "approved": false,
+      "ownerDecision": "KEEP RAW / unresolved",
+      "recommendKeepRaw": true,
+      "notes": "All 14 SKUs are Senar No.25–500 with KPL qty=1 only. No companion units. Senar numbers are line size, not pack count. Retail listings sell fishing line as gulungan/kumparan, but KPL cannot be expanded from letters or workbook qty. Keep raw Kpl rather than guessing Gulungan/Keping/Kumparan. Changing the customer label would not change POS identity."
+    },
+    {
+      "posToken": "LYR",
+      "proposedCustomerUnit": null,
+      "mappingSafety": "leave-unresolved",
+      "confidence": "LOW",
+      "affectedProductCount": 4,
+      "approved": false,
+      "ownerDecision": "KEEP RAW / unresolved",
+      "recommendKeepRaw": true,
+      "notes": "Four balloon SKUs, LYR qty=1 only. Other balloons use PAK (often isi 50), BKS/GTG, or PCS. Do not map to Pak. Layer is a balloon-decor term but is not evidenced as this shop's selling unit. Keep raw Lyr."
+    },
+    {
+      "posToken": "KG",
+      "proposedCustomerUnit": "Kg",
+      "mappingSafety": "already-mapped",
+      "confidence": "HIGH",
+      "affectedProductCount": 10,
+      "approved": false,
+      "ownerDecision": "LEAVE",
+      "notes": "Already in POS_UNIT_TO_CUSTOMER. Stage 5B.2C added Kg to DEFAULT_UNIT_PREFERENCE so fallback warnings stop."
+    },
+    {
+      "posToken": "GRAM",
+      "proposedCustomerUnit": "Gram",
+      "mappingSafety": "already-mapped",
+      "confidence": "HIGH",
+      "affectedProductCount": 1,
+      "approved": false,
+      "ownerDecision": "LEAVE",
+      "notes": "Already in POS_UNIT_TO_CUSTOMER. Stage 5B.2C added Gram to DEFAULT_UNIT_PREFERENCE so fallback warnings stop."
+    },
+    {
+      "posToken": "BLK",
+      "proposedCustomerUnit": "Balok",
+      "mappingSafety": "already-mapped",
+      "confidence": "HIGH",
+      "affectedProductCount": 4,
+      "approved": false,
+      "ownerDecision": "LEAVE",
+      "notes": "Already maps to Balok. Stage 5B.2C added Balok to DEFAULT_UNIT_PREFERENCE so fallback warnings stop."
+    }
+  ]
+}

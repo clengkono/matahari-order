@@ -56,11 +56,14 @@ export const WORKBOOK_RELATIVE = "imports/Matahari_Product_List_FINAL.xlsx";
 export const CLASSIFICATION_RELATIVE =
   "tmp/catalog-category-preview/product-classification.json";
 export const RECODE_DECISIONS_RELATIVE = "imports/catalog-recode-decisions.json";
+export const HELD_PRODUCT_DECISIONS_RELATIVE =
+  "imports/catalog-held-product-decisions.json";
 export const DRY_RUN_RELATIVE = "tmp/catalog-full-import";
 
 const WORKBOOK_PATH = join(ROOT, WORKBOOK_RELATIVE);
 const CLASSIFICATION_PATH = join(ROOT, CLASSIFICATION_RELATIVE);
 const RECODE_DECISIONS_PATH = join(ROOT, RECODE_DECISIONS_RELATIVE);
+const HELD_PRODUCT_DECISIONS_PATH = join(ROOT, HELD_PRODUCT_DECISIONS_RELATIVE);
 const CATALOG_DIR = join(ROOT, "src", "catalog");
 const CATEGORIES_JS = join(ROOT, "src", "config", "categories.js");
 const IMAGE_DIR = join(ROOT, "public", "product-images");
@@ -185,6 +188,90 @@ export function loadRecodeDecisions(filePath = RECODE_DECISIONS_PATH) {
   };
 }
 
+export function loadHeldProductDecisions(
+  filePath = HELD_PRODUCT_DECISIONS_PATH
+) {
+  if (!existsSync(filePath)) {
+    return {
+      version: 1,
+      decisions: [],
+      categoryCorrections: [],
+      source: "missing",
+    };
+  }
+
+  const parsed = readJson(filePath);
+  return {
+    version: parsed?.version ?? 1,
+    decisions: Array.isArray(parsed?.decisions) ? parsed.decisions : [],
+    categoryCorrections: Array.isArray(parsed?.categoryCorrections)
+      ? parsed.categoryCorrections
+      : [],
+    source: filePath,
+  };
+}
+
+function ownerCategoryOverrides(heldProductDecisions) {
+  const byPosCode = new Map();
+
+  for (const decision of heldProductDecisions?.decisions ?? []) {
+    if (!decision || decision.approved !== true) {
+      continue;
+    }
+    const category = String(decision.category ?? "").trim();
+    if (!APPROVED_CATEGORY_SET.has(category)) {
+      continue;
+    }
+    for (const code of decision.posCodes ?? []) {
+      const posCode = String(code ?? "").trim();
+      if (!posCode) {
+        continue;
+      }
+      byPosCode.set(posCode, {
+        category,
+        subcategory: decision.subcategory ?? null,
+        reason: `owner-approved-family:${decision.familyId ?? posCode}`,
+      });
+    }
+  }
+
+  for (const correction of heldProductDecisions?.categoryCorrections ?? []) {
+    if (!correction || correction.approved !== true) {
+      continue;
+    }
+    const posCode = String(correction.posCode ?? "").trim();
+    const category = String(correction.category ?? "").trim();
+    if (!posCode || !APPROVED_CATEGORY_SET.has(category)) {
+      continue;
+    }
+    byPosCode.set(posCode, {
+      category,
+      subcategory: correction.subcategory ?? null,
+      reason: `owner-approved-category-correction:${posCode}`,
+    });
+  }
+
+  return byPosCode;
+}
+
+function applyOwnerClassification(classification, posCode, overrides) {
+  const override = overrides.get(String(posCode ?? "").trim());
+  if (!override) {
+    return classification;
+  }
+
+  return {
+    ...(classification ?? {}),
+    proposedCategory: override.category,
+    proposedSubcategory:
+      override.subcategory || classification?.proposedSubcategory || "",
+    confidence: "HIGH",
+    reviewNeeded: false,
+    classificationReason: override.reason,
+    ownerApproved: true,
+  };
+}
+
 function approvedRecodeMap(recodeDecisions) {
   const byTo = new Map();
 
@@ -207,6 +294,95 @@ function approvedRecodeMap(recodeDecisions) {
   }
 
   return { byTo };
+}
+
+function applyApprovedRecodeMappings({
+  proposed,
+  product,
+  fromPosCode,
+  toPosCode,
+  toPosName,
+  workbookProduct,
+}) {
+  const otherProductIds = uniqueSorted(
+    proposed.mappings
+      .filter(
+        (mapping) =>
+          String(mapping.posCode ?? "").trim() === toPosCode &&
+          mapping.productId !== product.id
+      )
+      .map((mapping) => mapping.productId)
+  );
+  if (otherProductIds.length > 0) {
+    return {
+      applied: false,
+      reason: `new POS code ${toPosCode} already mapped to ${otherProductIds.join(", ")}`,
+      updates: [],
+    };
+  }
+
+  const fromMappings = proposed.mappings.filter(
+    (mapping) =>
+      mapping.productId === product.id &&
+      String(mapping.posCode ?? "").trim() === fromPosCode
+  );
+  if (fromMappings.length === 0) {
+    return {
+      applied: false,
+      reason: `no current mapping uses fromPosCode ${fromPosCode}`,
+      updates: [],
+    };
+  }
+
+  const alreadyHasNewCode = proposed.mappings.some(
+    (mapping) =>
+      mapping.productId === product.id &&
+      String(mapping.posCode ?? "").trim() === toPosCode
+  );
+  if (alreadyHasNewCode) {
+    return {
+      applied: false,
+      reason: `product already has mapping for ${toPosCode}; refusing duplicate`,
+      updates: [],
+    };
+  }
+
+  const updates = [];
+  for (const mapping of fromMappings) {
+    const workbookRow = (workbookProduct.rows ?? []).find((row) =>
+      unitsEquivalent(mapping.posUnit, row.posUnit)
+    );
+    const nextPosName =
+      workbookRow?.posName ||
+      workbookProduct.posName ||
+      toPosName ||
+      mapping.posName;
+
+    if (mapping.posCode !== toPosCode) {
+      updates.push({
+        field: "posCode",
+        mappingSourceRowIndex: mapping.sourceRowIndex,
+        from: mapping.posCode,
+        to: toPosCode,
+      });
+      mapping.posCode = toPosCode;
+    }
+    if (nextPosName && mapping.posName !== nextPosName) {
+      updates.push({
+        field: "posName",
+        mappingSourceRowIndex: mapping.sourceRowIndex,
+        from: mapping.posName,
+        to: nextPosName,
+      });
+      mapping.posName = nextPosName;
+    }
+  }
+
+  return {
+    applied: true,
+    updates,
+    recodedMappingCount: fromMappings.length,
+  };
 }
 
 export function isEligibleForVisibleImport(classification) {
@@ -442,6 +618,7 @@ export function buildImportPlan({
   workbookProducts,
   classifications,
   recodeDecisions,
+  heldProductDecisions,
   homepageFeaturedIds = HOMEPAGE_FEATURED_PRODUCT_IDS,
   categoryConfigIds = loadCategoryConfigIds(),
 } = {}) {
@@ -463,6 +640,9 @@ export function buildImportPlan({
     (classifications ?? []).map((row) => [String(row.posCode), row])
   );
   const recodes = approvedRecodeMap(recodeDecisions ?? { decisions: [] });
+  const ownerOverrides = ownerCategoryOverrides(
+    heldProductDecisions ?? { decisions: [], categoryCorrections: [] }
+  );
 
   const matchedCurrentIds = new Set();
   const representedPosCodes = new Set();
@@ -693,8 +873,92 @@ export function buildImportPlan({
       const approvedForThis =
         approvedHit && approvedHit.productId === product.id;
 
+      let applied = false;
+      let applyReason = approvedForThis
+        ? "owner-approved recode mapping"
+        : "normalized names match; no POS code match; not silently merged";
+      let recodeUpdates = [];
+
+      if (approvedForThis) {
+        const currentCodes = uniqueSorted(
+          (index.mappingsByProductId.get(product.id) ?? []).map(
+            (mapping) => mapping.posCode
+          )
+        );
+        if (!currentCodes.includes(approvedHit.fromPosCode)) {
+          applyReason = `approved recode fromPosCode ${approvedHit.fromPosCode} is not on the current product`;
+        } else {
+          const recodeResult = applyApprovedRecodeMappings({
+            proposed,
+            product,
+            fromPosCode: approvedHit.fromPosCode,
+            toPosCode: approvedHit.toPosCode,
+            toPosName: approvedHit.toPosName || hit.posName,
+            workbookProduct: hit,
+          });
+          applied = recodeResult.applied;
+          recodeUpdates = recodeResult.updates;
+          if (!recodeResult.applied) {
+            applyReason = recodeResult.reason;
+          } else {
+            applyReason = "owner-approved recode mapping applied in proposed catalogue";
+            if (recodeResult.updates.length > 0) {
+              mappingChanges.push({
+                productId: product.id,
+                posCode: hit.posCode,
+                recode: true,
+                fromPosCode: approvedHit.fromPosCode,
+                toPosCode: approvedHit.toPosCode,
+                updates: recodeResult.updates,
+              });
+              existingUpdates.push({
+                productId: product.id,
+                customerName: product.name,
+                posCode: hit.posCode,
+                workbookPosName: hit.posName,
+                recode: true,
+                fromPosCode: approvedHit.fromPosCode,
+                toPosCode: approvedHit.toPosCode,
+                updateCount: recodeResult.updates.length,
+                preserved: {
+                  productId: true,
+                  variantId: true,
+                  customerFacingName: true,
+                  category: true,
+                  image: true,
+                  favorite: true,
+                  aliases: true,
+                  recommendations: true,
+                  units: true,
+                },
+              });
+            }
+            const recodedMappings = proposed.mappings.filter(
+              (mapping) => mapping.productId === product.id
+            );
+            for (const row of hit.rows ?? []) {
+              const existing = findMappingForWorkbookRow(
+                recodedMappings,
+                hit.posCode,
+                row.posUnit
+              );
+              if (!existing) {
+                skippedExistingUnits.push({
+                  productId: product.id,
+                  customerName: product.name,
+                  posCode: hit.posCode,
+                  posUnit: row.posUnit,
+                  sourceRow: row.sourceRow,
+                  reason: "workbook-unit-not-added-in-5B.2",
+                });
+              }
+            }
+          }
+        }
+      }
+
       recodeReview.push({
-        status: approvedForThis ? "RECODE_APPROVED" : "RECODE_REVIEW",
+        status: approvedForThis && applied ? "RECODE_APPROVED" : "RECODE_REVIEW",
         currentProductId: product.id,
         currentCustomerName: product.name,
         category: product.category || "",
@@ -705,10 +969,19 @@ export function buildImportPlan({
         ),
         toPosCode: hit.posCode,
         posName: hit.posName,
-        reason: approvedForThis
-          ? "owner-approved recode mapping"
-          : "normalized names match; no POS code match; not silently merged",
-        applied: false,
+        reason: applyReason,
+        applied,
+        mappingUpdates: recodeUpdates,
+        preserved: {
+          productId: true,
+          variantId: true,
+          customerFacingName: true,
+          category: true,
+          image: true,
+          aliases: true,
+          recommendations: true,
+          units: true,
+        },
       });
       claimedCurrentIds.add(product.id);
       claimedWorkbookCodes.add(hit.posCode);
@@ -749,7 +1022,11 @@ export function buildImportPlan({
   const newMappingsToInsert = [];
 
   for (const workbookProduct of newWorkbookProducts) {
-    const classification = classificationByCode.get(workbookProduct.posCode);
+    const classification = applyOwnerClassification(
+      classificationByCode.get(workbookProduct.posCode),
+      workbookProduct.posCode,
+      ownerOverrides
+    );
     const eligibility = isEligibleForVisibleImport(classification);
     const idPlan = proposeProductId(
       workbookProduct.posName,
@@ -901,6 +1178,7 @@ export function buildImportPlan({
     recommendations: proposed.recommendations.length,
   };
 
+  const recodeApplied = recodeReview.filter((row) => row.applied === true);
   const heldMedium = heldForReview.filter(
     (row) => row.confidence === "MEDIUM"
   );
@@ -946,14 +1224,15 @@ export function buildImportPlan({
       units:
         "New products use product-scoped unit IDs `{productId}__{unitSlug}` (cigarette Pattern A). Existing shared grocery units are left on current grocery products. Qty/Paket is staging metadata only — no conversion factors.",
       defaultUnit:
-        "Preference Slof → Karton → Dus → Pack → Pak → Lusin → Bal → Box → Gross → Sak → Rim → Baki → Bungkus → Botol → Pcs. Half-units are never preferred over a full unit. Workbook row order is not used.",
+        "Preference Slof → Karton → Dus → Pack → Pak → Lusin → Bal → Box → Gross → Sak → Karung → Galon → Rim → Lembar → Baki → Toples → Ikat → Gantung → 5 Kg → Kg → Gram → Balok → Bungkus → Botol → Pcs. Half-units are never preferred over a full unit. Workbook row order is not used.",
       recodes:
-        "Name-only POS recodes stay in RECODE_REVIEW unless imports/catalog-recode-decisions.json has an approved decision. They are not silently merged and their workbook SKUs are not imported as new products.",
+        "Name-only POS recodes stay in RECODE_REVIEW unless imports/catalog-recode-decisions.json has an approved decision. Unapproved recodes are not silently merged and their workbook SKUs are not imported as new products. Approved recodes update mapping posCode/posName in the proposed catalogue, preserve product/variant IDs and customer-facing fields, drop the stale old POS code, and still require --apply --confirm to write live src/catalog.",
     },
     source: {
       workbook: WORKBOOK_RELATIVE,
       classification: CLASSIFICATION_RELATIVE,
       recodeDecisions: RECODE_DECISIONS_RELATIVE,
+      heldProductDecisions: HELD_PRODUCT_DECISIONS_RELATIVE,
     },
     before,
     after,
@@ -969,6 +1248,7 @@ export function buildImportPlan({
     heldLow: heldLow.length,
     heldLainnya: heldLainnya.length,
     recodeReview: recodeReview.length,
+    recodeApplied: recodeApplied.length,
     preservedNotInSource: preservedNotInSource.length,
     ambiguousMatches: ambiguousMatches.length,
     skippedExistingUnits: skippedExistingUnits.length,
@@ -1066,6 +1346,7 @@ function renderImportDiff(plan, hashes, validation) {
   add(`- Held Lainnya: **${s.heldLainnya}**`);
   add(`- Held for review (unique): **${s.heldForReview}**`);
   add(`- Recode review: **${s.recodeReview}**`);
+  add(`- Recode applied in proposed catalogue: **${s.recodeApplied}**`);
   add(`- Preserved not in source: **${s.preservedNotInSource}**`);
   add(`- ID collisions: **${s.idCollisions}**`);
   add(`- Default-unit review flags: **${s.defaultUnitReview}**`);
@@ -1103,7 +1384,7 @@ function renderImportDiff(plan, hashes, validation) {
   } else {
     for (const row of plan.recodeReview) {
       add(
-        `- \`${row.currentProductId}\` **${row.currentCustomerName}** ${row.fromPosCodes ? row.fromPosCodes.join(", ") : ""} → \`${row.toPosCode || ""}\` ${row.posName || ""} — ${row.reason || row.notes}`
+        `- \`${row.currentProductId}\` **${row.currentCustomerName}** ${row.fromPosCodes ? row.fromPosCodes.join(", ") : ""} → \`${row.toPosCode || ""}\` ${row.posName || ""} — ${row.status}${row.applied ? " (applied in proposed catalogue)" : ""} — ${row.reason || row.notes}`
       );
     }
   }
@@ -1345,12 +1626,16 @@ export function runDryImport(options = {}) {
   const workbookProducts = groupWorkbookProducts(workbook.dataRows);
   const classifications = loadClassifications(classificationPath);
   const recodeDecisions = loadRecodeDecisions(options.recodePath);
+  const heldProductDecisions = loadHeldProductDecisions(
+    options.heldProductPath
+  );
 
   const plan = buildImportPlan({
     catalog,
     workbookProducts,
     classifications,
     recodeDecisions,
+    heldProductDecisions,
     homepageFeaturedIds:
       options.homepageFeaturedIds ?? HOMEPAGE_FEATURED_PRODUCT_IDS,
     categoryConfigIds: options.categoryConfigIds ?? loadCategoryConfigIds(),
@@ -1406,6 +1691,7 @@ function printDrySummary(result) {
   console.log(`Held Lainnya    : ${s.heldLainnya}`);
   console.log(`Held unique     : ${s.heldForReview}`);
   console.log(`Recode review   : ${s.recodeReview}`);
+  console.log(`Recode applied  : ${s.recodeApplied}`);
   console.log(`Not in source   : ${s.preservedNotInSource}`);
   console.log(`Visible after   : ${s.proposedVisibleCatalogueSize}`);
   console.log(
@@ -1433,14 +1719,56 @@ function main(argv = process.argv.slice(2)) {
   }
 
   if (parsed.mode === "apply") {
-    console.error(
-      "Stage 5B.2 must not apply the live catalogue. Dry-run only. Re-run without --apply."
+    const dry = runDryImport();
+    printDrySummary(dry);
+
+    if (!dry.ok) {
+      console.error(
+        "Apply aborted: dry-run validation or live-hash check failed."
+      );
+      if (dry.validationErrors.length > 0) {
+        console.error("Proposed catalogue validation failed:");
+        for (const error of dry.validationErrors.slice(0, 40)) {
+          console.error(`  - ${error}`);
+        }
+      }
+      if (!dry.hashes.unchanged) {
+        console.error("Live src/catalog hashes changed during dry-run.");
+      }
+      process.exitCode = 1;
+      return dry;
+    }
+
+    const applied = applyFullCatalogImport(dry.plan, {
+      argv,
+      rebuildCustomerCatalog: false,
+    });
+
+    if (!applied.ok) {
+      console.error(applied.error || "Apply failed.");
+      if (applied.code) {
+        console.error(`Code: ${applied.code}`);
+      }
+      for (const error of (applied.validationErrors ?? []).slice(0, 40)) {
+        console.error(`  - ${error}`);
+      }
+      process.exitCode = 1;
+      return applied;
+    }
+
+    console.log("");
+    console.log("Stage 5B.3 full catalogue import — APPLY");
+    console.log(`Transaction     : OK`);
+    console.log(`Action          : ${applied.action || "full-catalog-import"}`);
+    console.log(`No-op           : ${applied.noop ? "yes" : "no"}`);
+    console.log(`Backup          : ${applied.backupId || "none"}`);
+    console.log(
+      `Changed files   : ${(applied.changedFiles || []).join(", ") || "none"}`
     );
-    console.error(
-      "The apply path is implemented behind --apply --confirm for a later stage."
+    console.log(
+      "Customer catalogue was not rebuilt by the transaction. Run catalog:customer-build next."
     );
-    process.exitCode = 1;
-    return parsed;
+    return { dry, applied };
   }
 
   const result = runDryImport();

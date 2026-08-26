@@ -1364,7 +1364,7 @@ function classifyName(name) {
       "lem fox",
     ]) ||
     includesAny(n, ["sinar dunia", "tip ex", "tipe x", "stapler", "amplop"]) ||
-    (n.startsWith("kertas ") && !includesAny(n, ["nasi", "kado", "krep", "metalik", "kaf"])) ||
+    (n.startsWith("kertas ") && !includesAny(n, ["nasi", "kado", "krep", "metalik"])) ||
     n.startsWith("lem alteco") ||
     n.startsWith("lem castol") ||
     n.startsWith("lem ehabond") ||
@@ -1464,6 +1464,17 @@ function classifyName(name) {
     return result("Minuman", sub, "HIGH", "Powdered or fruit drink");
   }
   if (
+    n.startsWith("kucing angora gelas") ||
+    n.startsWith("kucing batang merah")
+  ) {
+    return result(
+      "Kebutuhan Rumah",
+      "Sabun Rumah",
+      "HIGH",
+      "Cap Kucing cream/bar soap; Gelas is glass packaging, not mineral water"
+    );
+  }
+  if (
     startsAny(n, [
       "aqua",
       "le minerale",
@@ -1473,7 +1484,6 @@ function classifyName(name) {
       "ake botol",
       "ake gelas",
       "asegar",
-      "kucing angora gelas",
     ])
   ) {
     return result("Minuman", "Air Mineral", "HIGH", "Mineral water");
@@ -1728,6 +1738,14 @@ function classifyName(name) {
     includesAny(n, ["goso belanga", "pembersih"])
   ) {
     return result("Kebutuhan Rumah", "Pembersih Rumah", "HIGH", "Household cleaner / bleach");
+  }
+  if (n === "rackus") {
+    return result(
+      "Kebutuhan Rumah",
+      "Pengendali Hama",
+      "HIGH",
+      "Owner-approved rat poison"
+    );
   }
   if (
     startsAny(n, [
@@ -2002,8 +2020,15 @@ function classifyName(name) {
   if (n.startsWith("payung") || n.startsWith("jas hujan")) {
     return alat("Perlengkapan Rumah", n.startsWith("jas") ? "Jas Hujan" : "Payung", "HIGH", "Rain gear");
   }
-  if (n.startsWith("senar")) {
-    return alat("Perlengkapan Rumah", "Senar & Pancing", "HIGH", "Fishing line");
+  if (n.startsWith("senar") || n.startsWith("gomala")) {
+    return alat(
+      "Perlengkapan Rumah",
+      "Senar & Pancing",
+      "HIGH",
+      n.startsWith("gomala")
+        ? "Owner-approved fishing hook (gumala / Youvella sizes)"
+        : "Fishing line"
+    );
   }
   if (n.startsWith("benang")) {
     return alat("Perlengkapan Rumah", "Jahit & Benang", "HIGH", "Thread");
@@ -2087,13 +2112,13 @@ function classifyName(name) {
     return result("Kesehatan", "Obat", "MEDIUM", "Obat-prefixed name without a specific medicine brand");
   }
 
-  if (n.startsWith("gomala") || n === "rackus" || n === "speed" || n.startsWith("kucing batang merah") || n === "kertas kaf") {
+  if (n === "speed") {
     return result(
       "Lainnya",
       "Belum Teridentifikasi",
       "LOW",
       "Identity not safe from POS name alone; do not guess into an approved category",
-      { notes: "owner/web research required" }
+      { notes: "owner/web research required; KEEP UNKNOWN" }
     );
   }
 
@@ -2504,6 +2529,7 @@ function buildOwnerHighlights(records) {
     "rackus",
     "speed",
     "kucing batang merah",
+    "kucing angora gelas",
     "kertas kaf",
     "menara mld",
     "my vla",
@@ -2631,7 +2657,7 @@ function writeArtifacts(records, reportExtras) {
   }));
 
   const namedUncertain = records.filter((row) =>
-    /^(gomala|rackus|speed|kucing batang merah|kertas kaf|menara mld)/.test(normalizeName(row.posName))
+    /^(speed)$/.test(normalizeName(row.posName))
   );
   for (const row of namedUncertain) {
     if (!webResearch.some((item) => item.posCode === row.posCode)) {
@@ -2748,6 +2774,7 @@ function heuristicCorrectionRows(records) {
     "MKP Cap Lang",
     "Rexona",
     "Permen Rokok",
+    "Kucing Angora Gelas",
   ];
   const rows = [];
   const seen = new Set();

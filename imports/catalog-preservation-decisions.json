@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "notes": "Fate of current catalogue products not found in the final workbook. Existing rows are never deleted in this stage. Owner KEEP for now: all 11 remain in the proposed live catalogue until a later recode/replace/remove decision.",
+  "decisions": [
+    {
+      "productId": "prod-dss-magnum-mild-16",
+      "likely": "POSSIBLE DISCONTINUED",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-dss-magnum-mild-20",
+      "likely": "POSSIBLE DISCONTINUED",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-sergio-filter",
+      "likely": "POSSIBLE RECODE",
+      "relatedPosCode": "SF20",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-zenix-coffee",
+      "likely": "POSSIBLE RECODE",
+      "relatedPosCode": "ZC20",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-zenix-sultan",
+      "likely": "POSSIBLE RECODE",
+      "relatedPosCode": "ZS20",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-aqua-15l",
+      "likely": "POSSIBLE REPLACEMENT",
+      "relatedPosCode": "AQABTL1500",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-masako-ayam",
+      "likely": "POSSIBLE REPLACEMENT",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-masako-sapi",
+      "likely": "POSSIBLE REPLACEMENT",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-energen-vanilla",
+      "likely": "POSSIBLE REPLACEMENT",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-teh-botol-sosro",
+      "likely": "POSSIBLE DISCONTINUED",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    },
+    {
+      "productId": "prod-indomie-goreng",
+      "likely": "POSSIBLE REPLACEMENT",
+      "action": "KEEP",
+      "approved": true,
+      "ownerDecision": "KEEP for now"
+    }
+  ]
+}
