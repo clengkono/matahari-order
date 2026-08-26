@@ -37662,30 +37662,6 @@
     "sortOrder": 26
   },
   {
-    "id": "prod-sergio-filter-20__bungkus",
-    "productId": "prod-sergio-filter-20",
-    "name": "Bungkus",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 1
-  },
-  {
-    "id": "prod-sergio-filter-20__1-2-slof",
-    "productId": "prod-sergio-filter-20",
-    "name": "½ Slof",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 3
-  },
-  {
-    "id": "prod-sergio-filter-20__slof",
-    "productId": "prod-sergio-filter-20",
-    "name": "Slof",
-    "active": true,
-    "isDefault": true,
-    "sortOrder": 4
-  },
-  {
     "id": "prod-sergio-kretek-20__bungkus",
     "productId": "prod-sergio-kretek-20",
     "name": "Bungkus",
@@ -46566,30 +46542,6 @@
     "sortOrder": 22
   },
   {
-    "id": "prod-zenix-coffee-20__bungkus",
-    "productId": "prod-zenix-coffee-20",
-    "name": "Bungkus",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 1
-  },
-  {
-    "id": "prod-zenix-coffee-20__1-2-slof",
-    "productId": "prod-zenix-coffee-20",
-    "name": "½ Slof",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 3
-  },
-  {
-    "id": "prod-zenix-coffee-20__slof",
-    "productId": "prod-zenix-coffee-20",
-    "name": "Slof",
-    "active": true,
-    "isDefault": true,
-    "sortOrder": 4
-  },
-  {
     "id": "prod-zenix-semangka-20__bungkus",
     "productId": "prod-zenix-semangka-20",
     "name": "Bungkus",
@@ -46608,30 +46560,6 @@
   {
     "id": "prod-zenix-semangka-20__slof",
     "productId": "prod-zenix-semangka-20",
-    "name": "Slof",
-    "active": true,
-    "isDefault": true,
-    "sortOrder": 4
-  },
-  {
-    "id": "prod-zenix-sultan-20__bungkus",
-    "productId": "prod-zenix-sultan-20",
-    "name": "Bungkus",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 1
-  },
-  {
-    "id": "prod-zenix-sultan-20__1-2-slof",
-    "productId": "prod-zenix-sultan-20",
-    "name": "½ Slof",
-    "active": true,
-    "isDefault": false,
-    "sortOrder": 3
-  },
-  {
-    "id": "prod-zenix-sultan-20__slof",
-    "productId": "prod-zenix-sultan-20",
     "name": "Slof",
     "active": true,
     "isDefault": true,

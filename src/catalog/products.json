@@ -13825,13 +13825,6 @@
     "pattern": "fixed-product"
   },
   {
-    "id": "prod-sergio-filter-20",
-    "name": "Sergio Filter 20",
-    "category": "Rokok",
-    "favorite": false,
-    "pattern": "fixed-product"
-  },
-  {
     "id": "prod-sensi-face-mask-3-ply",
     "name": "Sensi Face Mask 3 Ply",
     "category": "Kesehatan",
@@ -15820,23 +15813,9 @@
     "pattern": "fixed-product"
   },
   {
-    "id": "prod-zenix-coffee-20",
-    "name": "Zenix Coffee 20",
-    "category": "Rokok",
-    "favorite": false,
-    "pattern": "fixed-product"
-  },
-  {
     "id": "prod-kacang-zico-putih",
     "name": "Kacang Zico Putih",
     "category": "Makanan Ringan",
-    "favorite": false,
-    "pattern": "fixed-product"
-  },
-  {
-    "id": "prod-zenix-sultan-20",
-    "name": "Zenix Sultan 20",
-    "category": "Rokok",
     "favorite": false,
     "pattern": "fixed-product"
   },

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "notes": "Owner-approved post-import merge/recode. Preserve the old product identity and adopt the imported POS code. approved must be true to apply. Stage 5B.4: three cigarette pairs. Do not include Sergio Kretek 20, tapioka, grocery KEEP rows, or Speed.",
+  "decisions": [
+    {
+      "survivorProductId": "prod-zenix-coffee",
+      "duplicateProductId": "prod-zenix-coffee-20",
+      "newPosCode": "ZC20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "addDuplicateNameAsAlias": true,
+      "notes": "Keep Zenix Coffee. POS ZNXCFE → ZC20. Retire imported Zenix Coffee 20."
+    },
+    {
+      "survivorProductId": "prod-zenix-sultan",
+      "duplicateProductId": "prod-zenix-sultan-20",
+      "newPosCode": "ZS20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "addDuplicateNameAsAlias": true,
+      "notes": "Keep Zenix Sultan. POS ZENIX → ZS20. Retire imported Zenix Sultan 20."
+    },
+    {
+      "survivorProductId": "prod-sergio-filter",
+      "duplicateProductId": "prod-sergio-filter-20",
+      "newPosCode": "SF20",
+      "approved": true,
+      "ownerDecision": "APPROVE",
+      "addDuplicateNameAsAlias": true,
+      "notes": "Keep Sergio Filter. POS SERGIO20 → SF20. Retire imported Sergio Filter 20. Do not touch Sergio Kretek 20."
+    }
+  ]
+}

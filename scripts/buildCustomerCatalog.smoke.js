@@ -149,8 +149,8 @@ function main() {
     const liveSerialized = serializeCustomerCatalog(liveCustomer);
 
     assert(
-      "live customer catalogue has 2,259 products",
-      liveCustomer.products.length === 2259,
+      "live customer catalogue has 2,256 products",
+      liveCustomer.products.length === 2256,
       `count=${liveCustomer.products.length}`
     );
     assert(

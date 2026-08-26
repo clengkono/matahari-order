@@ -963,5 +963,20 @@
     "id": "alias-zenix-sultan-5",
     "productId": "prod-zenix-sultan",
     "alias": "seynix kuning"
+  },
+  {
+    "id": "alias-zenix-coffee-6",
+    "productId": "prod-zenix-coffee",
+    "alias": "Zenix Coffee 20"
+  },
+  {
+    "id": "alias-zenix-sultan-6",
+    "productId": "prod-zenix-sultan",
+    "alias": "Zenix Sultan 20"
+  },
+  {
+    "id": "alias-sergio-filter-1",
+    "productId": "prod-sergio-filter",
+    "alias": "Sergio Filter 20"
   }
 ]

@@ -22847,18 +22847,6 @@
     "defaultQuantity": 1
   },
   {
-    "id": "prod-sergio-filter-20",
-    "productId": "prod-sergio-filter-20",
-    "name": "Sergio Filter 20",
-    "availableUnitIds": [
-      "prod-sergio-filter-20__bungkus",
-      "prod-sergio-filter-20__1-2-slof",
-      "prod-sergio-filter-20__slof"
-    ],
-    "defaultUnitId": "prod-sergio-filter-20__slof",
-    "defaultQuantity": 1
-  },
-  {
     "id": "prod-sensi-face-mask-3-ply",
     "productId": "prod-sensi-face-mask-3-ply",
     "name": "Sensi Face Mask 3 Ply",
@@ -26139,18 +26127,6 @@
     "defaultQuantity": 1
   },
   {
-    "id": "prod-zenix-coffee-20",
-    "productId": "prod-zenix-coffee-20",
-    "name": "Zenix Coffee 20",
-    "availableUnitIds": [
-      "prod-zenix-coffee-20__bungkus",
-      "prod-zenix-coffee-20__1-2-slof",
-      "prod-zenix-coffee-20__slof"
-    ],
-    "defaultUnitId": "prod-zenix-coffee-20__slof",
-    "defaultQuantity": 1
-  },
-  {
     "id": "prod-kacang-zico-putih",
     "productId": "prod-kacang-zico-putih",
     "name": "Kacang Zico Putih",
@@ -26159,18 +26135,6 @@
       "prod-kacang-zico-putih__ikat"
     ],
     "defaultUnitId": "prod-kacang-zico-putih__pak",
-    "defaultQuantity": 1
-  },
-  {
-    "id": "prod-zenix-sultan-20",
-    "productId": "prod-zenix-sultan-20",
-    "name": "Zenix Sultan 20",
-    "availableUnitIds": [
-      "prod-zenix-sultan-20__bungkus",
-      "prod-zenix-sultan-20__1-2-slof",
-      "prod-zenix-sultan-20__slof"
-    ],
-    "defaultUnitId": "prod-zenix-sultan-20__slof",
     "defaultQuantity": 1
   },
   {

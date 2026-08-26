@@ -2230,36 +2230,6 @@
     "unitName": "Karton"
   },
   {
-    "sourceRowIndex": 223,
-    "posCode": "SERGIO20",
-    "posName": "Sergio Filter",
-    "posUnit": "BKS",
-    "productId": "prod-sergio-filter",
-    "productName": "Sergio Filter",
-    "unitId": "prod-sergio-filter__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 224,
-    "posCode": "SERGIO20",
-    "posName": "Sergio Filter",
-    "posUnit": "½ SLOF",
-    "productId": "prod-sergio-filter",
-    "productName": "Sergio Filter",
-    "unitId": "prod-sergio-filter__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 225,
-    "posCode": "SERGIO20",
-    "posName": "Sergio Filter",
-    "posUnit": "SLOF",
-    "productId": "prod-sergio-filter",
-    "productName": "Sergio Filter",
-    "unitId": "prod-sergio-filter__slof",
-    "unitName": "Slof"
-  },
-  {
     "sourceRowIndex": 226,
     "posCode": "12FS",
     "posName": "Surya 12",
@@ -2460,36 +2430,6 @@
     "unitName": "Slof"
   },
   {
-    "sourceRowIndex": 246,
-    "posCode": "ZNXCFE",
-    "posName": "Zenix Coffee",
-    "posUnit": "BKS",
-    "productId": "prod-zenix-coffee",
-    "productName": "Zenix Coffee",
-    "unitId": "prod-zenix-coffee__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 247,
-    "posCode": "ZNXCFE",
-    "posName": "Zenix Coffee",
-    "posUnit": "½ SLOF",
-    "productId": "prod-zenix-coffee",
-    "productName": "Zenix Coffee",
-    "unitId": "prod-zenix-coffee__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 248,
-    "posCode": "ZNXCFE",
-    "posName": "Zenix Coffee",
-    "posUnit": "SLOF",
-    "productId": "prod-zenix-coffee",
-    "productName": "Zenix Coffee",
-    "unitId": "prod-zenix-coffee__slof",
-    "unitName": "Slof"
-  },
-  {
     "sourceRowIndex": 249,
     "posCode": "ZP20",
     "posName": "Zenix Putih 20",
@@ -2517,36 +2457,6 @@
     "productId": "prod-zenix-putih-20",
     "productName": "Zenix Putih 20",
     "unitId": "prod-zenix-putih-20__slof",
-    "unitName": "Slof"
-  },
-  {
-    "sourceRowIndex": 252,
-    "posCode": "ZENIX",
-    "posName": "Zenix Sultan",
-    "posUnit": "BKS",
-    "productId": "prod-zenix-sultan",
-    "productName": "Zenix Sultan",
-    "unitId": "prod-zenix-sultan__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 253,
-    "posCode": "ZENIX",
-    "posName": "Zenix Sultan",
-    "posUnit": "½ SLOF",
-    "productId": "prod-zenix-sultan",
-    "productName": "Zenix Sultan",
-    "unitId": "prod-zenix-sultan__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 254,
-    "posCode": "ZENIX",
-    "posName": "Zenix Sultan",
-    "posUnit": "SLOF",
-    "productId": "prod-zenix-sultan",
-    "productName": "Zenix Sultan",
-    "unitId": "prod-zenix-sultan__slof",
     "unitName": "Slof"
   },
   {
@@ -51050,36 +50960,6 @@
     "unitName": "Pak"
   },
   {
-    "sourceRowIndex": 4692,
-    "posCode": "SF20",
-    "posName": "Sergio Filter 20",
-    "posUnit": "BKS",
-    "productId": "prod-sergio-filter-20",
-    "productName": "Sergio Filter 20",
-    "unitId": "prod-sergio-filter-20__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 4693,
-    "posCode": "SF20",
-    "posName": "Sergio Filter 20",
-    "posUnit": "½ SLOF",
-    "productId": "prod-sergio-filter-20",
-    "productName": "Sergio Filter 20",
-    "unitId": "prod-sergio-filter-20__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 4694,
-    "posCode": "SF20",
-    "posName": "Sergio Filter 20",
-    "posUnit": "SLOF",
-    "productId": "prod-sergio-filter-20",
-    "productName": "Sergio Filter 20",
-    "unitId": "prod-sergio-filter-20__slof",
-    "unitName": "Slof"
-  },
-  {
     "sourceRowIndex": 4690,
     "posCode": "SFM3",
     "posName": "Sensi Face Mask 3 Ply",
@@ -58320,36 +58200,6 @@
     "unitName": "Gantung"
   },
   {
-    "sourceRowIndex": 5815,
-    "posCode": "ZC20",
-    "posName": "Zenix Coffee 20",
-    "posUnit": "BKS",
-    "productId": "prod-zenix-coffee-20",
-    "productName": "Zenix Coffee 20",
-    "unitId": "prod-zenix-coffee-20__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 5816,
-    "posCode": "ZC20",
-    "posName": "Zenix Coffee 20",
-    "posUnit": "½ SLOF",
-    "productId": "prod-zenix-coffee-20",
-    "productName": "Zenix Coffee 20",
-    "unitId": "prod-zenix-coffee-20__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 5817,
-    "posCode": "ZC20",
-    "posName": "Zenix Coffee 20",
-    "posUnit": "SLOF",
-    "productId": "prod-zenix-coffee-20",
-    "productName": "Zenix Coffee 20",
-    "unitId": "prod-zenix-coffee-20__slof",
-    "unitName": "Slof"
-  },
-  {
     "sourceRowIndex": 1914,
     "posCode": "ZCOPTH",
     "posName": "Kacang Zico Putih",
@@ -58368,36 +58218,6 @@
     "productName": "Kacang Zico Putih",
     "unitId": "prod-kacang-zico-putih__ikat",
     "unitName": "Ikat"
-  },
-  {
-    "sourceRowIndex": 5824,
-    "posCode": "ZS20",
-    "posName": "Zenix Sultan 20",
-    "posUnit": "BKS",
-    "productId": "prod-zenix-sultan-20",
-    "productName": "Zenix Sultan 20",
-    "unitId": "prod-zenix-sultan-20__bungkus",
-    "unitName": "Bungkus"
-  },
-  {
-    "sourceRowIndex": 5825,
-    "posCode": "ZS20",
-    "posName": "Zenix Sultan 20",
-    "posUnit": "½ SLOF",
-    "productId": "prod-zenix-sultan-20",
-    "productName": "Zenix Sultan 20",
-    "unitId": "prod-zenix-sultan-20__1-2-slof",
-    "unitName": "½ Slof"
-  },
-  {
-    "sourceRowIndex": 5826,
-    "posCode": "ZS20",
-    "posName": "Zenix Sultan 20",
-    "posUnit": "SLOF",
-    "productId": "prod-zenix-sultan-20",
-    "productName": "Zenix Sultan 20",
-    "unitId": "prod-zenix-sultan-20__slof",
-    "unitName": "Slof"
   },
   {
     "sourceRowIndex": 5821,
@@ -58427,6 +58247,96 @@
     "productId": "prod-zenix-semangka-20",
     "productName": "Zenix Semangka 20",
     "unitId": "prod-zenix-semangka-20__slof",
+    "unitName": "Slof"
+  },
+  {
+    "sourceRowIndex": 5815,
+    "posCode": "ZC20",
+    "posName": "Zenix Coffee 20",
+    "posUnit": "BKS",
+    "productId": "prod-zenix-coffee",
+    "productName": "Zenix Coffee",
+    "unitId": "prod-zenix-coffee__bungkus",
+    "unitName": "Bungkus"
+  },
+  {
+    "sourceRowIndex": 5816,
+    "posCode": "ZC20",
+    "posName": "Zenix Coffee 20",
+    "posUnit": "½ SLOF",
+    "productId": "prod-zenix-coffee",
+    "productName": "Zenix Coffee",
+    "unitId": "prod-zenix-coffee__1-2-slof",
+    "unitName": "½ Slof"
+  },
+  {
+    "sourceRowIndex": 5817,
+    "posCode": "ZC20",
+    "posName": "Zenix Coffee 20",
+    "posUnit": "SLOF",
+    "productId": "prod-zenix-coffee",
+    "productName": "Zenix Coffee",
+    "unitId": "prod-zenix-coffee__slof",
+    "unitName": "Slof"
+  },
+  {
+    "sourceRowIndex": 5824,
+    "posCode": "ZS20",
+    "posName": "Zenix Sultan 20",
+    "posUnit": "BKS",
+    "productId": "prod-zenix-sultan",
+    "productName": "Zenix Sultan",
+    "unitId": "prod-zenix-sultan__bungkus",
+    "unitName": "Bungkus"
+  },
+  {
+    "sourceRowIndex": 5825,
+    "posCode": "ZS20",
+    "posName": "Zenix Sultan 20",
+    "posUnit": "½ SLOF",
+    "productId": "prod-zenix-sultan",
+    "productName": "Zenix Sultan",
+    "unitId": "prod-zenix-sultan__1-2-slof",
+    "unitName": "½ Slof"
+  },
+  {
+    "sourceRowIndex": 5826,
+    "posCode": "ZS20",
+    "posName": "Zenix Sultan 20",
+    "posUnit": "SLOF",
+    "productId": "prod-zenix-sultan",
+    "productName": "Zenix Sultan",
+    "unitId": "prod-zenix-sultan__slof",
+    "unitName": "Slof"
+  },
+  {
+    "sourceRowIndex": 4692,
+    "posCode": "SF20",
+    "posName": "Sergio Filter 20",
+    "posUnit": "BKS",
+    "productId": "prod-sergio-filter",
+    "productName": "Sergio Filter",
+    "unitId": "prod-sergio-filter__bungkus",
+    "unitName": "Bungkus"
+  },
+  {
+    "sourceRowIndex": 4693,
+    "posCode": "SF20",
+    "posName": "Sergio Filter 20",
+    "posUnit": "½ SLOF",
+    "productId": "prod-sergio-filter",
+    "productName": "Sergio Filter",
+    "unitId": "prod-sergio-filter__1-2-slof",
+    "unitName": "½ Slof"
+  },
+  {
+    "sourceRowIndex": 4694,
+    "posCode": "SF20",
+    "posName": "Sergio Filter 20",
+    "posUnit": "SLOF",
+    "productId": "prod-sergio-filter",
+    "productName": "Sergio Filter",
+    "unitId": "prod-sergio-filter__slof",
     "unitName": "Slof"
   }
 ]
