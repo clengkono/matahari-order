@@ -376,7 +376,7 @@
 .studioCurrentImagePhoto,
 .studioMissingImage {
   width: 100%;
-  max-width: 280px;
+  max-width: 180px;
   aspect-ratio: 1;
   border-radius: 14px;
   background: var(--color-image-bg, #ede8e1);
@@ -418,6 +418,18 @@
   border-radius: 16px;
   background: #faf8f5;
   text-align: center;
+}
+
+.studioDropzone--hero {
+  padding: 28px 16px;
+  border-width: 3px;
+  border-color: var(--color-primary, #e67e22);
+  background: #fff7f0;
+}
+
+.studioDropzone:focus-visible {
+  outline: 2px solid var(--color-accent, #d4a017);
+  outline-offset: 2px;
 }
 
 .studioDropzone--active {
@@ -518,9 +530,9 @@
 .studioConfirmPreview {
   display: block;
   width: 100%;
-  max-width: 240px;
+  max-width: 180px;
+  margin: 0 auto 4px;
   aspect-ratio: 1;
-  margin-bottom: 12px;
   border-radius: 12px;
   object-fit: contain;
   background: var(--color-image-bg, #ede8e1);
@@ -563,9 +575,33 @@
   font-size: 0.9rem;
 }
 
-.studioQueuePosition,
-.studioQueueCurrent {
-  margin: 0 0 10px;
+.studioQueueProgress {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.studioShortcutHint,
+.studioFilterStale {
+  margin: 0 0 8px;
+  color: var(--color-text-muted, #6b6560);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.studioFilterStale {
+  color: #7a3e16;
+}
+
+.studioResumeButton,
+.studioMoreButton {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.studioQueuePosition {
+  margin: 0;
   color: var(--color-text-muted, #6b6560);
   font-size: 0.9rem;
 }
@@ -577,6 +613,7 @@
 .studioQueueNav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   margin-bottom: 14px;
 }

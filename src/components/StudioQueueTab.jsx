@@ -1,5 +1,9 @@
 import StudioImageBrowser from "./StudioImageBrowser";
 
+function formatCount(value) {
+  return Number(value || 0).toLocaleString("id-ID");
+}
+
 function StudioQueueTab({
   products,
   categories,
@@ -14,18 +18,10 @@ function StudioQueueTab({
   return (
     <div className="studioQueue">
       <div className="studioQueueStats" aria-live="polite">
-        <div className="studioStat">
-          <span className="studioStatValue">{stats.completed}</span>
-          <span className="studioStatLabel">Completed</span>
-        </div>
-        <div className="studioStat">
-          <span className="studioStatValue">{stats.total}</span>
-          <span className="studioStatLabel">Total</span>
-        </div>
-        <div className="studioStat">
-          <span className="studioStatValue">{stats.missing}</span>
-          <span className="studioStatLabel">Missing</span>
-        </div>
+        <p className="studioQueueProgress">
+          {formatCount(stats.completed)} selesai · {formatCount(stats.missing)} belum
+          ada gambar
+        </p>
       </div>
 
       <StudioImageBrowser
@@ -39,6 +35,7 @@ function StudioQueueTab({
         defaultStatus="missing"
         heading="Search missing images"
         showQueueNav
+        showResume
         apiRef={apiRef}
       />
     </div>

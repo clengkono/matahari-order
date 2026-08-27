@@ -1285,14 +1285,24 @@
     "name": "Indomie Mie Goreng Cakalang",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-indomie-mie-goreng-cakalang.webp",
+      "detail": "/product-images/details/cigarettes/prod-indomie-mie-goreng-cakalang.webp",
+      "original": "/product-images/originals/cigarettes/prod-indomie-mie-goreng-cakalang-original.png"
+    }
   },
   {
     "id": "prod-indomie-mie-cakalang-kuah",
     "name": "Indomie Mie Cakalang Kuah",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-indomie-mie-cakalang-kuah.webp",
+      "detail": "/product-images/details/cigarettes/prod-indomie-mie-cakalang-kuah.webp",
+      "original": "/product-images/originals/cigarettes/prod-indomie-mie-cakalang-kuah-original.png"
+    }
   },
   {
     "id": "prod-plastik-mika-sedang",
@@ -2188,7 +2198,12 @@
     "name": "Indomilk Botol Coklat",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-indomilk-botol-coklat.webp",
+      "detail": "/product-images/details/cigarettes/prod-indomilk-botol-coklat.webp",
+      "original": "/product-images/originals/cigarettes/prod-indomilk-botol-coklat-original.png"
+    }
   },
   {
     "id": "prod-sarimi-isi-2-goreng-rasa-ayam-kremes",
@@ -2370,7 +2385,12 @@
     "name": "Supermie Ayam Bawang",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-supermie-ayam-bawang.webp",
+      "detail": "/product-images/details/cigarettes/prod-supermie-ayam-bawang.webp",
+      "original": "/product-images/originals/cigarettes/prod-supermie-ayam-bawang-original.png"
+    }
   },
   {
     "id": "prod-cap-enak-putih-sachet-6",
@@ -2454,14 +2474,24 @@
     "name": "Indomilk Putih Blek 370G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-indomilk-putih-blek-370g.webp",
+      "detail": "/product-images/details/cigarettes/prod-indomilk-putih-blek-370g.webp",
+      "original": "/product-images/originals/cigarettes/prod-indomilk-putih-blek-370g-original.png"
+    }
   },
   {
     "id": "prod-indomilk-coklat-blek-370g",
     "name": "Indomilk Coklat Blek 370G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-indomilk-coklat-blek-370g.webp",
+      "detail": "/product-images/details/cigarettes/prod-indomilk-coklat-blek-370g.webp",
+      "original": "/product-images/originals/cigarettes/prod-indomilk-coklat-blek-370g-original.png"
+    }
   },
   {
     "id": "prod-kremer-kental-manis-375g",
@@ -6920,14 +6950,24 @@
     "name": "Aqua Botol 1500ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-aqua-botol-1500ml.webp",
+      "detail": "/product-images/details/cigarettes/prod-aqua-botol-1500ml.webp",
+      "original": "/product-images/originals/cigarettes/prod-aqua-botol-1500ml-original.png"
+    }
   },
   {
     "id": "prod-aqua-botol-330ml",
     "name": "Aqua Botol 330ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-aqua-botol-330ml.webp",
+      "detail": "/product-images/details/cigarettes/prod-aqua-botol-330ml.webp",
+      "original": "/product-images/originals/cigarettes/prod-aqua-botol-330ml-original.png"
+    }
   },
   {
     "id": "prod-aqua-botol-600ml",

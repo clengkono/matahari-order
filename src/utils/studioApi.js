@@ -172,10 +172,12 @@ export function mimeFromFile(file) {
   return file?.type || "image/jpeg";
 }
 
-export async function clipboardImageFile(clipboardData) {
+export function inspectClipboardImages(clipboardData) {
   if (!clipboardData) {
-    return null;
+    return { file: null, extraCount: 0, total: 0 };
   }
+
+  const seen = [];
 
   const items = clipboardData.items;
   if (items) {
@@ -183,20 +185,27 @@ export async function clipboardImageFile(clipboardData) {
       if (item.kind === "file" && item.type.startsWith("image/")) {
         const file = item.getAsFile();
         if (file) {
-          return file;
+          seen.push(file);
         }
       }
     }
   }
 
-  const files = clipboardData.files;
-  if (files) {
-    for (const file of files) {
+  if (seen.length === 0 && clipboardData.files) {
+    for (const file of clipboardData.files) {
       if (file.type.startsWith("image/")) {
-        return file;
+        seen.push(file);
       }
     }
   }
 
-  return null;
+  return {
+    file: seen[0] ?? null,
+    extraCount: Math.max(0, seen.length - 1),
+    total: seen.length,
+  };
+}
+
+export async function clipboardImageFile(clipboardData) {
+  return inspectClipboardImages(clipboardData).file;
 }

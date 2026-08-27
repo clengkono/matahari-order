@@ -3,16 +3,17 @@ import StudioImagesTab from "./StudioImagesTab";
 import StudioProductsTab from "./StudioProductsTab";
 import StudioQueueTab from "./StudioQueueTab";
 import { fetchStudioImages } from "../utils/studioApi";
+import { isStudioTypingTarget } from "../utils/studioImageSearch";
 import "../CatalogueStudio.css";
 
 const TABS = [
-  { id: "images", label: "Images" },
   { id: "queue", label: "Queue" },
+  { id: "images", label: "Images" },
   { id: "products", label: "Products" },
 ];
 
 function CatalogueStudio() {
-  const [tab, setTab] = useState("images");
+  const [tab, setTab] = useState("queue");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recentProductIds, setRecentProductIds] = useState([]);
@@ -21,6 +22,7 @@ function CatalogueStudio() {
   const [loadError, setLoadError] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadNonce, setLoadNonce] = useState(0);
+  const [notice, setNotice] = useState(null);
   const searchRef = useRef(null);
   const queueSearchRef = useRef(null);
   const productsSearchRef = useRef(null);
@@ -35,7 +37,11 @@ function CatalogueStudio() {
       if (current && data.products?.some((product) => product.id === current)) {
         return current;
       }
-      return data.products?.[0]?.id ?? null;
+      return (
+        data.products?.find((product) => !product.hasImage)?.id ??
+        data.products?.[0]?.id ??
+        null
+      );
     });
   }, []);
 
@@ -98,6 +104,12 @@ function CatalogueStudio() {
   const handleSaved = useCallback(
     async (result) => {
       await refresh();
+      if (result?.notice) {
+        setNotice({
+          text: result.notice,
+          tone: result.noticeTone || "success",
+        });
+      }
       if (result?.selectProductId) {
         setSelectedId(result.selectProductId);
       } else if (result?.productId) {
@@ -108,22 +120,33 @@ function CatalogueStudio() {
   );
 
   useEffect(() => {
-    function isTypingTarget(target) {
-      if (!(target instanceof HTMLElement)) {
-        return false;
-      }
-      const tag = target.tagName;
-      return (
-        tag === "INPUT" ||
-        tag === "TEXTAREA" ||
-        tag === "SELECT" ||
-        target.isContentEditable
-      );
+    if (!notice || notice.tone === "warning") {
+      return undefined;
     }
+    const timer = window.setTimeout(() => setNotice(null), 4000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
 
+  useEffect(() => {
     function onKeyDown(event) {
       const key = event.key.toLowerCase();
       const hasCtrl = event.ctrlKey || event.metaKey;
+      const typing = isStudioTypingTarget(event.target);
+
+      if (event.key === "/" && !typing && !hasCtrl) {
+        event.preventDefault();
+        const target =
+          tab === "products"
+            ? productsSearchRef.current
+            : tab === "images"
+              ? searchRef.current
+              : queueSearchRef.current;
+        requestAnimationFrame(() => {
+          target?.focus();
+          target?.select?.();
+        });
+        return;
+      }
 
       if (hasCtrl && key === "f") {
         event.preventDefault();
@@ -150,7 +173,11 @@ function CatalogueStudio() {
         return;
       }
 
-      if (tab === "queue" && !isTypingTarget(event.target)) {
+      if (
+        tab === "queue" &&
+        !typing &&
+        !document.querySelector(".studioConfirm")
+      ) {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
           queueApiRef.current?.goPrevious();
@@ -195,6 +222,15 @@ function CatalogueStudio() {
         LOCAL ONLY — This Studio and its image service bind to 127.0.0.1 and must
         not be publicly deployed as-is. There is no authentication in Version 1.
       </div>
+
+      {notice ? (
+        <p
+          className={`studioInlineStatus${notice.tone === "warning" ? " is-error" : " is-success"}`}
+          role={notice.tone === "warning" ? "alert" : "status"}
+        >
+          {notice.text}
+        </p>
+      ) : null}
 
       <nav className="studioTabs" aria-label="Studio sections">
         {TABS.map((item) => (

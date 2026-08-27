@@ -2,8 +2,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import StudioImagePanel from "./StudioImagePanel";
 import {
   STUDIO_IMAGE_PAGE_SIZE,
+  continueWhereLeftOff,
   filterStudioImageProducts,
-  missingNeighbors,
+  nextProductAfterSave,
+  queueNeighbors,
+  selectionForFilter,
 } from "../utils/studioImageSearch";
 
 function StudioImageBrowser({
@@ -18,11 +21,13 @@ function StudioImageBrowser({
   defaultStatus = "all",
   heading = "Search products",
   showQueueNav = false,
+  showResume = false,
 }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState(defaultStatus);
   const [category, setCategory] = useState("");
   const [highlight, setHighlight] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(STUDIO_IMAGE_PAGE_SIZE);
   const listRef = useRef(null);
 
   const filtered = useMemo(
@@ -36,12 +41,25 @@ function StudioImageBrowser({
     [products, query, status, category, recentProductIds]
   );
 
-  const results = filtered.slice(0, STUDIO_IMAGE_PAGE_SIZE);
+  const results = filtered.slice(0, visibleCount);
   const hiddenCount = Math.max(0, filtered.length - results.length);
   const safeHighlight =
     results.length === 0 ? 0 : Math.min(highlight, results.length - 1);
   const selected = products.find((product) => product.id === selectedId) ?? null;
-  const neighbors = missingNeighbors(products, selectedId);
+  const neighbors = queueNeighbors(filtered, selectedId);
+  const selectedHiddenByFilter =
+    Boolean(selectedId) &&
+    filtered.length > 0 &&
+    !filtered.some((product) => product.id === selectedId);
+
+  useEffect(() => {
+    const next = selectionForFilter(filtered, selectedId);
+    if (next.id && next.id !== selectedId && filtered.length > 0) {
+      onSelect(next.id);
+    }
+    // Snap only when the owner changes search/filters, not after a catalogue refresh.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, category, query]);
 
   useEffect(() => {
     const active = listRef.current?.querySelector('[data-active="true"]');
@@ -96,18 +114,57 @@ function StudioImageBrowser({
   }
 
   function handleSaved(result) {
-    if (showQueueNav && result?.productId) {
-      const remaining = products.filter(
-        (product) => product.id !== result.productId && !product.hasImage
-      );
+    const canAdvance =
+      showQueueNav &&
+      result?.productId &&
+      result.removed !== true &&
+      result.regenerated !== true &&
+      result.customerCatalog?.ok !== false;
+
+    if (!canAdvance) {
+      onSaved?.(result);
+      return;
+    }
+
+    const nextInFilter = nextProductAfterSave(filtered, result.productId);
+    if (nextInFilter) {
       onSaved?.({
         ...result,
-        selectProductId: remaining[0]?.id ?? result.productId,
+        selectProductId: nextInFilter,
+        focusDropzone: true,
       });
       return;
     }
 
-    onSaved?.(result);
+    const withoutQuery = filterStudioImageProducts(products, {
+      query: "",
+      status,
+      category,
+      recentIds: recentProductIds,
+    });
+    const nextWider = nextProductAfterSave(withoutQuery, result.productId);
+    if (query) {
+      setQuery("");
+      setHighlight(0);
+      setVisibleCount(STUDIO_IMAGE_PAGE_SIZE);
+    }
+    onSaved?.({
+      ...result,
+      selectProductId: nextWider ?? result.productId,
+      focusDropzone: true,
+    });
+  }
+
+  function handleResume() {
+    const nextId = continueWhereLeftOff(products, recentProductIds);
+    if (nextId) {
+      setStatus("missing");
+      setQuery("");
+      setCategory("");
+      setHighlight(0);
+      setVisibleCount(STUDIO_IMAGE_PAGE_SIZE);
+      onSelect(nextId);
+    }
   }
 
   return (
@@ -125,6 +182,7 @@ function StudioImageBrowser({
           onChange={(event) => {
             setQuery(event.target.value);
             setHighlight(0);
+            setVisibleCount(STUDIO_IMAGE_PAGE_SIZE);
           }}
           onKeyDown={handleSearchKeyDown}
           placeholder="Name, alias, ID, or POS…"
@@ -142,6 +200,7 @@ function StudioImageBrowser({
             onChange={(event) => {
               setStatus(event.target.value);
               setHighlight(0);
+              setVisibleCount(STUDIO_IMAGE_PAGE_SIZE);
             }}
           >
             <option value="all">All</option>
@@ -164,6 +223,7 @@ function StudioImageBrowser({
             onChange={(event) => {
               setCategory(event.target.value);
               setHighlight(0);
+              setVisibleCount(STUDIO_IMAGE_PAGE_SIZE);
             }}
           >
             <option value="">All categories</option>
@@ -175,12 +235,36 @@ function StudioImageBrowser({
           </select>
         </div>
 
+        {showResume && recentProductIds.length > 0 ? (
+          <button
+            type="button"
+            className="studioButton studioButton--ghost studioResumeButton"
+            onClick={handleResume}
+          >
+            Continue where I left off
+          </button>
+        ) : null}
+
         <p className="studioFilterCount">
           {filtered.length === 1
             ? "1 product"
             : `${filtered.length} products`}
-          {hiddenCount > 0 ? ` · showing first ${results.length}` : ""}
+          {hiddenCount > 0 ? ` · showing ${results.length}` : ""}
         </p>
+        <p className="studioShortcutHint">
+          / search · ← → next missing · Ctrl+V paste
+        </p>
+
+        {selectedHiddenByFilter ? (
+          <p className="studioFilterStale" role="status">
+            Selected product is outside this filter. Showing the first match.
+          </p>
+        ) : null}
+        {filtered.length === 0 && selected ? (
+          <p className="studioFilterStale" role="status">
+            No matches in this filter. The selected product is still open.
+          </p>
+        ) : null}
 
         <ul className="studioResultList" ref={listRef} role="listbox" aria-label="Search results">
           {results.length === 0 ? (
@@ -215,6 +299,17 @@ function StudioImageBrowser({
             })
           )}
         </ul>
+        {hiddenCount > 0 ? (
+          <button
+            type="button"
+            className="studioButton studioButton--secondary studioMoreButton"
+            onClick={() =>
+              setVisibleCount((current) => current + STUDIO_IMAGE_PAGE_SIZE)
+            }
+          >
+            Show {Math.min(STUDIO_IMAGE_PAGE_SIZE, hiddenCount)} more
+          </button>
+        ) : null}
       </aside>
 
       <StudioImagePanel
@@ -223,6 +318,7 @@ function StudioImageBrowser({
         onSaved={handleSaved}
         neighbors={showQueueNav ? neighbors : null}
         onSelectNeighbor={showQueueNav ? onSelect : null}
+        queueMode={showQueueNav}
       />
     </div>
   );

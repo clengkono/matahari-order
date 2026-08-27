@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import {
   assignProductImage,
-  clipboardImageFile,
+  inspectClipboardImages,
   fileToBase64,
   mimeFromFile,
   previewProductImage,
@@ -9,6 +9,10 @@ import {
   removeProductImage,
   validateImageFile,
 } from "../utils/studioApi";
+import {
+  isStudioTypingTarget,
+  pickFirstImageFile,
+} from "../utils/studioImageSearch";
 
 function cacheBust(src, version) {
   if (!src) {
@@ -17,14 +21,25 @@ function cacheBust(src, version) {
   return `${src}${src.includes("?") ? "&" : "?"}v=${version}`;
 }
 
+function extraFileNotice(extraCount) {
+  if (extraCount < 1) {
+    return "";
+  }
+  return extraCount === 1
+    ? "Using the first image only. Extra file ignored."
+    : `Using the first image only. ${extraCount} extra files ignored.`;
+}
+
 function StudioImagePanel({
   product,
   onSaved,
   neighbors = null,
   onSelectNeighbor,
+  queueMode = false,
 }) {
   const inputId = useId();
   const fileInputRef = useRef(null);
+  const dropzoneRef = useRef(null);
   const [draft, setDraft] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -61,8 +76,24 @@ function StudioImagePanel({
     onSavedRef.current = onSaved;
   }, [onSaved]);
 
-  async function acceptFile(file) {
-    setError("");
+  useEffect(() => {
+    if (!product || product.hasImage || step !== "idle") {
+      return undefined;
+    }
+    const node = dropzoneRef.current;
+    if (!node) {
+      return undefined;
+    }
+    const active = document.activeElement;
+    if (isStudioTypingTarget(active)) {
+      return undefined;
+    }
+    node.focus();
+    return undefined;
+  }, [product, step]);
+
+  async function acceptFile(file, extraCount = 0) {
+    setError(extraFileNotice(extraCount));
     const validationError = validateImageFile(file);
     if (validationError) {
       setError(validationError);
@@ -129,6 +160,15 @@ function StudioImagePanel({
     }
   }
 
+  function acceptFromList(fileList) {
+    const picked = pickFirstImageFile(fileList);
+    if (!picked.file) {
+      setError("Drop a JPEG, PNG, or WebP image.");
+      return;
+    }
+    void acceptFile(picked.file, picked.extraCount);
+  }
+
   function clearDraft() {
     setDraft((previous) => {
       if (previous?.previewUrl) {
@@ -162,7 +202,8 @@ function StudioImagePanel({
       });
       clearDraft();
       setPreviewVersion(Date.now());
-      if (result.customerCatalog && result.customerCatalog.ok === false) {
+      const rebuildFailed = result.customerCatalog && result.customerCatalog.ok === false;
+      if (rebuildFailed) {
         setCatalogWarning(
           result.customerCatalog.warning ||
             "Saved the image, but the customer catalogue is stale. Run npm run catalog:customer-build."
@@ -170,7 +211,14 @@ function StudioImagePanel({
       } else {
         setCatalogWarning("");
       }
-      onSavedRef.current?.(result);
+      onSavedRef.current?.({
+        ...result,
+        notice: rebuildFailed
+          ? result.customerCatalog.warning ||
+            "Saved, but the customer catalogue is stale."
+          : `✓ ${currentProduct.name} image saved`,
+        noticeTone: rebuildFailed ? "warning" : "success",
+      });
     } catch (err) {
       setError(err.message || "Save failed.");
       if (err.code === "REPLACE_CONFIRMATION_REQUIRED") {
@@ -211,7 +259,12 @@ function StudioImagePanel({
     try {
       const result = await regenerateProductImage(currentProduct.id);
       setPreviewVersion(Date.now());
-      onSavedRef.current?.(result);
+      onSavedRef.current?.({
+        ...result,
+        regenerated: true,
+        notice: `✓ ${currentProduct.name} regenerated`,
+        noticeTone: "success",
+      });
     } catch (err) {
       setError(err.message || "Regenerate failed.");
     } finally {
@@ -244,7 +297,8 @@ function StudioImagePanel({
       const result = await removeProductImage(currentProduct.id);
       setStep("idle");
       setPreviewVersion(Date.now());
-      if (result.customerCatalog && result.customerCatalog.ok === false) {
+      const rebuildFailed = result.customerCatalog && result.customerCatalog.ok === false;
+      if (rebuildFailed) {
         setCatalogWarning(
           result.customerCatalog.warning ||
             "Removed the image, but the customer catalogue is stale. Run npm run catalog:customer-build."
@@ -252,7 +306,15 @@ function StudioImagePanel({
       } else {
         setCatalogWarning("");
       }
-      onSavedRef.current?.(result);
+      onSavedRef.current?.({
+        ...result,
+        removed: true,
+        notice: rebuildFailed
+          ? result.customerCatalog.warning ||
+            "Removed, but the customer catalogue is stale."
+          : `✓ Image removed from ${currentProduct.name}`,
+        noticeTone: rebuildFailed ? "warning" : "success",
+      });
     } catch (err) {
       setError(err.message || "Remove failed.");
       setStep("remove");
@@ -286,28 +348,48 @@ function StudioImagePanel({
         return;
       }
 
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (currentStep === "assign") {
-          handleConfirmAssign();
-        } else if (currentStep === "replace") {
-          handleConfirmReplace();
-        } else if (currentStep === "remove") {
-          void handleConfirmRemove();
-        }
+      if (event.key !== "Enter") {
+        return;
+      }
+
+      if (isStudioTypingTarget(event.target)) {
+        return;
+      }
+      if (event.target instanceof HTMLButtonElement) {
+        return;
+      }
+      if (currentStep === "remove") {
+        return;
+      }
+
+      event.preventDefault();
+      if (currentStep === "assign") {
+        handleConfirmAssign();
+      } else if (currentStep === "replace") {
+        handleConfirmReplace();
       }
     }
 
-    async function onPaste(event) {
+    function onPaste(event) {
       if (!productRef.current) {
         return;
       }
-      const file = await clipboardImageFile(event.clipboardData);
-      if (!file) {
+      if (stepRef.current === "remove") {
+        return;
+      }
+      if (
+        isStudioTypingTarget(event.target) &&
+        event.target !== dropzoneRef.current
+      ) {
+        return;
+      }
+
+      const inspected = inspectClipboardImages(event.clipboardData);
+      if (!inspected.file) {
         return;
       }
       event.preventDefault();
-      void acceptFile(file);
+      void acceptFile(inspected.file, inspected.extraCount);
     }
 
     window.addEventListener("keydown", onKeyDown);
@@ -341,9 +423,136 @@ function StudioImagePanel({
   const cardSrc = cacheBust(currentCard, previewVersion);
   const detailSrc = cacheBust(currentDetail, previewVersion);
   const originalStored = Boolean(product.originalStored || product.image?.original);
+  const showCurrentImages = product.hasImage && step !== "assign";
+  const showDropzone = step === "idle" || step === "assign";
+  const previewReady = step === "assign" && Boolean(draft);
+
+  const dropzone = (
+    <div
+      ref={dropzoneRef}
+      tabIndex={0}
+      className={`studioDropzone${dragOver ? " studioDropzone--active" : ""}${!product.hasImage && !previewReady ? " studioDropzone--hero" : ""}`}
+      aria-label={`Paste or drop an image for ${product.name}`}
+      onDragEnter={(event) => {
+        event.preventDefault();
+        setDragOver(true);
+      }}
+      onDragOver={(event) => {
+        event.preventDefault();
+        setDragOver(true);
+      }}
+      onDragLeave={(event) => {
+        event.preventDefault();
+        setDragOver(false);
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        setDragOver(false);
+        acceptFromList(event.dataTransfer?.files);
+      }}
+    >
+      <p className="studioDropzoneTitle">
+        {previewReady ? "Choose a different image" : "Paste image here"}
+      </p>
+      <p className="studioDropzoneHint">
+        Ctrl+V · drop · or choose a JPEG, PNG, or WebP · max 15 MB
+      </p>
+      <div className="studioDropzoneActions">
+        <label className="studioButton studioButton--secondary" htmlFor={inputId}>
+          Choose file
+        </label>
+        <input
+          id={inputId}
+          ref={fileInputRef}
+          className="studioFileInput"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+          onChange={(event) => {
+            acceptFromList(event.target.files);
+          }}
+        />
+      </div>
+    </div>
+  );
+
+  const assignConfirm = previewReady ? (
+    <div
+      className="studioConfirm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="studio-assign-title"
+    >
+      <h3 id="studio-assign-title" className="studioConfirmTitle">
+        Confirm &amp; Save · {product.name}
+      </h3>
+      <div className="studioPreviewGrid">
+        <figure className="studioPreviewFigure">
+          <img
+            src={draft.previewUrl}
+            alt={`Source for ${product.name}`}
+            className="studioConfirmPreview"
+          />
+          <figcaption>Source</figcaption>
+        </figure>
+        <figure className="studioPreviewFigure">
+          {generatedPreview?.card?.dataUrl ? (
+            <img
+              src={generatedPreview.card.dataUrl}
+              alt={`Generated card for ${product.name}`}
+              className="studioConfirmPreview"
+            />
+          ) : (
+            <div className="studioMissingImage studioMissingImage--small">
+              {previewBusy ? "Generating…" : "Card preview unavailable"}
+            </div>
+          )}
+          <figcaption>Generated card</figcaption>
+        </figure>
+        <figure className="studioPreviewFigure">
+          {generatedPreview?.detail?.dataUrl ? (
+            <img
+              src={generatedPreview.detail.dataUrl}
+              alt={`Generated detail for ${product.name}`}
+              className="studioConfirmPreview"
+            />
+          ) : (
+            <div className="studioMissingImage studioMissingImage--small">
+              {previewBusy ? "Generating…" : "Detail preview unavailable"}
+            </div>
+          )}
+          <figcaption>Generated detail</figcaption>
+        </figure>
+      </div>
+      <p className="studioConfirmBody">
+        Watermark: Matahari Langowan on card and detail. Original stays clean.
+      </p>
+      <div className="studioConfirmActions">
+        <button
+          type="button"
+          className="studioButton studioButton--ghost"
+          onClick={clearDraft}
+          disabled={busy}
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          className="studioButton"
+          onClick={handleConfirmAssign}
+          disabled={busy}
+        >
+          {busy ? "Saving…" : "Confirm & Save"}
+        </button>
+      </div>
+      <p className="studioConfirmHint">
+        Not saved yet. Enter confirms · Escape cancels. Replace still needs a
+        second confirmation.
+      </p>
+    </div>
+  ) : null;
 
   return (
-    <div className="studioPanel">
+    <div className={`studioPanel${queueMode ? " studioPanel--queue" : ""}`}>
       <div className="studioPanelHeader">
         <h2 className="studioProductTitle">{product.name}</h2>
         <p className="studioProductMeta">
@@ -363,10 +572,9 @@ function StudioImagePanel({
             Previous missing
           </button>
           <p className="studioQueuePosition">
-            {neighbors.remaining} missing
             {neighbors.position
-              ? ` · ${neighbors.position} of ${neighbors.remaining}`
-              : ""}
+              ? `${neighbors.position} of ${neighbors.remaining}`
+              : `${neighbors.remaining} in this list`}
           </p>
           <button
             type="button"
@@ -379,41 +587,45 @@ function StudioImagePanel({
         </div>
       ) : null}
 
-      <div className="studioImageStatusGrid">
-        <div className="studioCurrentImage">
-          <p className="studioImageCaption">Current image</p>
-          {cardSrc ? (
-            <img
-              src={cardSrc}
-              alt={`Current card image for ${product.name}`}
-              className="studioCurrentImagePhoto"
-            />
-          ) : (
-            <div className="studioMissingImage" role="status">
-              Missing image
-            </div>
-          )}
+      {showCurrentImages ? (
+        <div className="studioImageStatusGrid">
+          <div className="studioCurrentImage">
+            <p className="studioImageCaption">Current image</p>
+            {cardSrc ? (
+              <img
+                src={cardSrc}
+                alt={`Current card image for ${product.name}`}
+                className="studioCurrentImagePhoto"
+              />
+            ) : (
+              <div className="studioMissingImage" role="status">
+                Missing image
+              </div>
+            )}
+          </div>
+          <div className="studioCurrentImage">
+            <p className="studioImageCaption">Detail image</p>
+            {detailSrc ? (
+              <img
+                src={detailSrc}
+                alt={`Current detail image for ${product.name}`}
+                className="studioCurrentImagePhoto"
+              />
+            ) : (
+              <div className="studioMissingImage studioMissingImage--small" role="status">
+                No detail
+              </div>
+            )}
+          </div>
         </div>
-        <div className="studioCurrentImage">
-          <p className="studioImageCaption">Detail image</p>
-          {detailSrc ? (
-            <img
-              src={detailSrc}
-              alt={`Current detail image for ${product.name}`}
-              className="studioCurrentImagePhoto"
-            />
-          ) : (
-            <div className="studioMissingImage studioMissingImage--small" role="status">
-              No detail
-            </div>
-          )}
-        </div>
-      </div>
+      ) : null}
 
-      <ul className="studioImageFacts">
-        <li>Original stored: {originalStored ? "Yes" : "No"}</li>
-        <li>Watermark: Matahari Langowan</li>
-      </ul>
+      {product.hasImage && step === "idle" ? (
+        <ul className="studioImageFacts">
+          <li>Original stored: {originalStored ? "Yes" : "No"}</li>
+          <li>Watermark: Matahari Langowan</li>
+        </ul>
+      ) : null}
 
       {product.hasImage && step === "idle" ? (
         <div className="studioImageActions">
@@ -438,152 +650,14 @@ function StudioImagePanel({
         </div>
       ) : null}
 
-      <details className="studioTechDetails">
-        <summary>Technical paths</summary>
-        <dl className="studioMetaList">
-          <div className="studioMetaRow">
-            <dt>Card</dt>
-            <dd className="studioMono">{product.image?.card || "None"}</dd>
-          </div>
-          <div className="studioMetaRow">
-            <dt>Detail</dt>
-            <dd className="studioMono">{product.image?.detail || "None"}</dd>
-          </div>
-          <div className="studioMetaRow">
-            <dt>Original</dt>
-            <dd className="studioMono">{product.image?.original || "None"}</dd>
-          </div>
-        </dl>
-      </details>
+      {previewReady ? assignConfirm : null}
 
-      <div
-        className={`studioDropzone${dragOver ? " studioDropzone--active" : ""}`}
-        onDragEnter={(event) => {
-          event.preventDefault();
-          setDragOver(true);
-        }}
-        onDragOver={(event) => {
-          event.preventDefault();
-          setDragOver(true);
-        }}
-        onDragLeave={(event) => {
-          event.preventDefault();
-          setDragOver(false);
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          setDragOver(false);
-          const file = event.dataTransfer?.files?.[0];
-          if (file) {
-            void acceptFile(file);
-          } else {
-            setError("Drop a JPEG, PNG, or WebP image.");
-          }
-        }}
-      >
-        <p className="studioDropzoneTitle">Drop image here</p>
-        <p className="studioDropzoneHint">
-          JPEG, PNG, or WebP · max 15 MB · or Ctrl+V to paste
-        </p>
-        <div className="studioDropzoneActions">
-          <label className="studioButton studioButton--secondary" htmlFor={inputId}>
-            Choose File
-          </label>
-          <input
-            id={inputId}
-            ref={fileInputRef}
-            className="studioFileInput"
-            type="file"
-            accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
-            onChange={(event) => {
-              const file = event.target.files?.[0];
-              if (file) {
-                void acceptFile(file);
-              }
-            }}
-          />
-        </div>
-      </div>
+      {showDropzone ? dropzone : null}
 
       {error ? (
         <p className="studioError" role="alert">
           {error}
         </p>
-      ) : null}
-
-      {step === "assign" && draft ? (
-        <div
-          className="studioConfirm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="studio-assign-title"
-        >
-          <h3 id="studio-assign-title" className="studioConfirmTitle">
-            Assign this image to: {product.name}
-          </h3>
-          <div className="studioPreviewGrid">
-            <figure className="studioPreviewFigure">
-              <img
-                src={draft.previewUrl}
-                alt={`Source for ${product.name}`}
-                className="studioConfirmPreview"
-              />
-              <figcaption>Source</figcaption>
-            </figure>
-            <figure className="studioPreviewFigure">
-              {generatedPreview?.card?.dataUrl ? (
-                <img
-                  src={generatedPreview.card.dataUrl}
-                  alt={`Generated card for ${product.name}`}
-                  className="studioConfirmPreview"
-                />
-              ) : (
-                <div className="studioMissingImage studioMissingImage--small">
-                  {previewBusy ? "Generating…" : "Card preview unavailable"}
-                </div>
-              )}
-              <figcaption>Generated card</figcaption>
-            </figure>
-            <figure className="studioPreviewFigure">
-              {generatedPreview?.detail?.dataUrl ? (
-                <img
-                  src={generatedPreview.detail.dataUrl}
-                  alt={`Generated detail for ${product.name}`}
-                  className="studioConfirmPreview"
-                />
-              ) : (
-                <div className="studioMissingImage studioMissingImage--small">
-                  {previewBusy ? "Generating…" : "Detail preview unavailable"}
-                </div>
-              )}
-              <figcaption>Generated detail</figcaption>
-            </figure>
-          </div>
-          <p className="studioConfirmBody">
-            Original stays clean. Card and detail get the Matahari Langowan watermark.
-          </p>
-          <div className="studioConfirmActions">
-            <button
-              type="button"
-              className="studioButton studioButton--ghost"
-              onClick={clearDraft}
-              disabled={busy}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              className="studioButton"
-              onClick={handleConfirmAssign}
-              disabled={busy}
-            >
-              {busy ? "Saving…" : "Confirm & Save"}
-            </button>
-          </div>
-          <p className="studioConfirmHint">
-            Press Enter to confirm · Escape to cancel
-          </p>
-        </div>
       ) : null}
 
       {step === "replace" && draft ? (
@@ -643,7 +717,7 @@ function StudioImagePanel({
             </button>
           </div>
           <p className="studioConfirmHint">
-            Press Enter to confirm replace · Escape to cancel
+            Extra confirmation required. Enter confirms replace · Escape cancels
           </p>
         </div>
       ) : null}
@@ -684,8 +758,8 @@ function StudioImagePanel({
             </button>
           </div>
           <p className="studioConfirmHint">
-            This does not delete the product. Press Enter to confirm · Escape to
-            cancel
+            This does not delete the product. Click Remove image to confirm.
+            Escape cancels. There is no keyboard shortcut to remove.
           </p>
         </div>
       ) : null}
@@ -699,9 +773,29 @@ function StudioImagePanel({
       {step === "idle" ? (
         <p className="studioIdleHint">
           {product.hasImage
-            ? "Ready to replace the image when you choose a file."
-            : "Choose or paste an image, then confirm to save."}
+            ? "Replace still needs the extra confirmation."
+            : "Paste, drop, or choose a file — then Confirm & Save."}
         </p>
+      ) : null}
+
+      {product.hasImage && step === "idle" ? (
+        <details className="studioTechDetails">
+          <summary>Technical paths</summary>
+          <dl className="studioMetaList">
+            <div className="studioMetaRow">
+              <dt>Card</dt>
+              <dd className="studioMono">{product.image?.card || "None"}</dd>
+            </div>
+            <div className="studioMetaRow">
+              <dt>Detail</dt>
+              <dd className="studioMono">{product.image?.detail || "None"}</dd>
+            </div>
+            <div className="studioMetaRow">
+              <dt>Original</dt>
+              <dd className="studioMono">{product.image?.original || "None"}</dd>
+            </div>
+          </dl>
+        </details>
       ) : null}
     </div>
   );

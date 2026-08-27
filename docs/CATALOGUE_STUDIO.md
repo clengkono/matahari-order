@@ -44,48 +44,48 @@ Then open `/studio` in the Vite app.
 
 ## Images workflow
 
-1. Open the **Images** tab.
-2. Search any catalogue product by customer-facing name, alias, product ID, POS name, or POS code.
-3. Filter by **Missing image**, **Has image**, **Category**, or **Recently updated**.
-4. Use arrow keys and Enter, or click, to select a product. The result list shows at most 40 rows; narrow the search instead of scrolling the whole catalogue.
-5. Review **Current image**, **Detail image**, **Original stored**, and **Watermark: Matahari Langowan**.
-6. Add an image by drag-and-drop, **Choose File**, or clipboard paste.
-7. Confirm the preview: source plus generated card/detail. Original stays clean; card/detail get the watermark.
-8. If the product already has an image, confirm the additional replace step.
+1. Open Studio — **Queue** is the default tab for fast missing-image entry. Use **Images** to browse the full catalogue.
+2. Search any catalogue product by customer-facing name, alias, product ID, POS name, or POS code. Stronger customer-name matches sort first.
+3. Filter by **Missing image**, **Has image**, **Category**, or **Recently updated**. If the selected product is outside the new filter, Studio selects the first visible match.
+4. The result list shows 40 rows at a time, with **Show 40 more** if needed. Prefer search or Next missing over scrolling the whole catalogue.
+5. For a missing product, paste (`Ctrl+V`), drop, or **Choose file**. Preview source + generated card/detail, then **Confirm & Save**. Nothing is saved until that click (or Enter in the confirm dialog).
+6. After a successful Queue save, Studio shows `✓ {name} image saved` and opens the next missing product in the current filter. A customer-catalogue rebuild warning stays on the saved product and does not auto-advance.
+7. If the product already has an image, confirm the additional replace step. Fast-entry keys cannot skip that step.
 
 Keyboard:
 
-- `Ctrl+F` focuses the current tab’s product search (does not open browser find)
-- Images: `Ctrl+F` focuses the all-product image search
-- Queue: `Ctrl+F` focuses the missing-image search
-- Products: `Ctrl+F` focuses the full-catalogue product search
-- `Ctrl+V` pastes an image when the clipboard contains image data
-- `Enter` confirms save when a confirmation dialog is open
+- `/` or `Ctrl+F` focuses the current tab’s product search (does not open browser find)
+- Queue: `Ctrl+F` / `/` focuses the missing-image search
+- Images: `Ctrl+F` / `/` focuses the all-product image search
+- Products: `Ctrl+F` / `/` focuses the full-catalogue product search
+- `Ctrl+V` pastes an image when a product is selected and you are not typing in a field
+- Left / Right (Queue) previous / next missing in the current filtered list, not while typing or while a confirm dialog is open
+- `Enter` confirms save only in the assign/replace dialog, and not while typing
 - `Escape` cancels preview or confirmation
+- There is no keyboard shortcut for Remove image
 
 ---
 
 ## Queue workflow
 
-1. Open the **Queue** tab.
-2. By default the queue lists **all** products that are still missing images (not only Rokok).
-3. Review completed / total / missing counts. Search and category-filter the missing list.
-4. Assign an image with the same drop / file / paste flow.
-5. After a successful save, that product leaves the missing queue and Studio opens the next missing product.
-6. Use **Previous missing** and **Next missing** (or Left / Right arrow keys) to move through missing products.
-
-Keyboard:
-
-- Left / Right arrow keys navigate missing products when focus is not inside a text field
+1. Studio opens on the **Queue** tab. Missing images is the default filter.
+2. Progress reads like `8 selesai · 2.248 belum ada gambar`, plus `12 of 2248` on the selected product.
+3. Assign an image with paste / drop / file. Review the preview. Confirm & Save.
+4. That product leaves the missing list. Studio selects the next missing product in the current search/filter and focuses the paste target.
+5. **Previous missing** / **Next missing** (or Left / Right) stay inside the current filtered result set.
+6. **Continue where I left off** jumps to the next missing product after the most recently assigned image.
+7. If a search/filter has no remaining missing products after save, Studio clears the search and continues the missing queue.
 
 ---
 
 ## Clipboard paste
 
-Copy an image (not plain text) and press `Ctrl+V` while Studio is focused.
+Copy an image (not plain text) and press `Ctrl+V` while a product is selected and you are not typing in search.
 
 - Image clipboard data is accepted
 - Arbitrary text is ignored as an image source
+- Paste while a search/input is focused does **not** assign an image
+- Multiple dropped/pasted files: only the first image is used, with a notice. No bulk auto-match.
 
 ---
 

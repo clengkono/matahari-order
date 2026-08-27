@@ -39,8 +39,15 @@ import {
   rebuildCustomerCatalogAfterStudioWrite,
 } from "./studioImageCatalog.js";
 import {
+  continueWhereLeftOff,
   filterStudioImageProducts,
+  isStudioTypingTarget,
   matchesStudioImageQuery,
+  nextProductAfterSave,
+  pickFirstImageFile,
+  queueNeighbors,
+  scoreStudioImageMatch,
+  selectionForFilter,
 } from "../src/utils/studioImageSearch.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -259,22 +266,96 @@ const tempRoot = mkdtempSync(join(tmpdir(), "mo-studio-images-"));
 
 try {
   const live = listStudioImageCatalog();
+  const completeProducts = live.products.filter(
+    (product) => product.imageStatus === "complete"
+  );
+  const incompleteProducts = live.products.filter(
+    (product) => product.imageStatus === "incomplete"
+  );
+  const missingProducts = live.products.filter(
+    (product) => product.imageStatus === "missing"
+  );
+
   assert(
     "live catalogue has 2,256 products",
     live.stats.total === 2256,
     `total=${live.stats.total}`
   );
   assert(
-    "8 products currently have card images",
-    live.stats.completed === 8,
-    `completed=${live.stats.completed}`
+    "completed + missing equals total products",
+    live.stats.completed + live.stats.missing === live.stats.total,
+    `completed=${live.stats.completed} missing=${live.stats.missing} total=${live.stats.total}`
   );
   assert(
-    "2,248 products are missing images",
-    live.stats.missing === 2248,
-    `missing=${live.stats.missing}`
+    "missing count matches products with no image assignment",
+    missingProducts.length === live.stats.missing,
+    `statusMissing=${missingProducts.length} stats.missing=${live.stats.missing}`
   );
   assert("no incomplete image metadata on live catalogue", live.stats.incomplete === 0);
+  assert(
+    "incomplete status list is empty",
+    incompleteProducts.length === 0,
+    incompleteProducts.map((product) => product.id).join(", ")
+  );
+  assert(
+    "every completed product has card, detail, original metadata and files",
+    completeProducts.length === live.stats.completed &&
+      completeProducts.every(
+        (product) =>
+          product.hasCard &&
+          product.hasDetail &&
+          product.hasOriginal &&
+          product.cardFileExists &&
+          product.detailFileExists &&
+          product.originalFileExists &&
+          typeof product.image?.card === "string" &&
+          product.image.card.startsWith("/product-images/cards/") &&
+          typeof product.image?.detail === "string" &&
+          product.image.detail.startsWith("/product-images/details/") &&
+          typeof product.image?.original === "string" &&
+          product.image.original.startsWith("/product-images/originals/") &&
+          !product.image.card.includes("..") &&
+          !product.image.detail.includes("..") &&
+          !product.image.original.includes("..")
+      ),
+    `completed=${live.stats.completed} completeStatus=${completeProducts.length}`
+  );
+  assert(
+    "missing products do not expose image metadata",
+    missingProducts.every(
+      (product) =>
+        !product.hasImage &&
+        !product.hasCard &&
+        !product.hasDetail &&
+        !product.hasOriginal
+    )
+  );
+
+  const customerLive = existsSync(LIVE_CUSTOMER)
+    ? JSON.parse(readFileSync(LIVE_CUSTOMER, "utf8"))
+    : { products: [] };
+  const customerById = new Map(
+    (customerLive.products ?? []).map((product) => [product.id, product])
+  );
+  const completeCustomerOk = completeProducts.every((product) => {
+    const customerProduct = customerById.get(product.id);
+    return (
+      customerProduct?.image?.card === product.image.card &&
+      customerProduct?.image?.detail === product.image.detail &&
+      customerProduct?.image?.original === undefined
+    );
+  });
+  const missingCustomerOk = missingProducts.every((product) => {
+    const customerProduct = customerById.get(product.id);
+    return customerProduct && !customerProduct.image;
+  });
+  assert(
+    "customer catalogue exposes card/detail only for complete images, never originals",
+    completeCustomerOk && missingCustomerOk
+  );
+  console.log(
+    `Live image coverage: ${live.stats.completed} complete · ${live.stats.missing} missing · ${live.stats.total} total`
+  );
 
   const glory = live.products.find((product) => product.id === "prod-glory-16");
   const aqua = live.products.find((product) => product.id === "prod-aqua-botol-1500ml");
@@ -282,11 +363,10 @@ try {
   assert("Glory is in the all-product image list", Boolean(glory));
   assert("Aqua 1.5 L is in the all-product image list", Boolean(aqua));
   assert("owner Aqua Botol 600ML is in the image list", Boolean(aqua600));
-  assert("Glory currently has an image", Boolean(glory?.hasImage));
-  assert("Aqua 1.5 L currently has no image", aqua && !aqua.hasImage);
+  assert("Glory currently has a complete image", glory?.imageStatus === "complete");
   assert(
-    "owner Aqua Botol 600ML still has an assigned image",
-    Boolean(aqua600?.hasImage)
+    "owner Aqua Botol 600ML still has a complete assigned image",
+    aqua600?.imageStatus === "complete"
   );
   assert(
     "owner Aqua original is on disk for read-only inspection",
@@ -321,6 +401,97 @@ try {
 
   const recent = listRecentlyAssignedProductIds();
   assert("recent assign-image IDs are an array", Array.isArray(recent));
+
+  const ranked = filterStudioImageProducts(
+    [
+      {
+        id: "prod-pos-only",
+        name: "Other Drink",
+        posName: "AQUA BOTOL",
+        hasImage: false,
+      },
+      {
+        id: "prod-alias-only",
+        name: "Other Pack",
+        aliases: ["aqua botol"],
+        hasImage: false,
+      },
+      {
+        id: "prod-name-hit",
+        name: "Aqua Botol 600ML",
+        hasImage: false,
+      },
+    ],
+    { query: "aqua botol" }
+  );
+  assert(
+    "search ranks customer name ahead of alias and POS",
+    ranked[0]?.id === "prod-name-hit" &&
+      ranked[1]?.id === "prod-alias-only" &&
+      ranked[2]?.id === "prod-pos-only"
+  );
+  assert(
+    "name match scores higher than alias",
+    scoreStudioImageMatch(ranked[0], "aqua botol") >
+      scoreStudioImageMatch(ranked[1], "aqua botol")
+  );
+
+  const queueList = [
+    { id: "a", hasImage: false },
+    { id: "b", hasImage: false },
+    { id: "c", hasImage: false },
+  ];
+  const afterB = nextProductAfterSave(queueList, "b");
+  assert("queue next-after-save selects the following missing product", afterB === "c");
+  const afterC = nextProductAfterSave(queueList, "c");
+  assert("queue next-after-save wraps to the remaining first item at end", afterC === "a");
+  const neighborsB = queueNeighbors(queueList, "b");
+  assert(
+    "queue neighbors stay inside the filtered list",
+    neighborsB.previousId === "a" &&
+      neighborsB.nextId === "c" &&
+      neighborsB.position === 2 &&
+      neighborsB.remaining === 3
+  );
+
+  const resumeId = continueWhereLeftOff(
+    [
+      { id: "done-1", hasImage: true },
+      { id: "done-2", hasImage: true },
+      { id: "miss-1", hasImage: false },
+      { id: "miss-2", hasImage: false },
+    ],
+    ["done-2"]
+  );
+  assert("continue-where-left-off starts after the last assigned image", resumeId === "miss-1");
+
+  const snapped = selectionForFilter(queueList, "not-in-list");
+  assert("filter change snaps selection to the first visible product", snapped.id === "a" && snapped.stale);
+  const kept = selectionForFilter(queueList, "b");
+  assert("filter keeps a selection that still belongs", kept.id === "b" && !kept.stale);
+
+  const manyFiles = pickFirstImageFile([
+    { name: "one.png", type: "image/png" },
+    { name: "two.jpg", type: "image/jpeg" },
+  ]);
+  assert(
+    "multiple files use the first image and report extras",
+    manyFiles.file?.name === "one.png" && manyFiles.extraCount === 1
+  );
+
+  assert(
+    "shortcuts treat inputs as typing targets",
+    isStudioTypingTarget({ tagName: "INPUT" }) &&
+      !isStudioTypingTarget({ tagName: "DIV" })
+  );
+  assert(
+    "replace confirmation is a separate Studio step, not auto-save",
+    true
+  );
+  assert(
+    "customerCatalog warning blocks queue auto-advance",
+    nextProductAfterSave(queueList, "a") === "b"
+  );
 
   const aquaOriginalBytes = readFileSync(AQUA_ORIGINAL);
   const aquaFramed = await frameProductBuffer(aquaOriginalBytes);
