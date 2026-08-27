@@ -46,3 +46,11 @@ body {
 p {
   margin: 0;
 }
+
+.bootFallback {
+  margin: 0;
+  padding: 24px 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  color: #2d2d2d;
+}

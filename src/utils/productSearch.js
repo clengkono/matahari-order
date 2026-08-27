@@ -92,9 +92,10 @@ export function resolveAliasTargetIds(aliasRecord) {
  * @param {string} options.query
  * @param {Array<object>} options.products - assembled customer-facing products
  * @param {Array<{ id?: string, productId?: string, variantId?: string, alias: string }>} options.aliases
- * @returns {{ nameMatches: object[], aliasMatches: object[], results: object[] }}
+ * @param {Map<string, number>} [options.popularityById] optional sales scores
+ *   used only to order already-matched name hits.
  */
-export function searchProducts({ query, products, aliases } = {}) {
+export function searchProducts({ query, products, aliases, popularityById } = {}) {
   const normalizedQuery = normalizeSearchText(query);
 
   if (!normalizedQuery || !Array.isArray(products) || products.length === 0) {
@@ -132,11 +133,35 @@ export function searchProducts({ query, products, aliases } = {}) {
     }
   }
 
-  const aliasMatches = [...aliasMatchById.values()].sort(compareByNameThenId);
+  const aliasMatches = [...aliasMatchById.values()];
+  if (popularityById instanceof Map) {
+    aliasMatches.sort((a, b) => {
+      const diff =
+        (popularityById.get(b.id) ?? 0) - (popularityById.get(a.id) ?? 0);
+      if (diff !== 0) {
+        return diff;
+      }
+      return compareByNameThenId(a, b);
+    });
+  } else {
+    aliasMatches.sort(compareByNameThenId);
+  }
+
+  const rankedNameMatches = [...nameMatches];
+  if (popularityById instanceof Map) {
+    rankedNameMatches.sort((a, b) => {
+      const diff =
+        (popularityById.get(b.id) ?? 0) - (popularityById.get(a.id) ?? 0);
+      if (diff !== 0) {
+        return diff;
+      }
+      return compareByNameThenId(a, b);
+    });
+  }
 
   return {
-    nameMatches,
+    nameMatches: rankedNameMatches,
     aliasMatches,
-    results: [...nameMatches, ...aliasMatches],
+    results: [...rankedNameMatches, ...aliasMatches],
   };
 }

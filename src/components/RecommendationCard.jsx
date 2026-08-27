@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { formatUnitQuantity } from "../utils/unitDisplay";
+import ProductThumb from "./ProductThumb";
 
 function RecommendationCard({ product, onAdd, onOpen }) {
-  const [imageFailed, setImageFailed] = useState(false);
   const defaultOrder = formatUnitQuantity(
     product.defaultQuantity,
     product.defaultUnit
   );
-  const cardImage = product.image?.card;
-  const showImage = Boolean(cardImage) && !imageFailed;
   const isOpenable = typeof onOpen === "function";
 
   const handleCardActivate = () => {
@@ -47,22 +44,7 @@ function RecommendationCard({ product, onAdd, onOpen }) {
         onKeyDown={isOpenable ? handleKeyDown : undefined}
       >
         <div className="orderReviewRecoCardMedia">
-          {showImage ? (
-            <img
-              className="orderReviewRecoCardImage"
-              src={cardImage}
-              alt=""
-              loading="lazy"
-              onError={() => setImageFailed(true)}
-            />
-          ) : (
-            <div
-              className="orderReviewRecoCardImage orderReviewRecoCardImage--placeholder"
-              aria-hidden="true"
-            >
-              PHOTO
-            </div>
-          )}
+          <ProductThumb product={product} variant="reco" />
           <button
             type="button"
             className="orderReviewRecoCardAdd"

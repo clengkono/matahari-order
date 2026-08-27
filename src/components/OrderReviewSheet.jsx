@@ -123,7 +123,7 @@ function OrderReviewSheet({
                 <OrderReviewRow
                   key={line.productId}
                   line={line}
-                  imageCard={productsById[line.productId]?.image?.card}
+                  product={productsById[line.productId]}
                   availableUnits={
                     productUnitsById[line.productId] ?? [line.unit]
                   }

@@ -4,9 +4,9 @@
  * Matching, ranking, recommendations, and category membership still run
  * over the full result set. These helpers only limit how many rows mount.
  *
- * Virtualization was not added: a "Tampilkan lainnya" batch is enough for
- * the current ordering UI, keeps the bundle dependency-free, and avoids
- * changing scroll/focus behaviour on small phones.
+ * Virtualization was not added. Visible rows grow in these batches via
+ * IntersectionObserver (with Tampilkan lainnya as fallback) so a large
+ * catalogue does not mount hundreds of cards at once.
  */
 
 export const SEARCH_RESULT_PAGE_SIZE = 20;

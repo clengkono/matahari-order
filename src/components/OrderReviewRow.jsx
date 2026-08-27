@@ -1,19 +1,18 @@
-import { useState } from "react";
 import { getCartUnitDisplayLabel } from "../utils/unitDisplay";
+import ProductThumb from "./ProductThumb";
 
 function OrderReviewRow({
   line,
-  imageCard,
+  product,
   availableUnits,
   onIncrease,
   onDecrease,
   onRemoveProduct,
   onChangeUnit,
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
-  const showImage = Boolean(imageCard) && !imageFailed;
   const units =
     availableUnits.length > 0 ? availableUnits : [line.unit].filter(Boolean);
+  const selectedUnitLabel = getCartUnitDisplayLabel(line.unit);
 
   const handleRemove = () => {
     onRemoveProduct(line.productId);
@@ -28,22 +27,7 @@ function OrderReviewRow({
   return (
     <li className="orderReviewRow">
       <div className="orderReviewRowMain">
-        {showImage ? (
-          <img
-            className="orderReviewRowThumb"
-            src={imageCard}
-            alt=""
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <div
-            className="orderReviewRowThumb orderReviewRowThumb--placeholder"
-            aria-hidden="true"
-          >
-            PRODUCT PHOTO
-          </div>
-        )}
+        <ProductThumb product={product} variant="row" />
 
         <div className="orderReviewRowBody">
           <div className="orderReviewRowHeader">
@@ -57,6 +41,10 @@ function OrderReviewRow({
               Hapus
             </button>
           </div>
+
+          <p className="orderReviewRowUnit">
+            {line.quantity} {selectedUnitLabel}
+          </p>
 
           <div className="orderReviewUnitLine">
             <fieldset className="orderReviewUnitOptions">
@@ -81,7 +69,7 @@ function OrderReviewRow({
               <button
                 type="button"
                 className="quantityButton"
-                aria-label={`Kurangi ${line.name} ${getCartUnitDisplayLabel(line.unit)}`}
+                aria-label={`Kurangi ${line.name} ${selectedUnitLabel}`}
                 onClick={() => onDecrease(line.productId)}
                 disabled={line.quantity <= 1}
               >
@@ -93,7 +81,7 @@ function OrderReviewRow({
               <button
                 type="button"
                 className="quantityButton"
-                aria-label={`Tambah ${line.name} ${getCartUnitDisplayLabel(line.unit)}`}
+                aria-label={`Tambah ${line.name} ${selectedUnitLabel}`}
                 onClick={() => onIncrease(line.productId)}
               >
                 +

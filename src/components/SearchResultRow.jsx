@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { formatUnitQuantity } from "../utils/unitDisplay";
+import { formatAvailableUnits, formatUnitQuantity } from "../utils/unitDisplay";
+import ProductThumb from "./ProductThumb";
 
 function SearchResultRow({
   product,
@@ -10,13 +10,11 @@ function SearchResultRow({
   onDecrease,
   subordinate = false,
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
   const defaultOrder = formatUnitQuantity(
     product.defaultQuantity,
     product.defaultUnit
   );
-  const cardImage = product.image?.card;
-  const showImage = Boolean(cardImage) && !imageFailed;
+  const unitsLabel = formatAvailableUnits(product.availableUnits);
   const inCart = cartQuantity > 0;
 
   const handleOpen = () => {
@@ -48,23 +46,13 @@ function SearchResultRow({
         onClick={handleOpen}
         aria-label={`${product.name}, buka detail. Default ${defaultOrder}`}
       >
-        {showImage ? (
-          <img
-            className="searchResultThumb"
-            src={cardImage}
-            alt=""
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <div className="searchResultThumb searchResultThumb--placeholder" aria-hidden="true">
-            PRODUCT PHOTO
-          </div>
-        )}
+        <ProductThumb product={product} variant="row" />
 
         <span className="searchResultText">
           <span className="searchResultName">{product.name}</span>
-          <span className="searchResultDefault">{defaultOrder}</span>
+          <span className="searchResultUnits">
+            {unitsLabel || defaultOrder}
+          </span>
         </span>
       </button>
 

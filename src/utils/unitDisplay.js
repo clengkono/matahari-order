@@ -39,3 +39,12 @@ export function getCartUnitDisplayLabel(unit) {
 export function formatUnitQuantity(quantity, unit) {
   return `${quantity} ${getCartUnitDisplayLabel(unit)}`;
 }
+
+/** Compact selling-unit list for result rows. Display-only. */
+export function formatAvailableUnits(units) {
+  if (!Array.isArray(units) || units.length === 0) {
+    return "";
+  }
+
+  return units.map((unit) => getCartUnitDisplayLabel(unit)).join(" · ");
+}

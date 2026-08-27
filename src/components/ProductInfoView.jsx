@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import ProductThumb from "./ProductThumb";
 import RecommendationCard from "./RecommendationCard";
 import { getCartUnitDisplayLabel } from "../utils/unitDisplay";
 
@@ -21,7 +22,22 @@ function ProductInfoView({
       : product.defaultUnit;
   const [selectedUnit, setSelectedUnit] = useState(startingUnit);
   const [quantity, setQuantity] = useState(product.defaultQuantity);
-  const [imageFailed, setImageFailed] = useState(false);
+  const scrollRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const node = scrollRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.scrollTop = 0;
+    const frameId = window.requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
+      }
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [product.id]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -37,8 +53,6 @@ function ProductInfoView({
     };
   }, [onBack, suppressEscape]);
 
-  const detailImage = product.image?.detail;
-  const showImage = Boolean(detailImage) && !imageFailed;
   const hints = product.customerUnitHints ?? [];
   const hasRecommendations = recommendations.length > 0;
   const isInCart = Boolean(cartLine && cartLine.quantity >= 1);
@@ -93,25 +107,15 @@ function ProductInfoView({
           <span className="productInfoHeaderTitle">Detail Produk</span>
         </header>
 
-        <div className="productInfoScroll">
-          {showImage ? (
-            <img
-              className="productInfoPhoto"
-              src={detailImage}
-              alt={product.name}
-              onError={() => setImageFailed(true)}
-            />
-          ) : (
-            <div className="productInfoImagePlaceholder" aria-hidden="true">
-              PRODUCT PHOTO
-            </div>
-          )}
-
+        <div className="productInfoScroll" ref={scrollRef}>
           <div className="productInfoIdentity">
-            <h2 className="productInfoName">{product.name}</h2>
-            {product.category ? (
-              <p className="productInfoCategory">{product.category}</p>
-            ) : null}
+            <ProductThumb product={product} variant="detail" alt={product.name} />
+            <div className="productInfoIdentityText">
+              <h2 className="productInfoName">{product.name}</h2>
+              {product.category ? (
+                <p className="productInfoCategory">{product.category}</p>
+              ) : null}
+            </div>
           </div>
 
           {isInCart ? (
