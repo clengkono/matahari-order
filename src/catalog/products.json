@@ -6934,7 +6934,12 @@
     "name": "Aqua Botol 600ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/cigarettes/prod-aqua-botol-600ml.webp",
+      "detail": "/product-images/details/cigarettes/prod-aqua-botol-600ml.webp",
+      "original": "/product-images/originals/cigarettes/prod-aqua-botol-600ml-original.png"
+    }
   },
   {
     "id": "prod-aqua-gelas-220ml",

@@ -12,6 +12,13 @@ async function parseJson(response) {
   return data;
 }
 
+export async function fetchStudioImages() {
+  const response = await fetch(`${STUDIO_API}/images`, {
+    cache: "no-store",
+  });
+  return parseJson(response);
+}
+
 export async function fetchCigaretteCatalogue() {
   const response = await fetch(`${STUDIO_API}/cigarettes`, {
     cache: "no-store",
@@ -42,7 +49,7 @@ export async function updateStudioProduct(productId, payload) {
 
 export async function regenerateProductImage(productId) {
   const response = await fetch(
-    `${STUDIO_API}/cigarettes/${encodeURIComponent(productId)}/image/regenerate`,
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}/image/regenerate`,
     {
       method: "POST",
       headers: {
@@ -53,6 +60,34 @@ export async function regenerateProductImage(productId) {
   return parseJson(response);
 }
 
+export async function removeProductImage(productId) {
+  const response = await fetch(
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}/image/remove`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ confirm: true }),
+    }
+  );
+  return parseJson(response);
+}
+
+export async function previewProductImage({ mimeType, base64Data }) {
+  const response = await fetch(`${STUDIO_API}/images/preview`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      mimeType,
+      data: base64Data,
+    }),
+  });
+  return parseJson(response);
+}
+
 export async function assignProductImage({
   productId,
   mimeType,
@@ -60,7 +95,7 @@ export async function assignProductImage({
   replaceConfirmed = false,
 }) {
   const response = await fetch(
-    `${STUDIO_API}/cigarettes/${encodeURIComponent(productId)}/image`,
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}/image`,
     {
       method: "POST",
       headers: {

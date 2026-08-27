@@ -23,7 +23,7 @@ import {
   runCatalogTransaction,
   undoLastCatalogTransaction,
 } from "./catalogTransaction.js";
-import { saveAssignedImageMetadata } from "./imageService.js";
+import { saveAssignedImageMetadata, saveRemovedImageMetadata } from "./imageService.js";
 import {
   getAllowedCategories,
   listStudioProducts,
@@ -371,6 +371,45 @@ function main() {
     assert(
       "I. imageService module loads without starting the listener",
       true
+    );
+
+    const unitsBeforeRemove = loadCatalog(dirs).units.length;
+    const mappingsBeforeRemove = loadCatalog(dirs).mappings.length;
+    const aliasesBeforeRemove = loadCatalog(dirs).aliases.length;
+    const recoBeforeRemove = loadCatalog(dirs).recommendations.length;
+    const imageRemoved = saveRemovedImageMetadata(
+      "prod-ave-20",
+      txOptions(dirs, {
+        validateOptions: {
+          publicDir: LIVE_PUBLIC_DIR,
+          fileExists: (filePath) =>
+            String(filePath).includes("prod-ave-20") || existsSync(filePath),
+        },
+      })
+    );
+    assert(
+      "I. remove-image metadata transaction succeeds",
+      imageRemoved.ok,
+      imageRemoved.error || imageRemoved.validationErrors?.[0]
+    );
+    const afterImageRemove = loadCatalog(dirs);
+    const aveAfterRemove = afterImageRemove.products.find(
+      (product) => product.id === "prod-ave-20"
+    );
+    assert(
+      "I. remove-image cleared image metadata",
+      !aveAfterRemove?.image
+    );
+    assert(
+      "I. remove-image left units/mappings/aliases/recommendations unchanged",
+      afterImageRemove.units.length === unitsBeforeRemove &&
+        afterImageRemove.mappings.length === mappingsBeforeRemove &&
+        afterImageRemove.aliases.length === aliasesBeforeRemove &&
+        afterImageRemove.recommendations.length === recoBeforeRemove
+    );
+    assert(
+      "I. changelog records remove-image",
+      changelogLines(dirs.backupsDir).some((row) => row.action === "remove-image")
     );
 
     const liveCatalog = loadCatalog({ catalogDir: LIVE_CATALOG_DIR });

@@ -135,9 +135,8 @@ function StudioProductDetail({ product, categories, saving, onSave, onStatus }) 
             </select>
             {leavingCigaretteList ? (
               <p className="studioCategoryWarning" role="status">
-                Changing a Rokok product to another category will remove it from
-                the current Images/Queue cigarette list. Existing image files will
-                not be deleted.
+                Changing category does not move or delete image files. Paths stay
+                tied to the product ID.
               </p>
             ) : null}
           </div>

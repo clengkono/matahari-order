@@ -21,7 +21,20 @@ import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
 import sharp from "sharp";
 import { loadCatalog, runCatalogTransaction } from "./catalogTransaction.js";
-import { createWatermarkOverlay } from "./imageWatermark.js";
+import {
+  archiveAssignedImageFiles,
+  restoreArchivedImageFiles,
+} from "./imageArchive.js";
+import {
+  fitBoxSize,
+  frameProductBuffer,
+  framingSummary,
+} from "./imageFraming.js";
+import { createWatermarkOverlay, getWatermarkLabel } from "./imageWatermark.js";
+import {
+  listStudioImageCatalog,
+  rebuildCustomerCatalogAfterStudioWrite,
+} from "./studioImageCatalog.js";
 import {
   getAllowedCategories,
   getStudioProduct,
@@ -58,6 +71,8 @@ const WINDOWS_LOCK_CODES = new Set([
 const PRODUCTS_PATH = join(ROOT, "src", "catalog", "products.json");
 const BACKUPS_DIR = join(ROOT, "src", "catalog", "backups");
 const PUBLIC_IMAGES = join(ROOT, "public", "product-images");
+/** Historical on-disk bucket. Not a category. Category edits do not move files. */
+const IMAGE_BUCKET = "cigarettes";
 
 const MIME_TO_EXT = {
   "image/jpeg": "jpg",
@@ -150,7 +165,11 @@ function publicPath(relativeFromPublic) {
   return `/${relativeFromPublic.replace(/\\/g, "/")}`;
 }
 
-function resolvePublicImagePath(publicUrl) {
+function publicDirFromImages(publicImages) {
+  return resolve(join(publicImages, ".."));
+}
+
+function resolvePublicImagePath(publicUrl, publicDir = join(ROOT, "public")) {
   if (typeof publicUrl !== "string" || !publicUrl.startsWith("/product-images/")) {
     return null;
   }
@@ -160,8 +179,8 @@ function resolvePublicImagePath(publicUrl) {
     return null;
   }
 
-  const absolute = resolve(join(ROOT, "public", ...segments));
-  const imagesRoot = resolve(PUBLIC_IMAGES);
+  const absolute = resolve(join(publicDir, ...segments));
+  const imagesRoot = resolve(join(publicDir, "product-images"));
   const prefix = imagesRoot.endsWith(sep) ? imagesRoot : imagesRoot + sep;
   if (absolute !== imagesRoot && !absolute.startsWith(prefix)) {
     return null;
@@ -169,8 +188,11 @@ function resolvePublicImagePath(publicUrl) {
   return absolute;
 }
 
-function findOriginalAbsolutePath(product) {
-  const fromMeta = resolvePublicImagePath(product?.image?.original);
+function findOriginalAbsolutePath(product, publicImages = PUBLIC_IMAGES) {
+  const fromMeta = resolvePublicImagePath(
+    product?.image?.original,
+    publicDirFromImages(publicImages)
+  );
   if (fromMeta) {
     return existsSync(fromMeta) ? fromMeta : null;
   }
@@ -181,9 +203,9 @@ function findOriginalAbsolutePath(product) {
 
   for (const ext of Object.keys(EXT_TO_MIME)) {
     const candidate = join(
-      PUBLIC_IMAGES,
+      publicImages,
       "originals",
-      "cigarettes",
+      IMAGE_BUCKET,
       `${product.id}-original.${ext}`
     );
     if (existsSync(candidate)) {
@@ -192,6 +214,16 @@ function findOriginalAbsolutePath(product) {
   }
 
   return null;
+}
+
+function imageSummaryPayload(options = {}) {
+  const summary = listStudioImageCatalog(options);
+  return {
+    stats: summary.stats,
+    categories: summary.categories,
+    recentProductIds: summary.recentProductIds,
+    products: summary.products,
+  };
 }
 
 function cigaretteSummary(products) {
@@ -242,6 +274,39 @@ export function saveAssignedImageMetadata(productId, image, options = {}) {
         detail: image.detail,
         original: image.original,
       };
+    },
+    ...options,
+  });
+}
+
+export function saveRemovedImageMetadata(productId, options = {}) {
+  return runCatalogTransaction({
+    action: "remove-image",
+    productIds: [productId],
+    summary: `Removed image assignment for ${productId}`,
+    mutate(catalog) {
+      if (options.forceMetadataError) {
+        throw new Error(
+          typeof options.forceMetadataError === "string"
+            ? options.forceMetadataError
+            : "forced metadata failure"
+        );
+      }
+
+      const product = catalog.products.find((entry) => entry.id === productId);
+      if (!product) {
+        throw new Error("Product ID not found in catalogue.");
+      }
+
+      if (
+        !product.image?.card &&
+        !product.image?.detail &&
+        !product.image?.original
+      ) {
+        throw new Error("This product has no image to remove.");
+      }
+
+      delete product.image;
     },
     ...options,
   });
@@ -447,12 +512,13 @@ async function restoreDestination(priorPath, destPath, label) {
   });
 }
 
-async function generateSquareWebpBuffer(sourceBuffer, size) {
-  const resized = await sharp(sourceBuffer)
-    .rotate()
-    .resize(size, size, {
+async function generateSquareWebpBuffer(sourceBuffer, size, framedInput) {
+  const framed = framedInput ?? (await frameProductBuffer(sourceBuffer));
+  const fitBox = fitBoxSize(size);
+  const resized = await sharp(framed.buffer)
+    .resize(fitBox, fitBox, {
       fit: "inside",
-      withoutEnlargement: true,
+      withoutEnlargement: false,
     })
     .toBuffer({ resolveWithObject: true });
 
@@ -484,6 +550,11 @@ async function generateSquareWebpBuffer(sourceBuffer, size) {
     data: output.data,
     width: output.info.width,
     height: output.info.height,
+    framing: framingSummary(framed, {
+      canvasSize: size,
+      fittedWidth: resized.info.width,
+      fittedHeight: resized.info.height,
+    }),
   };
 }
 
@@ -519,7 +590,45 @@ async function writeProcessedTemp(dir, baseName, imageBuffer, expectedWidth) {
   };
 }
 
-async function processAndSaveImage(productId, buffer, mimeType) {
+async function rollbackSavedBinaries(saved) {
+  if (!saved?.paths) {
+    return;
+  }
+
+  if (saved.priors?.card) {
+    await restoreDestination(saved.priors.card, saved.paths.cardAbs, "card");
+  } else {
+    safeUnlink(saved.paths.cardAbs);
+  }
+
+  if (saved.priors?.detail) {
+    await restoreDestination(saved.priors.detail, saved.paths.detailAbs, "detail");
+  } else {
+    safeUnlink(saved.paths.detailAbs);
+  }
+
+  if (saved.priors?.original) {
+    await restoreDestination(
+      saved.priors.original,
+      saved.paths.originalAbs,
+      "original"
+    );
+  } else {
+    safeUnlink(saved.paths.originalAbs);
+  }
+}
+
+function discardSavedPriors(saved) {
+  for (const prior of [
+    saved?.priors?.card,
+    saved?.priors?.detail,
+    saved?.priors?.original,
+  ]) {
+    safeUnlink(prior);
+  }
+}
+
+async function processAndSaveImage(productId, buffer, mimeType, options = {}) {
   const ext = MIME_TO_EXT[mimeType];
   if (!ext) {
     const error = new Error("Unsupported file type. Use JPEG, PNG, or WebP.");
@@ -543,11 +652,15 @@ async function processAndSaveImage(productId, buffer, mimeType) {
     throw error;
   }
 
+  const publicImages = options.publicImages ?? PUBLIC_IMAGES;
   ensureDirs();
+  mkdirSync(join(publicImages, "originals", IMAGE_BUCKET), { recursive: true });
+  mkdirSync(join(publicImages, "cards", IMAGE_BUCKET), { recursive: true });
+  mkdirSync(join(publicImages, "details", IMAGE_BUCKET), { recursive: true });
 
-  const originalsDir = join(PUBLIC_IMAGES, "originals", "cigarettes");
-  const cardsDir = join(PUBLIC_IMAGES, "cards", "cigarettes");
-  const detailsDir = join(PUBLIC_IMAGES, "details", "cigarettes");
+  const originalsDir = join(publicImages, "originals", IMAGE_BUCKET);
+  const cardsDir = join(publicImages, "cards", IMAGE_BUCKET);
+  const detailsDir = join(publicImages, "details", IMAGE_BUCKET);
 
   const originalName = `${productId}-original.${ext}`;
   const cardName = `${productId}.webp`;
@@ -579,8 +692,13 @@ async function processAndSaveImage(productId, buffer, mimeType) {
 
   try {
     // Fully await Sharp into buffers first — never write onto final paths.
-    const cardProcessed = await generateSquareWebpBuffer(buffer, CARD_SIZE);
-    const detailProcessed = await generateSquareWebpBuffer(buffer, DETAIL_SIZE);
+    const framed = await frameProductBuffer(buffer);
+    const cardProcessed = await generateSquareWebpBuffer(buffer, CARD_SIZE, framed);
+    const detailProcessed = await generateSquareWebpBuffer(
+      buffer,
+      DETAIL_SIZE,
+      framed
+    );
 
     cardTemp = await writeProcessedTemp(
       cardsDir,
@@ -647,21 +765,32 @@ async function processAndSaveImage(productId, buffer, mimeType) {
       safeUnlink(stale);
     }
 
-    for (const prior of priors) {
-      safeUnlink(prior);
-    }
-    priors.length = 0;
-
     const image = {
-      card: publicPath(`product-images/cards/cigarettes/${cardName}`),
-      detail: publicPath(`product-images/details/cigarettes/${detailName}`),
-      original: publicPath(`product-images/originals/cigarettes/${originalName}`),
+      card: publicPath(`product-images/cards/${IMAGE_BUCKET}/${cardName}`),
+      detail: publicPath(`product-images/details/${IMAGE_BUCKET}/${detailName}`),
+      original: publicPath(
+        `product-images/originals/${IMAGE_BUCKET}/${originalName}`
+      ),
     };
 
     return {
       image,
       cardInfo: { width: cardTemp.width, height: cardTemp.height },
       detailInfo: { width: detailTemp.width, height: detailTemp.height },
+      framing: {
+        card: cardProcessed.framing,
+        detail: detailProcessed.framing,
+      },
+      priors: {
+        card: priorCard,
+        detail: priorDetail,
+        original: priorOriginal,
+      },
+      paths: {
+        cardAbs,
+        detailAbs,
+        originalAbs,
+      },
     };
   } catch (error) {
     console.error("[studio] image save/replace failed:", error);
@@ -686,6 +815,10 @@ async function processAndSaveImage(productId, buffer, mimeType) {
       throw wrapped;
     }
 
+    for (const prior of priors) {
+      safeUnlink(prior);
+    }
+
     if (error.status) {
       error.userSafe = true;
       throw error;
@@ -699,13 +832,10 @@ async function processAndSaveImage(productId, buffer, mimeType) {
     for (const tempPath of temps) {
       safeUnlink(tempPath);
     }
-    for (const prior of priors) {
-      safeUnlink(prior);
-    }
   }
 }
 
-async function regenerateDerivedImages(productId) {
+async function regenerateDerivedImages(productId, options = {}) {
   const idError = validateProductId(productId);
   if (idError) {
     const error = new Error(idError);
@@ -732,13 +862,6 @@ async function regenerateDerivedImages(productId) {
     throw error;
   }
 
-  if (!isCigaretteProduct(product)) {
-    const error = new Error("Studio Version 1 only accepts cigarette products.");
-    error.status = 400;
-    error.userSafe = true;
-    throw error;
-  }
-
   if (!product.image?.original && !hasCardImage(product)) {
     const error = new Error("This product has no image to regenerate.");
     error.status = 400;
@@ -746,7 +869,8 @@ async function regenerateDerivedImages(productId) {
     throw error;
   }
 
-  const originalAbs = findOriginalAbsolutePath(product);
+  const publicImages = options.publicImages ?? PUBLIC_IMAGES;
+  const originalAbs = findOriginalAbsolutePath(product, publicImages);
   if (!originalAbs) {
     const error = new Error(
       "Cannot regenerate: the original image file is missing. Card and detail were left unchanged."
@@ -779,8 +903,8 @@ async function regenerateDerivedImages(productId) {
 
   ensureDirs();
 
-  const cardsDir = join(PUBLIC_IMAGES, "cards", "cigarettes");
-  const detailsDir = join(PUBLIC_IMAGES, "details", "cigarettes");
+  const cardsDir = join(publicImages, "cards", IMAGE_BUCKET);
+  const detailsDir = join(publicImages, "details", IMAGE_BUCKET);
   const cardName = `${productId}.webp`;
   const detailName = `${productId}.webp`;
   const cardAbs = join(cardsDir, cardName);
@@ -796,8 +920,13 @@ async function regenerateDerivedImages(productId) {
   let priorDetail = null;
 
   try {
-    const cardProcessed = await generateSquareWebpBuffer(buffer, CARD_SIZE);
-    const detailProcessed = await generateSquareWebpBuffer(buffer, DETAIL_SIZE);
+    const framed = await frameProductBuffer(buffer);
+    const cardProcessed = await generateSquareWebpBuffer(buffer, CARD_SIZE, framed);
+    const detailProcessed = await generateSquareWebpBuffer(
+      buffer,
+      DETAIL_SIZE,
+      framed
+    );
 
     cardTemp = await writeProcessedTemp(
       cardsDir,
@@ -840,13 +969,17 @@ async function regenerateDerivedImages(productId) {
     priors.length = 0;
 
     const image = {
-      card: product.image?.card ?? publicPath(`product-images/cards/cigarettes/${cardName}`),
+      card:
+        product.image?.card ??
+        publicPath(`product-images/cards/${IMAGE_BUCKET}/${cardName}`),
       detail:
         product.image?.detail ??
-        publicPath(`product-images/details/cigarettes/${detailName}`),
-      original: product.image?.original ?? publicPath(
-        `product-images/originals/cigarettes/${basenameSafe(originalAbs)}`
-      ),
+        publicPath(`product-images/details/${IMAGE_BUCKET}/${detailName}`),
+      original:
+        product.image?.original ??
+        publicPath(
+          `product-images/originals/${IMAGE_BUCKET}/${basenameSafe(originalAbs)}`
+        ),
     };
 
     return {
@@ -856,6 +989,10 @@ async function regenerateDerivedImages(productId) {
       originalUnchanged: true,
       cardInfo: { width: cardTemp.width, height: cardTemp.height },
       detailInfo: { width: detailTemp.width, height: detailTemp.height },
+      framing: {
+        card: cardProcessed.framing,
+        detail: detailProcessed.framing,
+      },
     };
   } catch (error) {
     console.error("[studio] regenerate derived images failed:", error);
@@ -894,6 +1031,122 @@ async function regenerateDerivedImages(productId) {
       safeUnlink(prior);
     }
   }
+}
+
+export async function removeAssignedImage(productId, options = {}) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    const error = new Error(idError);
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  let catalog;
+  try {
+    catalog = loadCatalog({ catalogDir: options.catalogDir });
+  } catch (error) {
+    const wrapped = new Error(error.message || "Failed to read catalogue.");
+    wrapped.status = 500;
+    wrapped.userSafe = true;
+    throw wrapped;
+  }
+
+  const product = catalog.products.find((entry) => entry.id === productId);
+  if (!product) {
+    const error = new Error("Product ID not found in catalogue.");
+    error.status = 404;
+    error.userSafe = true;
+    throw error;
+  }
+
+  if (!product.image?.card && !product.image?.detail && !product.image?.original) {
+    const error = new Error("This product has no image to remove.");
+    error.status = 400;
+    error.userSafe = true;
+    throw error;
+  }
+
+  const publicImages = options.publicImages ?? PUBLIC_IMAGES;
+  const publicDir = publicDirFromImages(publicImages);
+  const trashRoot = options.trashDir ?? join(publicImages, ".trash");
+
+  let archive;
+  try {
+    archive = archiveAssignedImageFiles({
+      product,
+      trashRoot,
+      resolvePath: (publicUrl) => resolvePublicImagePath(publicUrl, publicDir),
+    });
+  } catch (error) {
+    error.status = error.status || 500;
+    error.userSafe = true;
+    throw error;
+  }
+
+  if (typeof options.afterArchive === "function") {
+    options.afterArchive(archive);
+  }
+
+  const transaction = saveRemovedImageMetadata(productId, options);
+  if (!transaction.ok) {
+    try {
+      restoreArchivedImageFiles(archive);
+    } catch (restoreError) {
+      console.error(
+        "[studio] restore after remove-image metadata failure:",
+        restoreError
+      );
+    }
+
+    return {
+      ok: false,
+      productId,
+      name: product.name,
+      restored: true,
+      transaction,
+      archive: {
+        destDir: archive.destDir,
+        manifest: archive.manifest,
+      },
+    };
+  }
+
+  const unlinkWarnings = [];
+  for (const file of archive.files) {
+    try {
+      safeUnlink(file.fromAbs);
+      if (existsSync(file.fromAbs)) {
+        unlinkWarnings.push(file.kind);
+      }
+    } catch {
+      unlinkWarnings.push(file.kind);
+    }
+  }
+
+  let customerCatalog = null;
+  if (!options.skipCustomerRebuild) {
+    customerCatalog = rebuildCustomerCatalogAfterStudioWrite({
+      catalogDir: options.catalogDir,
+      outputPath: options.customerOutputPath,
+    });
+  }
+
+  return {
+    ok: true,
+    productId,
+    name: product.name,
+    image: null,
+    removed: true,
+    archive: {
+      destDir: archive.destDir,
+      manifest: archive.manifest,
+    },
+    unlinkWarnings,
+    backupId: transaction.backupId,
+    transaction,
+    customerCatalog,
+  };
 }
 
 async function handleAssignImage(req, res, productId) {
@@ -976,11 +1229,6 @@ async function handleAssignImage(req, res, productId) {
   }
 
   const product = products[index];
-  if (!isCigaretteProduct(product)) {
-    sendJson(res, 400, { error: "Studio Version 1 only accepts cigarette products." });
-    return;
-  }
-
   const replacing = hasCardImage(product);
   if (replacing && !replaceConfirmed) {
     sendJson(res, 409, {
@@ -990,49 +1238,60 @@ async function handleAssignImage(req, res, productId) {
     return;
   }
 
+  let saved;
   try {
-    const { image, cardInfo, detailInfo } = await processAndSaveImage(
-      productId,
-      buffer,
-      mimeType
-    );
-
-    const transaction = saveAssignedImageMetadata(productId, image);
-    if (!transaction.ok) {
-      sendJson(res, transaction.code === "VALIDATION_FAILED" ? 400 : 500, {
-        error:
-          transaction.error ||
-          "Image files were saved, but catalogue metadata could not be updated.",
-        validationErrors: transaction.validationErrors,
-        code: transaction.code || "CATALOG_WRITE_FAILED",
-      });
-      return;
-    }
-
-    const nextProducts = loadProducts();
-
-    sendJson(res, 200, {
-      ok: true,
-      productId,
-      name: product.name,
-      image,
-      replaced: replacing,
-      backupId: transaction.backupId,
-      backupPath: transaction.backupId
-        ? `/src/catalog/backups/${transaction.backupId}`
-        : "",
-      dimensions: {
-        card: cardInfo,
-        detail: detailInfo,
-      },
-      stats: cigaretteSummary(nextProducts).stats,
-    });
+    saved = await processAndSaveImage(productId, buffer, mimeType);
   } catch (error) {
     console.error("[studio] assign image failed:", error);
     sendJson(res, error.status || 500, {
       error: userFacingImageError(error),
     });
+    return;
   }
+
+  const transaction = saveAssignedImageMetadata(productId, saved.image);
+  if (!transaction.ok) {
+    try {
+      await rollbackSavedBinaries(saved);
+    } catch (restoreError) {
+      console.error("[studio] binary rollback after metadata failure:", restoreError);
+    }
+    discardSavedPriors(saved);
+    sendJson(res, transaction.code === "VALIDATION_FAILED" ? 400 : 500, {
+      error:
+        transaction.error ||
+        "Catalogue metadata could not be updated. Previous image files were restored.",
+      validationErrors: transaction.validationErrors,
+      code: transaction.code || "CATALOG_WRITE_FAILED",
+      binariesRolledBack: true,
+    });
+    return;
+  }
+
+  discardSavedPriors(saved);
+
+  const customerCatalog = rebuildCustomerCatalogAfterStudioWrite();
+  const nextSummary = imageSummaryPayload();
+
+  sendJson(res, 200, {
+    ok: true,
+    productId,
+    name: product.name,
+    image: saved.image,
+    replaced: replacing,
+    backupId: transaction.backupId,
+    backupPath: transaction.backupId
+      ? `/src/catalog/backups/${transaction.backupId}`
+      : "",
+    dimensions: {
+      card: saved.cardInfo,
+      detail: saved.detailInfo,
+    },
+    framing: saved.framing ?? null,
+    stats: nextSummary.stats,
+    customerCatalog,
+    watermark: getWatermarkLabel(),
+  });
 }
 
 function handleList(res) {
@@ -1046,6 +1305,103 @@ function handleList(res) {
     });
   } catch (error) {
     sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+function handleListImages(res) {
+  try {
+    const summary = imageSummaryPayload();
+    sendJson(res, 200, {
+      ...summary,
+      watermark: getWatermarkLabel(),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+async function handlePreviewImage(req, res) {
+  let body;
+  try {
+    body = await readBody(req, MAX_BYTES + 1024);
+  } catch (error) {
+    sendJson(res, error.status || 400, { error: error.message || "Upload failed." });
+    return;
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(body.toString("utf8"));
+  } catch {
+    sendJson(res, 400, { error: "Expected JSON body with base64 image data." });
+    return;
+  }
+
+  const mimeType = payload.mimeType;
+  const data = payload.data;
+  if (typeof data !== "string" || data.length === 0) {
+    sendJson(res, 400, { error: "Missing image data." });
+    return;
+  }
+  if (!MIME_TO_EXT[mimeType]) {
+    sendJson(res, 415, { error: "Unsupported file type. Use JPEG, PNG, or WebP." });
+    return;
+  }
+
+  let buffer;
+  try {
+    buffer = Buffer.from(data, "base64");
+  } catch {
+    sendJson(res, 400, { error: "Invalid image data." });
+    return;
+  }
+
+  if (!buffer.length) {
+    sendJson(res, 400, { error: "Invalid image data." });
+    return;
+  }
+
+  if (buffer.length > MAX_BYTES) {
+    sendJson(res, 413, { error: "File exceeds 15 MB limit." });
+    return;
+  }
+
+  try {
+    const meta = await sharp(buffer).metadata();
+    const format = (meta.format || "").toLowerCase();
+    if (!ACCEPTED_FORMATS.has(format)) {
+      sendJson(res, 415, { error: "Unsupported file type. Use JPEG, PNG, or WebP." });
+      return;
+    }
+
+    const framed = await frameProductBuffer(buffer);
+    const card = await generateSquareWebpBuffer(buffer, CARD_SIZE, framed);
+    const detail = await generateSquareWebpBuffer(buffer, DETAIL_SIZE, framed);
+    sendJson(res, 200, {
+      ok: true,
+      watermark: getWatermarkLabel(),
+      originalUnchanged: true,
+      framing: {
+        card: card.framing,
+        detail: detail.framing,
+      },
+      card: {
+        dataUrl: `data:image/webp;base64,${card.data.toString("base64")}`,
+        width: card.width,
+        height: card.height,
+      },
+      detail: {
+        dataUrl: `data:image/webp;base64,${detail.data.toString("base64")}`,
+        width: detail.width,
+        height: detail.height,
+      },
+    });
+  } catch (error) {
+    console.error("[studio] image preview failed:", error);
+    sendJson(res, error.status || 500, {
+      error: userFacingImageError(error),
+    });
   }
 }
 
@@ -1164,6 +1520,9 @@ async function handleUpdateStudioProduct(req, res, productId) {
     return;
   }
 
+  const customerCatalog =
+    result.noop ? null : rebuildCustomerCatalogAfterStudioWrite();
+
   sendJson(res, 200, {
     ok: true,
     noop: Boolean(result.noop),
@@ -1177,6 +1536,7 @@ async function handleUpdateStudioProduct(req, res, productId) {
     summary: result.summary,
     changedFiles: result.changedFiles,
     backupId: result.backupId,
+    customerCatalog,
   });
 }
 
@@ -1203,6 +1563,16 @@ const server = createServer(async (req, res) => {
 
   if (req.method === "GET" && pathname === "/api/studio/cigarettes") {
     handleList(res);
+    return;
+  }
+
+  if (req.method === "GET" && pathname === "/api/studio/images") {
+    handleListImages(res);
+    return;
+  }
+
+  if (req.method === "POST" && pathname === "/api/studio/images/preview") {
+    await handlePreviewImage(req, res);
     return;
   }
 
@@ -1233,7 +1603,7 @@ const server = createServer(async (req, res) => {
   }
 
   const assignMatch = pathname.match(
-    /^\/api\/studio\/cigarettes\/([^/]+)\/image$/
+    /^\/api\/studio\/(?:cigarettes|products)\/([^/]+)\/image$/
   );
   if (req.method === "POST" && assignMatch) {
     const productId = decodeURIComponent(assignMatch[1]);
@@ -1242,11 +1612,20 @@ const server = createServer(async (req, res) => {
   }
 
   const regenerateMatch = pathname.match(
-    /^\/api\/studio\/cigarettes\/([^/]+)\/image\/regenerate$/
+    /^\/api\/studio\/(?:cigarettes|products)\/([^/]+)\/image\/regenerate$/
   );
   if (req.method === "POST" && regenerateMatch) {
     const productId = decodeURIComponent(regenerateMatch[1]);
     await handleRegenerateImage(res, productId);
+    return;
+  }
+
+  const removeMatch = pathname.match(
+    /^\/api\/studio\/(?:cigarettes|products)\/([^/]+)\/image\/remove$/
+  );
+  if (req.method === "POST" && removeMatch) {
+    const productId = decodeURIComponent(removeMatch[1]);
+    await handleRemoveImage(req, res, productId);
     return;
   }
 
@@ -1258,7 +1637,7 @@ async function handleRegenerateImage(res, productId) {
     const result = await regenerateDerivedImages(productId);
     let stats;
     try {
-      stats = cigaretteSummary(loadProducts()).stats;
+      stats = imageSummaryPayload().stats;
     } catch {
       stats = null;
     }
@@ -1274,10 +1653,85 @@ async function handleRegenerateImage(res, productId) {
         card: result.cardInfo,
         detail: result.detailInfo,
       },
+      framing: result.framing ?? null,
       stats,
+      watermark: getWatermarkLabel(),
     });
   } catch (error) {
     console.error("[studio] regenerate image failed:", error);
+    sendJson(res, error.status || 500, {
+      error: userFacingImageError(error),
+    });
+  }
+}
+
+async function handleRemoveImage(req, res, productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  let body;
+  try {
+    body = await readBody(req, METADATA_MAX_BYTES);
+  } catch (error) {
+    sendJson(res, error.status || 400, { error: error.message || "Request failed." });
+    return;
+  }
+
+  let payload = {};
+  if (body.length > 0) {
+    try {
+      payload = JSON.parse(body.toString("utf8"));
+    } catch {
+      sendJson(res, 400, { error: "Expected JSON body with confirm: true." });
+      return;
+    }
+  }
+
+  if (payload.confirm !== true) {
+    sendJson(res, 400, {
+      error: "Removal confirmation required.",
+      code: "REMOVE_CONFIRMATION_REQUIRED",
+    });
+    return;
+  }
+
+  try {
+    const result = await removeAssignedImage(productId);
+    if (!result.ok) {
+      sendJson(res, result.transaction?.code === "VALIDATION_FAILED" ? 400 : 500, {
+        error:
+          result.transaction?.error ||
+          "Catalogue metadata could not be updated. Image files were restored.",
+        validationErrors: result.transaction?.validationErrors,
+        code: result.transaction?.code || "CATALOG_WRITE_FAILED",
+        restored: true,
+      });
+      return;
+    }
+
+    let stats;
+    try {
+      stats = imageSummaryPayload().stats;
+    } catch {
+      stats = null;
+    }
+
+    sendJson(res, 200, {
+      ok: true,
+      productId: result.productId,
+      name: result.name,
+      image: null,
+      removed: true,
+      backupId: result.backupId,
+      stats,
+      customerCatalog: result.customerCatalog,
+      unlinkWarnings: result.unlinkWarnings,
+    });
+  } catch (error) {
+    console.error("[studio] remove image failed:", error);
     sendJson(res, error.status || 500, {
       error: userFacingImageError(error),
     });
@@ -1300,4 +1754,10 @@ if (isLaunchedDirectly()) {
   });
 }
 
-export { regenerateDerivedImages, processAndSaveImage };
+export {
+  generateSquareWebpBuffer,
+  regenerateDerivedImages,
+  processAndSaveImage,
+  rollbackSavedBinaries,
+  discardSavedPriors,
+};

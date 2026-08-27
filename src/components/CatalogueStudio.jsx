@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import StudioImagesTab from "./StudioImagesTab";
 import StudioProductsTab from "./StudioProductsTab";
 import StudioQueueTab from "./StudioQueueTab";
-import { fetchCigaretteCatalogue } from "../utils/studioApi";
+import { fetchStudioImages } from "../utils/studioApi";
 import "../CatalogueStudio.css";
 
 const TABS = [
@@ -14,17 +14,22 @@ const TABS = [
 function CatalogueStudio() {
   const [tab, setTab] = useState("images");
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [recentProductIds, setRecentProductIds] = useState([]);
   const [stats, setStats] = useState({ total: 0, completed: 0, missing: 0 });
   const [selectedId, setSelectedId] = useState(null);
   const [loadError, setLoadError] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadNonce, setLoadNonce] = useState(0);
   const searchRef = useRef(null);
+  const queueSearchRef = useRef(null);
   const productsSearchRef = useRef(null);
   const queueApiRef = useRef(null);
 
   const applyCatalogue = useCallback((data) => {
     setProducts(data.products || []);
+    setCategories(data.categories || []);
+    setRecentProductIds(data.recentProductIds || []);
     setStats(data.stats || { total: 0, completed: 0, missing: 0 });
     setSelectedId((current) => {
       if (current && data.products?.some((product) => product.id === current)) {
@@ -36,7 +41,7 @@ function CatalogueStudio() {
 
   const refresh = useCallback(async () => {
     try {
-      const data = await fetchCigaretteCatalogue();
+      const data = await fetchStudioImages();
       applyCatalogue(data);
       setLoadError("");
       return data;
@@ -52,7 +57,7 @@ function CatalogueStudio() {
   useEffect(() => {
     let cancelled = false;
 
-    fetchCigaretteCatalogue()
+    fetchStudioImages()
       .then((data) => {
         if (cancelled) {
           return;
@@ -93,7 +98,9 @@ function CatalogueStudio() {
   const handleSaved = useCallback(
     async (result) => {
       await refresh();
-      if (result?.productId) {
+      if (result?.selectProductId) {
+        setSelectedId(result.selectProductId);
+      } else if (result?.productId) {
         setSelectedId(result.productId);
       }
     },
@@ -128,7 +135,14 @@ function CatalogueStudio() {
           return;
         }
 
-        setTab("images");
+        if (tab === "queue") {
+          requestAnimationFrame(() => {
+            queueSearchRef.current?.focus();
+            queueSearchRef.current?.select?.();
+          });
+          return;
+        }
+
         requestAnimationFrame(() => {
           searchRef.current?.focus();
           searchRef.current?.select?.();
@@ -164,7 +178,7 @@ function CatalogueStudio() {
         <div className="studioStats" aria-live="polite">
           <div className="studioStat">
             <span className="studioStatValue">{stats.total}</span>
-            <span className="studioStatLabel">Cigarette products</span>
+            <span className="studioStatLabel">Products</span>
           </div>
           <div className="studioStat">
             <span className="studioStatValue">{stats.completed}</span>
@@ -188,7 +202,22 @@ function CatalogueStudio() {
             key={item.id}
             type="button"
             className={`studioTab${tab === item.id ? " is-active" : ""}`}
-            onClick={() => setTab(item.id)}
+            onClick={() => {
+              setTab(item.id);
+              if (item.id === "queue") {
+                setSelectedId((current) => {
+                  const selected = products.find(
+                    (product) => product.id === current
+                  );
+                  if (selected && !selected.hasImage) {
+                    return current;
+                  }
+                  return (
+                    products.find((product) => !product.hasImage)?.id ?? current
+                  );
+                });
+              }
+            }}
             aria-current={tab === item.id ? "page" : undefined}
           >
             {item.label}
@@ -223,6 +252,8 @@ function CatalogueStudio() {
         {tab !== "products" && !loading && !loadError && tab === "images" ? (
           <StudioImagesTab
             products={products}
+            categories={categories}
+            recentProductIds={recentProductIds}
             selectedId={selectedId}
             onSelect={setSelectedId}
             onSaved={handleSaved}
@@ -233,8 +264,13 @@ function CatalogueStudio() {
         {tab !== "products" && !loading && !loadError && tab === "queue" ? (
           <StudioQueueTab
             products={products}
+            categories={categories}
+            recentProductIds={recentProductIds}
             stats={stats}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
             onSaved={handleSaved}
+            searchRef={queueSearchRef}
             apiRef={queueApiRef}
           />
         ) : null}

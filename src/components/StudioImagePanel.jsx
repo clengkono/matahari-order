@@ -4,19 +4,36 @@ import {
   clipboardImageFile,
   fileToBase64,
   mimeFromFile,
+  previewProductImage,
   regenerateProductImage,
+  removeProductImage,
   validateImageFile,
 } from "../utils/studioApi";
 
-function StudioImagePanel({ product, onSaved }) {
+function cacheBust(src, version) {
+  if (!src) {
+    return null;
+  }
+  return `${src}${src.includes("?") ? "&" : "?"}v=${version}`;
+}
+
+function StudioImagePanel({
+  product,
+  onSaved,
+  neighbors = null,
+  onSelectNeighbor,
+}) {
   const inputId = useId();
   const fileInputRef = useRef(null);
   const [draft, setDraft] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [step, setStep] = useState("idle"); // idle | assign | replace
+  const [step, setStep] = useState("idle"); // idle | assign | replace | remove
   const [dragOver, setDragOver] = useState(false);
   const [previewVersion, setPreviewVersion] = useState(0);
+  const [generatedPreview, setGeneratedPreview] = useState(null);
+  const [previewBusy, setPreviewBusy] = useState(false);
+  const [catalogWarning, setCatalogWarning] = useState("");
 
   const draftRef = useRef(null);
   const stepRef = useRef("idle");
@@ -86,7 +103,20 @@ function StudioImagePanel({ product, onSaved }) {
           previewUrl,
         };
       });
+      setGeneratedPreview(null);
       setStep("assign");
+      setPreviewBusy(true);
+      try {
+        const generated = await previewProductImage({
+          mimeType,
+          base64Data,
+        });
+        setGeneratedPreview(generated);
+      } catch {
+        setGeneratedPreview(null);
+      } finally {
+        setPreviewBusy(false);
+      }
     } catch {
       setError("Could not read the selected file.");
       setDraft((previous) => {
@@ -132,6 +162,14 @@ function StudioImagePanel({ product, onSaved }) {
       });
       clearDraft();
       setPreviewVersion(Date.now());
+      if (result.customerCatalog && result.customerCatalog.ok === false) {
+        setCatalogWarning(
+          result.customerCatalog.warning ||
+            "Saved the image, but the customer catalogue is stale. Run npm run catalog:customer-build."
+        );
+      } else {
+        setCatalogWarning("");
+      }
       onSavedRef.current?.(result);
     } catch (err) {
       setError(err.message || "Save failed.");
@@ -181,6 +219,48 @@ function StudioImagePanel({ product, onSaved }) {
     }
   }
 
+  function handleAskRemove() {
+    if (!productRef.current?.hasImage || busyRef.current || stepRef.current !== "idle") {
+      return;
+    }
+    setError("");
+    setStep("remove");
+  }
+
+  function handleCancelRemove() {
+    setStep("idle");
+  }
+
+  async function handleConfirmRemove() {
+    const currentProduct = productRef.current;
+    if (!currentProduct?.hasImage || busyRef.current || stepRef.current !== "remove") {
+      return;
+    }
+
+    setBusy(true);
+    setError("");
+
+    try {
+      const result = await removeProductImage(currentProduct.id);
+      setStep("idle");
+      setPreviewVersion(Date.now());
+      if (result.customerCatalog && result.customerCatalog.ok === false) {
+        setCatalogWarning(
+          result.customerCatalog.warning ||
+            "Removed the image, but the customer catalogue is stale. Run npm run catalog:customer-build."
+        );
+      } else {
+        setCatalogWarning("");
+      }
+      onSavedRef.current?.(result);
+    } catch (err) {
+      setError(err.message || "Remove failed.");
+      setStep("remove");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   useEffect(() => {
     if (!product) {
       return undefined;
@@ -188,13 +268,21 @@ function StudioImagePanel({ product, onSaved }) {
 
     function onKeyDown(event) {
       const currentStep = stepRef.current;
-      if (currentStep !== "assign" && currentStep !== "replace") {
+      if (
+        currentStep !== "assign" &&
+        currentStep !== "replace" &&
+        currentStep !== "remove"
+      ) {
         return;
       }
 
       if (event.key === "Escape") {
         event.preventDefault();
-        clearDraft();
+        if (currentStep === "remove") {
+          handleCancelRemove();
+        } else {
+          clearDraft();
+        }
         return;
       }
 
@@ -202,8 +290,10 @@ function StudioImagePanel({ product, onSaved }) {
         event.preventDefault();
         if (currentStep === "assign") {
           handleConfirmAssign();
-        } else {
+        } else if (currentStep === "replace") {
           handleConfirmReplace();
+        } else if (currentStep === "remove") {
+          void handleConfirmRemove();
         }
       }
     }
@@ -247,47 +337,124 @@ function StudioImagePanel({ product, onSaved }) {
   }
 
   const currentCard = product.image?.card;
-  const previewSrc = currentCard
-    ? `${currentCard}${currentCard.includes("?") ? "&" : "?"}v=${previewVersion}`
-    : null;
+  const currentDetail = product.image?.detail;
+  const cardSrc = cacheBust(currentCard, previewVersion);
+  const detailSrc = cacheBust(currentDetail, previewVersion);
+  const originalStored = Boolean(product.originalStored || product.image?.original);
 
   return (
     <div className="studioPanel">
       <div className="studioPanelHeader">
         <h2 className="studioProductTitle">{product.name}</h2>
-        <p className="studioProductMeta">{product.id}</p>
+        <p className="studioProductMeta">
+          {product.category ? `${product.category} · ` : ""}
+          {product.id}
+        </p>
       </div>
 
-      <div className="studioCurrentImage">
-        {previewSrc ? (
-          <img
-            src={previewSrc}
-            alt={`Current card image for ${product.name}`}
-            className="studioCurrentImagePhoto"
-          />
-        ) : (
-          <div className="studioMissingImage" role="status">
-            Missing Image
-          </div>
-        )}
-        {product.hasImage ? (
-          <div className="studioWatermarkRow">
-            <p className="studioWatermarkNote">Watermark: Matahari Langowan</p>
-            {step === "idle" ? (
-              <button
-                type="button"
-                className="studioButton studioButton--secondary"
-                onClick={() => {
-                  void handleRegenerate();
-                }}
-                disabled={busy}
-              >
-                {busy ? "Regenerating…" : "Regenerate"}
-              </button>
-            ) : null}
-          </div>
-        ) : null}
+      {neighbors ? (
+        <div className="studioQueueNav">
+          <button
+            type="button"
+            className="studioButton studioButton--secondary"
+            onClick={() => onSelectNeighbor?.(neighbors.previousId)}
+            disabled={!neighbors.previousId}
+          >
+            Previous missing
+          </button>
+          <p className="studioQueuePosition">
+            {neighbors.remaining} missing
+            {neighbors.position
+              ? ` · ${neighbors.position} of ${neighbors.remaining}`
+              : ""}
+          </p>
+          <button
+            type="button"
+            className="studioButton studioButton--secondary"
+            onClick={() => onSelectNeighbor?.(neighbors.nextId)}
+            disabled={!neighbors.nextId}
+          >
+            Next missing
+          </button>
+        </div>
+      ) : null}
+
+      <div className="studioImageStatusGrid">
+        <div className="studioCurrentImage">
+          <p className="studioImageCaption">Current image</p>
+          {cardSrc ? (
+            <img
+              src={cardSrc}
+              alt={`Current card image for ${product.name}`}
+              className="studioCurrentImagePhoto"
+            />
+          ) : (
+            <div className="studioMissingImage" role="status">
+              Missing image
+            </div>
+          )}
+        </div>
+        <div className="studioCurrentImage">
+          <p className="studioImageCaption">Detail image</p>
+          {detailSrc ? (
+            <img
+              src={detailSrc}
+              alt={`Current detail image for ${product.name}`}
+              className="studioCurrentImagePhoto"
+            />
+          ) : (
+            <div className="studioMissingImage studioMissingImage--small" role="status">
+              No detail
+            </div>
+          )}
+        </div>
       </div>
+
+      <ul className="studioImageFacts">
+        <li>Original stored: {originalStored ? "Yes" : "No"}</li>
+        <li>Watermark: Matahari Langowan</li>
+      </ul>
+
+      {product.hasImage && step === "idle" ? (
+        <div className="studioImageActions">
+          <button
+            type="button"
+            className="studioButton studioButton--secondary"
+            onClick={() => {
+              void handleRegenerate();
+            }}
+            disabled={busy}
+          >
+            {busy ? "Regenerating…" : "Regenerate"}
+          </button>
+          <button
+            type="button"
+            className="studioButton studioButton--ghost"
+            onClick={handleAskRemove}
+            disabled={busy}
+          >
+            Remove image
+          </button>
+        </div>
+      ) : null}
+
+      <details className="studioTechDetails">
+        <summary>Technical paths</summary>
+        <dl className="studioMetaList">
+          <div className="studioMetaRow">
+            <dt>Card</dt>
+            <dd className="studioMono">{product.image?.card || "None"}</dd>
+          </div>
+          <div className="studioMetaRow">
+            <dt>Detail</dt>
+            <dd className="studioMono">{product.image?.detail || "None"}</dd>
+          </div>
+          <div className="studioMetaRow">
+            <dt>Original</dt>
+            <dd className="studioMono">{product.image?.original || "None"}</dd>
+          </div>
+        </dl>
+      </details>
 
       <div
         className={`studioDropzone${dragOver ? " studioDropzone--active" : ""}`}
@@ -354,11 +521,47 @@ function StudioImagePanel({ product, onSaved }) {
           <h3 id="studio-assign-title" className="studioConfirmTitle">
             Assign this image to: {product.name}
           </h3>
-          <img
-            src={draft.previewUrl}
-            alt={`Preview for ${product.name}`}
-            className="studioConfirmPreview"
-          />
+          <div className="studioPreviewGrid">
+            <figure className="studioPreviewFigure">
+              <img
+                src={draft.previewUrl}
+                alt={`Source for ${product.name}`}
+                className="studioConfirmPreview"
+              />
+              <figcaption>Source</figcaption>
+            </figure>
+            <figure className="studioPreviewFigure">
+              {generatedPreview?.card?.dataUrl ? (
+                <img
+                  src={generatedPreview.card.dataUrl}
+                  alt={`Generated card for ${product.name}`}
+                  className="studioConfirmPreview"
+                />
+              ) : (
+                <div className="studioMissingImage studioMissingImage--small">
+                  {previewBusy ? "Generating…" : "Card preview unavailable"}
+                </div>
+              )}
+              <figcaption>Generated card</figcaption>
+            </figure>
+            <figure className="studioPreviewFigure">
+              {generatedPreview?.detail?.dataUrl ? (
+                <img
+                  src={generatedPreview.detail.dataUrl}
+                  alt={`Generated detail for ${product.name}`}
+                  className="studioConfirmPreview"
+                />
+              ) : (
+                <div className="studioMissingImage studioMissingImage--small">
+                  {previewBusy ? "Generating…" : "Detail preview unavailable"}
+                </div>
+              )}
+              <figcaption>Generated detail</figcaption>
+            </figure>
+          </div>
+          <p className="studioConfirmBody">
+            Original stays clean. Card and detail get the Matahari Langowan watermark.
+          </p>
           <div className="studioConfirmActions">
             <button
               type="button"
@@ -394,14 +597,33 @@ function StudioImagePanel({ product, onSaved }) {
             Replace existing image for {product.name}?
           </h3>
           <p className="studioConfirmBody">
-            The current card, detail, and original files for this product will be
-            overwritten. A catalogue backup will be created first.
+            This will replace the current image. Confirm to overwrite card, detail,
+            and original. A catalogue backup is created first.
           </p>
-          <img
-            src={draft.previewUrl}
-            alt={`Replacement preview for ${product.name}`}
-            className="studioConfirmPreview"
-          />
+          <div className="studioPreviewGrid">
+            <figure className="studioPreviewFigure">
+              {cardSrc ? (
+                <img
+                  src={cardSrc}
+                  alt={`Current image for ${product.name}`}
+                  className="studioConfirmPreview"
+                />
+              ) : (
+                <div className="studioMissingImage studioMissingImage--small">
+                  No current image
+                </div>
+              )}
+              <figcaption>Current image</figcaption>
+            </figure>
+            <figure className="studioPreviewFigure">
+              <img
+                src={generatedPreview?.card?.dataUrl || draft.previewUrl}
+                alt={`Replacement for ${product.name}`}
+                className="studioConfirmPreview"
+              />
+              <figcaption>Replace image</figcaption>
+            </figure>
+          </div>
           <div className="studioConfirmActions">
             <button
               type="button"
@@ -424,6 +646,54 @@ function StudioImagePanel({ product, onSaved }) {
             Press Enter to confirm replace · Escape to cancel
           </p>
         </div>
+      ) : null}
+
+      {step === "remove" && product.hasImage ? (
+        <div
+          className="studioConfirm studioConfirm--replace"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="studio-remove-title"
+        >
+          <h3 id="studio-remove-title" className="studioConfirmTitle">
+            Remove image from {product.name}?
+          </h3>
+          <p className="studioConfirmBody">
+            The product stays in the catalogue. Only its assigned image is
+            removed. The customer app will show the no-image fallback until a new
+            photo is assigned.
+          </p>
+          <div className="studioConfirmActions">
+            <button
+              type="button"
+              className="studioButton studioButton--ghost"
+              onClick={handleCancelRemove}
+              disabled={busy}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="studioButton studioButton--danger"
+              onClick={() => {
+                void handleConfirmRemove();
+              }}
+              disabled={busy}
+            >
+              {busy ? "Removing…" : "Remove image"}
+            </button>
+          </div>
+          <p className="studioConfirmHint">
+            This does not delete the product. Press Enter to confirm · Escape to
+            cancel
+          </p>
+        </div>
+      ) : null}
+
+      {catalogWarning ? (
+        <p className="studioError" role="status">
+          {catalogWarning}
+        </p>
       ) : null}
 
       {step === "idle" ? (

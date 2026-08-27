@@ -18,6 +18,9 @@ tmp/
 src/catalog/backups/*
 !src/catalog/backups/.gitkeep
 
+# Recoverable Studio image trash (not customer-facing)
+public/product-images/.trash/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

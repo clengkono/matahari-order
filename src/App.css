@@ -721,8 +721,8 @@ body:has(.app) {
 }
 
 .productThumb--detail {
-  width: 84px;
-  height: 84px;
+  width: clamp(120px, 34vw, 135px);
+  height: clamp(120px, 34vw, 135px);
   border-radius: 12px;
   border: 1px solid var(--color-border-light);
 }
@@ -2386,8 +2386,8 @@ body:has(.app) {
 
 .productInfoPhoto {
   display: block;
-  width: 84px;
-  height: 84px;
+  width: clamp(120px, 34vw, 135px);
+  height: clamp(120px, 34vw, 135px);
   margin: 0;
   border-radius: 12px;
   object-fit: contain;
@@ -2398,8 +2398,8 @@ body:has(.app) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 84px;
-  height: 84px;
+  width: clamp(120px, 34vw, 135px);
+  height: clamp(120px, 34vw, 135px);
   margin: 0;
   border-radius: 12px;
   background: var(--color-navy-tint);
@@ -2413,8 +2413,8 @@ body:has(.app) {
 .productInfoIdentity {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .productInfoIdentityText {
