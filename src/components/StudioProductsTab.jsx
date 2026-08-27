@@ -287,7 +287,7 @@ function StudioProductsTab({ searchRef, onCatalogueChanged }) {
         }
         setLoadError(
           error.message ||
-            "Could not reach the local image service. Run npm run studio."
+            "Could not reach the local image service. Start Matahari Studio (or npm run studio)."
         );
       })
       .finally(() => {
@@ -389,7 +389,7 @@ function StudioProductsTab({ searchRef, onCatalogueChanged }) {
       .catch((error) => {
         setLoadError(
           error.message ||
-            "Could not reach the local image service. Run npm run studio."
+            "Could not reach the local image service. Start Matahari Studio (or npm run studio)."
         );
       })
       .finally(() => {

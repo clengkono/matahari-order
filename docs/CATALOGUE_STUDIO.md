@@ -4,11 +4,25 @@ Local development tool for assigning product images across the full catalogue (2
 
 **LOCAL ONLY.** The Studio UI and image service are not authenticated and must never be publicly deployed as-is.
 
+Owner daily steps (start, add photos, publish): [OWNER_STUDIO.md](OWNER_STUDIO.md)
+
 ---
 
 ## Start Studio
 
-From the project root:
+Everyday (Windows): double-click `Start Matahari Studio.cmd`, or use the Desktop shortcut after running `Create Matahari Desktop Shortcuts.cmd`.
+
+That starts the local services, waits until they are ready, and opens:
+
+[http://127.0.0.1:5173/studio](http://127.0.0.1:5173/studio)
+
+Equivalent npm command (still available):
+
+```bash
+npm run studio:start
+```
+
+Low-level start without the browser wait (still available):
 
 ```bash
 npm run studio
@@ -17,17 +31,13 @@ npm run studio
 This starts:
 
 1. the local image service on `127.0.0.1:8787`
-2. Vite on the usual development port (typically `5173`)
-
-### Studio URL
-
-Open:
-
-[http://127.0.0.1:5173/studio](http://127.0.0.1:5173/studio)
+2. Vite on `127.0.0.1:5173`
 
 The customer app remains at:
 
 [http://127.0.0.1:5173/](http://127.0.0.1:5173/)
+
+If Studio is already running, the one-click launcher opens `/studio` again and does not start a second copy.
 
 ### Separate commands (optional)
 
@@ -39,6 +49,18 @@ npm run dev
 ```
 
 Then open `/studio` in the Vite app.
+
+### Publish photos to GitHub
+
+Everyday: double-click `Publish Matahari Changes.cmd`, review the summary, press **Y**.
+
+Equivalent npm command:
+
+```bash
+npm run studio:publish
+```
+
+Publish is never automatic when Studio closes. It only sends owner image/catalogue files after checks and confirmation. Underlying `git` / `npm run catalog:*` commands remain available.
 
 ---
 
@@ -224,7 +246,7 @@ There is no Trash UI in this stage.
 
 ## Stop all services
 
-In the terminal running `npm run studio`, press `Ctrl+C`.
+In the window started by **Start Matahari Studio** (or `npm run studio`), press `Ctrl+C`.
 
 That stops both the image service and Vite.
 
@@ -249,11 +271,37 @@ Generated image files under `public/product-images/` may also need manual cleanu
 ## Why this must remain local-only
 
 - The image service binds only to `127.0.0.1`
+- Vite is also bound to `127.0.0.1`
 - There is no authentication
 - The service can write catalogue JSON and image files on disk
-- Exposing it on a public network interface would allow untrusted image and catalogue writes
+- Image files live in this Git working tree (`public/product-images/`)
+- Catalogue transactions assume a local owner on this computer
+- Publish uses the owner’s existing Git login; it does not store GitHub passwords or tokens
 
-Do not reverse-proxy it to the internet. Do not bind it to `0.0.0.0`. Do not deploy Version 1 as a public admin tool.
+Do not reverse-proxy it to the internet. Do not bind it to `0.0.0.0`. Do not expose port 8787. Do not add tunnel tooling. Do not deploy Version 1 as a public admin tool.
+
+---
+
+## Future remote collaboration (not in this stage)
+
+Remote Studio access is **not** implemented. These local assumptions currently block it:
+
+- images are stored on the local filesystem and committed through Git
+- catalogue writes go to the local working tree
+- there is no authentication or authorization
+- the Studio API binds to `127.0.0.1` only
+- the catalogue transaction system assumes a local owner
+- image paths in the catalogue point at repo files
+
+A later remote-collaboration stage would need all of:
+
+- authentication
+- roles and permissions
+- centralized image storage or a controlled write service
+- a hosted catalogue mutation service
+- an audit trail
+
+Do not treat opening a tunnel or binding `0.0.0.0` as a substitute for those.
 
 ---
 

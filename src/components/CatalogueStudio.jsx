@@ -54,7 +54,7 @@ function CatalogueStudio() {
     } catch (error) {
       setLoadError(
         error.message ||
-          "Could not reach the local image service. Run npm run studio."
+          "Could not reach the local image service. Start Matahari Studio (or npm run studio)."
       );
       throw error;
     }
@@ -77,7 +77,7 @@ function CatalogueStudio() {
         }
         setLoadError(
           error.message ||
-            "Could not reach the local image service. Run npm run studio."
+            "Could not reach the local image service. Start Matahari Studio (or npm run studio)."
         );
       })
       .finally(() => {

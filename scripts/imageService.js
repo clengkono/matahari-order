@@ -1553,6 +1553,7 @@ const server = createServer(async (req, res) => {
   if (req.method === "GET" && pathname === "/api/studio/health") {
     sendJson(res, 200, {
       ok: true,
+      service: "matahari-studio",
       host: HOST,
       port: PORT,
       warning:
