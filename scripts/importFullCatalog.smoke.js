@@ -82,10 +82,10 @@ function baseCatalog() {
         favorite: true,
         pattern: "fixed-product",
         image: {
-          card: "/product-images/cards/cigarettes/prod-glory-16.webp",
-          detail: "/product-images/details/cigarettes/prod-glory-16.webp",
+          card: "/product-images/cards/prod-glory-16.webp",
+          detail: "/product-images/details/prod-glory-16.webp",
           original:
-            "/product-images/originals/cigarettes/prod-glory-16-original.png",
+            "/product-images/originals/prod-glory-16-original.png",
         },
       },
       {
@@ -303,7 +303,7 @@ function main() {
         glory.name === "Glory 16" &&
         glory.category === "Rokok" &&
         glory.image?.card ===
-          "/product-images/cards/cigarettes/prod-glory-16.webp" &&
+          "/product-images/cards/prod-glory-16.webp" &&
         exactPlan.exactPosMatches.length === 1 &&
         exactPlan.newVisibleProducts.length === 0
     );
@@ -611,7 +611,7 @@ function main() {
 
     const recodeCatalog = structuredClone(baseCatalog());
     recodeCatalog.products.find((product) => product.id === "prod-ave-20").image = {
-      card: "/product-images/cards/cigarettes/prod-ave-20.webp",
+      card: "/product-images/cards/prod-ave-20.webp",
     };
     recodeCatalog.aliases.push({
       id: "alias-ave-1",
@@ -668,7 +668,7 @@ function main() {
         recodedAve.name === "Ave 20" &&
         recodedAve.category === "Rokok" &&
         recodedAve.image?.card ===
-          "/product-images/cards/cigarettes/prod-ave-20.webp" &&
+          "/product-images/cards/prod-ave-20.webp" &&
         recodedVariant?.id === "prod-ave-20" &&
         recodedUnits.length === 1 &&
         recodedUnits[0].id === "prod-ave-20__slof" &&

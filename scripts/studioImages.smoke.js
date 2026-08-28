@@ -64,7 +64,6 @@ const AQUA_600_ID = "prod-aqua-botol-600ml";
 const AQUA_ORIGINAL = join(
   LIVE_IMAGES,
   "originals",
-  "cigarettes",
   `${AQUA_600_ID}-original.png`
 );
 const BACKGROUND = { r: 237, g: 232, b: 225 };
@@ -314,6 +313,11 @@ try {
           product.image.detail.startsWith("/product-images/details/") &&
           typeof product.image?.original === "string" &&
           product.image.original.startsWith("/product-images/originals/") &&
+          product.image.card === `/product-images/cards/${product.id}.webp` &&
+          product.image.detail === `/product-images/details/${product.id}.webp` &&
+          !product.image.card.includes("cigarettes") &&
+          !product.image.detail.includes("cigarettes") &&
+          !product.image.original.includes("cigarettes") &&
           !product.image.card.includes("..") &&
           !product.image.detail.includes("..") &&
           !product.image.original.includes("..")
@@ -584,28 +588,26 @@ try {
 
   assert(
     "temp card file was written",
-    existsSync(join(publicImages, "cards", "cigarettes", "prod-smoke-image.webp"))
+    existsSync(join(publicImages, "cards", "prod-smoke-image.webp"))
   );
   assert(
     "temp detail file was written",
-    existsSync(join(publicImages, "details", "cigarettes", "prod-smoke-image.webp"))
+    existsSync(join(publicImages, "details", "prod-smoke-image.webp"))
   );
   const originalAbs = join(
     publicImages,
     "originals",
-    "cigarettes",
     "prod-smoke-image-original.png"
   );
   assert("temp original file was written", existsSync(originalAbs));
   assert(
-    "public paths stay under the historical cigarettes bucket",
-    saved.image.card === "/product-images/cards/cigarettes/prod-smoke-image.webp" &&
-      saved.image.detail ===
-        "/product-images/details/cigarettes/prod-smoke-image.webp"
+    "public paths use canonical product-id folders",
+    saved.image.card === "/product-images/cards/prod-smoke-image.webp" &&
+      saved.image.detail === "/product-images/details/prod-smoke-image.webp"
   );
 
   const cardStat = readFileSync(
-    join(publicImages, "cards", "cigarettes", "prod-smoke-image.webp")
+    join(publicImages, "cards", "prod-smoke-image.webp")
   );
   const originalStat = readFileSync(originalAbs);
   assert("generated card is WebP, not the original PNG", cardStat[0] === 0x52);
@@ -632,23 +634,22 @@ try {
   discardSavedPriors(replaced);
 
   const aquaTempPublic = join(tempRoot, "aqua-regen", "product-images");
-  mkdirSync(join(aquaTempPublic, "originals", "cigarettes"), { recursive: true });
-  mkdirSync(join(aquaTempPublic, "cards", "cigarettes"), { recursive: true });
-  mkdirSync(join(aquaTempPublic, "details", "cigarettes"), { recursive: true });
+  mkdirSync(join(aquaTempPublic, "originals"), { recursive: true });
+  mkdirSync(join(aquaTempPublic, "cards"), { recursive: true });
+  mkdirSync(join(aquaTempPublic, "details"), { recursive: true });
   const aquaTempOriginal = join(
     aquaTempPublic,
     "originals",
-    "cigarettes",
     `${AQUA_600_ID}-original.png`
   );
   copyFileSync(AQUA_ORIGINAL, aquaTempOriginal);
   copyFileSync(
-    join(LIVE_IMAGES, "cards", "cigarettes", `${AQUA_600_ID}.webp`),
-    join(aquaTempPublic, "cards", "cigarettes", `${AQUA_600_ID}.webp`)
+    join(LIVE_IMAGES, "cards", `${AQUA_600_ID}.webp`),
+    join(aquaTempPublic, "cards", `${AQUA_600_ID}.webp`)
   );
   copyFileSync(
-    join(LIVE_IMAGES, "details", "cigarettes", `${AQUA_600_ID}.webp`),
-    join(aquaTempPublic, "details", "cigarettes", `${AQUA_600_ID}.webp`)
+    join(LIVE_IMAGES, "details", `${AQUA_600_ID}.webp`),
+    join(aquaTempPublic, "details", `${AQUA_600_ID}.webp`)
   );
   const regenerated = await regenerateDerivedImages(AQUA_600_ID, {
     publicImages: aquaTempPublic,
@@ -713,7 +714,7 @@ try {
       product: { id: FIXTURE_ID, name: "Fixture", image: fixtureSaved.image },
       trashRoot: archiveFailPath,
       resolvePath: () =>
-        join(fixturePublic, "cards", "cigarettes", `${FIXTURE_ID}.webp`),
+        join(fixturePublic, "cards", `${FIXTURE_ID}.webp`),
     });
   } catch {
     archiveFailed = true;
@@ -741,7 +742,7 @@ try {
     tempTxOptions(restoreCatalogDir, restorePublic)
   );
   assert("restore-path assign succeeds", restoreAssigned.ok, restoreAssigned.error);
-  const restoreCard = join(restorePublic, "cards", "cigarettes", `${FIXTURE_ID}.webp`);
+  const restoreCard = join(restorePublic, "cards", `${FIXTURE_ID}.webp`);
   const metadataFail = await removeAssignedImage(FIXTURE_ID, {
     ...tempTxOptions(restoreCatalogDir, restorePublic),
     trashDir: join(restorePublic, ".trash"),
@@ -783,10 +784,10 @@ try {
   );
   assert(
     "active customer paths no longer resolve after removal",
-    !existsSync(join(fixturePublic, "cards", "cigarettes", `${FIXTURE_ID}.webp`)) &&
-      !existsSync(join(fixturePublic, "details", "cigarettes", `${FIXTURE_ID}.webp`)) &&
+    !existsSync(join(fixturePublic, "cards", `${FIXTURE_ID}.webp`)) &&
+      !existsSync(join(fixturePublic, "details", `${FIXTURE_ID}.webp`)) &&
       !existsSync(
-        join(fixturePublic, "originals", "cigarettes", `${FIXTURE_ID}-original.png`)
+        join(fixturePublic, "originals", `${FIXTURE_ID}-original.png`)
       )
   );
   const afterRemoveProduct = JSON.parse(

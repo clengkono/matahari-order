@@ -182,11 +182,15 @@ try {
 
   assert(
     "safe owner image path",
-    isSafeOwnerPath("public/product-images/cards/cigarettes/prod-aqua-botol-600ml.webp")
+    isSafeOwnerPath("public/product-images/cards/prod-aqua-botol-600ml.webp")
+  );
+  assert(
+    "canonical originals are safe owner data",
+    isSafeOwnerPath("public/product-images/originals/prod-aqua-botol-600ml-original.png")
   );
   assert(
     "safe owner path with spaces",
-    isSafeOwnerPath("public/product-images/cards/cigarettes/prod aqua botol.webp")
+    isSafeOwnerPath("public/product-images/cards/prod aqua botol.webp")
   );
   assert(
     "products.json is a safe owner path",
@@ -214,17 +218,17 @@ try {
   );
 
   const mixed = classifyChangedPaths([
-    "public/product-images/cards/cigarettes/prod-aqua-botol-600ml.webp",
+    "public/product-images/cards/prod-aqua-botol-600ml.webp",
     "src/components/CatalogueStudio.jsx",
   ]);
   assert("mixed image + component is flagged", mixed.mixed && mixed.hasDeveloper);
 
   const quoted = parseGitStatusPorcelain(
-    '?? "public/product-images/cards/cigarettes/prod aqua.webp"\n'
+    '?? "public/product-images/cards/prod aqua.webp"\n'
   );
   assert(
     "porcelain quoted path with spaces is parsed",
-    quoted[0]?.path === "public/product-images/cards/cigarettes/prod aqua.webp"
+    quoted[0]?.path === "public/product-images/cards/prod aqua.webp"
   );
 
   const twelve = Array.from({ length: 12 }, (_, index) => ({

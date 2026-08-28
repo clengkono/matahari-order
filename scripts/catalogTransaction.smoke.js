@@ -347,9 +347,9 @@ function main() {
     const imageMeta = saveAssignedImageMetadata(
       "prod-ave-20",
       {
-        card: "/product-images/cards/cigarettes/prod-ave-20.webp",
-        detail: "/product-images/details/cigarettes/prod-ave-20.webp",
-        original: "/product-images/originals/cigarettes/prod-ave-20-original.png",
+        card: "/product-images/cards/prod-ave-20.webp",
+        detail: "/product-images/details/prod-ave-20.webp",
+        original: "/product-images/originals/prod-ave-20-original.png",
       },
       txOptions(dirs, {
         validateOptions: {
@@ -605,10 +605,10 @@ function main() {
     const imageAfterMeta = saveAssignedImageMetadata(
       "prod-52-kretek-20",
       {
-        card: "/product-images/cards/cigarettes/prod-52-kretek-20.webp",
-        detail: "/product-images/details/cigarettes/prod-52-kretek-20.webp",
+        card: "/product-images/cards/prod-52-kretek-20.webp",
+        detail: "/product-images/details/prod-52-kretek-20.webp",
         original:
-          "/product-images/originals/cigarettes/prod-52-kretek-20-original.png",
+          "/product-images/originals/prod-52-kretek-20-original.png",
       },
       metaTxOptions(dirs)
     );

@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { normalizeSearchText } from "../src/utils/productSearch.js";
+import { canonicalPathErrors } from "./imagePaths.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -229,6 +230,9 @@ function validateProductImages(products, { publicDir, fileExists } = {}) {
       errors.push(...result.errors);
       if (result.normalizedPath) {
         errors.push(
+          ...canonicalPathErrors(result.normalizedPath, productId, "card")
+        );
+        errors.push(
           ...validateServedImageFilename(result.normalizedPath, productId, "card")
         );
         if (seenCard.has(result.normalizedPath)) {
@@ -250,6 +254,9 @@ function validateProductImages(products, { publicDir, fileExists } = {}) {
       );
       errors.push(...result.errors);
       if (result.normalizedPath) {
+        errors.push(
+          ...canonicalPathErrors(result.normalizedPath, productId, "detail")
+        );
         errors.push(
           ...validateServedImageFilename(
             result.normalizedPath,
@@ -276,6 +283,9 @@ function validateProductImages(products, { publicDir, fileExists } = {}) {
       );
       errors.push(...result.errors);
       if (result.normalizedPath) {
+        errors.push(
+          ...canonicalPathErrors(result.normalizedPath, productId, "original")
+        );
         errors.push(
           ...validateOriginalImageFilename(result.normalizedPath, productId)
         );

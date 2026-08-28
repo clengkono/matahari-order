@@ -141,33 +141,37 @@ Studio preserves the whole package using `fit: contain` on a warm neutral backgr
 
 ## Storage locations
 
-The on-disk bucket is still named `cigarettes/` for historical reasons. It is **not** a category folder. Category edits do not move files. Filenames are the product ID.
+Active images are stored by product ID only. There is no category folder, and the historical `cigarettes/` bucket is not used for new or migrated files.
 
 Original uploads (unwatermarked):
 
-`public/product-images/originals/cigarettes/<product-id>-original.<ext>`
+`public/product-images/originals/<product-id>-original.<ext>`
 
 Generated card images (360 × 360 WebP, watermarked):
 
-`public/product-images/cards/cigarettes/<product-id>.webp`
+`public/product-images/cards/<product-id>.webp`
 
 Generated detail images (900 × 900 WebP, watermarked):
 
-`public/product-images/details/cigarettes/<product-id>.webp`
+`public/product-images/details/<product-id>.webp`
 
 Browser paths written into the catalogue look like:
 
-- `/product-images/cards/cigarettes/<product-id>.webp`
-- `/product-images/details/cigarettes/<product-id>.webp`
-- `/product-images/originals/cigarettes/<product-id>-original.<ext>`
+- `/product-images/cards/<product-id>.webp`
+- `/product-images/details/<product-id>.webp`
+- `/product-images/originals/<product-id>-original.<ext>`
 
-Existing files were not moved. New uploads for any category use the same layout.
+The customer catalogue exposes **card + detail only**. Original remains Studio/internal metadata.
+
+Category edits do not move files. Product ID is the stable image identity.
 
 Removed images are copied (not served to customers) to:
 
 `public/product-images/.trash/<timestamp>/<product-id>/`
 
 That folder holds the archived original/card/detail files plus `manifest.json` (`productId`, `removedAt`, source paths). It is gitignored. Vite can still serve a guessed URL under `/product-images/.trash/…`; customer catalogue JSON never includes those paths.
+
+Stage 5F migration copies files first, then updates `products.json` in a catalogue transaction, then deletes leftover `cigarettes/` files. If the process dies after the copy and before the JSON write, both locations can exist while metadata still points at the old path. Re-run the guarded migration; it is written to continue safely. If JSON succeeds and process dies before deleting leftovers, metadata is already canonical and a second run is a no-op besides leftover cleanup.
 
 ---
 

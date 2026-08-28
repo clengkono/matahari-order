@@ -13,9 +13,9 @@
     "favorite": true,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-apache-16.webp",
-      "detail": "/product-images/details/cigarettes/prod-apache-16.webp",
-      "original": "/product-images/originals/cigarettes/prod-apache-16-original.png"
+      "card": "/product-images/cards/prod-apache-16.webp",
+      "detail": "/product-images/details/prod-apache-16.webp",
+      "original": "/product-images/originals/prod-apache-16-original.png"
     }
   },
   {
@@ -221,9 +221,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-dunhill-hitam-filter-16.webp",
-      "detail": "/product-images/details/cigarettes/prod-dunhill-hitam-filter-16.webp",
-      "original": "/product-images/originals/cigarettes/prod-dunhill-hitam-filter-16-original.png"
+      "card": "/product-images/cards/prod-dunhill-hitam-filter-16.webp",
+      "detail": "/product-images/details/prod-dunhill-hitam-filter-16.webp",
+      "original": "/product-images/originals/prod-dunhill-hitam-filter-16-original.png"
     }
   },
   {
@@ -268,9 +268,9 @@
     "favorite": true,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-glory-16.webp",
-      "detail": "/product-images/details/cigarettes/prod-glory-16.webp",
-      "original": "/product-images/originals/cigarettes/prod-glory-16-original.png"
+      "card": "/product-images/cards/prod-glory-16.webp",
+      "detail": "/product-images/details/prod-glory-16.webp",
+      "original": "/product-images/originals/prod-glory-16-original.png"
     }
   },
   {
@@ -315,9 +315,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-gudang-garam-merah-16.webp",
-      "detail": "/product-images/details/cigarettes/prod-gudang-garam-merah-16.webp",
-      "original": "/product-images/originals/cigarettes/prod-gudang-garam-merah-16-original.png"
+      "card": "/product-images/cards/prod-gudang-garam-merah-16.webp",
+      "detail": "/product-images/details/prod-gudang-garam-merah-16.webp",
+      "original": "/product-images/originals/prod-gudang-garam-merah-16-original.png"
     }
   },
   {
@@ -327,9 +327,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-harum-manis-20.webp",
-      "detail": "/product-images/details/cigarettes/prod-harum-manis-20.webp",
-      "original": "/product-images/originals/cigarettes/prod-harum-manis-20-original.jpg"
+      "card": "/product-images/cards/prod-harum-manis-20.webp",
+      "detail": "/product-images/details/prod-harum-manis-20.webp",
+      "original": "/product-images/originals/prod-harum-manis-20-original.jpg"
     }
   },
   {
@@ -437,9 +437,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-nation-gold-20.webp",
-      "detail": "/product-images/details/cigarettes/prod-nation-gold-20.webp",
-      "original": "/product-images/originals/cigarettes/prod-nation-gold-20-original.png"
+      "card": "/product-images/cards/prod-nation-gold-20.webp",
+      "detail": "/product-images/details/prod-nation-gold-20.webp",
+      "original": "/product-images/originals/prod-nation-gold-20-original.png"
     }
   },
   {
@@ -589,9 +589,9 @@
     "favorite": true,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-troy-20.webp",
-      "detail": "/product-images/details/cigarettes/prod-troy-20.webp",
-      "original": "/product-images/originals/cigarettes/prod-troy-20-original.jpg"
+      "card": "/product-images/cards/prod-troy-20.webp",
+      "detail": "/product-images/details/prod-troy-20.webp",
+      "original": "/product-images/originals/prod-troy-20-original.jpg"
     }
   },
   {
@@ -1287,9 +1287,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-indomie-mie-goreng-cakalang.webp",
-      "detail": "/product-images/details/cigarettes/prod-indomie-mie-goreng-cakalang.webp",
-      "original": "/product-images/originals/cigarettes/prod-indomie-mie-goreng-cakalang-original.png"
+      "card": "/product-images/cards/prod-indomie-mie-goreng-cakalang.webp",
+      "detail": "/product-images/details/prod-indomie-mie-goreng-cakalang.webp",
+      "original": "/product-images/originals/prod-indomie-mie-goreng-cakalang-original.png"
     }
   },
   {
@@ -1299,9 +1299,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-indomie-mie-cakalang-kuah.webp",
-      "detail": "/product-images/details/cigarettes/prod-indomie-mie-cakalang-kuah.webp",
-      "original": "/product-images/originals/cigarettes/prod-indomie-mie-cakalang-kuah-original.png"
+      "card": "/product-images/cards/prod-indomie-mie-cakalang-kuah.webp",
+      "detail": "/product-images/details/prod-indomie-mie-cakalang-kuah.webp",
+      "original": "/product-images/originals/prod-indomie-mie-cakalang-kuah-original.png"
     }
   },
   {
@@ -2200,9 +2200,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-indomilk-botol-coklat.webp",
-      "detail": "/product-images/details/cigarettes/prod-indomilk-botol-coklat.webp",
-      "original": "/product-images/originals/cigarettes/prod-indomilk-botol-coklat-original.png"
+      "card": "/product-images/cards/prod-indomilk-botol-coklat.webp",
+      "detail": "/product-images/details/prod-indomilk-botol-coklat.webp",
+      "original": "/product-images/originals/prod-indomilk-botol-coklat-original.png"
     }
   },
   {
@@ -2387,9 +2387,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-supermie-ayam-bawang.webp",
-      "detail": "/product-images/details/cigarettes/prod-supermie-ayam-bawang.webp",
-      "original": "/product-images/originals/cigarettes/prod-supermie-ayam-bawang-original.png"
+      "card": "/product-images/cards/prod-supermie-ayam-bawang.webp",
+      "detail": "/product-images/details/prod-supermie-ayam-bawang.webp",
+      "original": "/product-images/originals/prod-supermie-ayam-bawang-original.png"
     }
   },
   {
@@ -2476,9 +2476,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-indomilk-putih-blek-370g.webp",
-      "detail": "/product-images/details/cigarettes/prod-indomilk-putih-blek-370g.webp",
-      "original": "/product-images/originals/cigarettes/prod-indomilk-putih-blek-370g-original.png"
+      "card": "/product-images/cards/prod-indomilk-putih-blek-370g.webp",
+      "detail": "/product-images/details/prod-indomilk-putih-blek-370g.webp",
+      "original": "/product-images/originals/prod-indomilk-putih-blek-370g-original.png"
     }
   },
   {
@@ -2488,9 +2488,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-indomilk-coklat-blek-370g.webp",
-      "detail": "/product-images/details/cigarettes/prod-indomilk-coklat-blek-370g.webp",
-      "original": "/product-images/originals/cigarettes/prod-indomilk-coklat-blek-370g-original.png"
+      "card": "/product-images/cards/prod-indomilk-coklat-blek-370g.webp",
+      "detail": "/product-images/details/prod-indomilk-coklat-blek-370g.webp",
+      "original": "/product-images/originals/prod-indomilk-coklat-blek-370g-original.png"
     }
   },
   {
@@ -4577,7 +4577,12 @@
     "name": "Milkita Candy Stroberi Premium (30)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milkita-candy-stroberi-premium-30.webp",
+      "detail": "/product-images/details/prod-milkita-candy-stroberi-premium-30.webp",
+      "original": "/product-images/originals/prod-milkita-candy-stroberi-premium-30-original.png"
+    }
   },
   {
     "id": "prod-milkita-candy-milk-30",
@@ -6952,9 +6957,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-aqua-botol-1500ml.webp",
-      "detail": "/product-images/details/cigarettes/prod-aqua-botol-1500ml.webp",
-      "original": "/product-images/originals/cigarettes/prod-aqua-botol-1500ml-original.png"
+      "card": "/product-images/cards/prod-aqua-botol-1500ml.webp",
+      "detail": "/product-images/details/prod-aqua-botol-1500ml.webp",
+      "original": "/product-images/originals/prod-aqua-botol-1500ml-original.png"
     }
   },
   {
@@ -6964,9 +6969,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-aqua-botol-330ml.webp",
-      "detail": "/product-images/details/cigarettes/prod-aqua-botol-330ml.webp",
-      "original": "/product-images/originals/cigarettes/prod-aqua-botol-330ml-original.png"
+      "card": "/product-images/cards/prod-aqua-botol-330ml.webp",
+      "detail": "/product-images/details/prod-aqua-botol-330ml.webp",
+      "original": "/product-images/originals/prod-aqua-botol-330ml-original.png"
     }
   },
   {
@@ -6976,9 +6981,9 @@
     "favorite": false,
     "pattern": "fixed-product",
     "image": {
-      "card": "/product-images/cards/cigarettes/prod-aqua-botol-600ml.webp",
-      "detail": "/product-images/details/cigarettes/prod-aqua-botol-600ml.webp",
-      "original": "/product-images/originals/cigarettes/prod-aqua-botol-600ml-original.png"
+      "card": "/product-images/cards/prod-aqua-botol-600ml.webp",
+      "detail": "/product-images/details/prod-aqua-botol-600ml.webp",
+      "original": "/product-images/originals/prod-aqua-botol-600ml-original.png"
     }
   },
   {

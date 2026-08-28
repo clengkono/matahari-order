@@ -42,6 +42,12 @@ import {
   parseProductMetadataPatch,
   updateProductMetadata,
 } from "./studioProductMetadata.js";
+import {
+  canonicalImagePublicUrls,
+  ensureCanonicalImageDirs,
+  findOriginalAbsolutePath,
+  originalExtensionFromPublicUrl,
+} from "./imagePaths.js";
 
 sharp.cache(false);
 
@@ -71,8 +77,6 @@ const WINDOWS_LOCK_CODES = new Set([
 const PRODUCTS_PATH = join(ROOT, "src", "catalog", "products.json");
 const BACKUPS_DIR = join(ROOT, "src", "catalog", "backups");
 const PUBLIC_IMAGES = join(ROOT, "public", "product-images");
-/** Historical on-disk bucket. Not a category. Category edits do not move files. */
-const IMAGE_BUCKET = "cigarettes";
 
 const MIME_TO_EXT = {
   "image/jpeg": "jpg",
@@ -90,15 +94,8 @@ const EXT_TO_MIME = {
 const ACCEPTED_FORMATS = new Set(["jpeg", "jpg", "png", "webp"]);
 
 function ensureDirs() {
-  const dirs = [
-    join(PUBLIC_IMAGES, "originals", "cigarettes"),
-    join(PUBLIC_IMAGES, "cards", "cigarettes"),
-    join(PUBLIC_IMAGES, "details", "cigarettes"),
-    BACKUPS_DIR,
-  ];
-  for (const dir of dirs) {
-    mkdirSync(dir, { recursive: true });
-  }
+  ensureCanonicalImageDirs(PUBLIC_IMAGES, mkdirSync);
+  mkdirSync(BACKUPS_DIR, { recursive: true });
 }
 
 function sendJson(res, status, body) {
@@ -161,10 +158,6 @@ function validateProductId(productId) {
   return null;
 }
 
-function publicPath(relativeFromPublic) {
-  return `/${relativeFromPublic.replace(/\\/g, "/")}`;
-}
-
 function publicDirFromImages(publicImages) {
   return resolve(join(publicImages, ".."));
 }
@@ -186,34 +179,6 @@ function resolvePublicImagePath(publicUrl, publicDir = join(ROOT, "public")) {
     return null;
   }
   return absolute;
-}
-
-function findOriginalAbsolutePath(product, publicImages = PUBLIC_IMAGES) {
-  const fromMeta = resolvePublicImagePath(
-    product?.image?.original,
-    publicDirFromImages(publicImages)
-  );
-  if (fromMeta) {
-    return existsSync(fromMeta) ? fromMeta : null;
-  }
-
-  if (!product?.id) {
-    return null;
-  }
-
-  for (const ext of Object.keys(EXT_TO_MIME)) {
-    const candidate = join(
-      publicImages,
-      "originals",
-      IMAGE_BUCKET,
-      `${product.id}-original.${ext}`
-    );
-    if (existsSync(candidate)) {
-      return candidate;
-    }
-  }
-
-  return null;
 }
 
 function imageSummaryPayload(options = {}) {
@@ -653,14 +618,11 @@ async function processAndSaveImage(productId, buffer, mimeType, options = {}) {
   }
 
   const publicImages = options.publicImages ?? PUBLIC_IMAGES;
-  ensureDirs();
-  mkdirSync(join(publicImages, "originals", IMAGE_BUCKET), { recursive: true });
-  mkdirSync(join(publicImages, "cards", IMAGE_BUCKET), { recursive: true });
-  mkdirSync(join(publicImages, "details", IMAGE_BUCKET), { recursive: true });
+  ensureCanonicalImageDirs(publicImages, mkdirSync);
 
-  const originalsDir = join(publicImages, "originals", IMAGE_BUCKET);
-  const cardsDir = join(publicImages, "cards", IMAGE_BUCKET);
-  const detailsDir = join(publicImages, "details", IMAGE_BUCKET);
+  const originalsDir = join(publicImages, "originals");
+  const cardsDir = join(publicImages, "cards");
+  const detailsDir = join(publicImages, "details");
 
   const originalName = `${productId}-original.${ext}`;
   const cardName = `${productId}.webp`;
@@ -765,13 +727,7 @@ async function processAndSaveImage(productId, buffer, mimeType, options = {}) {
       safeUnlink(stale);
     }
 
-    const image = {
-      card: publicPath(`product-images/cards/${IMAGE_BUCKET}/${cardName}`),
-      detail: publicPath(`product-images/details/${IMAGE_BUCKET}/${detailName}`),
-      original: publicPath(
-        `product-images/originals/${IMAGE_BUCKET}/${originalName}`
-      ),
-    };
+    const image = canonicalImagePublicUrls(productId, ext);
 
     return {
       image,
@@ -901,10 +857,10 @@ async function regenerateDerivedImages(productId, options = {}) {
     throw error;
   }
 
-  ensureDirs();
+  ensureCanonicalImageDirs(publicImages, mkdirSync);
 
-  const cardsDir = join(publicImages, "cards", IMAGE_BUCKET);
-  const detailsDir = join(publicImages, "details", IMAGE_BUCKET);
+  const cardsDir = join(publicImages, "cards");
+  const detailsDir = join(publicImages, "details");
   const cardName = `${productId}.webp`;
   const detailName = `${productId}.webp`;
   const cardAbs = join(cardsDir, cardName);
@@ -968,19 +924,11 @@ async function regenerateDerivedImages(productId, options = {}) {
     }
     priors.length = 0;
 
-    const image = {
-      card:
-        product.image?.card ??
-        publicPath(`product-images/cards/${IMAGE_BUCKET}/${cardName}`),
-      detail:
-        product.image?.detail ??
-        publicPath(`product-images/details/${IMAGE_BUCKET}/${detailName}`),
-      original:
-        product.image?.original ??
-        publicPath(
-          `product-images/originals/${IMAGE_BUCKET}/${basenameSafe(originalAbs)}`
-        ),
-    };
+    const originalExt =
+      originalExtensionFromPublicUrl(product.image?.original) ||
+      basenameSafe(originalAbs).replace(/^.*-original\./, "") ||
+      "png";
+    const image = canonicalImagePublicUrls(productId, originalExt);
 
     return {
       productId,

@@ -328,6 +328,8 @@ function main() {
     const fixtureBuild = buildCustomerCatalog({
       catalog: proposed,
       outputPath: fixtureOutput,
+      // Importer snapshot under tmp/ is not live image storage.
+      skipValidate: true,
     });
     assert(
       "generator produces compact fixture artefact",
