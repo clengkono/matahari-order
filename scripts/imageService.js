@@ -43,6 +43,20 @@ import {
   updateProductMetadata,
 } from "./studioProductMetadata.js";
 import {
+  clearOwnerDefaultUnit,
+  listStudioDefaults,
+  parseDefaultUnitPatch,
+  setOwnerDefaultUnit,
+} from "./studioCatalogDefaults.js";
+import {
+  createStudioFamily,
+  deleteStudioFamily,
+  listStudioFamilies,
+  parseFamilyCreateBody,
+  parseFamilyPatchBody,
+  updateStudioFamily,
+} from "./studioProductFamilies.js";
+import {
   canonicalImagePublicUrls,
   ensureCanonicalImageDirs,
   findOriginalAbsolutePath,
@@ -1414,10 +1428,256 @@ function metadataStatus(result) {
   if (result.code === "NOT_FOUND") {
     return 404;
   }
-  if (result.code === "INVALID_INPUT" || result.code === "VALIDATION_FAILED") {
+  if (
+    result.code === "INVALID_INPUT" ||
+    result.code === "VALIDATION_FAILED" ||
+    result.code === "UNIT_UNAVAILABLE" ||
+    result.code === "UNIT_INACTIVE" ||
+    result.code === "FAMILY_TOO_SMALL" ||
+    result.code === "DUPLICATE_MEMBER" ||
+    result.code === "UNKNOWN_MEMBER" ||
+    result.code === "FAMILY_CONFLICT"
+  ) {
     return 400;
   }
   return 500;
+}
+
+async function readJsonObjectBody(req, res, emptyError) {
+  let raw;
+  try {
+    raw = await readBody(req, METADATA_MAX_BYTES);
+  } catch (error) {
+    sendJson(res, error.status || 400, {
+      error: error.message || "Could not read the request.",
+    });
+    return null;
+  }
+
+  try {
+    return JSON.parse(raw.toString("utf8") || "{}");
+  } catch {
+    sendJson(res, 400, {
+      error: emptyError,
+      code: "INVALID_INPUT",
+    });
+    return null;
+  }
+}
+
+function sendStudioWriteFailure(res, result) {
+  sendJson(res, metadataStatus(result), {
+    error: result.error || "Could not save.",
+    code: result.code,
+    validationErrors: result.validationErrors,
+  });
+}
+
+function handleListStudioDefaults(res) {
+  try {
+    const catalog = loadCatalog();
+    sendJson(res, 200, {
+      ...listStudioDefaults(catalog),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+async function handlePatchStudioDefaultUnit(req, res, productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  const body = await readJsonObjectBody(
+    req,
+    res,
+    "Expected JSON with defaultUnitName."
+  );
+  if (body === null) {
+    return;
+  }
+
+  const parsed = parseDefaultUnitPatch(body);
+  if (!parsed.ok) {
+    sendJson(res, 400, { error: parsed.error, code: parsed.code });
+    return;
+  }
+
+  const result = setOwnerDefaultUnit({
+    productId,
+    defaultUnitName: parsed.defaultUnitName,
+  });
+
+  if (!result.ok) {
+    sendStudioWriteFailure(res, result);
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    productId: result.productId,
+    defaultUnitName: result.defaultUnitName,
+    created: result.created,
+    updated: result.updated,
+    default: result.default,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+    customerCatalog: result.customerCatalog,
+  });
+}
+
+function handleDeleteStudioDefaultUnit(res, productId) {
+  const idError = validateProductId(productId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  const result = clearOwnerDefaultUnit({ productId });
+  if (!result.ok) {
+    sendStudioWriteFailure(res, result);
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    productId: result.productId,
+    cleared: result.cleared,
+    default: result.default,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+    customerCatalog: result.customerCatalog,
+  });
+}
+
+function handleListStudioFamilies(res) {
+  try {
+    const catalog = loadCatalog();
+    sendJson(res, 200, {
+      ...listStudioFamilies(catalog),
+      warning: studioWarning(),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message || "Failed to read catalogue." });
+  }
+}
+
+async function handleCreateStudioFamily(req, res) {
+  const body = await readJsonObjectBody(
+    req,
+    res,
+    "Expected JSON with name and members."
+  );
+  if (body === null) {
+    return;
+  }
+
+  const parsed = parseFamilyCreateBody(body);
+  if (!parsed.ok) {
+    sendJson(res, 400, { error: parsed.error, code: parsed.code });
+    return;
+  }
+
+  const result = createStudioFamily({
+    name: parsed.name,
+    members: parsed.members,
+  });
+
+  if (!result.ok) {
+    sendStudioWriteFailure(res, result);
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    family: result.family,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+    customerCatalog: result.customerCatalog,
+  });
+}
+
+function validateFamilyId(familyId) {
+  if (typeof familyId !== "string" || !PRODUCT_ID_PATTERN.test(familyId)) {
+    return "Invalid family ID.";
+  }
+  if (familyId.includes("..") || familyId.includes("/") || familyId.includes("\\")) {
+    return "Invalid family ID.";
+  }
+  return null;
+}
+
+async function handlePatchStudioFamily(req, res, familyId) {
+  const idError = validateFamilyId(familyId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  const body = await readJsonObjectBody(
+    req,
+    res,
+    "Expected JSON with name and/or members."
+  );
+  if (body === null) {
+    return;
+  }
+
+  const parsed = parseFamilyPatchBody(body);
+  if (!parsed.ok) {
+    sendJson(res, 400, { error: parsed.error, code: parsed.code });
+    return;
+  }
+
+  const result = updateStudioFamily({
+    familyId,
+    ...parsed.patch,
+  });
+
+  if (!result.ok) {
+    sendStudioWriteFailure(res, result);
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    family: result.family,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+    customerCatalog: result.customerCatalog,
+  });
+}
+
+function handleDeleteStudioFamily(res, familyId) {
+  const idError = validateFamilyId(familyId);
+  if (idError) {
+    sendJson(res, 400, { error: idError });
+    return;
+  }
+
+  const result = deleteStudioFamily({ familyId });
+  if (!result.ok) {
+    sendStudioWriteFailure(res, result);
+    return;
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    noop: Boolean(result.noop),
+    familyId: result.familyId,
+    deleted: result.deleted,
+    changedFiles: result.changedFiles,
+    backupId: result.backupId,
+    customerCatalog: result.customerCatalog,
+  });
 }
 
 async function handleUpdateStudioProduct(req, res, productId) {
@@ -1533,6 +1793,49 @@ const server = createServer(async (req, res) => {
   if (req.method === "GET" && pathname === "/api/studio/categories") {
     handleStudioCategories(res);
     return;
+  }
+
+  if (req.method === "GET" && pathname === "/api/studio/defaults") {
+    handleListStudioDefaults(res);
+    return;
+  }
+
+  const defaultUnitMatch = pathname.match(
+    /^\/api\/studio\/products\/([^/]+)\/default-unit$/
+  );
+  if (defaultUnitMatch) {
+    const productId = decodeURIComponent(defaultUnitMatch[1]);
+    if (req.method === "PATCH") {
+      await handlePatchStudioDefaultUnit(req, res, productId);
+      return;
+    }
+    if (req.method === "DELETE") {
+      handleDeleteStudioDefaultUnit(res, productId);
+      return;
+    }
+  }
+
+  if (req.method === "GET" && pathname === "/api/studio/families") {
+    handleListStudioFamilies(res);
+    return;
+  }
+
+  if (req.method === "POST" && pathname === "/api/studio/families") {
+    await handleCreateStudioFamily(req, res);
+    return;
+  }
+
+  const studioFamilyMatch = pathname.match(/^\/api\/studio\/families\/([^/]+)$/);
+  if (studioFamilyMatch) {
+    const familyId = decodeURIComponent(studioFamilyMatch[1]);
+    if (req.method === "PATCH") {
+      await handlePatchStudioFamily(req, res, familyId);
+      return;
+    }
+    if (req.method === "DELETE") {
+      handleDeleteStudioFamily(res, familyId);
+      return;
+    }
   }
 
   const studioProductMatch = pathname.match(

@@ -329,14 +329,40 @@ Keyboard: `Ctrl+F` on the Products tab focuses the Products search, not the imag
 
 ---
 
+## Defaults and families (local API)
+
+Studio remains **local-only** (`127.0.0.1:8787`, no authentication). These routes are for a future Studio tab. There is no Defaults or Families UI in this stage.
+
+Owner default units live in `src/catalog/productDefaults.json`. A row means the owner confirmed that unit (`ownerConfigured: true`), even when it matches the import/heuristic fallback. `DELETE` removes that row; the effective default returns to the variant/import fallback. There is no customer-facing “owner configured” flag.
+
+Product families continue to live in `src/catalog/productFamilies.json`. Writes are catalogue transactions: validate, persist atomically, then rebuild the generated customer catalogue. A no-op write does not rebuild. Recommendations are not rewritten. Deleting a family does not delete member products.
+
+`GET /api/studio/products` remains the owner product picker (customer name, aliases, product id, POS name, POS code). Do not add a second full-catalogue list.
+
+If a source write succeeds and the customer rebuild then fails, Studio reports `customerCatalog.ok: false` and a warning. The source change is not rolled back. Run `npm run catalog:customer-build`.
+
+Future Studio UI MUST surface `customerCatalog.ok: false` as a prominent partial-success warning, not an ordinary successful-save indicator. Do not add rollback-after-rebuild in this stage.
+
+---
+
 ## API (local image service)
 
 Backwards-compatible cigarette routes still exist. Images/Queue now use all-product routes:
 
 - `GET /api/studio/images` — all products, image stats, categories, recent assign-image IDs
 - `POST /api/studio/images/preview` — generate card/detail previews without writing files
+- `GET /api/studio/products` — owner product list for Products/Images and future pickers
+- `GET /api/studio/products/:id` — one owner product row
+- `PATCH /api/studio/products/:id` — customer-facing name and/or category
 - `POST /api/studio/products/:id/image` — assign/replace
 - `POST /api/studio/products/:id/image/regenerate` — rebuild card/detail from original using current framing and watermark rules
 - `POST /api/studio/products/:id/image/remove` — `{ confirm: true }` archives files, removes image metadata, rebuilds the customer catalogue
+- `GET /api/studio/defaults` — owner default-unit rows (`availableUnits`, `currentDefaultUnit`, `ownerDefaultUnit`, `ownerConfigured`)
+- `PATCH /api/studio/products/:id/default-unit` — `{ "defaultUnitName": "Pak" }` confirms an owner override
+- `DELETE /api/studio/products/:id/default-unit` — clear that override; missing override is a no-op
+- `GET /api/studio/families` — families and member identity (no prices or conversions)
+- `POST /api/studio/families` — `{ "name", "members" }` (minimum 2, no cross-family members)
+- `PATCH /api/studio/families/:id` — name and/or members; id is immutable
+- `DELETE /api/studio/families/:id` — remove the family only
 - `GET /api/studio/cigarettes` — Rokok-only list (compat)
 - `POST /api/studio/cigarettes/:id/image` — same assign handler as the all-product route

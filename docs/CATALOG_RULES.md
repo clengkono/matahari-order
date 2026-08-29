@@ -55,6 +55,8 @@ Do not dual-write owner defaults onto `variants.json` or `products.json`. Normal
 
 Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use the identity files plus the owner-curated files. Catalogue transactions backup, write, roll back, and undo both `productFamilies.json` and `productDefaults.json`.
 
+Local Studio mutation APIs (`127.0.0.1:8787` only) confirm owner default units and manage families through that same transaction layer. Clearing an owner default returns the product to its import fallback. Family membership is never guessed and is never written onto recommendations.
+
 The customer app imports the generated artefact `src/catalog/generated/customerCatalog.json`.
 
 - Do not edit the generated file by hand.
