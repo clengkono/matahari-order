@@ -47,6 +47,10 @@ import {
 } from "./utils/productSearch";
 import { getRecommendedProducts } from "./utils/recommendations";
 import {
+  excludeSimilarFromRecommendations,
+  resolveSimilarProducts,
+} from "./utils/productFamilies";
+import {
   buildSalesPopularity,
   getSeringDipesanProducts,
 } from "./utils/salesPopularity";
@@ -248,13 +252,25 @@ export default function App() {
       ...cart.map((line) => ({ productId: line.productId })),
     ];
 
-    return getRecommendedProducts({
-      cart: recommendationSources,
-      relationships: catalogRecommendations,
-      products,
-      limit: 8,
-    });
+    return excludeSimilarFromRecommendations(
+      getRecommendedProducts({
+        cart: recommendationSources,
+        relationships: catalogRecommendations,
+        products,
+        limit: 8,
+      }),
+      selectedProduct.similarProductIds
+    );
   }, [selectedProduct, cart]);
+
+  const similarProducts = useMemo(
+    () =>
+      resolveSimilarProducts(
+        selectedProduct?.similarProductIds,
+        productsById
+      ),
+    [selectedProduct]
+  );
 
   const hasOrder = lineCount > 0;
   const showReviewBar = hasOrder && !isProductInfoOpen;
@@ -896,6 +912,7 @@ export default function App() {
           cartCount={cartCount}
           productCount={productCount}
           recommendations={productPageRecommendations}
+          similarProducts={similarProducts}
           suppressEscape={isReviewOpen}
           onBack={handleProductBack}
           onAddToCart={addToCartWithFeedback}

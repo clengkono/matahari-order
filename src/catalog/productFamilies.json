@@ -1,0 +1,30 @@
+[
+  {
+    "id": "daia-sachet-46g",
+    "name": "Daia Sachet 46G",
+    "members": [
+      "prod-daia-bunga-sachet-46g",
+      "prod-daia-hijab-sachet-46g",
+      "prod-daia-lemon-sachet-46g",
+      "prod-daia-putih-sachet-46g",
+      "prod-daia-softener-sachet-46g",
+      "prod-daia-violet-sachet-46g"
+    ]
+  },
+  {
+    "id": "milkita-candy-premium-30",
+    "name": "Milkita Candy Premium (30)",
+    "members": [
+      "prod-milkita-candy-coklat-premium-30",
+      "prod-milkita-candy-stroberi-premium-30"
+    ]
+  },
+  {
+    "id": "indomilk-blek-370g",
+    "name": "Indomilk Blek 370G",
+    "members": [
+      "prod-indomilk-coklat-blek-370g",
+      "prod-indomilk-putih-blek-370g"
+    ]
+  }
+]

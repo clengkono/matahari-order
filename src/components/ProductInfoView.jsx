@@ -3,12 +3,51 @@ import ProductThumb from "./ProductThumb";
 import RecommendationCard from "./RecommendationCard";
 import { getCartUnitDisplayLabel } from "../utils/unitDisplay";
 
+function RelatedProductRow({ title, products, onAdd, onOpen }) {
+  if (!Array.isArray(products) || products.length === 0) {
+    return null;
+  }
+
+  return (
+    <section
+      className="orderReviewRecommendations productInfoRecommendations"
+      aria-label={title}
+    >
+      <div className="orderReviewRecommendationsHeader">
+        <h3 className="orderReviewRecommendationsTitle">
+          <span
+            className="orderReviewRecommendationsAccent"
+            aria-hidden="true"
+          >
+            ✦
+          </span>
+          {title}
+        </h3>
+        <p className="orderReviewRecommendationsHint">
+          Geser untuk melihat lebih banyak
+        </p>
+      </div>
+      <ul className="orderReviewRecoCarousel">
+        {products.map((related) => (
+          <RecommendationCard
+            key={related.id}
+            product={related}
+            onAdd={onAdd}
+            onOpen={onOpen}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function ProductInfoView({
   product,
   cartLine,
   cartCount,
   productCount,
   recommendations = [],
+  similarProducts = [],
   suppressEscape = false,
   onBack,
   onAddToCart,
@@ -54,7 +93,6 @@ function ProductInfoView({
   }, [onBack, suppressEscape]);
 
   const hints = product.customerUnitHints ?? [];
-  const hasRecommendations = recommendations.length > 0;
   const isInCart = Boolean(cartLine && cartLine.quantity >= 1);
   const selectedUnitLabel = getCartUnitDisplayLabel(selectedUnit);
   const addButtonLabel = isInCart
@@ -195,37 +233,18 @@ function ProductInfoView({
             </ul>
           ) : null}
 
-          {hasRecommendations ? (
-            <section
-              className="orderReviewRecommendations productInfoRecommendations"
-              aria-label="Sering Dipesan Bersama"
-            >
-              <div className="orderReviewRecommendationsHeader">
-                <h3 className="orderReviewRecommendationsTitle">
-                  <span
-                    className="orderReviewRecommendationsAccent"
-                    aria-hidden="true"
-                  >
-                    ✦
-                  </span>
-                  Sering Dipesan Bersama
-                </h3>
-                <p className="orderReviewRecommendationsHint">
-                  Geser untuk melihat lebih banyak
-                </p>
-              </div>
-              <ul className="orderReviewRecoCarousel">
-                {recommendations.map((recommended) => (
-                  <RecommendationCard
-                    key={recommended.id}
-                    product={recommended}
-                    onAdd={onQuickAddRecommendation}
-                    onOpen={onOpenRecommendation}
-                  />
-                ))}
-              </ul>
-            </section>
-          ) : null}
+          <RelatedProductRow
+            title="Produk Serupa"
+            products={similarProducts}
+            onAdd={onQuickAddRecommendation}
+            onOpen={onOpenRecommendation}
+          />
+          <RelatedProductRow
+            title="Sering Dipesan Bersama"
+            products={recommendations}
+            onAdd={onQuickAddRecommendation}
+            onOpen={onOpenRecommendation}
+          />
         </div>
 
         <div className="productInfoActions">

@@ -1,7 +1,7 @@
 /**
  * Build the compact customer catalogue artefact from the six-file source.
  *
- * Authoritative: src/catalog/{products,variants,units,aliases,mappings,recommendations}.json
+ * Authoritative: src/catalog/{products,variants,units,aliases,mappings,recommendations,productFamilies}.json
  * Generated:     src/catalog/generated/customerCatalog.json
  *
  * Does not change the source schema. Does not write POS mappings into the
@@ -21,6 +21,7 @@ import {
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { assembleProducts } from "../src/catalog/assembleProducts.js";
+import { deriveSimilarProductIds } from "../src/utils/productFamilies.js";
 import { validateCatalog } from "./buildCatalog.js";
 import {
   DEFAULT_CATALOG_DIR,
@@ -71,7 +72,7 @@ function compactImage(image) {
   return next;
 }
 
-function toCustomerProduct(assembled) {
+function toCustomerProduct(assembled, similarByProduct) {
   const product = {
     id: assembled.id,
     name: assembled.name,
@@ -91,6 +92,11 @@ function toCustomerProduct(assembled) {
     assembled.customerUnitHints.length > 0
   ) {
     product.customerUnitHints = assembled.customerUnitHints;
+  }
+
+  const similarProductIds = similarByProduct.get(assembled.id);
+  if (Array.isArray(similarProductIds) && similarProductIds.length > 0) {
+    product.similarProductIds = similarProductIds;
   }
 
   return product;
@@ -126,9 +132,12 @@ export function assembleCustomerCatalog(catalog) {
     variants: catalog.variants,
     units: catalog.units,
   });
+  const similarByProduct = deriveSimilarProductIds(catalog.productFamilies);
 
   return {
-    products: assembled.map(toCustomerProduct),
+    products: assembled.map((product) =>
+      toCustomerProduct(product, similarByProduct)
+    ),
     aliases: (catalog.aliases ?? []).map(toCustomerAlias),
     recommendations: (catalog.recommendations ?? []).map(
       toCustomerRecommendation
@@ -258,6 +267,9 @@ export function buildCustomerCatalog(options = {}) {
     productCount: customerCatalog.products.length,
     aliasCount: customerCatalog.aliases.length,
     recommendationCount: customerCatalog.recommendations.length,
+    familyCount: Array.isArray(catalog.productFamilies)
+      ? catalog.productFamilies.length
+      : 0,
   };
 }
 

@@ -201,6 +201,10 @@ try {
     isSafeOwnerPath("src/catalog/generated/customerCatalog.json")
   );
   assert(
+    "productFamilies.json is a safe owner path",
+    isSafeOwnerPath("src/catalog/productFamilies.json")
+  );
+  assert(
     "trash images are not safe to publish",
     isSafeOwnerPath("public/product-images/.trash/cards/x.webp") === false
   );

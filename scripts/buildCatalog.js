@@ -384,6 +384,108 @@ function validateCustomerUnitHints(variant, unitIds) {
   return errors;
 }
 
+function validateProductFamilies(productFamilies, productIds) {
+  const errors = [];
+
+  if (productFamilies === undefined || productFamilies === null) {
+    return errors;
+  }
+
+  if (!Array.isArray(productFamilies)) {
+    errors.push("productFamilies must be an array");
+    return errors;
+  }
+
+  const seenFamilyIds = new Map();
+  const productToFamily = new Map();
+
+  productFamilies.forEach((family, index) => {
+    const label = family?.id
+      ? `product family "${family.id}"`
+      : `productFamily[${index}]`;
+    const familyId = family?.id;
+    const members = family?.members;
+
+    if (
+      familyId === undefined ||
+      familyId === null ||
+      String(familyId).trim() === ""
+    ) {
+      errors.push(`${label} missing id`);
+    } else if (seenFamilyIds.has(String(familyId))) {
+      errors.push(`duplicate product family id "${familyId}"`);
+    } else {
+      seenFamilyIds.set(String(familyId), true);
+    }
+
+    if (!Array.isArray(members)) {
+      errors.push(`${label} members must be an array`);
+      return;
+    }
+
+    if (members.length < 2) {
+      errors.push(`${label} must have at least 2 members`);
+    }
+
+    const seenMembers = new Set();
+    for (const memberId of members) {
+      if (
+        memberId === undefined ||
+        memberId === null ||
+        String(memberId).trim() === ""
+      ) {
+        errors.push(`${label} has an empty member id`);
+        continue;
+      }
+
+      if (seenMembers.has(memberId)) {
+        errors.push(`${label} duplicate member "${memberId}"`);
+      } else {
+        seenMembers.add(memberId);
+      }
+
+      if (!productIds.has(memberId)) {
+        errors.push(`${label} has missing product "${memberId}"`);
+      }
+
+      if (productToFamily.has(memberId)) {
+        errors.push(
+          `product "${memberId}" belongs to multiple families ("${productToFamily.get(memberId)}" and "${familyId}")`
+        );
+      } else {
+        productToFamily.set(memberId, familyId ?? label);
+      }
+    }
+  });
+
+  return errors;
+}
+
+function duplicateFamilyNameWarnings(productFamilies) {
+  if (!Array.isArray(productFamilies)) {
+    return [];
+  }
+
+  const seen = new Map();
+  for (const family of productFamilies) {
+    const name =
+      typeof family?.name === "string" ? family.name.trim() : "";
+    if (!name) {
+      continue;
+    }
+    const list = seen.get(name) ?? [];
+    list.push(family.id ?? "(missing id)");
+    seen.set(name, list);
+  }
+
+  return [...seen.entries()]
+    .filter(([, ids]) => ids.length > 1)
+    .map(
+      ([name, ids]) =>
+        `duplicate product family name "${name}" (${ids.join(", ")})`
+    );
+}
+
 function validateRecommendations(recommendations, productIds) {
   const errors = [];
 
@@ -464,7 +566,15 @@ function validateRecommendations(recommendations, productIds) {
 }
 
 function validateCatalog(
-  { products, variants, units, aliases, mappings, recommendations },
+  {
+    products,
+    variants,
+    units,
+    aliases,
+    mappings,
+    recommendations,
+    productFamilies,
+  },
   options = {}
 ) {
   const errors = [];
@@ -681,13 +791,22 @@ function validateCatalog(
   }
 
   errors.push(...validateRecommendations(recommendations, productIds));
+  errors.push(...validateProductFamilies(productFamilies, productIds));
   errors.push(...validateProductImages(products, options));
 
   return errors;
 }
 
 function printSummary(
-  { products, variants, units, aliases, mappings, recommendations },
+  {
+    products,
+    variants,
+    units,
+    aliases,
+    mappings,
+    recommendations,
+    productFamilies,
+  },
   errors
 ) {
   console.log("Matahari Order — Catalogue Build");
@@ -699,6 +818,9 @@ function printSummary(
   console.log(`Mappings : ${mappings.length}`);
   console.log(
     `Reco     : ${Array.isArray(recommendations) ? recommendations.length : 0}`
+  );
+  console.log(
+    `Families : ${Array.isArray(productFamilies) ? productFamilies.length : 0}`
   );
   console.log("");
 
@@ -724,6 +846,7 @@ function main() {
   const aliases = loadJson("aliases.json");
   const mappings = loadJson("mappings.json");
   const recommendations = loadJson("recommendations.json");
+  const productFamilies = loadJson("productFamilies.json");
 
   if (
     !Array.isArray(products) ||
@@ -731,24 +854,28 @@ function main() {
     !Array.isArray(units) ||
     !Array.isArray(aliases) ||
     !Array.isArray(mappings) ||
-    !Array.isArray(recommendations)
+    !Array.isArray(recommendations) ||
+    !Array.isArray(productFamilies)
   ) {
     console.error("Catalogue JSON files must each contain an array.");
     process.exit(1);
   }
 
-  const errors = validateCatalog({
+  const catalog = {
     products,
     variants,
     units,
     aliases,
     mappings,
     recommendations,
-  });
-  printSummary(
-    { products, variants, units, aliases, mappings, recommendations },
-    errors
-  );
+    productFamilies,
+  };
+  const errors = validateCatalog(catalog);
+  printSummary(catalog, errors);
+
+  for (const warning of duplicateFamilyNameWarnings(productFamilies)) {
+    console.log(`Warning : ${warning}`);
+  }
 
   if (errors.length > 0) {
     process.exit(1);
@@ -763,4 +890,9 @@ if (isDirectRun) {
   main();
 }
 
-export { validateCatalog, validateProductImages };
+export {
+  duplicateFamilyNameWarnings,
+  validateCatalog,
+  validateProductFamilies,
+  validateProductImages,
+};

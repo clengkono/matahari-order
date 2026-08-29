@@ -30,6 +30,7 @@
     "catalog:customer-build": "node scripts/buildCustomerCatalog.js",
     "catalog:customer-build:smoke": "node scripts/buildCustomerCatalog.smoke.js",
     "catalog:studio-images:smoke": "node scripts/studioImages.smoke.js",
+    "catalog:product-families:smoke": "node scripts/productFamilies.smoke.js",
     "catalog:normalize-images:dry": "node scripts/normalizeImageStorage.js --dry",
     "catalog:normalize-images:apply": "node scripts/normalizeImageStorage.js --apply",
     "catalog:normalize-images:smoke": "node scripts/normalizeImageStorage.smoke.js",

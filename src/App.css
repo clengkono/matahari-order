@@ -2536,6 +2536,10 @@ body:has(.app) {
   margin: 4px 0 8px;
 }
 
+.productInfoRecommendations + .productInfoRecommendations {
+  margin-top: 8px;
+}
+
 .productInfoActions {
   display: flex;
   align-items: center;

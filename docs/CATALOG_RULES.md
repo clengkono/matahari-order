@@ -33,7 +33,7 @@ Search and category screens cap how many rows mount (`Tampilkan lainnya`) so a l
 
 ## Authoritative vs generated customer catalogue
 
-The six files in `src/catalog/` remain the source of truth:
+The six POS/identity files in `src/catalog/` remain the source of truth:
 
 - `products.json`
 - `variants.json`
@@ -42,7 +42,13 @@ The six files in `src/catalog/` remain the source of truth:
 - `mappings.json`
 - `recommendations.json`
 
-Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use those files.
+Curated product-family membership for customer **Produk Serupa** lives in a separate file:
+
+- `productFamilies.json`
+
+Do not store family membership on recommendations, aliases, variants, or mappings. Family membership is owner-curated; the customer app must not guess it from similar names.
+
+Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use the six identity files. `catalog:check` also validates `productFamilies.json`. Catalogue transactions do not rewrite families in Stage 6A.
 
 The customer app imports the generated artefact `src/catalog/generated/customerCatalog.json`.
 

@@ -138,6 +138,17 @@ export function loadCatalog(options = {}) {
     catalog[key] = parsed;
   }
 
+  const familiesPath = join(catalogDir, "productFamilies.json");
+  if (existsSync(familiesPath)) {
+    const parsed = readJsonFile(familiesPath);
+    if (!Array.isArray(parsed)) {
+      throw new Error("productFamilies.json must contain an array.");
+    }
+    catalog.productFamilies = parsed;
+  } else {
+    catalog.productFamilies = [];
+  }
+
   return catalog;
 }
 

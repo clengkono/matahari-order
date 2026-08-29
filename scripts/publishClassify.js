@@ -10,6 +10,7 @@ export const SAFE_CATALOG_RELATIVE_PATHS = Object.freeze([
   "src/catalog/aliases.json",
   "src/catalog/mappings.json",
   "src/catalog/recommendations.json",
+  "src/catalog/productFamilies.json",
   "src/catalog/generated/customerCatalog.json",
 ]);
 
