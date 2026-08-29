@@ -4,7 +4,12 @@
     "name": "52 Kretek 20",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-52-kretek-20.webp",
+      "detail": "/product-images/details/prod-52-kretek-20.webp",
+      "original": "/product-images/originals/prod-52-kretek-20-original.png"
+    }
   },
   {
     "id": "prod-apache-16",
@@ -886,7 +891,12 @@
     "name": "Ovaltine Choco 130G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ovaltine-choco-130g.webp",
+      "detail": "/product-images/details/prod-ovaltine-choco-130g.webp",
+      "original": "/product-images/originals/prod-ovaltine-choco-130g-original.png"
+    }
   },
   {
     "id": "prod-ovaltine-choco-biscuit-24g-12",
@@ -1215,7 +1225,12 @@
     "name": "Mama Lemon 105ML",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mama-lemon-105ml.webp",
+      "detail": "/product-images/details/prod-mama-lemon-105ml.webp",
+      "original": "/product-images/originals/prod-mama-lemon-105ml-original.png"
+    }
   },
   {
     "id": "prod-zinc-hijau-10ml",
@@ -1435,14 +1450,24 @@
     "name": "Daia Bunga Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-bunga-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-bunga-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-bunga-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-daia-lemon-sachet-46g",
     "name": "Daia Lemon Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-lemon-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-lemon-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-lemon-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-so-klin-orchid-bubuk-215g-rp-5000",
@@ -1568,7 +1593,12 @@
     "name": "Mama Lemon 230gr",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mama-lemon-230gr.webp",
+      "detail": "/product-images/details/prod-mama-lemon-230gr.webp",
+      "original": "/product-images/originals/prod-mama-lemon-230gr-original.png"
+    }
   },
   {
     "id": "prod-ubm-mini-assorted-150g-10",
@@ -1883,14 +1913,24 @@
     "name": "Daia Bunga 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-bunga-800g.webp",
+      "detail": "/product-images/details/prod-daia-bunga-800g.webp",
+      "original": "/product-images/originals/prod-daia-bunga-800g-original.png"
+    }
   },
   {
     "id": "prod-daia-lemon-800g",
     "name": "Daia Lemon 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-lemon-800g.webp",
+      "detail": "/product-images/details/prod-daia-lemon-800g.webp",
+      "original": "/product-images/originals/prod-daia-lemon-800g-original.png"
+    }
   },
   {
     "id": "prod-so-klin-smart-color-pouch-725g",
@@ -1904,7 +1944,12 @@
     "name": "Daia Putih 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-putih-800g.webp",
+      "detail": "/product-images/details/prod-daia-putih-800g.webp",
+      "original": "/product-images/originals/prod-daia-putih-800g-original.png"
+    }
   },
   {
     "id": "prod-kecap-sedap-refill-700g",
@@ -2009,7 +2054,12 @@
     "name": "Ovaltine Classic Sachet 22G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ovaltine-classic-sachet-22g.webp",
+      "detail": "/product-images/details/prod-ovaltine-classic-sachet-22g.webp",
+      "original": "/product-images/originals/prod-ovaltine-classic-sachet-22g-original.png"
+    }
   },
   {
     "id": "prod-top-kopi-murni-7g-10",
@@ -2044,14 +2094,24 @@
     "name": "Dancow Instant Sachet 26G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-dancow-instant-sachet-26g.webp",
+      "detail": "/product-images/details/prod-dancow-instant-sachet-26g.webp",
+      "original": "/product-images/originals/prod-dancow-instant-sachet-26g-original.png"
+    }
   },
   {
     "id": "prod-dancow-coklat-sachet-38g",
     "name": "Dancow Coklat Sachet 38G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-dancow-coklat-sachet-38g.webp",
+      "detail": "/product-images/details/prod-dancow-coklat-sachet-38g.webp",
+      "original": "/product-images/originals/prod-dancow-coklat-sachet-38g-original.png"
+    }
   },
   {
     "id": "prod-koko-krunch-cereal-170g",
@@ -2093,14 +2153,24 @@
     "name": "Milo Sachet 22G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milo-sachet-22g.webp",
+      "detail": "/product-images/details/prod-milo-sachet-22g.webp",
+      "original": "/product-images/originals/prod-milo-sachet-22g-original.png"
+    }
   },
   {
     "id": "prod-milo-3-in-1-sachet-35g-10",
     "name": "Milo 3 in 1 Sachet 35G (10)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milo-3-in-1-sachet-35g-10.webp",
+      "detail": "/product-images/details/prod-milo-3-in-1-sachet-35g-10.webp",
+      "original": "/product-images/originals/prod-milo-3-in-1-sachet-35g-10-original.png"
+    }
   },
   {
     "id": "prod-coffeemate-sachet-80-20g",
@@ -3037,7 +3107,12 @@
     "name": "Top Kopi Gula Aren 22G (15)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-gula-aren-22g-15.webp",
+      "detail": "/product-images/details/prod-top-kopi-gula-aren-22g-15.webp",
+      "original": "/product-images/originals/prod-top-kopi-gula-aren-22g-15-original.png"
+    }
   },
   {
     "id": "prod-top-kopi-susu-gula-aren-15",
@@ -3849,7 +3924,12 @@
     "name": "Roma Malkist Crackers Sachet 21G",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-roma-malkist-crackers-sachet-21g.webp",
+      "detail": "/product-images/details/prod-roma-malkist-crackers-sachet-21g.webp",
+      "original": "/product-images/originals/prod-roma-malkist-crackers-sachet-21g-original.png"
+    }
   },
   {
     "id": "prod-roma-malkist-abon-sachet-21g",
@@ -3877,7 +3957,12 @@
     "name": "Roma Malkist Coklat Sachet 18G",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-roma-malkist-coklat-sachet-18g.webp",
+      "detail": "/product-images/details/prod-roma-malkist-coklat-sachet-18g.webp",
+      "original": "/product-images/originals/prod-roma-malkist-coklat-sachet-18g-original.png"
+    }
   },
   {
     "id": "prod-roma-cream-crackers-107g",
@@ -5205,7 +5290,12 @@
     "name": "Daia Bunga Sedang 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-bunga-sedang-245g.webp",
+      "detail": "/product-images/details/prod-daia-bunga-sedang-245g.webp",
+      "original": "/product-images/originals/prod-daia-bunga-sedang-245g-original.png"
+    }
   },
   {
     "id": "prod-nuvo-family-biru-72g",
@@ -5324,7 +5414,12 @@
     "name": "Daia Lemon Bag 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-lemon-bag-245g.webp",
+      "detail": "/product-images/details/prod-daia-lemon-bag-245g.webp",
+      "original": "/product-images/originals/prod-daia-lemon-bag-245g-original.png"
+    }
   },
   {
     "id": "prod-protex-regular-bag-8-pads-hijau",
@@ -5352,7 +5447,12 @@
     "name": "Daia Putih Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-putih-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-putih-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-putih-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-cemerlang-ember-2-85-kg",
@@ -5408,28 +5508,48 @@
     "name": "Daia Putih Bag 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-putih-bag-245g.webp",
+      "detail": "/product-images/details/prod-daia-putih-bag-245g.webp",
+      "original": "/product-images/originals/prod-daia-putih-bag-245g-original.png"
+    }
   },
   {
     "id": "prod-daia-softener-sachet-46g",
     "name": "Daia Softener Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-softener-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-softener-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-softener-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-daia-softener-bag-245g",
     "name": "Daia Softener Bag 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-softener-bag-245g.webp",
+      "detail": "/product-images/details/prod-daia-softener-bag-245g.webp",
+      "original": "/product-images/originals/prod-daia-softener-bag-245g-original.png"
+    }
   },
   {
     "id": "prod-daia-softener-800g",
     "name": "Daia Softener 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-softener-800g.webp",
+      "detail": "/product-images/details/prod-daia-softener-800g.webp",
+      "original": "/product-images/originals/prod-daia-softener-800g-original.png"
+    }
   },
   {
     "id": "prod-softener-sekali-bilas-violet-sachet-15ml",
@@ -5443,56 +5563,96 @@
     "name": "Daia Putih Bag 480G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-putih-bag-480g.webp",
+      "detail": "/product-images/details/prod-daia-putih-bag-480g.webp",
+      "original": "/product-images/originals/prod-daia-putih-bag-480g-original.png"
+    }
   },
   {
     "id": "prod-daia-violet-470g-10-000",
     "name": "Daia Violet 470G (10,000)",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-violet-470g-10-000.webp",
+      "detail": "/product-images/details/prod-daia-violet-470g-10-000.webp",
+      "original": "/product-images/originals/prod-daia-violet-470g-10-000-original.png"
+    }
   },
   {
     "id": "prod-daia-softener-470g-rp10-000",
     "name": "Daia Softener 470G Rp10.000",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-softener-470g-rp10-000.webp",
+      "detail": "/product-images/details/prod-daia-softener-470g-rp10-000.webp",
+      "original": "/product-images/originals/prod-daia-softener-470g-rp10-000-original.png"
+    }
   },
   {
     "id": "prod-daia-lemon-470g-10-000",
     "name": "Daia Lemon 470G (10,000)",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-lemon-470g-10-000.webp",
+      "detail": "/product-images/details/prod-daia-lemon-470g-10-000.webp",
+      "original": "/product-images/originals/prod-daia-lemon-470g-10-000-original.png"
+    }
   },
   {
     "id": "prod-daia-violet-800g",
     "name": "Daia Violet 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-violet-800g.webp",
+      "detail": "/product-images/details/prod-daia-violet-800g.webp",
+      "original": "/product-images/originals/prod-daia-violet-800g-original.png"
+    }
   },
   {
     "id": "prod-daia-violet-sachet-46g",
     "name": "Daia Violet Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-violet-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-violet-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-violet-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-daia-violet-bag-245g",
     "name": "Daia Violet Bag 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-violet-bag-245g.webp",
+      "detail": "/product-images/details/prod-daia-violet-bag-245g.webp",
+      "original": "/product-images/originals/prod-daia-violet-bag-245g-original.png"
+    }
   },
   {
     "id": "prod-daia-violet-470g-rp10-000",
     "name": "Daia Violet 470G  Rp10.000",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-violet-470g-rp10-000.webp",
+      "detail": "/product-images/details/prod-daia-violet-470g-rp10-000.webp",
+      "original": "/product-images/originals/prod-daia-violet-470g-rp10-000-original.png"
+    }
   },
   {
     "id": "prod-teh-rio",
@@ -5576,21 +5736,36 @@
     "name": "Daia Hijab Sachet 46G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-hijab-sachet-46g.webp",
+      "detail": "/product-images/details/prod-daia-hijab-sachet-46g.webp",
+      "original": "/product-images/originals/prod-daia-hijab-sachet-46g-original.png"
+    }
   },
   {
     "id": "prod-daia-hijab-bag-245g",
     "name": "Daia Hijab Bag 245G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-hijab-bag-245g.webp",
+      "detail": "/product-images/details/prod-daia-hijab-bag-245g.webp",
+      "original": "/product-images/originals/prod-daia-hijab-bag-245g-original.png"
+    }
   },
   {
     "id": "prod-daia-hijab-800g",
     "name": "Daia Hijab 800G",
     "category": "Kebutuhan Rumah",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-daia-hijab-800g.webp",
+      "detail": "/product-images/details/prod-daia-hijab-800g.webp",
+      "original": "/product-images/originals/prod-daia-hijab-800g-original.png"
+    }
   },
   {
     "id": "prod-so-klin-liquid-korean-sachet-22ml",
@@ -5863,21 +6038,36 @@
     "name": "Teh Sariwangi Dos (25)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-sariwangi-dos-25.webp",
+      "detail": "/product-images/details/prod-teh-sariwangi-dos-25.webp",
+      "original": "/product-images/originals/prod-teh-sariwangi-dos-25-original.png"
+    }
   },
   {
     "id": "prod-teh-sariwangi-sachet-5",
     "name": "Teh Sariwangi Sachet (5)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-sariwangi-sachet-5.webp",
+      "detail": "/product-images/details/prod-teh-sariwangi-sachet-5.webp",
+      "original": "/product-images/originals/prod-teh-sariwangi-sachet-5-original.png"
+    }
   },
   {
     "id": "prod-teh-sarimurni-dos-25",
     "name": "Teh Sarimurni Dos (25)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-sarimurni-dos-25.webp",
+      "detail": "/product-images/details/prod-teh-sarimurni-dos-25.webp",
+      "original": "/product-images/originals/prod-teh-sarimurni-dos-25-original.png"
+    }
   },
   {
     "id": "prod-rinso-molto-ungu-perfume-bubuk-sachet-40g",
@@ -6129,7 +6319,12 @@
     "name": "Teh Sarimurni Sachet 1.8G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-sarimurni-sachet-1-8g.webp",
+      "detail": "/product-images/details/prod-teh-sarimurni-sachet-1-8g.webp",
+      "original": "/product-images/originals/prod-teh-sarimurni-sachet-1-8g-original.png"
+    }
   },
   {
     "id": "prod-rinso-molto-cair-rose-fresh-38ml-rp-1000",
