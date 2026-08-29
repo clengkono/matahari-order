@@ -144,6 +144,19 @@ function baseCatalog() {
         defaultQuantity: 1,
       },
     ],
+    productFamilies: [
+      {
+        id: "smoke-glory-camel",
+        name: "Smoke Glory Camel",
+        members: ["prod-glory-16", "prod-camel-blue16"],
+      },
+    ],
+    productDefaults: [
+      {
+        productId: "prod-aqua-15l",
+        defaultUnitName: "Karton",
+      },
+    ],
     units: [
       { id: "karton", name: "Karton", active: true },
       {
@@ -267,7 +280,7 @@ function setupTempCatalog(catalog) {
     const key = fileName.replace(".json", "");
     writeFileSync(
       join(catalogDir, fileName),
-      serializeCatalogJson(catalog[key]),
+      serializeCatalogJson(catalog[key] ?? []),
       "utf8"
     );
   }
@@ -430,6 +443,22 @@ function main() {
     });
     assert("F. hypothetical apply succeeds", applied.ok, applied.error);
     const afterApply = loadCatalog({ catalogDir: dirs.catalogDir });
+    assert(
+      "F. import leaves owner defaults unchanged",
+      JSON.stringify(afterApply.productDefaults) ===
+        JSON.stringify(baseCatalog().productDefaults)
+    );
+    assert(
+      "F. import leaves product families unchanged",
+      JSON.stringify(afterApply.productFamilies) ===
+        JSON.stringify(baseCatalog().productFamilies)
+    );
+    assert(
+      "F. newly imported product has no owner-default row",
+      !afterApply.productDefaults.some(
+        (row) => row.productId === "prod-abc-kecap-asin-133ml"
+      )
+    );
     const rerun = buildImportPlan({
       catalog: afterApply,
       workbookProducts: fixture.workbookProducts,

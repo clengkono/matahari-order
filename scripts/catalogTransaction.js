@@ -1,5 +1,7 @@
 /**
  * Catalogue write transaction for Catalogue Studio.
+ * Writes identity/POS files plus owner-curated productFamilies.json and
+ * productDefaults.json.
  *
  * Load → mutate in memory → validate (same catalog:check rules) →
  * backup changed files → temp write → replace → rollback on failure.
@@ -34,6 +36,8 @@ export const CATALOG_FILES = Object.freeze([
   "aliases.json",
   "mappings.json",
   "recommendations.json",
+  "productFamilies.json",
+  "productDefaults.json",
 ]);
 
 const FILE_TO_KEY = Object.freeze({
@@ -43,6 +47,8 @@ const FILE_TO_KEY = Object.freeze({
   "aliases.json": "aliases",
   "mappings.json": "mappings",
   "recommendations.json": "recommendations",
+  "productFamilies.json": "productFamilies",
+  "productDefaults.json": "productDefaults",
 });
 
 const KEY_TO_FILE = Object.freeze(
@@ -136,17 +142,6 @@ export function loadCatalog(options = {}) {
       throw new Error(`${fileName} must contain an array.`);
     }
     catalog[key] = parsed;
-  }
-
-  const familiesPath = join(catalogDir, "productFamilies.json");
-  if (existsSync(familiesPath)) {
-    const parsed = readJsonFile(familiesPath);
-    if (!Array.isArray(parsed)) {
-      throw new Error("productFamilies.json must contain an array.");
-    }
-    catalog.productFamilies = parsed;
-  } else {
-    catalog.productFamilies = [];
   }
 
   return catalog;

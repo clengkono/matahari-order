@@ -1,7 +1,7 @@
 /**
  * Customer runtime catalogue.
  *
- * Authoritative source: src/catalog/{products,variants,units,aliases,mappings,recommendations,productFamilies}.json
+ * Authoritative source: src/catalog/{products,variants,units,aliases,mappings,recommendations,productFamilies,productDefaults}.json
  * This module reads the generated artefact only. Do not import assembleProducts
  * or the raw catalogue files from customer UI code.
  */

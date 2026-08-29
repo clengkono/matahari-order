@@ -174,6 +174,8 @@ function fixtureCatalog() {
         source: "sales",
       },
     ],
+    productFamilies: [],
+    productDefaults: [],
   };
 }
 
@@ -336,6 +338,84 @@ function main() {
           row.sourceProductId === "prod-keep-20" &&
           row.targetProductId === "prod-zenix-coffee"
       )
+    );
+
+    const remapDefaultOnlyOld = structuredClone(catalog);
+    remapDefaultOnlyOld.productDefaults = [
+      { productId: "prod-zenix-coffee-20", defaultUnitName: "Slof" },
+    ];
+    const remappedDefault = applyMergeRecode(remapDefaultOnlyOld, decision);
+    assert("G2. remaps owner default from duplicate id", remappedDefault.ok);
+    assert(
+      "G2. duplicate default now belongs to survivor",
+      remapDefaultOnlyOld.productDefaults.length === 1 &&
+        remapDefaultOnlyOld.productDefaults[0].productId === "prod-zenix-coffee" &&
+        remapDefaultOnlyOld.productDefaults[0].defaultUnitName === "Slof"
+    );
+
+    const keepSurvivorDefault = structuredClone(catalog);
+    keepSurvivorDefault.productDefaults = [
+      { productId: "prod-zenix-coffee", defaultUnitName: "Bungkus" },
+      { productId: "prod-zenix-coffee-20", defaultUnitName: "Slof" },
+    ];
+    const keptSurvivorDefault = applyMergeRecode(keepSurvivorDefault, decision);
+    assert("G3. conflicting defaults keep survivor row", keptSurvivorDefault.ok);
+    assert(
+      "G3. survivor defaultUnitName is unchanged",
+      keepSurvivorDefault.productDefaults.length === 1 &&
+        keepSurvivorDefault.productDefaults[0].productId === "prod-zenix-coffee" &&
+        keepSurvivorDefault.productDefaults[0].defaultUnitName === "Bungkus"
+    );
+
+    const familyRemap = structuredClone(catalog);
+    familyRemap.productFamilies = [
+      {
+        id: "zenix-keep",
+        name: "Zenix Keep",
+        members: ["prod-keep-20", "prod-zenix-coffee-20"],
+      },
+    ];
+    const remappedFamily = applyMergeRecode(familyRemap, decision);
+    assert("G4. remaps family member id to survivor", remappedFamily.ok);
+    assert(
+      "G4. family members are remapped and unique",
+      familyRemap.productFamilies[0].members.join(",") ===
+        "prod-keep-20,prod-zenix-coffee"
+    );
+
+    const familyCollapse = structuredClone(catalog);
+    familyCollapse.productFamilies = [
+      {
+        id: "zenix-pair",
+        name: "Zenix Pair",
+        members: ["prod-keep-20", "prod-zenix-coffee", "prod-zenix-coffee-20"],
+      },
+    ];
+    const collapsedFamily = applyMergeRecode(familyCollapse, decision);
+    assert("G5. same-family recode collapses duplicate member", collapsedFamily.ok);
+    assert(
+      "G5. collapsed members stay unique",
+      familyCollapse.productFamilies[0].members.join(",") ===
+        "prod-keep-20,prod-zenix-coffee"
+    );
+
+    const familyConflict = structuredClone(catalog);
+    familyConflict.productFamilies = [
+      {
+        id: "family-a",
+        name: "Family A",
+        members: ["prod-keep-20", "prod-zenix-coffee"],
+      },
+      {
+        id: "family-b",
+        name: "Family B",
+        members: ["prod-other-20", "prod-zenix-coffee-20"],
+      },
+    ];
+    const conflictedFamily = applyMergeRecode(familyConflict, decision);
+    assert(
+      "G6. cross-family recode is refused",
+      conflictedFamily.ok === false && conflictedFamily.code === "FAMILY_CONFLICT"
     );
 
     const second = applyMergeRecode(after, decision);

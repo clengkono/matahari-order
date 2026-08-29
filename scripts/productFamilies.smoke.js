@@ -300,6 +300,8 @@ try {
   assert(
     "family JSON is safe owner data and not mixed into recommendations",
     isSafeOwnerPath("src/catalog/productFamilies.json") &&
+      isSafeOwnerPath("src/catalog/productDefaults.json") &&
+      live.productDefaults.length === 0 &&
       !JSON.stringify(live.recommendations).includes("daia-sachet-46g")
   );
 

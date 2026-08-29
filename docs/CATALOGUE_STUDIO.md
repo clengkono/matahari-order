@@ -60,7 +60,7 @@ Equivalent npm command:
 npm run studio:publish
 ```
 
-Publish is never automatic when Studio closes. It only sends owner image/catalogue files after checks and confirmation. Underlying `git` / `npm run catalog:*` commands remain available.
+Publish is never automatic when Studio closes. It only sends owner image/catalogue files after checks and confirmation. After validation rebuilds the customer catalogue, Publish re-reads git status and includes `src/catalog/generated/customerCatalog.json` when that generated file changed. Source-code files still block everyday publish. Underlying `git` / `npm run catalog:*` commands remain available.
 
 ---
 
@@ -202,6 +202,8 @@ That layer:
 4. writes temps and replaces live files
 5. rolls all changed JSON files back if any replace fails
 6. appends `src/catalog/backups/changelog.jsonl` on success
+
+The transaction set includes the identity/POS files plus owner-curated `productFamilies.json` and `productDefaults.json`. `variants.json` defaults remain the import fallback; owner-confirmed defaults live only in `productDefaults.json` and win in the generated customer catalogue.
 
 After a successful image metadata write (and after a successful Products-tab name/category save that is not a no-op), Studio calls `buildCustomerCatalog()` directly. You do **not** need a separate CLI regenerate for the customer app to see the new image paths.
 

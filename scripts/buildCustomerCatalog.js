@@ -1,7 +1,7 @@
 /**
- * Build the compact customer catalogue artefact from the six-file source.
+ * Build the compact customer catalogue artefact from the catalogue source.
  *
- * Authoritative: src/catalog/{products,variants,units,aliases,mappings,recommendations,productFamilies}.json
+ * Authoritative: src/catalog/{products,variants,units,aliases,mappings,recommendations,productFamilies,productDefaults}.json
  * Generated:     src/catalog/generated/customerCatalog.json
  *
  * Does not change the source schema. Does not write POS mappings into the
@@ -22,7 +22,10 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { assembleProducts } from "../src/catalog/assembleProducts.js";
 import { deriveSimilarProductIds } from "../src/utils/productFamilies.js";
-import { validateCatalog } from "./buildCatalog.js";
+import {
+  resolveOwnerDefaultUnitName,
+  validateCatalog,
+} from "./buildCatalog.js";
 import {
   DEFAULT_CATALOG_DIR,
   loadCatalog,
@@ -72,13 +75,26 @@ function compactImage(image) {
   return next;
 }
 
-function toCustomerProduct(assembled, similarByProduct) {
+function ownerDefaultByProductId(productDefaults) {
+  const byProduct = new Map();
+  if (!Array.isArray(productDefaults)) {
+    return byProduct;
+  }
+  for (const row of productDefaults) {
+    if (typeof row?.productId === "string" && row.productId) {
+      byProduct.set(row.productId, row);
+    }
+  }
+  return byProduct;
+}
+
+function toCustomerProduct(assembled, similarByProduct, ownerDefaultName) {
   const product = {
     id: assembled.id,
     name: assembled.name,
     category: assembled.category,
     availableUnits: assembled.availableUnits,
-    defaultUnit: assembled.defaultUnit,
+    defaultUnit: ownerDefaultName ?? assembled.defaultUnit,
     defaultQuantity: assembled.defaultQuantity,
   };
 
@@ -133,11 +149,23 @@ export function assembleCustomerCatalog(catalog) {
     units: catalog.units,
   });
   const similarByProduct = deriveSimilarProductIds(catalog.productFamilies);
+  const ownerDefaults = ownerDefaultByProductId(catalog.productDefaults);
 
   return {
-    products: assembled.map((product) =>
-      toCustomerProduct(product, similarByProduct)
-    ),
+    products: assembled.map((product) => {
+      const override = ownerDefaults.get(product.id);
+      let ownerDefaultName;
+      if (override) {
+        const resolved = resolveOwnerDefaultUnitName(
+          override.defaultUnitName,
+          product.availableUnits
+        );
+        if (resolved.ok) {
+          ownerDefaultName = resolved.name;
+        }
+      }
+      return toCustomerProduct(product, similarByProduct, ownerDefaultName);
+    }),
     aliases: (catalog.aliases ?? []).map(toCustomerAlias),
     recommendations: (catalog.recommendations ?? []).map(
       toCustomerRecommendation

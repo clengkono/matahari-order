@@ -44,18 +44,17 @@ This is not a conventional ecommerce application.
 
 ## Catalogue files
 
-- Authoritative catalogue: `src/catalog/*.json` (six files, including POS mappings).
+- Authoritative catalogue: `src/catalog/*.json` (identity/POS files plus owner-curated `productFamilies.json` and `productDefaults.json`).
+- `variants.json` `defaultUnitId` is the import-derived fallback.
+- `productDefaults.json` is the owner-curated default-unit override. A valid override wins in the customer catalogue. An invalid override is a validation error, never a silent unit substitution.
 - Customer runtime: generated `src/catalog/generated/customerCatalog.json`. Do not hand-edit it.
-- After catalogue edits, run `npm run catalog:customer-build`. `npm run build` regenerates it before Vite.
+- After catalogue edits, run `npm run catalog:customer-build`. `npm run build` regenerates it before Vite. Owner Publish includes this generated file when catalogue data changes.
 
 ## Cart rules
 
 - Use the existing `CartContext`.
-- A cart line is unique by:
-  - product ID
-  - selected unit
-- Same product and same unit: merge quantities.
-- Same product and different unit: create a separate line.
+- A cart line is unique by product ID — one active unit per product.
+- Same product: merge quantities onto that single line.
 - Do not replace working cart helpers unless necessary.
 - Do not implement prices or totals.
 

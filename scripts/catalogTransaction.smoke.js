@@ -687,6 +687,111 @@ function main() {
         aquaListed.aliases.includes("aqua")
     );
 
+    const snapshotBeforeOwnerMeta = snapshotFiles(dirs.catalogDir);
+    const ownerMeta = runCatalogTransaction(
+      txOptions(dirs, {
+        action: "owner-meta-smoke",
+        productIds: ["prod-milkita-candy-stroberi-premium-30"],
+        summary: "Smoke owner default + family write",
+        mutate(catalog) {
+          catalog.productDefaults = [
+            {
+              productId: "prod-milkita-candy-stroberi-premium-30",
+              defaultUnitName: "Pak",
+            },
+          ];
+          catalog.productFamilies = [
+            ...catalog.productFamilies,
+            {
+              id: "smoke-owner-family",
+              name: "Smoke Owner Family",
+              members: ["prod-glory-16", "prod-apache-16"],
+            },
+          ];
+        },
+      })
+    );
+    assert("6B.1 owner meta write succeeds", ownerMeta.ok, ownerMeta.error);
+    assert(
+      "6B.1 owner meta wrote defaults and families",
+      ownerMeta.changedFiles.includes("productDefaults.json") &&
+        ownerMeta.changedFiles.includes("productFamilies.json")
+    );
+    const afterOwnerMeta = loadCatalog(dirs);
+    assert(
+      "6B.1 live defaults updated",
+      afterOwnerMeta.productDefaults.some(
+        (row) =>
+          row.productId === "prod-milkita-candy-stroberi-premium-30" &&
+          row.defaultUnitName === "Pak"
+      )
+    );
+    assert(
+      "6B.1 live families gained smoke family",
+      afterOwnerMeta.productFamilies.some((family) => family.id === "smoke-owner-family")
+    );
+
+    const ownerRollback = runCatalogTransaction(
+      txOptions(dirs, {
+        action: "owner-meta-rollback",
+        productIds: ["prod-glory-16"],
+        summary: "Force owner-meta rollback",
+        mutate(catalog) {
+          catalog.productDefaults = [];
+          catalog.productFamilies = catalog.productFamilies.filter(
+            (family) => family.id !== "smoke-owner-family"
+          );
+        },
+        testHooks: {
+          beforeReplace(_fileName, index) {
+            if (index === 1) {
+              throw new Error("simulated owner-meta replace failure");
+            }
+          },
+        },
+      })
+    );
+    assert(
+      "6B.1 owner meta rollback reported",
+      !ownerRollback.ok && ownerRollback.code === "WRITE_FAILED",
+      ownerRollback.error
+    );
+    const afterOwnerRollback = loadCatalog(dirs);
+    assert(
+      "6B.1 rollback restores defaults",
+      afterOwnerRollback.productDefaults.some(
+        (row) => row.productId === "prod-milkita-candy-stroberi-premium-30"
+      )
+    );
+    assert(
+      "6B.1 rollback restores families",
+      afterOwnerRollback.productFamilies.some(
+        (family) => family.id === "smoke-owner-family"
+      )
+    );
+
+    const undoOwner = undoLastCatalogTransaction(txOptions(dirs));
+    assert("6B.1 undo owner meta succeeds", undoOwner.ok, undoOwner.error);
+    const afterOwnerUndo = loadCatalog(dirs);
+    assert(
+      "6B.1 undo restores empty defaults",
+      Array.isArray(afterOwnerUndo.productDefaults) &&
+        afterOwnerUndo.productDefaults.length === 0
+    );
+    assert(
+      "6B.1 undo restores original families",
+      !afterOwnerUndo.productFamilies.some(
+        (family) => family.id === "smoke-owner-family"
+      ) && afterOwnerUndo.productFamilies.length === 3
+    );
+    assert(
+      "6B.1 owner-meta files match pre-write snapshot after undo",
+      readText(join(dirs.catalogDir, "productDefaults.json")) ===
+        snapshotBeforeOwnerMeta["productDefaults.json"] &&
+        readText(join(dirs.catalogDir, "productFamilies.json")) ===
+          snapshotBeforeOwnerMeta["productFamilies.json"]
+    );
+
     assert(
       "live catalogue files untouched",
       filesUnchanged(LIVE_CATALOG_DIR, liveSnapshot)

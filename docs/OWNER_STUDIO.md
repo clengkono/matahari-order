@@ -33,7 +33,7 @@ If you start Studio again, it should say it is already running and open the Stud
 
 ### Publish says code files changed
 
-Publish stopped to protect you. Everyday publish only sends product images and catalogue data.
+Publish stopped to protect you. Everyday publish only sends product images and catalogue data, including the generated customer catalogue when catalogue files changed.
 
 Leave the extra files alone, or ask a developer to handle code changes separately. Do not mix unfinished Cursor work with a photo batch.
 

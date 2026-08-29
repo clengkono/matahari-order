@@ -61,9 +61,14 @@ function fakeGit({
   ahead = 0,
   pushCode = 0,
 } = {}) {
+  const state = { porcelain };
   const calls = [];
   return {
     calls,
+    state,
+    setPorcelain(next) {
+      state.porcelain = next;
+    },
     run(args) {
       calls.push(args.slice());
       const head = args[0];
@@ -91,13 +96,13 @@ function fakeGit({
         return { code: 0, stdout: `${behind}\t${ahead}\n`, stderr: "" };
       }
       if (head === "status") {
-        return { code: 0, stdout: porcelain, stderr: "" };
+        return { code: 0, stdout: state.porcelain, stderr: "" };
       }
       if (head === "add") {
         return { code: 0, stdout: "", stderr: "" };
       }
       if (head === "diff") {
-        const names = pathsFromPorcelain(porcelain).join("\n");
+        const names = pathsFromPorcelain(state.porcelain).join("\n");
         return { code: 0, stdout: names ? `${names}\n` : "", stderr: "" };
       }
       if (head === "commit") {
@@ -203,6 +208,10 @@ try {
   assert(
     "productFamilies.json is a safe owner path",
     isSafeOwnerPath("src/catalog/productFamilies.json")
+  );
+  assert(
+    "productDefaults.json is a safe owner path",
+    isSafeOwnerPath("src/catalog/productDefaults.json")
   );
   assert(
     "trash images are not safe to publish",
@@ -366,6 +375,75 @@ try {
   assert("validation failure aborts", validateFail.reason === "validate");
   assert("validation failure does not stage", called(validateGit, "add") === false);
   assert("validation failure does not commit", called(validateGit, "commit") === false);
+
+  const rebuildGit = fakeGit({
+    porcelain: " M src/catalog/products.json\n",
+  });
+  const rebuildPublish = await runPublish({
+    root: noChangeRoot,
+    git: rebuildGit,
+    skipFetch: true,
+    yes: true,
+    catalogStats,
+    log() {},
+    error() {},
+    validate: async () => {
+      rebuildGit.setPorcelain(
+        " M src/catalog/products.json\n M src/catalog/generated/customerCatalog.json\n"
+      );
+      return {
+        ok: true,
+        failed: null,
+        results: FAST_CHECK_NAMES(),
+      };
+    },
+  });
+  assert(
+    "customer-build artefact after validate is published",
+    rebuildPublish.ok && rebuildPublish.reason !== "developer-files"
+  );
+  const rebuildAdd = rebuildGit.calls.find((args) => args[0] === "add");
+  assert(
+    "publisher stages generated customer catalogue after rebuild",
+    Array.isArray(rebuildAdd) &&
+      rebuildAdd.includes("src/catalog/generated/customerCatalog.json") &&
+      rebuildAdd.includes("src/catalog/products.json")
+  );
+  assert(
+    "rebuild publish never uses git add .",
+    rebuildGit.calls.every((args) => args.join(" ") !== "add .")
+  );
+
+  const leakGit = fakeGit({
+    porcelain: " M src/catalog/products.json\n",
+  });
+  const leakPublish = await runPublish({
+    root: noChangeRoot,
+    git: leakGit,
+    skipFetch: true,
+    yes: true,
+    catalogStats,
+    log() {},
+    error() {},
+    validate: async () => {
+      leakGit.setPorcelain(
+        " M src/catalog/products.json\n M src/components/CatalogueStudio.jsx\n"
+      );
+      return {
+        ok: true,
+        failed: null,
+        results: FAST_CHECK_NAMES(),
+      };
+    },
+  });
+  assert(
+    "developer file created during validate still blocks publish",
+    leakPublish.reason === "developer-files" && leakPublish.ok === false
+  );
+  assert(
+    "developer leak during validate is not staged",
+    called(leakGit, "add") === false
+  );
 
   const cancelGit = fakeGit({
     porcelain: "?? public/product-images/cards/x/prod-a.webp\n",

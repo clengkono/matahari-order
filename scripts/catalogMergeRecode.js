@@ -402,6 +402,112 @@ export function planMergeRecode(catalog, decision) {
   };
 }
 
+function remapOwnerDefaults(defaults, survivorId, duplicateId) {
+  const rows = Array.isArray(defaults) ? defaults : [];
+  const survivorRow = rows.find((row) => row.productId === survivorId);
+  const duplicateRow = rows.find((row) => row.productId === duplicateId);
+  const kept = rows.filter((row) => row.productId !== duplicateId);
+
+  if (duplicateRow && !survivorRow) {
+    kept.push({ ...duplicateRow, productId: survivorId });
+    return { rows: kept, action: "remapped-duplicate" };
+  }
+  if (duplicateRow && survivorRow) {
+    return { rows: kept, action: "kept-survivor" };
+  }
+  if (survivorRow) {
+    return { rows: kept, action: "kept-survivor" };
+  }
+  return { rows: kept, action: "none" };
+}
+
+function remapOwnerFamilies(families, survivorId, duplicateId) {
+  const list = Array.isArray(families) ? families : [];
+  const survivorFamily = list.find((family) =>
+    (family.members ?? []).includes(survivorId)
+  );
+  const duplicateFamily = list.find((family) =>
+    (family.members ?? []).includes(duplicateId)
+  );
+
+  if (
+    survivorFamily &&
+    duplicateFamily &&
+    survivorFamily.id !== duplicateFamily.id
+  ) {
+    return {
+      ok: false,
+      error: `Cannot recode ${duplicateId} into ${survivorId}: they belong to different families ("${duplicateFamily.id}" and "${survivorFamily.id}").`,
+      code: "FAMILY_CONFLICT",
+      families: list,
+    };
+  }
+
+  const next = list.map((family) => {
+    const members = [];
+    const seen = new Set();
+    for (const memberId of family.members ?? []) {
+      const mapped = memberId === duplicateId ? survivorId : memberId;
+      if (seen.has(mapped)) {
+        continue;
+      }
+      seen.add(mapped);
+      members.push(mapped);
+    }
+    return { ...family, members };
+  });
+
+  const tooSmall = next.find((family) => family.members.length < 2);
+  if (tooSmall) {
+    return {
+      ok: false,
+      error: `Cannot recode ${duplicateId} into ${survivorId}: family "${tooSmall.id}" would have fewer than 2 members.`,
+      code: "FAMILY_TOO_SMALL",
+      families: list,
+    };
+  }
+
+  return {
+    ok: true,
+    error: null,
+    code: null,
+    families: next,
+    action: duplicateFamily ? "remapped-member" : "none",
+  };
+}
+
+function remapOwnerMetadata(catalog, survivorId, duplicateId) {
+  if (!Array.isArray(catalog.productDefaults)) {
+    catalog.productDefaults = [];
+  }
+  if (!Array.isArray(catalog.productFamilies)) {
+    catalog.productFamilies = [];
+  }
+
+  const defaults = remapOwnerDefaults(
+    catalog.productDefaults,
+    survivorId,
+    duplicateId
+  );
+  const families = remapOwnerFamilies(
+    catalog.productFamilies,
+    survivorId,
+    duplicateId
+  );
+  if (!families.ok) {
+    return families;
+  }
+
+  catalog.productDefaults = defaults.rows;
+  catalog.productFamilies = families.families;
+  return {
+    ok: true,
+    error: null,
+    defaultRemap: defaults.action,
+    familyRemap: families.action,
+  };
+}
+
 function rewriteRecommendations(catalog, survivorId, duplicateId, report) {
   const seen = new Set();
   const next = [];
@@ -573,6 +679,17 @@ export function applyMergeRecode(catalog, decision) {
 
   migrateAliases(catalog, pair, report);
   rewriteRecommendations(catalog, pair.survivorId, pair.duplicateId, report);
+
+  const ownerMeta = remapOwnerMetadata(
+    catalog,
+    pair.survivorId,
+    pair.duplicateId
+  );
+  if (!ownerMeta.ok) {
+    return fail(ownerMeta.error, { code: ownerMeta.code });
+  }
+  report.defaultRemap = ownerMeta.defaultRemap;
+  report.familyRemap = ownerMeta.familyRemap;
 
   catalog.units = catalog.units.filter(
     (unit) => unit.productId !== pair.duplicateId

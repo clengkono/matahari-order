@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { normalizeSearchText } from "../src/utils/productSearch.js";
+import { unitsEquivalent } from "./catalogWorkbook.js";
 import { canonicalPathErrors } from "./imagePaths.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -461,6 +462,119 @@ function validateProductFamilies(productFamilies, productIds) {
   return errors;
 }
 
+function listedUnitsForProduct(productId, variants, units) {
+  const variant = (variants ?? []).find((row) => row.productId === productId);
+  if (!variant || !Array.isArray(variant.availableUnitIds)) {
+    return [];
+  }
+  const unitById = new Map((units ?? []).map((unit) => [unit.id, unit]));
+  return variant.availableUnitIds
+    .map((unitId) => unitById.get(unitId))
+    .filter(Boolean);
+}
+
+/**
+ * Resolve an owner defaultUnitName against available customer unit names.
+ * availableUnitNames may be strings or unit records with a name field.
+ */
+export function resolveOwnerDefaultUnitName(defaultUnitName, availableUnitNames) {
+  if (typeof defaultUnitName !== "string" || defaultUnitName.trim() === "") {
+    return { ok: false, name: null, reason: "empty" };
+  }
+
+  const names = (availableUnitNames ?? [])
+    .map((entry) => (typeof entry === "string" ? entry : entry?.name))
+    .filter((name) => typeof name === "string" && name);
+
+  const matches = names.filter((name) => unitsEquivalent(name, defaultUnitName));
+  if (matches.length === 1) {
+    return { ok: true, name: matches[0], reason: null };
+  }
+  if (matches.length === 0) {
+    return { ok: false, name: null, reason: "unresolved" };
+  }
+  return { ok: false, name: null, reason: "ambiguous" };
+}
+
+function validateProductDefaults(productDefaults, productIds, variants, units) {
+  const errors = [];
+
+  if (productDefaults === undefined || productDefaults === null) {
+    return errors;
+  }
+
+  if (!Array.isArray(productDefaults)) {
+    errors.push("productDefaults must be an array");
+    return errors;
+  }
+
+  const seenProductIds = new Map();
+
+  productDefaults.forEach((row, index) => {
+    const label = `productDefault[${index}]`;
+    const productId = row?.productId;
+    const hasProductId =
+      productId !== undefined &&
+      productId !== null &&
+      String(productId).trim() !== "";
+
+    if (!hasProductId) {
+      errors.push(`${label} missing productId`);
+    } else if (seenProductIds.has(String(productId))) {
+      errors.push(`duplicate productDefaults productId "${productId}"`);
+    } else {
+      seenProductIds.set(String(productId), true);
+      if (!productIds.has(productId)) {
+        errors.push(`${label} has unknown product "${productId}"`);
+      }
+    }
+
+    const unitName = row?.defaultUnitName;
+    if (unitName === undefined || unitName === null || String(unitName).trim() === "") {
+      errors.push(`${label} missing defaultUnitName`);
+      return;
+    }
+
+    if (!hasProductId || !productIds.has(productId)) {
+      return;
+    }
+
+    const listed = listedUnitsForProduct(productId, variants, units);
+    const activeNames = listed
+      .filter((unit) => unit.active !== false)
+      .map((unit) => unit.name);
+    const inactiveNames = listed
+      .filter((unit) => unit.active === false)
+      .map((unit) => unit.name);
+
+    const activeResolved = resolveOwnerDefaultUnitName(unitName, activeNames);
+    if (activeResolved.ok) {
+      return;
+    }
+
+    const inactiveResolved = resolveOwnerDefaultUnitName(unitName, inactiveNames);
+    if (inactiveResolved.ok) {
+      errors.push(
+        `${label} defaultUnitName "${unitName}" is inactive for product "${productId}"`
+      );
+      return;
+    }
+
+    if (activeResolved.reason === "ambiguous") {
+      errors.push(
+        `${label} defaultUnitName "${unitName}" is ambiguous for product "${productId}"`
+      );
+      return;
+    }
+
+    errors.push(
+      `${label} defaultUnitName "${unitName}" is not an available unit for product "${productId}"`
+    );
+  });
+
+  return errors;
+}
+
 function duplicateFamilyNameWarnings(productFamilies) {
   if (!Array.isArray(productFamilies)) {
     return [];
@@ -574,6 +688,7 @@ function validateCatalog(
     mappings,
     recommendations,
     productFamilies,
+    productDefaults,
   },
   options = {}
 ) {
@@ -792,6 +907,9 @@ function validateCatalog(
 
   errors.push(...validateRecommendations(recommendations, productIds));
   errors.push(...validateProductFamilies(productFamilies, productIds));
+  errors.push(
+    ...validateProductDefaults(productDefaults, productIds, variants, units)
+  );
   errors.push(...validateProductImages(products, options));
 
   return errors;
@@ -806,6 +924,7 @@ function printSummary(
     mappings,
     recommendations,
     productFamilies,
+    productDefaults,
   },
   errors
 ) {
@@ -821,6 +940,9 @@ function printSummary(
   );
   console.log(
     `Families : ${Array.isArray(productFamilies) ? productFamilies.length : 0}`
+  );
+  console.log(
+    `Defaults : ${Array.isArray(productDefaults) ? productDefaults.length : 0}`
   );
   console.log("");
 
@@ -847,6 +969,7 @@ function main() {
   const mappings = loadJson("mappings.json");
   const recommendations = loadJson("recommendations.json");
   const productFamilies = loadJson("productFamilies.json");
+  const productDefaults = loadJson("productDefaults.json");
 
   if (
     !Array.isArray(products) ||
@@ -855,7 +978,8 @@ function main() {
     !Array.isArray(aliases) ||
     !Array.isArray(mappings) ||
     !Array.isArray(recommendations) ||
-    !Array.isArray(productFamilies)
+    !Array.isArray(productFamilies) ||
+    !Array.isArray(productDefaults)
   ) {
     console.error("Catalogue JSON files must each contain an array.");
     process.exit(1);
@@ -869,6 +993,7 @@ function main() {
     mappings,
     recommendations,
     productFamilies,
+    productDefaults,
   };
   const errors = validateCatalog(catalog);
   printSummary(catalog, errors);
@@ -893,6 +1018,7 @@ if (isDirectRun) {
 export {
   duplicateFamilyNameWarnings,
   validateCatalog,
+  validateProductDefaults,
   validateProductFamilies,
   validateProductImages,
 };

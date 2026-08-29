@@ -1,5 +1,5 @@
 /**
- * Assemble customer-visible products from the authoritative six-file catalogue.
+ * Assemble customer-visible products from the authoritative catalogue.
  *
  * Used by the customer-catalogue generator (scripts/buildCustomerCatalog.js).
  * The customer app must not import this module — it would pull variants.json

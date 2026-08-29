@@ -33,7 +33,7 @@ Search and category screens cap how many rows mount (`Tampilkan lainnya`) so a l
 
 ## Authoritative vs generated customer catalogue
 
-The six POS/identity files in `src/catalog/` remain the source of truth:
+The POS/identity files in `src/catalog/` remain the source of truth for imported catalogue data:
 
 - `products.json`
 - `variants.json`
@@ -42,13 +42,18 @@ The six POS/identity files in `src/catalog/` remain the source of truth:
 - `mappings.json`
 - `recommendations.json`
 
-Curated product-family membership for customer **Produk Serupa** lives in a separate file:
+Owner-curated metadata lives in separate files:
 
-- `productFamilies.json`
+- `productFamilies.json` — family membership for customer **Produk Serupa**
+- `productDefaults.json` — owner-selected default units
+
+`variants.json` `defaultUnitId` is the import-derived fallback. `productDefaults.json` is the owner override. A valid override wins when the customer catalogue is generated. An invalid or stale override fails validation; it is never silently replaced with another unit. Empty `productDefaults.json` (`[]`) is valid.
 
 Do not store family membership on recommendations, aliases, variants, or mappings. Family membership is owner-curated; the customer app must not guess it from similar names.
 
-Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use the six identity files. `catalog:check` also validates `productFamilies.json`. Catalogue transactions do not rewrite families in Stage 6A.
+Do not dual-write owner defaults onto `variants.json` or `products.json`. Normal POS import must not rewrite `productFamilies.json` or `productDefaults.json`.
+
+Studio, `catalog:check`, catalogue transactions, import tools, and POS mappings use the identity files plus the owner-curated files. Catalogue transactions backup, write, roll back, and undo both `productFamilies.json` and `productDefaults.json`.
 
 The customer app imports the generated artefact `src/catalog/generated/customerCatalog.json`.
 

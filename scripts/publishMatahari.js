@@ -331,10 +331,6 @@ export async function runPublish(options = {}) {
     }
   }
 
-  const filesToPublish = allowCode
-    ? classification.all
-    : classification.owner;
-  const summary = summarizeImageChanges(filesToPublish);
   let catalogStats;
   try {
     catalogStats = catalogStatsFn();
@@ -372,6 +368,47 @@ export async function runPublish(options = {}) {
     }
   }
 
+  const statusAfter = git.run(["status", "--porcelain=v1", "-uall"]);
+  if (statusAfter.code !== 0) {
+    error("Could not re-read git status after validation. Publish stopped.");
+    return { ok: false, code: 1, reason: "status" };
+  }
+
+  const changedAfter = pathsFromPorcelain(statusAfter.stdout);
+  const classificationAfter = classifyChangedPaths(changedAfter);
+
+  if (classificationAfter.hasDeveloper && !allowCode) {
+    error(
+      [
+        "Publish stopped: source-code or other non-catalogue files changed.",
+        "Everyday Publish only sends product images and catalogue data.",
+        "This protects you from accidentally publishing unfinished Cursor work.",
+        "",
+        "Unexpected files:",
+        formatPathList(classificationAfter.developer),
+        "",
+        "If you meant to publish owner images only, leave those files unchanged.",
+        "A developer can publish code separately.",
+      ].join("\n")
+    );
+    appendLog(
+      root,
+      `abort developer-files ${classificationAfter.developer.length}`
+    );
+    return { ok: false, code: 2, reason: "developer-files" };
+  }
+
+  const filesToPublish = allowCode
+    ? classificationAfter.all
+    : classificationAfter.owner;
+  const summary = summarizeImageChanges(filesToPublish);
+
+  if (classificationAfter.empty) {
+    log("No Matahari changes to publish.");
+    appendLog(root, "no-changes");
+    return { ok: true, code: 0, reason: "no-changes" };
+  }
+
   const suggested = defaultCommitMessage(summary);
   let commitMessage = suggested;
 
@@ -397,7 +434,7 @@ export async function runPublish(options = {}) {
 
   if (dryRun) {
     log("Dry run: no git add, commit, or push.");
-    return { ok: true, code: 0, reason: "dry", classification, summary };
+    return { ok: true, code: 0, reason: "dry", classification: classificationAfter, summary };
   }
 
   const confirm = yes
