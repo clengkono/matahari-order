@@ -32,6 +32,7 @@
     "catalog:studio-images:smoke": "node scripts/studioImages.smoke.js",
     "catalog:product-families:smoke": "node scripts/productFamilies.smoke.js",
     "catalog:recommendation-context:smoke": "node scripts/recommendationContext.smoke.js",
+    "catalog:order-history:smoke": "node scripts/orderHistoryStorage.smoke.js",
     "catalog:product-defaults:smoke": "node scripts/productDefaults.smoke.js",
     "catalog:studio-catalog-api:smoke": "node scripts/studioCatalogApi.smoke.js",
     "catalog:studio-catalog-ui:smoke": "node scripts/studioCatalogUi.smoke.js",

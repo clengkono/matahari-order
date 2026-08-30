@@ -64,6 +64,7 @@ import {
   loadRecentSearches,
   rememberRecentSearch,
 } from "./utils/recentSearches";
+import { saveOrderHistorySnapshot } from "./utils/orderHistoryStorage";
 import { openWhatsAppWithOrder } from "./utils/whatsapp";
 
 const productsById = Object.fromEntries(
@@ -550,6 +551,8 @@ export default function App() {
 
     whatsAppSendLockRef.current = true;
     setWhatsAppHandoffStatus("opening");
+
+    saveOrderHistorySnapshot({ cart, note: orderNote });
 
     const result = openWhatsAppWithOrder(cart, orderNote);
 
