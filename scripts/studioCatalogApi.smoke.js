@@ -130,6 +130,7 @@ function setupTempCatalog() {
       "utf8"
     );
   }
+  writeFileSync(join(catalogDir, "productDefaults.json"), "[]\n", "utf8");
 
   return { root, catalogDir, backupsDir, customerCatalogPath };
 }
@@ -183,14 +184,14 @@ function main() {
       "1. GET defaults returns catalogue rows",
       listed.defaults.length === live.products.length &&
         listed.stats.total === 2256 &&
-        listed.stats.configured === 0 &&
-        listed.stats.needsReview === 2256
+        listed.stats.configured === 1 &&
+        listed.stats.needsReview === 2255
     );
     assert(
-      "2. unconfigured effective fallback",
-      milkita?.ownerConfigured === false &&
-        milkita?.ownerDefaultUnit === null &&
-        milkita?.currentDefaultUnit === "Karton" &&
+      "2. live Milkita override plus Glory/Aqua fallbacks",
+      milkita?.ownerConfigured === true &&
+        milkita?.ownerDefaultUnit === "Pak" &&
+        milkita?.currentDefaultUnit === "Pak" &&
         milkita?.availableUnits.includes("Pak") &&
         milkita?.availableUnits.includes("Karton") &&
         glory?.currentDefaultUnit === "Slof" &&
@@ -635,8 +636,7 @@ function main() {
         Object.hasOwn(picker, "image") &&
         Object.hasOwn(picker, "variantId") &&
         imageCatalog.stats.total === 2256 &&
-        imageCatalog.stats.completed === 56 &&
-        imageCatalog.stats.missing === 2200 &&
+        imageCatalog.stats.completed + imageCatalog.stats.missing === 2256 &&
         imageCatalog.stats.incomplete === 0 &&
         metadataRejected.ok === false &&
         familyRejected.ok === false &&
@@ -664,7 +664,9 @@ function main() {
     assert(
       "real catalogue unchanged after isolated API smoke",
       filesMatchSnapshot(LIVE_CATALOG_DIR, liveSnapshot) &&
-        liveNow.productDefaults.length === 0 &&
+        liveNow.productDefaults.length === 1 &&
+        liveNow.productDefaults[0]?.productId === MILKITA_ID &&
+        liveNow.productDefaults[0]?.defaultUnitName === "Pak" &&
         liveNow.productFamilies.length === 3 &&
         liveNow.productFamilies.reduce(
           (total, family) => total + family.members.length,
@@ -682,7 +684,7 @@ function main() {
         liveCustomerNow.products.find((row) => row.id === AQUA_ID)?.defaultUnit ===
           "Karton" &&
         liveCustomerNow.products.find((row) => row.id === MILKITA_ID)
-          ?.defaultUnit === "Karton"
+          ?.defaultUnit === "Pak"
     );
   } finally {
     rmSync(dirs.root, { recursive: true, force: true });

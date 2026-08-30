@@ -603,12 +603,11 @@ function main() {
     );
 
     const imageAfterMeta = saveAssignedImageMetadata(
-      "prod-52-kretek-20",
+      "prod-apache-16",
       {
-        card: "/product-images/cards/prod-52-kretek-20.webp",
-        detail: "/product-images/details/prod-52-kretek-20.webp",
-        original:
-          "/product-images/originals/prod-52-kretek-20-original.png",
+        card: "/product-images/cards/prod-apache-16.webp",
+        detail: "/product-images/details/prod-apache-16.webp",
+        original: "/product-images/originals/prod-apache-16-original.png",
       },
       metaTxOptions(dirs)
     );
@@ -689,15 +688,19 @@ function main() {
 
     const snapshotBeforeOwnerMeta = snapshotFiles(dirs.catalogDir);
     const ownerMeta = runCatalogTransaction(
-      txOptions(dirs, {
+      metaTxOptions(dirs, {
         action: "owner-meta-smoke",
-        productIds: ["prod-milkita-candy-stroberi-premium-30"],
+        productIds: ["prod-glory-16"],
         summary: "Smoke owner default + family write",
         mutate(catalog) {
+          const withoutGlory = (catalog.productDefaults ?? []).filter(
+            (row) => row.productId !== "prod-glory-16"
+          );
           catalog.productDefaults = [
+            ...withoutGlory,
             {
-              productId: "prod-milkita-candy-stroberi-premium-30",
-              defaultUnitName: "Pak",
+              productId: "prod-glory-16",
+              defaultUnitName: "Bungkus",
             },
           ];
           catalog.productFamilies = [
@@ -722,8 +725,7 @@ function main() {
       "6B.1 live defaults updated",
       afterOwnerMeta.productDefaults.some(
         (row) =>
-          row.productId === "prod-milkita-candy-stroberi-premium-30" &&
-          row.defaultUnitName === "Pak"
+          row.productId === "prod-glory-16" && row.defaultUnitName === "Bungkus"
       )
     );
     assert(
@@ -732,7 +734,7 @@ function main() {
     );
 
     const ownerRollback = runCatalogTransaction(
-      txOptions(dirs, {
+      metaTxOptions(dirs, {
         action: "owner-meta-rollback",
         productIds: ["prod-glory-16"],
         summary: "Force owner-meta rollback",
@@ -760,7 +762,8 @@ function main() {
     assert(
       "6B.1 rollback restores defaults",
       afterOwnerRollback.productDefaults.some(
-        (row) => row.productId === "prod-milkita-candy-stroberi-premium-30"
+        (row) =>
+          row.productId === "prod-glory-16" && row.defaultUnitName === "Bungkus"
       )
     );
     assert(
@@ -770,13 +773,16 @@ function main() {
       )
     );
 
-    const undoOwner = undoLastCatalogTransaction(txOptions(dirs));
+    const undoOwner = undoLastCatalogTransaction(metaTxOptions(dirs));
     assert("6B.1 undo owner meta succeeds", undoOwner.ok, undoOwner.error);
     const afterOwnerUndo = loadCatalog(dirs);
+    const defaultsBeforeOwnerMeta = JSON.parse(
+      snapshotBeforeOwnerMeta["productDefaults.json"]
+    );
     assert(
-      "6B.1 undo restores empty defaults",
-      Array.isArray(afterOwnerUndo.productDefaults) &&
-        afterOwnerUndo.productDefaults.length === 0
+      "6B.1 undo restores pre-write defaults",
+      JSON.stringify(afterOwnerUndo.productDefaults) ===
+        JSON.stringify(defaultsBeforeOwnerMeta)
     );
     assert(
       "6B.1 undo restores original families",

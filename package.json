@@ -33,6 +33,7 @@
     "catalog:product-families:smoke": "node scripts/productFamilies.smoke.js",
     "catalog:product-defaults:smoke": "node scripts/productDefaults.smoke.js",
     "catalog:studio-catalog-api:smoke": "node scripts/studioCatalogApi.smoke.js",
+    "catalog:studio-catalog-ui:smoke": "node scripts/studioCatalogUi.smoke.js",
     "catalog:normalize-images:dry": "node scripts/normalizeImageStorage.js --dry",
     "catalog:normalize-images:apply": "node scripts/normalizeImageStorage.js --apply",
     "catalog:normalize-images:smoke": "node scripts/normalizeImageStorage.smoke.js",

@@ -301,7 +301,10 @@ try {
     "family JSON is safe owner data and not mixed into recommendations",
     isSafeOwnerPath("src/catalog/productFamilies.json") &&
       isSafeOwnerPath("src/catalog/productDefaults.json") &&
-      live.productDefaults.length === 0 &&
+      live.productDefaults.length === 1 &&
+      live.productDefaults[0]?.productId ===
+        "prod-milkita-candy-stroberi-premium-30" &&
+      live.productDefaults[0]?.defaultUnitName === "Pak" &&
       !JSON.stringify(live.recommendations).includes("daia-sachet-46g")
   );
 

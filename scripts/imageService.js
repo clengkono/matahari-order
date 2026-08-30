@@ -1764,6 +1764,7 @@ const server = createServer(async (req, res) => {
       service: "matahari-studio",
       host: HOST,
       port: PORT,
+      capabilities: ["defaults", "families"],
       warning:
         "LOCAL ONLY — Do not expose this service on public network interfaces.",
     });

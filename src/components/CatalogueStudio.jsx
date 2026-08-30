@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import StudioDefaultsTab from "./StudioDefaultsTab";
+import StudioFamiliesTab from "./StudioFamiliesTab";
 import StudioImagesTab from "./StudioImagesTab";
 import StudioProductsTab from "./StudioProductsTab";
 import StudioQueueTab from "./StudioQueueTab";
@@ -10,6 +12,8 @@ const TABS = [
   { id: "queue", label: "Queue" },
   { id: "images", label: "Images" },
   { id: "products", label: "Products" },
+  { id: "defaults", label: "Defaults" },
+  { id: "families", label: "Families" },
 ];
 
 function CatalogueStudio() {
@@ -26,6 +30,8 @@ function CatalogueStudio() {
   const searchRef = useRef(null);
   const queueSearchRef = useRef(null);
   const productsSearchRef = useRef(null);
+  const defaultsSearchRef = useRef(null);
+  const familiesSearchRef = useRef(null);
   const queueApiRef = useRef(null);
 
   const applyCatalogue = useCallback((data) => {
@@ -140,7 +146,11 @@ function CatalogueStudio() {
             ? productsSearchRef.current
             : tab === "images"
               ? searchRef.current
-              : queueSearchRef.current;
+              : tab === "defaults"
+                ? defaultsSearchRef.current
+                : tab === "families"
+                  ? familiesSearchRef.current
+                  : queueSearchRef.current;
         requestAnimationFrame(() => {
           target?.focus();
           target?.select?.();
@@ -150,25 +160,19 @@ function CatalogueStudio() {
 
       if (hasCtrl && key === "f") {
         event.preventDefault();
-        if (tab === "products") {
-          requestAnimationFrame(() => {
-            productsSearchRef.current?.focus();
-            productsSearchRef.current?.select?.();
-          });
-          return;
-        }
-
-        if (tab === "queue") {
-          requestAnimationFrame(() => {
-            queueSearchRef.current?.focus();
-            queueSearchRef.current?.select?.();
-          });
-          return;
-        }
-
+        const target =
+          tab === "products"
+            ? productsSearchRef.current
+            : tab === "queue"
+              ? queueSearchRef.current
+              : tab === "defaults"
+                ? defaultsSearchRef.current
+                : tab === "families"
+                  ? familiesSearchRef.current
+                  : searchRef.current;
         requestAnimationFrame(() => {
-          searchRef.current?.focus();
-          searchRef.current?.select?.();
+          target?.focus();
+          target?.select?.();
         });
         return;
       }
@@ -269,10 +273,25 @@ function CatalogueStudio() {
           />
         ) : null}
 
-        {tab !== "products" && loading ? (
+        {tab === "defaults" ? (
+          <StudioDefaultsTab searchRef={defaultsSearchRef} />
+        ) : null}
+
+        {tab === "families" ? (
+          <StudioFamiliesTab searchRef={familiesSearchRef} />
+        ) : null}
+
+        {tab !== "products" &&
+        tab !== "defaults" &&
+        tab !== "families" &&
+        loading ? (
           <p className="studioStatus">Loading catalogue…</p>
         ) : null}
-        {tab !== "products" && !loading && loadError ? (
+        {tab !== "products" &&
+        tab !== "defaults" &&
+        tab !== "families" &&
+        !loading &&
+        loadError ? (
           <div className="studioError" role="alert">
             <p>{loadError}</p>
             <button

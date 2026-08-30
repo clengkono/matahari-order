@@ -9,21 +9,38 @@ export const API_PORT = 8787;
 export const STUDIO_URL = `http://${STUDIO_HOST}:${FRONTEND_PORT}/studio`;
 export const FRONTEND_URL = `http://${STUDIO_HOST}:${FRONTEND_PORT}/`;
 export const API_HEALTH_URL = `http://${STUDIO_HOST}:${API_PORT}/api/studio/health`;
+export const REQUIRED_STUDIO_API_CAPABILITIES = Object.freeze([
+  "defaults",
+  "families",
+]);
+
+function parseHealthBody(body) {
+  if (body && typeof body === "object") {
+    return body;
+  }
+  if (typeof body !== "string") {
+    return null;
+  }
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
+}
+
+export function studioApiCapabilities(body) {
+  const json = parseHealthBody(body);
+  return Array.isArray(json?.capabilities)
+    ? json.capabilities.filter((item) => typeof item === "string")
+    : [];
+}
 
 export function looksLikeStudioApi(status, body) {
   if (status !== 200) {
     return false;
   }
 
-  let json = body;
-  if (typeof body === "string") {
-    try {
-      json = JSON.parse(body);
-    } catch {
-      return false;
-    }
-  }
-
+  const json = parseHealthBody(body);
   if (!json || json.ok !== true) {
     return false;
   }
@@ -33,6 +50,16 @@ export function looksLikeStudioApi(status, body) {
   }
 
   return typeof json.warning === "string" && json.warning.includes("LOCAL ONLY");
+}
+
+export function looksLikeCurrentStudioApi(status, body) {
+  if (!looksLikeStudioApi(status, body)) {
+    return false;
+  }
+  const capabilities = studioApiCapabilities(body);
+  return REQUIRED_STUDIO_API_CAPABILITIES.every((item) =>
+    capabilities.includes(item)
+  );
 }
 
 export function looksLikeStudioFrontend(status, body) {
@@ -105,7 +132,16 @@ function classifyProbe(probe, looksLike) {
 }
 
 function classifyApi(probe) {
-  return classifyProbe(probe, looksLikeStudioApi);
+  if (!probe.reachable) {
+    return probe.error === "connection-refused" ? "closed" : "pending";
+  }
+  if (looksLikeCurrentStudioApi(probe.status, probe.body)) {
+    return "matahari";
+  }
+  if (looksLikeStudioApi(probe.status, probe.body)) {
+    return "stale";
+  }
+  return "foreign";
 }
 
 function classifyFrontend(probe) {
@@ -176,6 +212,17 @@ export function explainFrontendFailure(inspect) {
     "• Project libraries are missing (run npm install in this folder)",
   ];
   return lines.join("\n");
+}
+
+export function explainStaleApi() {
+  return [
+    "An older Matahari catalogue service is already running on port 8787.",
+    "The current Studio UI needs Defaults and Families support.",
+    "",
+    "Close every Matahari Studio window (press Ctrl+C in each one),",
+    "then start Studio again with Start Matahari Studio.",
+    "This launcher will not stop that older service itself.",
+  ].join("\n");
 }
 
 export function explainForeignPort(port, role) {

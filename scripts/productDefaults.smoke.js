@@ -64,8 +64,15 @@ function main() {
 
     assert(
       "1. empty productDefaults is valid",
+      validateProductDefaults([], productIds, live.variants, live.units)
+        .length === 0
+    );
+    assert(
+      "1b. live owner defaults are valid",
       Array.isArray(live.productDefaults) &&
-        live.productDefaults.length === 0 &&
+        live.productDefaults.length === 1 &&
+        live.productDefaults[0]?.productId === MILKITA_ID &&
+        live.productDefaults[0]?.defaultUnitName === "Pak" &&
         validateProductDefaults(
           live.productDefaults,
           productIds,
@@ -227,9 +234,9 @@ function main() {
 
     const liveCustomer = assembleCustomerCatalog(live);
     assert(
-      "zero overrides keep live customer defaults unchanged",
+      "live customer defaults use the Milkita owner override",
       liveCustomer.products.find((product) => product.id === MILKITA_ID)
-        ?.defaultUnit === "Karton" &&
+        ?.defaultUnit === "Pak" &&
         liveCustomer.products.find((product) => product.id === GLORY_ID)
           ?.defaultUnit === "Slof"
     );
@@ -249,8 +256,10 @@ function main() {
       isSafeOwnerPath("src/catalog/productDefaults.json")
     );
     assert(
-      "initial owner override count is 0",
-      live.productDefaults.length === 0
+      "live owner override is Milkita Stroberi Premium → Pak",
+      live.productDefaults.length === 1 &&
+        live.productDefaults[0]?.productId === MILKITA_ID &&
+        live.productDefaults[0]?.defaultUnitName === "Pak"
     );
     assert(
       "catalogue counts remain the Stage 6B.1 baseline",

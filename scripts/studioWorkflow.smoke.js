@@ -35,9 +35,15 @@ import {
 import {
   explainApiFailure,
   formatReadyBanner,
+  explainStaleApi,
+  looksLikeCurrentStudioApi,
   looksLikeStudioApi,
   looksLikeStudioFrontend,
 } from "./studioHealth.js";
+import {
+  isStudioTrashRequestUrl,
+  shouldIgnoreStudioWatchPath,
+} from "./viteStudioIgnore.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -276,6 +282,79 @@ try {
       service: "matahari-studio",
       warning: "LOCAL ONLY",
     })
+  );
+  assert(
+    "older Matahari health without capabilities is not current",
+    looksLikeStudioApi(200, {
+      ok: true,
+      service: "matahari-studio",
+      warning: "LOCAL ONLY",
+    }) &&
+      looksLikeCurrentStudioApi(200, {
+        ok: true,
+        service: "matahari-studio",
+        warning: "LOCAL ONLY",
+      }) === false
+  );
+  assert(
+    "current Matahari health requires defaults and families capabilities",
+    looksLikeCurrentStudioApi(200, {
+      ok: true,
+      service: "matahari-studio",
+      capabilities: ["defaults", "families"],
+      warning: "LOCAL ONLY",
+    })
+  );
+  assert(
+    "stale catalogue service message asks the owner to restart Studio",
+    explainStaleApi().includes("older Matahari catalogue service") &&
+      explainStaleApi().includes("Ctrl+C")
+  );
+
+  const viteConfig = readFileSync(join(ROOT, "vite.config.js"), "utf8");
+  const imageService = readFileSync(join(ROOT, "scripts", "imageService.js"), "utf8");
+  assert(
+    "Vite watch ignores Studio image trash",
+    shouldIgnoreStudioWatchPath(
+      "C:/Users/Admin/Documents/Projects/matahari-order/public/product-images/.trash/2026-08-30T03-14-57-364Z/prod-52-kretek-20/prod-52-kretek-20-original.png"
+    ) &&
+      shouldIgnoreStudioWatchPath(
+        "public\\product-images\\.trash\\x\\prod-a.webp"
+      ) &&
+      shouldIgnoreStudioWatchPath("public/product-images/cards/prod-a.webp") ===
+        false &&
+      viteConfig.includes("shouldIgnoreStudioWatchPath") &&
+      viteConfig.includes("STUDIO_TRASH_WATCH_GLOBS")
+  );
+  assert(
+    "active card/detail paths stay watchable",
+    shouldIgnoreStudioWatchPath(
+      "public/product-images/cards/prod-glory-16.webp"
+    ) === false &&
+      shouldIgnoreStudioWatchPath(
+        "public/product-images/details/prod-glory-16.webp"
+      ) === false &&
+      shouldIgnoreStudioWatchPath(
+        "public/product-images/originals/prod-glory-16-original.png"
+      ) === false
+  );
+  assert(
+    "Vite denies serving Studio image trash URLs",
+    isStudioTrashRequestUrl(
+      "/product-images/.trash/2026-08-30T03-14-57-364Z/prod-a/prod-a.webp"
+    ) &&
+      isStudioTrashRequestUrl("/product-images/cards/prod-a.webp") === false &&
+      viteConfig.includes("denyStudioTrashPlugin")
+  );
+  assert(
+    "image service remove-image route remains",
+    imageService.includes("removeAssignedImage") &&
+      imageService.includes("archiveAssignedImageFiles") &&
+      /image\\\/remove/.test(imageService)
+  );
+  assert(
+    "stale-service capability list remains on health",
+    imageService.includes('capabilities: ["defaults", "families"]')
   );
   assert(
     "studio frontend fingerprint accepts index.html",

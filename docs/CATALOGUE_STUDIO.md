@@ -169,7 +169,7 @@ Removed images are copied (not served to customers) to:
 
 `public/product-images/.trash/<timestamp>/<product-id>/`
 
-That folder holds the archived original/card/detail files plus `manifest.json` (`productId`, `removedAt`, source paths). It is gitignored. Vite can still serve a guessed URL under `/product-images/.trash/…`; customer catalogue JSON never includes those paths.
+That folder holds the archived original/card/detail files plus `manifest.json` (`productId`, `removedAt`, source paths). It is gitignored. Vite does not watch `.trash` (avoids a Windows `EBUSY` crash when files are archived). The Studio Vite middleware also 404s `/product-images/.trash/…`. Customer catalogue JSON never includes those paths.
 
 Stage 5F migration copies files first, then updates `products.json` in a catalogue transaction, then deletes leftover `cigarettes/` files. If the process dies after the copy and before the JSON write, both locations can exist while metadata still points at the old path. Re-run the guarded migration; it is written to continue safely. If JSON succeeds and process dies before deleting leftovers, metadata is already canonical and a second run is a no-op besides leftover cleanup.
 
@@ -232,7 +232,9 @@ Residual crash windows:
 - After a successful JSON write and before active files are unlinked: metadata has no image, old files may still sit on disk unused
 - If unlink fails after JSON success: same — customer JSON has no paths; leftover files are orphans
 - After copy-to-trash and before JSON: extra trash copy only; live image still assigned
-- Guessable HTTP access to `.trash` under `public/` if someone knows the timestamp path
+- Guessable HTTP access to `.trash` is blocked in Vite dev/preview (404) and stripped from `dist` on build. A generic static server pointed at `public/` could still expose it.
+
+Known future cleanup (not changed in Stage 6B.3): card and detail both archive as `prod-<id>.webp` in the same `.trash` folder, so one can overwrite the other. Live catalogue assignment is still correct. Distinct archive filenames belong in a later image-archive cleanup, not a storage redesign here.
 
 There is no Trash UI in this stage.
 
@@ -325,23 +327,50 @@ The Products tab edits **customer-facing** name and category for the full catalo
 - Changing category does not move or delete image files
 - After a successful name/category save, Studio rebuilds the generated customer catalogue. If that rebuild warns, run `npm run catalog:customer-build`.
 
-Keyboard: `Ctrl+F` on the Products tab focuses the Products search, not the image search.
+Keyboard: `Ctrl+F` (and `/`) focuses the search on the current tab — Products, Defaults, Families, Queue, or Images.
+
+---
+
+## Defaults tab
+
+Review and confirm customer-facing default units. The list is large; filter **Needs review** first.
+
+- **Needs review** — no owner row yet. The dropdown still shows the current automatic fallback. That fallback is not missing or broken.
+- **Configured / Confirmed** — the owner has saved a default, even if it matches the automatic fallback.
+- Choose a unit from that product’s available units only. The save is immediate (no page-wide Save).
+- **Confirm** saves the unit currently shown. Use this when the fallback is already correct — changing the dropdown is not required.
+- **Use automatic default** clears the owner row. The effective unit returns to the import fallback.
+- If a save reports that the customer catalogue could not be rebuilt, treat it as a partial success. The owner setting was stored; run `npm run catalog:customer-build` (or Publish’s validation) before publishing.
+
+Owner changes are published later with **Publish Matahari Changes**.
+
+---
+
+## Families tab
+
+Manage Produk Serupa groups. Family id is not shown and cannot be edited.
+
+- **Create family** starts a local draft. Save/Create stays disabled until the name is non-empty and there are at least 2 members. Nothing is POSTed until then.
+- Edit an existing family locally, then **Save changes**. Removing a member does not PATCH a one-member family.
+- **Add product** searches the existing owner product list (name, aliases, id, POS name, POS code). A product already in another family cannot be added; the other family name is shown. There is no silent move.
+- **Delete family** asks for confirmation. Products are not deleted — only the Produk Serupa relationship is removed.
+- A `customerCatalog.ok: false` response is a partial-success warning, not a normal save.
+
+Publish later with **Publish Matahari Changes**.
 
 ---
 
 ## Defaults and families (local API)
 
-Studio remains **local-only** (`127.0.0.1:8787`, no authentication). These routes are for a future Studio tab. There is no Defaults or Families UI in this stage.
+Studio remains **local-only** (`127.0.0.1:8787`, no authentication).
 
 Owner default units live in `src/catalog/productDefaults.json`. A row means the owner confirmed that unit (`ownerConfigured: true`), even when it matches the import/heuristic fallback. `DELETE` removes that row; the effective default returns to the variant/import fallback. There is no customer-facing “owner configured” flag.
 
 Product families continue to live in `src/catalog/productFamilies.json`. Writes are catalogue transactions: validate, persist atomically, then rebuild the generated customer catalogue. A no-op write does not rebuild. Recommendations are not rewritten. Deleting a family does not delete member products.
 
-`GET /api/studio/products` remains the owner product picker (customer name, aliases, product id, POS name, POS code). Do not add a second full-catalogue list.
+`GET /api/studio/products` remains the owner product picker.
 
-If a source write succeeds and the customer rebuild then fails, Studio reports `customerCatalog.ok: false` and a warning. The source change is not rolled back. Run `npm run catalog:customer-build`.
-
-Future Studio UI MUST surface `customerCatalog.ok: false` as a prominent partial-success warning, not an ordinary successful-save indicator. Do not add rollback-after-rebuild in this stage.
+If a source write succeeds and the customer rebuild then fails, Studio reports `customerCatalog.ok: false` and a warning. The source change is not rolled back. The Defaults and Families tabs must show that as a prominent partial-success warning, not an ordinary successful-save indicator. Run `npm run catalog:customer-build`. Do not add rollback-after-rebuild.
 
 ---
 

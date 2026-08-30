@@ -13,6 +13,7 @@ import {
   explainApiFailure,
   explainForeignPort,
   explainFrontendFailure,
+  explainStaleApi,
   formatReadyBanner,
   FRONTEND_PORT,
   inspectStudioPorts,
@@ -104,7 +105,11 @@ export async function waitUntilStudioReady({
     if (last.api === "matahari" && last.frontend === "matahari") {
       return last;
     }
-    if (last.api === "foreign" || last.frontend === "foreign") {
+    if (
+      last.api === "foreign" ||
+      last.frontend === "foreign" ||
+      last.api === "stale"
+    ) {
       return last;
     }
     await sleep(intervalMs);
@@ -245,6 +250,14 @@ export async function startMatahariStudio(options = {}) {
     }
   }
 
+  if (initial.api === "stale") {
+    console.error(explainStaleApi());
+    if (pauseOnIdle) {
+      await waitForEnter("Press Enter to close this window.");
+    }
+    return { ok: false, code: 1, reason: "stale-api" };
+  }
+
   if (initial.api === "foreign" || initial.api === "pending") {
     console.error(explainForeignPort(API_PORT, "catalogue service"));
     if (pauseOnIdle) {
@@ -310,6 +323,11 @@ export async function startMatahariStudio(options = {}) {
 
   const ready = await waitUntilStudioReady();
 
+  if (ready.api === "stale") {
+    console.error(explainStaleApi());
+    shutdown(1);
+    return { ok: false, code: 1, reason: "stale-api-after-start" };
+  }
   if (ready.api === "foreign") {
     console.error(explainForeignPort(API_PORT, "catalogue service"));
     shutdown(1);

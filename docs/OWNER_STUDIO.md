@@ -13,6 +13,15 @@ This is the short owner guide for adding product photos and publishing them.
 
 You do not need to remember `npm`, `git`, or catalogue commands for this daily work.
 
+## Default units and similar products
+
+Studio also has **Defaults** and **Families** tabs.
+
+- **Defaults** — confirm the usual order unit for each product. **Needs review** still shows the current automatic default. Press **Confirm** when that unit is correct, or pick another unit. **Use automatic default** undoes your confirmation.
+- **Families** — group products that should appear as Produk Serupa. Create needs a name and at least two products. A product already in another family cannot be moved silently. Deleting a family does not delete the products.
+
+When you are finished, publish with **Publish Matahari Changes** the same way as photos.
+
 ## One-time desktop shortcuts
 
 Double-click **Create Matahari Desktop Shortcuts** once.
@@ -30,6 +39,10 @@ If you prefer to create a shortcut yourself:
 ### Studio is already running
 
 If you start Studio again, it should say it is already running and open the Studio page. It should not start a second copy. Use the original window and press `Ctrl+C` there to stop.
+
+If Defaults or Families says the catalogue service is older, close **every** Matahari Studio window (`Ctrl+C` in each one), then start Studio again. Do not leave an old Studio window running.
+
+If Studio says Vite crashed or **Matahari Studio did not start**, close any leftover Studio window (`Ctrl+C`), then Start Matahari Studio once. You do not need npm commands.
 
 ### Publish says code files changed
 

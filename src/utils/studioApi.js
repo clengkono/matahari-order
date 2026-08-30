@@ -33,6 +33,79 @@ export async function fetchStudioProducts() {
   return parseJson(response);
 }
 
+export async function fetchStudioDefaults() {
+  const response = await fetch(`${STUDIO_API}/defaults`, {
+    cache: "no-store",
+  });
+  return parseJson(response);
+}
+
+export async function setStudioDefaultUnit(productId, defaultUnitName) {
+  const response = await fetch(
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}/default-unit`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ defaultUnitName }),
+    }
+  );
+  return parseJson(response);
+}
+
+export async function clearStudioDefaultUnit(productId) {
+  const response = await fetch(
+    `${STUDIO_API}/products/${encodeURIComponent(productId)}/default-unit`,
+    {
+      method: "DELETE",
+    }
+  );
+  return parseJson(response);
+}
+
+export async function fetchStudioFamilies() {
+  const response = await fetch(`${STUDIO_API}/families`, {
+    cache: "no-store",
+  });
+  return parseJson(response);
+}
+
+export async function createStudioFamily({ name, members }) {
+  const response = await fetch(`${STUDIO_API}/families`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, members }),
+  });
+  return parseJson(response);
+}
+
+export async function updateStudioFamily(familyId, payload) {
+  const response = await fetch(
+    `${STUDIO_API}/families/${encodeURIComponent(familyId)}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+  return parseJson(response);
+}
+
+export async function deleteStudioFamily(familyId) {
+  const response = await fetch(
+    `${STUDIO_API}/families/${encodeURIComponent(familyId)}`,
+    {
+      method: "DELETE",
+    }
+  );
+  return parseJson(response);
+}
+
 export async function updateStudioProduct(productId, payload) {
   const response = await fetch(
     `${STUDIO_API}/products/${encodeURIComponent(productId)}`,
