@@ -45,7 +45,12 @@ import {
   normalizeSearchText,
   searchProducts,
 } from "./utils/productSearch";
-import { getRecommendedProducts } from "./utils/recommendations";
+import {
+  getRecommendedProducts,
+  recommendationSourcesForCart,
+  recommendationSourcesForProductDetail,
+  recommendationSourcesForSearch,
+} from "./utils/recommendations";
 import {
   excludeSimilarFromRecommendations,
   resolveSimilarProducts,
@@ -234,7 +239,7 @@ export default function App() {
   const frequentlyOrderedTogether = useMemo(
     () =>
       getRecommendedProducts({
-        cart,
+        cart: recommendationSourcesForCart(cart),
         relationships: catalogRecommendations,
         products,
         limit: 8,
@@ -247,20 +252,17 @@ export default function App() {
       return [];
     }
 
-    const recommendationSources = [
-      { productId: selectedProduct.id },
-      ...cart.map((line) => ({ productId: line.productId })),
-    ];
+    const cartProductIds = new Set(cart.map((line) => line.productId));
 
     return excludeSimilarFromRecommendations(
       getRecommendedProducts({
-        cart: recommendationSources,
+        cart: recommendationSourcesForProductDetail(selectedProduct.id),
         relationships: catalogRecommendations,
         products,
         limit: 8,
       }),
       selectedProduct.similarProductIds
-    );
+    ).filter((product) => !cartProductIds.has(product.id));
   }, [selectedProduct, cart]);
 
   const similarProducts = useMemo(
@@ -403,16 +405,8 @@ export default function App() {
     const searchIds = new Set(searchResultProducts.map((product) => product.id));
     const cartProductIds = new Set(cart.map((line) => line.productId));
 
-    // Whole-cart ranking (Release 0.7/0.9): treat all genuine search hits
-    // (name + alias) as recommendation sources; include cart IDs so in-cart
-    // items are excluded. Edges come from sales/manual provenance data.
-    const recommendationSources = [
-      ...searchResultProducts.map((product) => ({ productId: product.id })),
-      ...cart.map((line) => ({ productId: line.productId })),
-    ];
-
     return getRecommendedProducts({
-      cart: recommendationSources,
+      cart: recommendationSourcesForSearch(searchResultProducts),
       relationships: catalogRecommendations,
       products,
       limit: 3,

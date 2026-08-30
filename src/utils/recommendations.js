@@ -1,14 +1,19 @@
 /**
- * Whole-cart recommendation ranking.
+ * Recommendation source construction and ranking.
  *
  * Pure utility — no React dependency. Consumes edges from
  * recommendations.json with provenance:
  *   source: "sales"  — transaction-derived evidence
  *   source: "manual" — owner-entered business knowledge
  *
- * Ranking sums edge weights across all provenance sources for products
- * currently in the cart. Sales is the primary evidence set today; manual
- * edges can be added later without changing this ranking model.
+ * Ranking sums edge weights across the supplied source IDs. Which IDs are
+ * sources depends on the surface:
+ *   Product Detail — viewed product only
+ *   Search strip   — current search hits only
+ *   Cart / review  — every product in the cart
+ *
+ * Cart lines must not be mixed into Product Detail or Search sources.
+ * That leak made grocery pages inherit cigarette neighbors.
  */
 
 /** Allowed provenance values for recommendation edges. */
@@ -33,6 +38,46 @@ function isProductEligible(product) {
   }
 
   return true;
+}
+
+function uniqueSourceRows(items, getId) {
+  const sources = [];
+  const seen = new Set();
+
+  for (const item of items ?? []) {
+    const productId = getId(item);
+    if (!productId || seen.has(productId)) {
+      continue;
+    }
+    seen.add(productId);
+    sources.push({ productId });
+  }
+
+  return sources;
+}
+
+/**
+ * Product Detail FBT sources: the viewed product only.
+ * Do not add cart IDs — that inherited unrelated recommendations.
+ */
+export function recommendationSourcesForProductDetail(productId) {
+  return productId ? [{ productId }] : [];
+}
+
+/**
+ * Search "Mungkin Anda juga perlu" sources: current search hits only.
+ * Do not add cart IDs.
+ */
+export function recommendationSourcesForSearch(searchResultProducts = []) {
+  return uniqueSourceRows(searchResultProducts, (product) => product?.id);
+}
+
+/**
+ * Cart / order-review FBT sources: every product in the cart.
+ * This is the only surface that aggregates multiple cart lines.
+ */
+export function recommendationSourcesForCart(cart = []) {
+  return uniqueSourceRows(cart, (line) => line?.productId);
 }
 
 function getCartProductIds(cart) {
