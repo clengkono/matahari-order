@@ -4,12 +4,7 @@
     "name": "52 Kretek 20",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product",
-    "image": {
-      "card": "/product-images/cards/prod-52-kretek-20.webp",
-      "detail": "/product-images/details/prod-52-kretek-20.webp",
-      "original": "/product-images/originals/prod-52-kretek-20-original.png"
-    }
+    "pattern": "fixed-product"
   },
   {
     "id": "prod-apache-16",
@@ -1092,7 +1087,12 @@
     "name": "ABC Kecap Manis Botol 130ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-kecap-manis-botol-130ml.webp",
+      "detail": "/product-images/details/prod-abc-kecap-manis-botol-130ml.webp",
+      "original": "/product-images/originals/prod-abc-kecap-manis-botol-130ml-original.png"
+    }
   },
   {
     "id": "prod-abc-kecap-manis-botol-275ml",
@@ -1113,7 +1113,12 @@
     "name": "ABC Kecap Manis Botol Beling 620ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-kecap-manis-botol-beling-620ml.webp",
+      "detail": "/product-images/details/prod-abc-kecap-manis-botol-beling-620ml.webp",
+      "original": "/product-images/originals/prod-abc-kecap-manis-botol-beling-620ml-original.png"
+    }
   },
   {
     "id": "prod-abc-kecap-manis-sachet-15ml-12",
@@ -1134,7 +1139,12 @@
     "name": "ABC Kecap Manis Refill Pack 600gr",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-kecap-manis-refill-pack-600gr.webp",
+      "detail": "/product-images/details/prod-abc-kecap-manis-refill-pack-600gr.webp",
+      "original": "/product-images/originals/prod-abc-kecap-manis-refill-pack-600gr-original.png"
+    }
   },
   {
     "id": "prod-abc-kecap-manis-pouch-62g",
@@ -1272,7 +1282,12 @@
     "name": "Top Kopi Susu Kental Manis 30G (12)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-susu-kental-manis-30g-12.webp",
+      "detail": "/product-images/details/prod-top-kopi-susu-kental-manis-30g-12.webp",
+      "original": "/product-images/originals/prod-top-kopi-susu-kental-manis-30g-12-original.png"
+    }
   },
   {
     "id": "prod-sedaap-bumbu-kaldu-ayam-9g",
@@ -1696,7 +1711,12 @@
     "name": "ABC Kecap Asin Botol Beling 620ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-kecap-asin-botol-beling-620ml.webp",
+      "detail": "/product-images/details/prod-abc-kecap-asin-botol-beling-620ml.webp",
+      "original": "/product-images/originals/prod-abc-kecap-asin-botol-beling-620ml-original.png"
+    }
   },
   {
     "id": "prod-abc-kecap-asin-133ml",
@@ -1731,14 +1751,24 @@
     "name": "Kapal Api Special 90G (5)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-90g-5.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-90g-5.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-90g-5-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-susu-31g",
     "name": "Kapal Api Susu 31G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-susu-31g.webp",
+      "detail": "/product-images/details/prod-kapal-api-susu-31g.webp",
+      "original": "/product-images/originals/prod-kapal-api-susu-31g-original.png"
+    }
   },
   {
     "id": "prod-relaxa-barley-mint-toples-200",
@@ -1773,14 +1803,24 @@
     "name": "Kapal Api Special 30G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-30g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-30g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-30g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-special-60g",
     "name": "Kapal Api Special 60G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-60g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-60g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-60g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-special-150g",
@@ -1822,7 +1862,12 @@
     "name": "Wings Mie Sedap Soto Cup 81G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-soto-cup-81g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-soto-cup-81g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-soto-cup-81g-original.png"
+    }
   },
   {
     "id": "prod-wings-mie-sedap-baso-cup-77g",
@@ -1836,14 +1881,24 @@
     "name": "Wings Mie Sedap Kari Special Cup 81G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-kari-special-cup-81g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-kari-special-cup-81g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-kari-special-cup-81g-original.png"
+    }
   },
   {
     "id": "prod-wings-sedap-mie-bakso-cup-77g",
     "name": "Wings Sedap Mie Bakso Cup 77G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-sedap-mie-bakso-cup-77g.webp",
+      "detail": "/product-images/details/prod-wings-sedap-mie-bakso-cup-77g.webp",
+      "original": "/product-images/originals/prod-wings-sedap-mie-bakso-cup-77g-original.png"
+    }
   },
   {
     "id": "prod-wings-mie-sedap-goreng-cup-81g",
@@ -1977,7 +2032,12 @@
     "name": "Top Kopi White 21G (12)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-white-21g-12.webp",
+      "detail": "/product-images/details/prod-top-kopi-white-21g-12.webp",
+      "original": "/product-images/originals/prod-top-kopi-white-21g-12-original.png"
+    }
   },
   {
     "id": "prod-so-klin-liquid-violet-jumbo-48ml",
@@ -2019,21 +2079,36 @@
     "name": "ABC Saos Asam Manis 195ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-saos-asam-manis-195ml.webp",
+      "detail": "/product-images/details/prod-abc-saos-asam-manis-195ml.webp",
+      "original": "/product-images/originals/prod-abc-saos-asam-manis-195ml-original.png"
+    }
   },
   {
     "id": "prod-abc-kecap-inggris-195ml",
     "name": "ABC Kecap Inggris 195ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-kecap-inggris-195ml.webp",
+      "detail": "/product-images/details/prod-abc-kecap-inggris-195ml.webp",
+      "original": "/product-images/originals/prod-abc-kecap-inggris-195ml-original.png"
+    }
   },
   {
     "id": "prod-abc-minyak-wijen-195ml",
     "name": "ABC Minyak Wijen 195ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-minyak-wijen-195ml.webp",
+      "detail": "/product-images/details/prod-abc-minyak-wijen-195ml.webp",
+      "original": "/product-images/originals/prod-abc-minyak-wijen-195ml-original.png"
+    }
   },
   {
     "id": "prod-abc-saos-tiram-420ml",
@@ -2047,7 +2122,12 @@
     "name": "ABC Saos Tiram 195ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-saos-tiram-195ml.webp",
+      "detail": "/product-images/details/prod-abc-saos-tiram-195ml.webp",
+      "original": "/product-images/originals/prod-abc-saos-tiram-195ml-original.png"
+    }
   },
   {
     "id": "prod-ovaltine-classic-sachet-22g",
@@ -2378,7 +2458,12 @@
     "name": "ABC Sambal Asli Botol 335ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-sambal-asli-botol-335ml.webp",
+      "detail": "/product-images/details/prod-abc-sambal-asli-botol-335ml.webp",
+      "original": "/product-images/originals/prod-abc-sambal-asli-botol-335ml-original.png"
+    }
   },
   {
     "id": "prod-abc-sambal-asli-botol-130ml",
@@ -2467,14 +2552,24 @@
     "name": "Cap Enak Putih Sachet (6)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-cap-enak-putih-sachet-6.webp",
+      "detail": "/product-images/details/prod-cap-enak-putih-sachet-6.webp",
+      "original": "/product-images/originals/prod-cap-enak-putih-sachet-6-original.png"
+    }
   },
   {
     "id": "prod-cap-enak-coklat-sachet-6",
     "name": "Cap Enak Coklat Sachet (6)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-cap-enak-coklat-sachet-6.webp",
+      "detail": "/product-images/details/prod-cap-enak-coklat-sachet-6.webp",
+      "original": "/product-images/originals/prod-cap-enak-coklat-sachet-6-original.png"
+    }
   },
   {
     "id": "prod-pop-mie-goreng-spesial-12",
@@ -2530,14 +2625,24 @@
     "name": "Cap Enak Kental Manis Putih 370G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-cap-enak-kental-manis-putih-370g.webp",
+      "detail": "/product-images/details/prod-cap-enak-kental-manis-putih-370g.webp",
+      "original": "/product-images/originals/prod-cap-enak-kental-manis-putih-370g-original.png"
+    }
   },
   {
     "id": "prod-cap-enak-kental-manis-coklat-370g",
     "name": "Cap Enak Kental Manis Coklat 370G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-cap-enak-kental-manis-coklat-370g.webp",
+      "detail": "/product-images/details/prod-cap-enak-kental-manis-coklat-370g.webp",
+      "original": "/product-images/originals/prod-cap-enak-kental-manis-coklat-370g-original.png"
+    }
   },
   {
     "id": "prod-indomilk-putih-blek-370g",
@@ -2694,14 +2799,24 @@
     "name": "Indomilk Sachet Putih 37G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-indomilk-sachet-putih-37g.webp",
+      "detail": "/product-images/details/prod-indomilk-sachet-putih-37g.webp",
+      "original": "/product-images/originals/prod-indomilk-sachet-putih-37g-original.png"
+    }
   },
   {
     "id": "prod-indomilk-sachet-coklat-37g",
     "name": "Indomilk Sachet Coklat 37G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-indomilk-sachet-coklat-37g.webp",
+      "detail": "/product-images/details/prod-indomilk-sachet-coklat-37g.webp",
+      "original": "/product-images/originals/prod-indomilk-sachet-coklat-37g-original.png"
+    }
   },
   {
     "id": "prod-cemerlang-gelas-besar",
@@ -2778,7 +2893,12 @@
     "name": "ABC Saos Tomat Botol Beling 335ML",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-saos-tomat-botol-beling-335ml.webp",
+      "detail": "/product-images/details/prod-abc-saos-tomat-botol-beling-335ml.webp",
+      "original": "/product-images/originals/prod-abc-saos-tomat-botol-beling-335ml-original.png"
+    }
   },
   {
     "id": "prod-abc-saos-tomat-130ml",
@@ -2897,7 +3017,12 @@
     "name": "Wings Mie Sedap Goreng 90G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-goreng-90g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-goreng-90g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-goreng-90g-original.png"
+    }
   },
   {
     "id": "prod-wings-mie-sedap-ayam-bawang-70g",
@@ -2925,14 +3050,24 @@
     "name": "Wings Mie Sedap Kari Kental Spesial 75G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-kari-kental-spesial-75g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-kari-kental-spesial-75g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-kari-kental-spesial-75g-original.png"
+    }
   },
   {
     "id": "prod-top-kopi-murni-gelas-158g",
     "name": "Top Kopi Murni Gelas 158G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-murni-gelas-158g.webp",
+      "detail": "/product-images/details/prod-top-kopi-murni-gelas-158g.webp",
+      "original": "/product-images/originals/prod-top-kopi-murni-gelas-158g-original.png"
+    }
   },
   {
     "id": "prod-bango-kecap-manis-275ml",
@@ -2974,7 +3109,12 @@
     "name": "Wings Mie Sedap Baso Spesial 77G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-baso-spesial-77g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-baso-spesial-77g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-baso-spesial-77g-original.png"
+    }
   },
   {
     "id": "prod-ekomie-2",
@@ -2995,7 +3135,12 @@
     "name": "Top Kopi Toraja 158G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-toraja-158g.webp",
+      "detail": "/product-images/details/prod-top-kopi-toraja-158g.webp",
+      "original": "/product-images/originals/prod-top-kopi-toraja-158g-original.png"
+    }
   },
   {
     "id": "prod-potabee-bbq-15g",
@@ -3023,14 +3168,24 @@
     "name": "Mie Sedap Kari Mercon CUP",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mie-sedap-kari-mercon-cup.webp",
+      "detail": "/product-images/details/prod-mie-sedap-kari-mercon-cup.webp",
+      "original": "/product-images/originals/prod-mie-sedap-kari-mercon-cup-original.png"
+    }
   },
   {
     "id": "prod-golda-dolce-latte-200ml",
     "name": "Golda Dolce Latte 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-golda-dolce-latte-200ml.webp",
+      "detail": "/product-images/details/prod-golda-dolce-latte-200ml.webp",
+      "original": "/product-images/originals/prod-golda-dolce-latte-200ml-original.png"
+    }
   },
   {
     "id": "prod-minyak-goreng-sedap-jerigen-5l",
@@ -3051,7 +3206,12 @@
     "name": "Minyak Goreng Sabrina Pouch 2L",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-minyak-goreng-sabrina-pouch-2l.webp",
+      "detail": "/product-images/details/prod-minyak-goreng-sabrina-pouch-2l.webp",
+      "original": "/product-images/originals/prod-minyak-goreng-sabrina-pouch-2l-original.png"
+    }
   },
   {
     "id": "prod-pixy-two-way-cake-refill-natural-white",
@@ -3086,21 +3246,36 @@
     "name": "Wings Mie Sedap Korean Spicy Goreng 87G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-korean-spicy-goreng-87g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-korean-spicy-goreng-87g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-korean-spicy-goreng-87g-original.png"
+    }
   },
   {
     "id": "prod-mie-sedap-korean-spicy-cup-goreng",
     "name": "Mie Sedap Korean Spicy CUP GORENG",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mie-sedap-korean-spicy-cup-goreng.webp",
+      "detail": "/product-images/details/prod-mie-sedap-korean-spicy-cup-goreng.webp",
+      "original": "/product-images/originals/prod-mie-sedap-korean-spicy-cup-goreng-original.png"
+    }
   },
   {
     "id": "prod-wings-mie-sedap-korean-spicy-kuah-77g",
     "name": "Wings Mie Sedap Korean Spicy Kuah 77G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-korean-spicy-kuah-77g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-korean-spicy-kuah-77g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-korean-spicy-kuah-77g-original.png"
+    }
   },
   {
     "id": "prod-top-kopi-gula-aren-22g-15",
@@ -3126,7 +3301,12 @@
     "name": "Mie Sedap Korean Spicy CUP KUAH",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mie-sedap-korean-spicy-cup-kuah.webp",
+      "detail": "/product-images/details/prod-mie-sedap-korean-spicy-cup-kuah.webp",
+      "original": "/product-images/originals/prod-mie-sedap-korean-spicy-cup-kuah-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-leci-cup-180ml",
@@ -3154,21 +3334,36 @@
     "name": "Golda Cappuccino 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-golda-cappuccino-200ml.webp",
+      "detail": "/product-images/details/prod-golda-cappuccino-200ml.webp",
+      "original": "/product-images/originals/prod-golda-cappuccino-200ml-original.png"
+    }
   },
   {
     "id": "prod-mie-sedap-cup-ayam-jerit-77g",
     "name": "Mie Sedap Cup Ayam Jerit 77G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mie-sedap-cup-ayam-jerit-77g.webp",
+      "detail": "/product-images/details/prod-mie-sedap-cup-ayam-jerit-77g.webp",
+      "original": "/product-images/originals/prod-mie-sedap-cup-ayam-jerit-77g-original.png"
+    }
   },
   {
     "id": "prod-wings-mie-sedap-singapore-spicy-laksa-77g",
     "name": "Wings Mie Sedap Singapore Spicy Laksa 77G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-wings-mie-sedap-singapore-spicy-laksa-77g.webp",
+      "detail": "/product-images/details/prod-wings-mie-sedap-singapore-spicy-laksa-77g.webp",
+      "original": "/product-images/originals/prod-wings-mie-sedap-singapore-spicy-laksa-77g-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-mangga-cup-180ml",
@@ -3196,7 +3391,12 @@
     "name": "Top Kopi Avocado (15)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-avocado-15.webp",
+      "detail": "/product-images/details/prod-top-kopi-avocado-15.webp",
+      "original": "/product-images/originals/prod-top-kopi-avocado-15-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-cocopandan-180ml",
@@ -3224,7 +3424,12 @@
     "name": "Top Kopi Mokachinno (15)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-mokachinno-15.webp",
+      "detail": "/product-images/details/prod-top-kopi-mokachinno-15.webp",
+      "original": "/product-images/originals/prod-top-kopi-mokachinno-15-original.png"
+    }
   },
   {
     "id": "prod-ekomie-baksoo-sachet-renceng",
@@ -3238,7 +3443,12 @@
     "name": "UC1000 Orange 140ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-uc1000-orange-140ml.webp",
+      "detail": "/product-images/details/prod-uc1000-orange-140ml.webp",
+      "original": "/product-images/originals/prod-uc1000-orange-140ml-original.png"
+    }
   },
   {
     "id": "prod-milku-marie-biskuit-200ml",
@@ -3504,7 +3714,12 @@
     "name": "UC1000 Orange Water 500ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-uc1000-orange-water-500ml.webp",
+      "detail": "/product-images/details/prod-uc1000-orange-water-500ml.webp",
+      "original": "/product-images/originals/prod-uc1000-orange-water-500ml-original.png"
+    }
   },
   {
     "id": "prod-kit-motor-shampoo-24",
@@ -3917,7 +4132,12 @@
     "name": "Roma Sari Gandum Coklat Box 36G (12)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-roma-sari-gandum-coklat-box-36g-12.webp",
+      "detail": "/product-images/details/prod-roma-sari-gandum-coklat-box-36g-12.webp",
+      "original": "/product-images/originals/prod-roma-sari-gandum-coklat-box-36g-12-original.png"
+    }
   },
   {
     "id": "prod-roma-malkist-crackers-sachet-21g",
@@ -4179,7 +4399,12 @@
     "name": "Roma Superstar Snaps 28G (12)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-roma-superstar-snaps-28g-12.webp",
+      "detail": "/product-images/details/prod-roma-superstar-snaps-28g-12.webp",
+      "original": "/product-images/originals/prod-roma-superstar-snaps-28g-12-original.png"
+    }
   },
   {
     "id": "prod-roma-wafer-choco-blast-45g",
@@ -4235,7 +4460,12 @@
     "name": "Beng Beng Reguler 25G (17)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-beng-beng-reguler-25g-17.webp",
+      "detail": "/product-images/details/prod-beng-beng-reguler-25g-17.webp",
+      "original": "/product-images/originals/prod-beng-beng-reguler-25g-17-original.png"
+    }
   },
   {
     "id": "prod-kalpa-wafer-22g-12",
@@ -4277,35 +4507,60 @@
     "name": "Torabika Susu 28G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-torabika-susu-28g.webp",
+      "detail": "/product-images/details/prod-torabika-susu-28g.webp",
+      "original": "/product-images/originals/prod-torabika-susu-28g-original.png"
+    }
   },
   {
     "id": "prod-torabika-moka-28g",
     "name": "Torabika Moka 28G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-torabika-moka-28g.webp",
+      "detail": "/product-images/details/prod-torabika-moka-28g.webp",
+      "original": "/product-images/originals/prod-torabika-moka-28g-original.png"
+    }
   },
   {
     "id": "prod-torabika-creamy-latte-25g",
     "name": "Torabika Creamy Latte 25G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-torabika-creamy-latte-25g.webp",
+      "detail": "/product-images/details/prod-torabika-creamy-latte-25g.webp",
+      "original": "/product-images/originals/prod-torabika-creamy-latte-25g-original.png"
+    }
   },
   {
     "id": "prod-torabika-cappuccino-25g",
     "name": "Torabika Cappuccino 25G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-torabika-cappuccino-25g.webp",
+      "detail": "/product-images/details/prod-torabika-cappuccino-25g.webp",
+      "original": "/product-images/originals/prod-torabika-cappuccino-25g-original.png"
+    }
   },
   {
     "id": "prod-torabika-jahe-susu-29g",
     "name": "Torabika Jahe Susu 29G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-torabika-jahe-susu-29g.webp",
+      "detail": "/product-images/details/prod-torabika-jahe-susu-29g.webp",
+      "original": "/product-images/originals/prod-torabika-jahe-susu-29g-original.png"
+    }
   },
   {
     "id": "prod-energen-vanilla-32g",
@@ -4452,7 +4707,12 @@
     "name": "Luwak White Coffee 20G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-luwak-white-coffee-20g.webp",
+      "detail": "/product-images/details/prod-luwak-white-coffee-20g.webp",
+      "original": "/product-images/originals/prod-luwak-white-coffee-20g-original.png"
+    }
   },
   {
     "id": "prod-gillette-goal-ii-kuning",
@@ -4487,7 +4747,12 @@
     "name": "Teh Pucuk Harum 350ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-pucuk-harum-350ml.webp",
+      "detail": "/product-images/details/prod-teh-pucuk-harum-350ml.webp",
+      "original": "/product-images/originals/prod-teh-pucuk-harum-350ml-original.png"
+    }
   },
   {
     "id": "prod-teh-pucuk-harum-jasmine-500ml",
@@ -4620,21 +4885,36 @@
     "name": "ABC Sirup Nanas 460ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-sirup-nanas-460ml.webp",
+      "detail": "/product-images/details/prod-abc-sirup-nanas-460ml.webp",
+      "original": "/product-images/originals/prod-abc-sirup-nanas-460ml-original.png"
+    }
   },
   {
     "id": "prod-abc-sirup-leci-450ml",
     "name": "ABC Sirup Leci 450ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-sirup-leci-450ml.webp",
+      "detail": "/product-images/details/prod-abc-sirup-leci-450ml.webp",
+      "original": "/product-images/originals/prod-abc-sirup-leci-450ml-original.png"
+    }
   },
   {
     "id": "prod-abc-sirup-jeruk-460ml",
     "name": "ABC Sirup Jeruk 460ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-sirup-jeruk-460ml.webp",
+      "detail": "/product-images/details/prod-abc-sirup-jeruk-460ml.webp",
+      "original": "/product-images/originals/prod-abc-sirup-jeruk-460ml-original.png"
+    }
   },
   {
     "id": "prod-milkita-candy-mix-renceng-30",
@@ -4828,7 +5108,12 @@
     "name": "Choki STIX (12)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-choki-stix-12.webp",
+      "detail": "/product-images/details/prod-choki-stix-12.webp",
+      "original": "/product-images/originals/prod-choki-stix-12-original.png"
+    }
   },
   {
     "id": "prod-apetito-bbq-10",
@@ -4849,7 +5134,12 @@
     "name": "Energen Vanilla Topping Beng Beng Balls 47 gr",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-energen-vanilla-topping-beng-beng-balls-47-gr.webp",
+      "detail": "/product-images/details/prod-energen-vanilla-topping-beng-beng-balls-47-gr.webp",
+      "original": "/product-images/originals/prod-energen-vanilla-topping-beng-beng-balls-47-gr-original.png"
+    }
   },
   {
     "id": "prod-sarimi-gelas-ayam-bawang",
@@ -4884,7 +5174,12 @@
     "name": "ABC Sirup Cocopandan 485ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-sirup-cocopandan-485ml.webp",
+      "detail": "/product-images/details/prod-abc-sirup-cocopandan-485ml.webp",
+      "original": "/product-images/originals/prod-abc-sirup-cocopandan-485ml-original.png"
+    }
   },
   {
     "id": "prod-qtella-bbq-30g",
@@ -4919,7 +5214,12 @@
     "name": "Tiga Sapi Kental Manis 490G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-tiga-sapi-kental-manis-490g.webp",
+      "detail": "/product-images/details/prod-tiga-sapi-kental-manis-490g.webp",
+      "original": "/product-images/originals/prod-tiga-sapi-kental-manis-490g-original.png"
+    }
   },
   {
     "id": "prod-sabut-spons-polytex",
@@ -4996,7 +5296,12 @@
     "name": "Kratingdaeng Energy Drink 150ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kratingdaeng-energy-drink-150ml.webp",
+      "detail": "/product-images/details/prod-kratingdaeng-energy-drink-150ml.webp",
+      "original": "/product-images/originals/prod-kratingdaeng-energy-drink-150ml-original.png"
+    }
   },
   {
     "id": "prod-merries-pants-xl1",
@@ -5017,14 +5322,24 @@
     "name": "Ale Ale Jeruk Cup 180ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ale-ale-jeruk-cup-180ml.webp",
+      "detail": "/product-images/details/prod-ale-ale-jeruk-cup-180ml.webp",
+      "original": "/product-images/originals/prod-ale-ale-jeruk-cup-180ml-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-strawberry-cup-180ml",
     "name": "Ale Ale Strawberry Cup 180ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ale-ale-strawberry-cup-180ml.webp",
+      "detail": "/product-images/details/prod-ale-ale-strawberry-cup-180ml.webp",
+      "original": "/product-images/originals/prod-ale-ale-strawberry-cup-180ml-original.png"
+    }
   },
   {
     "id": "prod-protex-maxi-sachet-pink",
@@ -5052,21 +5367,36 @@
     "name": "Floridina Orange 360ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-floridina-orange-360ml.webp",
+      "detail": "/product-images/details/prod-floridina-orange-360ml.webp",
+      "original": "/product-images/originals/prod-floridina-orange-360ml-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-anggur-cup-180ml",
     "name": "Ale Ale Anggur Cup 180ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ale-ale-anggur-cup-180ml.webp",
+      "detail": "/product-images/details/prod-ale-ale-anggur-cup-180ml.webp",
+      "original": "/product-images/originals/prod-ale-ale-anggur-cup-180ml-original.png"
+    }
   },
   {
     "id": "prod-ale-ale-sirsak-cup-180ml",
     "name": "Ale Ale Sirsak Cup 180ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ale-ale-sirsak-cup-180ml.webp",
+      "detail": "/product-images/details/prod-ale-ale-sirsak-cup-180ml.webp",
+      "original": "/product-images/originals/prod-ale-ale-sirsak-cup-180ml-original.png"
+    }
   },
   {
     "id": "prod-ajinomoto-vetsin-500g",
@@ -5080,7 +5410,12 @@
     "name": "Minyak Goreng Sedap Pouch 1L",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-minyak-goreng-sedap-pouch-1l.webp",
+      "detail": "/product-images/details/prod-minyak-goreng-sedap-pouch-1l.webp",
+      "original": "/product-images/originals/prod-minyak-goreng-sedap-pouch-1l-original.png"
+    }
   },
   {
     "id": "prod-milkita-lollipop-30",
@@ -5129,14 +5464,24 @@
     "name": "ABC Susu Botol",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-susu-botol.webp",
+      "detail": "/product-images/details/prod-abc-susu-botol.webp",
+      "original": "/product-images/originals/prod-abc-susu-botol-original.png"
+    }
   },
   {
     "id": "prod-nestle-bear-brand-189ml",
     "name": "Nestle Bear Brand 189ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-nestle-bear-brand-189ml.webp",
+      "detail": "/product-images/details/prod-nestle-bear-brand-189ml.webp",
+      "original": "/product-images/originals/prod-nestle-bear-brand-189ml-original.png"
+    }
   },
   {
     "id": "prod-fullo-blasto-18g",
@@ -5680,7 +6025,12 @@
     "name": "ABC Terasi Udang 4.2G (20)",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-terasi-udang-4-2g-20.webp",
+      "detail": "/product-images/details/prod-abc-terasi-udang-4-2g-20.webp",
+      "original": "/product-images/originals/prod-abc-terasi-udang-4-2g-20-original.png"
+    }
   },
   {
     "id": "prod-so-klin-liquid-sakura-sachet-22ml",
@@ -6144,7 +6494,12 @@
     "name": "Buavita Mini Guava 40x125ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-buavita-mini-guava-40x125ml.webp",
+      "detail": "/product-images/details/prod-buavita-mini-guava-40x125ml.webp",
+      "original": "/product-images/originals/prod-buavita-mini-guava-40x125ml-original.png"
+    }
   },
   {
     "id": "prod-royco-ayam-8g",
@@ -6235,7 +6590,12 @@
     "name": "Buavita Guava 24x245ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-buavita-guava-24x245ml.webp",
+      "detail": "/product-images/details/prod-buavita-guava-24x245ml.webp",
+      "original": "/product-images/originals/prod-buavita-guava-24x245ml-original.png"
+    }
   },
   {
     "id": "prod-dove-super-shampoo-9ml",
@@ -6667,7 +7027,12 @@
     "name": "Top Kopi Cappuccino 25G (15)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-top-kopi-cappuccino-25g-15.webp",
+      "detail": "/product-images/details/prod-top-kopi-cappuccino-25g-15.webp",
+      "original": "/product-images/originals/prod-top-kopi-cappuccino-25g-15-original.png"
+    }
   },
   {
     "id": "prod-vanish-botol-180ml",
@@ -6695,7 +7060,12 @@
     "name": "Kopi Uang Emas Tupperware 600G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kopi-uang-emas-tupperware-600g.webp",
+      "detail": "/product-images/details/prod-kopi-uang-emas-tupperware-600g.webp",
+      "original": "/product-images/originals/prod-kopi-uang-emas-tupperware-600g-original.png"
+    }
   },
   {
     "id": "prod-anlene-gold-vanilla-20g",
@@ -6926,84 +7296,144 @@
     "name": "Pino Es Serut Buah (4)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-pino-es-serut-buah-4.webp",
+      "detail": "/product-images/details/prod-pino-es-serut-buah-4.webp",
+      "original": "/product-images/originals/prod-pino-es-serut-buah-4-original.png"
+    }
   },
   {
     "id": "prod-abc-susu",
     "name": "ABC Susu",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-susu.webp",
+      "detail": "/product-images/details/prod-abc-susu.webp",
+      "original": "/product-images/originals/prod-abc-susu-original.png"
+    }
   },
   {
     "id": "prod-good-day-moccacino",
     "name": "Good Day Moccacino",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-moccacino.webp",
+      "detail": "/product-images/details/prod-good-day-moccacino.webp",
+      "original": "/product-images/originals/prod-good-day-moccacino-original.png"
+    }
   },
   {
     "id": "prod-good-day-vanilla-latte",
     "name": "Good Day Vanilla Latte",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-vanilla-latte.webp",
+      "detail": "/product-images/details/prod-good-day-vanilla-latte.webp",
+      "original": "/product-images/originals/prod-good-day-vanilla-latte-original.png"
+    }
   },
   {
     "id": "prod-good-day-original",
     "name": "Good Day Original",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-original.webp",
+      "detail": "/product-images/details/prod-good-day-original.webp",
+      "original": "/product-images/originals/prod-good-day-original-original.png"
+    }
   },
   {
     "id": "prod-good-day-chococino",
     "name": "Good Day Chococino",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-chococino.webp",
+      "detail": "/product-images/details/prod-good-day-chococino.webp",
+      "original": "/product-images/originals/prod-good-day-chococino-original.png"
+    }
   },
   {
     "id": "prod-good-day-cappuccino-25g",
     "name": "Good Day Cappuccino 25G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-cappuccino-25g.webp",
+      "detail": "/product-images/details/prod-good-day-cappuccino-25g.webp",
+      "original": "/product-images/originals/prod-good-day-cappuccino-25g-original.png"
+    }
   },
   {
     "id": "prod-good-day-butterscotch",
     "name": "Good Day Butterscotch",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-butterscotch.webp",
+      "detail": "/product-images/details/prod-good-day-butterscotch.webp",
+      "original": "/product-images/originals/prod-good-day-butterscotch-original.png"
+    }
   },
   {
     "id": "prod-good-day-botol-moccacino",
     "name": "Good Day Botol Moccacino",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-botol-moccacino.webp",
+      "detail": "/product-images/details/prod-good-day-botol-moccacino.webp",
+      "original": "/product-images/originals/prod-good-day-botol-moccacino-original.png"
+    }
   },
   {
     "id": "prod-good-day-botol-avocado",
     "name": "Good Day Botol Avocado",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-botol-avocado.webp",
+      "detail": "/product-images/details/prod-good-day-botol-avocado.webp",
+      "original": "/product-images/originals/prod-good-day-botol-avocado-original.png"
+    }
   },
   {
     "id": "prod-abc-mocca",
     "name": "ABC Mocca",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-abc-mocca.webp",
+      "detail": "/product-images/details/prod-abc-mocca.webp",
+      "original": "/product-images/originals/prod-abc-mocca-original.png"
+    }
   },
   {
     "id": "prod-good-day-botol-cappuccino",
     "name": "Good Day Botol Cappuccino",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-good-day-botol-cappuccino.webp",
+      "detail": "/product-images/details/prod-good-day-botol-cappuccino.webp",
+      "original": "/product-images/originals/prod-good-day-botol-cappuccino-original.png"
+    }
   },
   {
     "id": "prod-aneka-cream-crackers-300g",
@@ -7186,7 +7616,12 @@
     "name": "Aqua Gelas 220ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-aqua-gelas-220ml.webp",
+      "detail": "/product-images/details/prod-aqua-gelas-220ml.webp",
+      "original": "/product-images/originals/prod-aqua-gelas-220ml-original.png"
+    }
   },
   {
     "id": "prod-asegar-gelas",
@@ -7613,7 +8048,12 @@
     "name": "Bir Bintang 620ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-bir-bintang-620ml.webp",
+      "detail": "/product-images/details/prod-bir-bintang-620ml.webp",
+      "original": "/product-images/originals/prod-bir-bintang-620ml-original.png"
+    }
   },
   {
     "id": "prod-bir-bintang-kaleng-330ml",
@@ -7977,7 +8417,12 @@
     "name": "Charm Non Wing 1 Pad",
     "category": "Perawatan Diri",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-charm-non-wing-1-pad.webp",
+      "detail": "/product-images/details/prod-charm-non-wing-1-pad.webp",
+      "original": "/product-images/originals/prod-charm-non-wing-1-pad-original.png"
+    }
   },
   {
     "id": "prod-charm-maxi-wing-2-pad",
@@ -7991,14 +8436,24 @@
     "name": "Charm Night Wing 29CM 2 Pad",
     "category": "Perawatan Diri",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-charm-night-wing-29cm-2-pad.webp",
+      "detail": "/product-images/details/prod-charm-night-wing-29cm-2-pad.webp",
+      "original": "/product-images/originals/prod-charm-night-wing-29cm-2-pad-original.png"
+    }
   },
   {
     "id": "prod-charm-night-wing-35cm-2pad",
     "name": "Charm Night Wing 35cm 2Pad",
     "category": "Perawatan Diri",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-charm-night-wing-35cm-2pad.webp",
+      "detail": "/product-images/details/prod-charm-night-wing-35cm-2pad.webp",
+      "original": "/product-images/originals/prod-charm-night-wing-35cm-2pad-original.png"
+    }
   },
   {
     "id": "prod-double-swallow-sun-agar-agar-coklat",
@@ -9139,7 +9594,12 @@
     "name": "Cimory Stick Blue/Strbry (4)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-cimory-stick-blue-strbry-4.webp",
+      "detail": "/product-images/details/prod-cimory-stick-blue-strbry-4.webp",
+      "original": "/product-images/originals/prod-cimory-stick-blue-strbry-4-original.png"
+    }
   },
   {
     "id": "prod-jepitan-rambut-pendek-flower",
@@ -9181,7 +9641,12 @@
     "name": "Collagena",
     "category": "Kesehatan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-collagena.webp",
+      "detail": "/product-images/details/prod-collagena.webp",
+      "original": "/product-images/originals/prod-collagena-original.png"
+    }
   },
   {
     "id": "prod-corn-shots-ab-ag-c",
@@ -9972,7 +10437,12 @@
     "name": "Hemaviton Energy Drink 150ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-hemaviton-energy-drink-150ml.webp",
+      "detail": "/product-images/details/prod-hemaviton-energy-drink-150ml.webp",
+      "original": "/product-images/originals/prod-hemaviton-energy-drink-150ml-original.png"
+    }
   },
   {
     "id": "prod-entrostop",
@@ -10280,7 +10750,12 @@
     "name": "Kuku Bima Anggur",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kuku-bima-anggur.webp",
+      "detail": "/product-images/details/prod-kuku-bima-anggur.webp",
+      "original": "/product-images/originals/prod-kuku-bima-anggur-original.png"
+    }
   },
   {
     "id": "prod-kain-has-steril-10",
@@ -10301,7 +10776,12 @@
     "name": "M150 Susu",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-m150-susu.webp",
+      "detail": "/product-images/details/prod-m150-susu.webp",
+      "original": "/product-images/originals/prod-m150-susu-original.png"
+    }
   },
   {
     "id": "prod-ponstan",
@@ -10427,7 +10907,12 @@
     "name": "Fanta Seru 350ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-fanta-seru-350ml.webp",
+      "detail": "/product-images/details/prod-fanta-seru-350ml.webp",
+      "original": "/product-images/originals/prod-fanta-seru-350ml-original.png"
+    }
   },
   {
     "id": "prod-fox-berries-125g",
@@ -10476,7 +10961,12 @@
     "name": "Fruitea Blackcurrant",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-fruitea-blackcurrant.webp",
+      "detail": "/product-images/details/prod-fruitea-blackcurrant.webp",
+      "original": "/product-images/originals/prod-fruitea-blackcurrant-original.png"
+    }
   },
   {
     "id": "prod-lem-fox-putih-150g",
@@ -10651,7 +11141,12 @@
     "name": "Guinness Bir Hitam JUMBO 620ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-guinness-bir-hitam-jumbo-620ml.webp",
+      "detail": "/product-images/details/prod-guinness-bir-hitam-jumbo-620ml.webp",
+      "original": "/product-images/originals/prod-guinness-bir-hitam-jumbo-620ml-original.png"
+    }
   },
   {
     "id": "prod-gp2-kretek-12",
@@ -10700,14 +11195,24 @@
     "name": "Green Sands Kaleng Slim 250ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-green-sands-kaleng-slim-250ml.webp",
+      "detail": "/product-images/details/prod-green-sands-kaleng-slim-250ml.webp",
+      "original": "/product-images/originals/prod-green-sands-kaleng-slim-250ml-original.png"
+    }
   },
   {
     "id": "prod-green-sands-kaleng-330ml",
     "name": "Green Sands Kaleng 330ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-green-sands-kaleng-330ml.webp",
+      "detail": "/product-images/details/prod-green-sands-kaleng-330ml.webp",
+      "original": "/product-images/originals/prod-green-sands-kaleng-330ml-original.png"
+    }
   },
   {
     "id": "prod-gabin-susu-multifood-200g",
@@ -11554,7 +12059,12 @@
     "name": "Susu Zee Coklat 38g",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-susu-zee-coklat-38g.webp",
+      "detail": "/product-images/details/prod-susu-zee-coklat-38g.webp",
+      "original": "/product-images/originals/prod-susu-zee-coklat-38g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-special-6g",
@@ -11904,7 +12414,12 @@
     "name": "L'Agie Singa Choco Mete 30G (12)",
     "category": "Makanan Ringan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-l-agie-singa-choco-mete-30g-12.webp",
+      "detail": "/product-images/details/prod-l-agie-singa-choco-mete-30g-12.webp",
+      "original": "/product-images/originals/prod-l-agie-singa-choco-mete-30g-12-original.png"
+    }
   },
   {
     "id": "prod-l-agie-beruang-choco-mete-30g-12",
@@ -12198,21 +12713,36 @@
     "name": "M150 Botol 150ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-m150-botol-150ml.webp",
+      "detail": "/product-images/details/prod-m150-botol-150ml.webp",
+      "original": "/product-images/originals/prod-m150-botol-150ml-original.png"
+    }
   },
   {
     "id": "prod-marjan-squash-cocopandan-450ml",
     "name": "Marjan SQUASH Cocopandan 450ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-marjan-squash-cocopandan-450ml.webp",
+      "detail": "/product-images/details/prod-marjan-squash-cocopandan-450ml.webp",
+      "original": "/product-images/originals/prod-marjan-squash-cocopandan-450ml-original.png"
+    }
   },
   {
     "id": "prod-marjan-sirup-cocopandan-460ml",
     "name": "Marjan Sirup Cocopandan 460ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-marjan-sirup-cocopandan-460ml.webp",
+      "detail": "/product-images/details/prod-marjan-sirup-cocopandan-460ml.webp",
+      "original": "/product-images/originals/prod-marjan-sirup-cocopandan-460ml-original.png"
+    }
   },
   {
     "id": "prod-masako-ayam-40g-2000",
@@ -12814,7 +13344,12 @@
     "name": "Nutrisari American Sweet Orange",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-nutrisari-american-sweet-orange.webp",
+      "detail": "/product-images/details/prod-nutrisari-american-sweet-orange.webp",
+      "original": "/product-images/originals/prod-nutrisari-american-sweet-orange-original.png"
+    }
   },
   {
     "id": "prod-nuri-butir-coklat-12kg",
@@ -13129,14 +13664,24 @@
     "name": "Pocari Sweat 350ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-pocari-sweat-350ml.webp",
+      "detail": "/product-images/details/prod-pocari-sweat-350ml.webp",
+      "original": "/product-images/originals/prod-pocari-sweat-350ml-original.png"
+    }
   },
   {
     "id": "prod-pocari-sweat-500ml",
     "name": "Pocari Sweat 500ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-pocari-sweat-500ml.webp",
+      "detail": "/product-images/details/prod-pocari-sweat-500ml.webp",
+      "original": "/product-images/originals/prod-pocari-sweat-500ml-original.png"
+    }
   },
   {
     "id": "prod-tas-merah-3-liter-penari-bali-16-x-34",
@@ -14557,7 +15102,12 @@
     "name": "Sprite Seru 350ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-sprite-seru-350ml.webp",
+      "detail": "/product-images/details/prod-sprite-seru-350ml.webp",
+      "original": "/product-images/originals/prod-sprite-seru-350ml-original.png"
+    }
   },
   {
     "id": "prod-silver-queen-chunky-cashew-26g-12",
@@ -15089,7 +15639,12 @@
     "name": "Teh Gorontalo Cap Daun",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-gorontalo-cap-daun.webp",
+      "detail": "/product-images/details/prod-teh-gorontalo-cap-daun.webp",
+      "original": "/product-images/originals/prod-teh-gorontalo-cap-daun-original.png"
+    }
   },
   {
     "id": "prod-hevit-c-vitamin-c-10",
@@ -15523,70 +16078,120 @@
     "name": "Ultra Milk Plain 1000ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-plain-1000ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-plain-1000ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-plain-1000ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-coklat-1000ml",
     "name": "Ultra Milk Coklat 1000ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-coklat-1000ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-coklat-1000ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-coklat-1000ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-plain-250ml",
     "name": "Ultra Milk Plain 250ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-plain-250ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-plain-250ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-plain-250ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-coklat-250ml",
     "name": "Ultra Milk Coklat 250ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-coklat-250ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-coklat-250ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-coklat-250ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-plain-200ml",
     "name": "Ultra Milk Plain 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-plain-200ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-plain-200ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-plain-200ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-coklat-200ml",
     "name": "Ultra Milk Coklat 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-coklat-200ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-coklat-200ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-coklat-200ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-strawberry-200ml",
     "name": "Ultra Milk Strawberry 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-strawberry-200ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-strawberry-200ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-strawberry-200ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-coklat-125ml",
     "name": "Ultra Milk Coklat 125ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-coklat-125ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-coklat-125ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-coklat-125ml-original.png"
+    }
   },
   {
     "id": "prod-ultra-milk-strawberry-125ml",
     "name": "Ultra Milk Strawberry 125ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-strawberry-125ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-strawberry-125ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-strawberry-125ml-original.png"
+    }
   },
   {
     "id": "prod-teh-kotak-300ml",
     "name": "Teh Kotak 300ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-teh-kotak-300ml.webp",
+      "detail": "/product-images/details/prod-teh-kotak-300ml.webp",
+      "original": "/product-images/originals/prod-teh-kotak-300ml-original.png"
+    }
   },
   {
     "id": "prod-teh-kotak-jasmine-500ml",
@@ -15607,7 +16212,12 @@
     "name": "Ultra Milk Plain 125ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ultra-milk-plain-125ml.webp",
+      "detail": "/product-images/details/prod-ultra-milk-plain-125ml.webp",
+      "original": "/product-images/originals/prod-ultra-milk-plain-125ml-original.png"
+    }
   },
   {
     "id": "prod-baterai-panasonic-d",
