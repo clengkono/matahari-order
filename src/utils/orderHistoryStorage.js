@@ -389,3 +389,47 @@ export function saveOrderHistorySnapshot({ cart, note } = {}) {
     return { ok: false };
   }
 }
+
+/**
+ * Update lastUsedAt on one existing record. Does not change createdAt,
+ * lines, note, source, or createdAt ordering. Persistence failure is ignored.
+ *
+ * @param {string} historyId
+ * @param {string} [now]
+ * @returns {{ ok: boolean, record?: object }}
+ */
+export function touchHistoryLastUsedAt(historyId, now) {
+  try {
+    if (!isValidHistoryId(historyId)) {
+      return { ok: false };
+    }
+
+    const timestamp = isValidIsoTimestamp(now) ? now : new Date().toISOString();
+    const store = loadOrderHistoryStore();
+    let updated = null;
+
+    const orders = store.orders.map((record) => {
+      if (record.id !== historyId) {
+        return record;
+      }
+
+      updated = {
+        ...record,
+        lastUsedAt: timestamp,
+      };
+      return updated;
+    });
+
+    if (!updated) {
+      return { ok: false };
+    }
+
+    persistOrderHistoryStore({
+      schemaVersion: ORDER_HISTORY_SCHEMA_VERSION,
+      orders: retainNewestOrders(orders),
+    });
+    return { ok: true, record: updated };
+  } catch {
+    return { ok: false };
+  }
+}

@@ -74,6 +74,10 @@ export function CartProvider({ children }) {
     setCart([]);
   }, []);
 
+  const replaceCart = useCallback((lines) => {
+    setCart(normalizeOneUnitPerProduct(Array.isArray(lines) ? lines : []));
+  }, []);
+
   const lineCount = normalizedCart.length;
   const productCount = lineCount;
 
@@ -89,6 +93,7 @@ export function CartProvider({ children }) {
       updateQuantity,
       changeUnit,
       clearCart,
+      replaceCart,
     }),
     [
       normalizedCart,
@@ -101,6 +106,7 @@ export function CartProvider({ children }) {
       updateQuantity,
       changeUnit,
       clearCart,
+      replaceCart,
     ]
   );
 

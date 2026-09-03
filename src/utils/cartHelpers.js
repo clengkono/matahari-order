@@ -145,4 +145,4 @@ export function changeLineUnit(cart, productId, oldUnit, newUnit) {
   );
 }
 
-export { getCartUnitDisplayLabel } from "./unitDisplay";
+export { getCartUnitDisplayLabel } from "./unitDisplay.js";

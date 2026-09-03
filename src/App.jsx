@@ -3,8 +3,11 @@ import "./App.css";
 import products, { aliases, catalogRecommendations } from "./catalog";
 import AddFeedbackToast from "./components/AddFeedbackToast";
 import CategoryGrid from "./components/CategoryGrid";
+import ConfirmReplaceOrderDialog from "./components/ConfirmReplaceOrderDialog";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
+import PreviousOrdersSection from "./components/PreviousOrdersSection";
+import RestoreFeedbackToast from "./components/RestoreFeedbackToast";
 import ProductGrid from "./components/ProductGrid";
 import ProductInfoView from "./components/ProductInfoView";
 import RecommendationCard from "./components/RecommendationCard";
@@ -64,7 +67,18 @@ import {
   loadRecentSearches,
   rememberRecentSearch,
 } from "./utils/recentSearches";
-import { saveOrderHistorySnapshot } from "./utils/orderHistoryStorage";
+import {
+  loadOrderHistory,
+  saveOrderHistorySnapshot,
+  touchHistoryLastUsedAt,
+} from "./utils/orderHistoryStorage";
+import {
+  decideRestoreAction,
+  formatAllSkippedRestoreMessage,
+  formatRestoreNotice,
+  getHomepageHistoryOrders,
+  restoreOrderFromHistory,
+} from "./utils/orderHistoryRestore";
 import { openWhatsAppWithOrder } from "./utils/whatsapp";
 
 const productsById = Object.fromEntries(
@@ -117,6 +131,13 @@ export default function App() {
     return loadStoredOrderNote();
   });
   const [whatsAppHandoffStatus, setWhatsAppHandoffStatus] = useState("idle");
+  const [orderHistory, setOrderHistory] = useState(loadOrderHistory);
+  const [pendingRestoreOrder, setPendingRestoreOrder] = useState(null);
+  const [restoreNotice, setRestoreNotice] = useState({
+    token: 0,
+    message: "",
+    alert: false,
+  });
   const [addFeedbackToken, setAddFeedbackToken] = useState(0);
   const [visibleLimitState, setVisibleLimitState] = useState({
     resetKey: "",
@@ -137,6 +158,7 @@ export default function App() {
     updateQuantity,
     changeUnit,
     clearCart,
+    replaceCart,
   } = useCart();
 
   const selectedProduct =
@@ -279,7 +301,7 @@ export default function App() {
   const showReviewBar = hasOrder && !isProductInfoOpen;
 
   useEffect(() => {
-    if (!isProductInfoOpen && !isReviewOpen) {
+    if (!isProductInfoOpen && !isReviewOpen && !pendingRestoreOrder) {
       return;
     }
 
@@ -289,7 +311,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [isProductInfoOpen, isReviewOpen]);
+  }, [isProductInfoOpen, isReviewOpen, pendingRestoreOrder]);
 
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
@@ -536,6 +558,68 @@ export default function App() {
     saveStoredOrderNote(value);
   }, []);
 
+  const showRestoreNotice = useCallback((message, alert = false) => {
+    setRestoreNotice({
+      token: Date.now(),
+      message,
+      alert,
+    });
+  }, []);
+
+  const applyHistoryRestore = useCallback(
+    (order) => {
+      const result = restoreOrderFromHistory(order, products);
+      if (result.restoredCount < 1) {
+        showRestoreNotice(formatAllSkippedRestoreMessage(), true);
+        return false;
+      }
+
+      replaceCart(result.lines);
+      handleOrderNoteChange(result.note);
+      touchHistoryLastUsedAt(order.id);
+      setOrderHistory(loadOrderHistory());
+      setIsReviewOpen(true);
+      showRestoreNotice(formatRestoreNotice(result), result.skipped.length > 0);
+      return true;
+    },
+    [handleOrderNoteChange, replaceCart, showRestoreNotice]
+  );
+
+  const handlePesanLagi = useCallback(
+    (order) => {
+      const result = restoreOrderFromHistory(order, products);
+      const decision = decideRestoreAction({
+        currentLineCount: lineCount,
+        restoredCount: result.restoredCount,
+      });
+
+      if (decision.action === "blocked") {
+        showRestoreNotice(formatAllSkippedRestoreMessage(), true);
+        return;
+      }
+
+      if (decision.action === "confirm") {
+        setPendingRestoreOrder(order);
+        return;
+      }
+
+      applyHistoryRestore(order);
+    },
+    [applyHistoryRestore, lineCount, showRestoreNotice]
+  );
+
+  const handleConfirmReplaceOrder = useCallback(() => {
+    const order = pendingRestoreOrder;
+    setPendingRestoreOrder(null);
+    if (order) {
+      applyHistoryRestore(order);
+    }
+  }, [applyHistoryRestore, pendingRestoreOrder]);
+
+  const handleCancelReplaceOrder = useCallback(() => {
+    setPendingRestoreOrder(null);
+  }, []);
+
   const handleSendWhatsApp = useCallback(() => {
     if (whatsAppSendLockRef.current) {
       return;
@@ -553,6 +637,7 @@ export default function App() {
     setWhatsAppHandoffStatus("opening");
 
     saveOrderHistorySnapshot({ cart, note: orderNote });
+    setOrderHistory(loadOrderHistory());
 
     const result = openWhatsAppWithOrder(cart, orderNote);
 
@@ -717,6 +802,14 @@ export default function App() {
           onClearRecent={handleClearRecentSearches}
         />
       )}
+
+      {showHomepage ? (
+        <PreviousOrdersSection
+          orders={getHomepageHistoryOrders(orderHistory)}
+          products={products}
+          onPesanLagi={handlePesanLagi}
+        />
+      ) : null}
 
       {isCategoryMode && (
         <section
@@ -948,7 +1041,19 @@ export default function App() {
         onAddRecommendation={handleAddRecommendation}
       />
 
+      <ConfirmReplaceOrderDialog
+        isOpen={pendingRestoreOrder != null}
+        currentLineCount={lineCount}
+        onConfirm={handleConfirmReplaceOrder}
+        onCancel={handleCancelReplaceOrder}
+      />
+
       <AddFeedbackToast token={addFeedbackToken} />
+      <RestoreFeedbackToast
+        token={restoreNotice.token}
+        message={restoreNotice.message}
+        alert={restoreNotice.alert}
+      />
     </div>
   );
 }
