@@ -2,6 +2,9 @@
  * Device-local previous-order snapshots (Stage 7B.2).
  * Never transmitted — localStorage only.
  *
+ * This is the Pesan Lagi occasion log, not the learning profile.
+ * Do not add frequency, scores, or reuse conclusions to schema v1.
+ *
  * A record means "this basket was prepared for WhatsApp".
  * It does not mean the message was sent, received, or completed.
  *

@@ -102,7 +102,7 @@ Remove item.
 
 Badge updates.
 
-Products with different units become different cart entries.
+A cart line is unique by product ID. Each product has one active unit.
 
 ---
 

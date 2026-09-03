@@ -161,15 +161,12 @@ Rules:
 
 The existing `CartContext` is the cart foundation.
 
-A cart line is unique by:
-
-- product ID
-- selected unit
+A cart line is unique by product ID. Each product has one active unit.
 
 Rules:
 
-- same product + same unit = merge quantities
-- same product + different unit = separate cart line
+- same product = merge quantities onto that single line
+- changing unit replaces the active unit on that line
 - cart count = total quantity across all cart lines
 
 The full cart interface is a future release.
@@ -236,3 +233,15 @@ If there are no matches, show:
 - category filtering
 - full cart UI
 - WhatsApp export
+
+Later releases may use the approved device-local stores below. Do not add new keys unless requested.
+
+## 14. Device-local stores
+
+Approved localStorage keys. None of these stores contain prices, POS values, or customer identity.
+
+- `matahari-order:cart`
+- `matahari-order:order-note`
+- `matahari-order:recent-searches`
+- `matahari-order:order-history` — Pesan Lagi occasion log (prepared-for-WhatsApp)
+- `matahari-order:learning-profile` — separate local behavioral evidence

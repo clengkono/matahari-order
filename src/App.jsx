@@ -72,6 +72,7 @@ import {
   saveOrderHistorySnapshot,
   touchHistoryLastUsedAt,
 } from "./utils/orderHistoryStorage";
+import { recordOrderingOccasion } from "./utils/learningProfileStorage";
 import {
   decideRestoreAction,
   formatAllSkippedRestoreMessage,
@@ -637,6 +638,7 @@ export default function App() {
     setWhatsAppHandoffStatus("opening");
 
     saveOrderHistorySnapshot({ cart, note: orderNote });
+    recordOrderingOccasion({ cart });
     setOrderHistory(loadOrderHistory());
 
     const result = openWhatsAppWithOrder(cart, orderNote);

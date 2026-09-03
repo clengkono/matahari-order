@@ -58,6 +58,20 @@ This is not a conventional ecommerce application.
 - Do not replace working cart helpers unless necessary.
 - Do not implement prices or totals.
 
+## Device-local stores
+
+Do not add new localStorage keys unless explicitly requested.
+
+Approved keys:
+
+- `matahari-order:cart`
+- `matahari-order:order-note`
+- `matahari-order:recent-searches`
+- `matahari-order:order-history` — prepared-for-WhatsApp Pesan Lagi occasion log
+- `matahari-order:learning-profile` — separate local behavioral evidence
+
+Order history is the occasion log. The learning profile is long-term behavioral evidence. Do not add scores, frequency fields, or recommendation state to history schema v1.
+
 ## UX rules
 
 - Mobile-first.
@@ -102,7 +116,7 @@ After editing:
 - backend
 - authentication
 - routing
-- localStorage
+- new localStorage keys (unless explicitly requested)
 - inventory synchronization
 - category filtering
 - full cart drawer

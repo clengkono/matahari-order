@@ -4,6 +4,15 @@ This roadmap defines the planned evolution of Matahari Order.
 
 The goal is to complete one release at a time, keeping every release stable before moving to the next.
 
+## Current stage
+
+Order history (Pesan Lagi occasion log) is shipped.
+
+Next: 7C local learning.
+
+- 7C.1 local learning foundation — being implemented
+- 7C.2–7C.6 remain future
+
 ---
 
 # Release 0.3 — Smart Ordering Foundation
@@ -131,7 +140,7 @@ Ideas are recorded here but are **not** committed features.
 Possible future improvements:
 
 - Customer login
-- Order history
+- Order history (shipped)
 - Favorites by customer
 - Seasonal suggestions
 - Offline support
