@@ -637,7 +637,7 @@ try {
       reloadAt < openAt &&
       !confirmBlock.includes("recordOrderingOccasion") &&
       appSource.includes('from "./utils/learningProfileStorage"') &&
-      !appSource.includes("loadLearningProfile") &&
+      appSource.includes("loadLearningProfile") &&
       !appSource.includes("clearLearningProfile") &&
       !appSource.includes("sanitizeLearningProfile")
   );

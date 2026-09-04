@@ -130,6 +130,8 @@ The home screen should contain:
 
 Do not duplicate `Sering Dipesan` and `Produk Favorit`.
 
+After sufficient device-local prepared-for-WhatsApp ordering evidence, the homepage may also show `Sering Anda Pesan`. That section is a personal convenience shortcut from this device's recent ordering occasions. It is distinct from generic `Sering Dipesan`.
+
 ## 8. Product detail interaction
 
 Tapping a product card opens a bottom sheet.

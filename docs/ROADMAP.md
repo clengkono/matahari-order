@@ -7,11 +7,13 @@ The goal is to complete one release at a time, keeping every release stable befo
 ## Current stage
 
 Order history (Pesan Lagi occasion log) is shipped.
+7C.1 local learning foundation is shipped.
 
-Next: 7C local learning.
+Current: 7C.2 Sering Anda Pesan — personal convenience shortcuts from this device's recent prepared-for-WhatsApp ordering occasions.
 
-- 7C.1 local learning foundation — being implemented
-- 7C.2–7C.6 remain future
+Deferred real-world QA: when Sering Anda Pesan naturally contains approximately 4–8 genuine learned products, re-check horizontal swipe, next-card peek, all cards reachable, narrow-phone layout, no whole-page horizontal overflow, and that the cart-aware stepper does not cause rail jump. This is deferred scale/rail QA, not a known bug.
+
+- 7C.3–7C.6 remain future
 
 ---
 

@@ -6,6 +6,7 @@ import CategoryGrid from "./components/CategoryGrid";
 import ConfirmReplaceOrderDialog from "./components/ConfirmReplaceOrderDialog";
 import OrderReviewBar from "./components/OrderReviewBar";
 import OrderReviewSheet from "./components/OrderReviewSheet";
+import PersonalRegularsSection from "./components/PersonalRegularsSection";
 import PreviousOrdersSection from "./components/PreviousOrdersSection";
 import RestoreFeedbackToast from "./components/RestoreFeedbackToast";
 import ProductGrid from "./components/ProductGrid";
@@ -72,7 +73,11 @@ import {
   saveOrderHistorySnapshot,
   touchHistoryLastUsedAt,
 } from "./utils/orderHistoryStorage";
-import { recordOrderingOccasion } from "./utils/learningProfileStorage";
+import { loadLearningProfile, recordOrderingOccasion } from "./utils/learningProfileStorage";
+import {
+  derivePersonalRegularProductIds,
+  resolvePersonalRegularProducts,
+} from "./utils/personalRegularProducts";
 import {
   decideRestoreAction,
   formatAllSkippedRestoreMessage,
@@ -316,6 +321,12 @@ export default function App() {
 
   const normalizedSearch = normalizeSearchText(search);
   const isSearching = normalizedSearch !== "";
+  const personalRegularProducts = useMemo(() => {
+    void orderHistory;
+    const ids = derivePersonalRegularProductIds(loadLearningProfile());
+    return resolvePersonalRegularProducts(ids, products);
+  }, [orderHistory]);
+
   const showHomepage = !isCategoryMode && !isSearching;
   // Shortcuts stay homepage/global only — never in category mode (Stage 2A).
   const showSearchShortcuts =
@@ -810,6 +821,17 @@ export default function App() {
           orders={getHomepageHistoryOrders(orderHistory)}
           products={products}
           onPesanLagi={handlePesanLagi}
+        />
+      ) : null}
+
+      {showHomepage ? (
+        <PersonalRegularsSection
+          products={personalRegularProducts}
+          onOpen={handleOpenProduct}
+          onQuickAdd={handleQuickAdd}
+          getCartQuantity={getDefaultUnitQuantity}
+          onIncrease={handleIncreaseQuantity}
+          onDecrease={handleDecreaseQuantity}
         />
       ) : null}
 
