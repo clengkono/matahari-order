@@ -1827,21 +1827,36 @@
     "name": "Kapal Api Special 150G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-150g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-150g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-150g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-special-250g",
     "name": "Kapal Api Special 250G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-250g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-250g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-250g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-special-350g",
     "name": "Kapal Api Special 350G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-350g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-350g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-350g-original.png"
+    }
   },
   {
     "id": "prod-top-kopi-susu-31g-12",
@@ -2278,7 +2293,12 @@
     "name": "Nestle Carnation Evaporated 405G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-nestle-carnation-evaporated-405g.webp",
+      "detail": "/product-images/details/prod-nestle-carnation-evaporated-405g.webp",
+      "original": "/product-images/originals/prod-nestle-carnation-evaporated-405g-original.png"
+    }
   },
   {
     "id": "prod-nestle-corn-flakes-150g",
@@ -2437,14 +2457,24 @@
     "name": "Indomilk Kids Coklat 115ML (40)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-indomilk-kids-coklat-115ml-40.webp",
+      "detail": "/product-images/details/prod-indomilk-kids-coklat-115ml-40.webp",
+      "original": "/product-images/originals/prod-indomilk-kids-coklat-115ml-40-original.png"
+    }
   },
   {
     "id": "prod-indomilk-kids-strawberry-115ml",
     "name": "Indomilk Kids Strawberry 115ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-indomilk-kids-strawberry-115ml.webp",
+      "detail": "/product-images/details/prod-indomilk-kids-strawberry-115ml.webp",
+      "original": "/product-images/originals/prod-indomilk-kids-strawberry-115ml-original.png"
+    }
   },
   {
     "id": "prod-kertas-nasi-gajah-merah-210",
@@ -2851,7 +2881,12 @@
     "name": "Kopi Mayor 135G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kopi-mayor-135g.webp",
+      "detail": "/product-images/details/prod-kopi-mayor-135g.webp",
+      "original": "/product-images/originals/prod-kopi-mayor-135g-original.png"
+    }
   },
   {
     "id": "prod-mentega-butter-palmvita-18kg",
@@ -3320,14 +3355,24 @@
     "name": "Milku Coklat 200ML (12)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milku-coklat-200ml-12.webp",
+      "detail": "/product-images/details/prod-milku-coklat-200ml-12.webp",
+      "original": "/product-images/originals/prod-milku-coklat-200ml-12-original.png"
+    }
   },
   {
     "id": "prod-milku-stroberi-200ml-12",
     "name": "Milku Stroberi 200ML (12)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milku-stroberi-200ml-12.webp",
+      "detail": "/product-images/details/prod-milku-stroberi-200ml-12.webp",
+      "original": "/product-images/originals/prod-milku-stroberi-200ml-12-original.png"
+    }
   },
   {
     "id": "prod-golda-cappuccino-200ml",
@@ -3410,7 +3455,12 @@
     "name": "Milku Original 200ML (12)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milku-original-200ml-12.webp",
+      "detail": "/product-images/details/prod-milku-original-200ml-12.webp",
+      "original": "/product-images/originals/prod-milku-original-200ml-12-original.png"
+    }
   },
   {
     "id": "prod-ekomie-baksoo-pak-4-95kg",
@@ -3455,7 +3505,12 @@
     "name": "Milku Marie Biskuit 200ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-milku-marie-biskuit-200ml.webp",
+      "detail": "/product-images/details/prod-milku-marie-biskuit-200ml.webp",
+      "original": "/product-images/originals/prod-milku-marie-biskuit-200ml-original.png"
+    }
   },
   {
     "id": "prod-minyak-tropical-botol-1l",
@@ -4794,7 +4849,12 @@
     "name": "Nipis Madu 330ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-nipis-madu-330ml.webp",
+      "detail": "/product-images/details/prod-nipis-madu-330ml.webp",
+      "original": "/product-images/originals/prod-nipis-madu-330ml-original.png"
+    }
   },
   {
     "id": "prod-indomilk-susu-steril-honey-189ml",
@@ -5289,7 +5349,12 @@
     "name": "Indocafe Coffeemix",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-indocafe-coffeemix.webp",
+      "detail": "/product-images/details/prod-indocafe-coffeemix.webp",
+      "original": "/product-images/originals/prod-indocafe-coffeemix-original.png"
+    }
   },
   {
     "id": "prod-kratingdaeng-energy-drink-150ml",
@@ -6775,7 +6840,12 @@
     "name": "Ichitan Brown Sugar Milk 310ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ichitan-brown-sugar-milk-310ml.webp",
+      "detail": "/product-images/details/prod-ichitan-brown-sugar-milk-310ml.webp",
+      "original": "/product-images/originals/prod-ichitan-brown-sugar-milk-310ml-original.png"
+    }
   },
   {
     "id": "prod-so-klin-lantai-merah-botol-450ml",
@@ -7454,7 +7524,12 @@
     "name": "Ragi Angel Sachet 11g",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ragi-angel-sachet-11g.webp",
+      "detail": "/product-images/details/prod-ragi-angel-sachet-11g.webp",
+      "original": "/product-images/originals/prod-ragi-angel-sachet-11g-original.png"
+    }
   },
   {
     "id": "prod-garuda-kacang-atom-bbq-20g",
@@ -7566,7 +7641,12 @@
     "name": "Ragi Angel 500G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ragi-angel-500g.webp",
+      "detail": "/product-images/details/prod-ragi-angel-500g.webp",
+      "original": "/product-images/originals/prod-ragi-angel-500g-original.png"
+    }
   },
   {
     "id": "prod-antaka-jagung-bakar-100g-10",
@@ -8067,7 +8147,12 @@
     "name": "Bir Bintang Zero Kaleng 330ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-bir-bintang-zero-kaleng-330ml.webp",
+      "detail": "/product-images/details/prod-bir-bintang-zero-kaleng-330ml.webp",
+      "original": "/product-images/originals/prod-bir-bintang-zero-kaleng-330ml-original.png"
+    }
   },
   {
     "id": "prod-bodrex-extra",
@@ -10470,7 +10555,12 @@
     "name": "Hemaviton Jreng Dos (10)",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-hemaviton-jreng-dos-10.webp",
+      "detail": "/product-images/details/prod-hemaviton-jreng-dos-10.webp",
+      "original": "/product-images/originals/prod-hemaviton-jreng-dos-10-original.png"
+    }
   },
   {
     "id": "prod-hemaviton-action",
@@ -11485,14 +11575,24 @@
     "name": "Ragi Saf Instant 11G",
     "category": "Bahan Makanan",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ragi-saf-instant-11g.webp",
+      "detail": "/product-images/details/prod-ragi-saf-instant-11g.webp",
+      "original": "/product-images/originals/prod-ragi-saf-instant-11g-original.png"
+    }
   },
   {
     "id": "prod-ichitan-thai-tea-310ml",
     "name": "Ichitan Thai Tea 310ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-ichitan-thai-tea-310ml.webp",
+      "detail": "/product-images/details/prod-ichitan-thai-tea-310ml.webp",
+      "original": "/product-images/originals/prod-ichitan-thai-tea-310ml-original.png"
+    }
   },
   {
     "id": "prod-plastik-ikan-mas-10cm",
@@ -11583,7 +11683,12 @@
     "name": "Koko Drink Leci 190ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-koko-drink-leci-190ml.webp",
+      "detail": "/product-images/details/prod-koko-drink-leci-190ml.webp",
+      "original": "/product-images/originals/prod-koko-drink-leci-190ml-original.png"
+    }
   },
   {
     "id": "prod-jocky-pak-25",
@@ -12071,7 +12176,12 @@
     "name": "Kapal Api Special 6G",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-kapal-api-special-6g.webp",
+      "detail": "/product-images/details/prod-kapal-api-special-6g.webp",
+      "original": "/product-images/originals/prod-kapal-api-special-6g-original.png"
+    }
   },
   {
     "id": "prod-kapal-api-mix-gula-aren-23g",
@@ -13239,7 +13349,12 @@
     "name": "Mountea Apel 160ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-mountea-apel-160ml.webp",
+      "detail": "/product-images/details/prod-mountea-apel-160ml.webp",
+      "original": "/product-images/originals/prod-mountea-apel-160ml-original.png"
+    }
   },
   {
     "id": "prod-mizone-apple-guava",
@@ -14808,7 +14923,12 @@
     "name": "Sampoerna PRIMA Kretek 12",
     "category": "Rokok",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-sampoerna-prima-kretek-12.webp",
+      "detail": "/product-images/details/prod-sampoerna-prima-kretek-12.webp",
+      "original": "/product-images/originals/prod-sampoerna-prima-kretek-12-original.png"
+    }
   },
   {
     "id": "prod-filma-pouch-1l",
@@ -15324,14 +15444,24 @@
     "name": "Clevo Coklat 115ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-clevo-coklat-115ml.webp",
+      "detail": "/product-images/details/prod-clevo-coklat-115ml.webp",
+      "original": "/product-images/originals/prod-clevo-coklat-115ml-original.png"
+    }
   },
   {
     "id": "prod-clevo-stroberi-115ml",
     "name": "Clevo Stroberi 115ML",
     "category": "Minuman",
     "favorite": false,
-    "pattern": "fixed-product"
+    "pattern": "fixed-product",
+    "image": {
+      "card": "/product-images/cards/prod-clevo-stroberi-115ml.webp",
+      "detail": "/product-images/details/prod-clevo-stroberi-115ml.webp",
+      "original": "/product-images/originals/prod-clevo-stroberi-115ml-original.png"
+    }
   },
   {
     "id": "prod-sweety-l1",
